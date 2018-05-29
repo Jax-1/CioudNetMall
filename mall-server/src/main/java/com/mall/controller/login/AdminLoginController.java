@@ -7,9 +7,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.mall.code.ProcessResult;
 import com.mall.controller.AbstractController;
 import com.mall.entity.login.Admin;
+import com.mall.message.ProcessResult;
 import com.mall.service.login.AdminLoginService;
 
 @Controller

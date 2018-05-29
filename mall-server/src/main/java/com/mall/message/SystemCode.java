@@ -1,9 +1,6 @@
-package com.mall.code;
+package com.mall.message;
 
-import java.util.HashMap;
-
-public class ProcessMassage {
-	private final static HashMap<Integer , String> _codeDict ;
+public class SystemCode {
 	/**
 	 * 请求成功
 	 */
@@ -89,10 +86,6 @@ public class ProcessMassage {
 	 */
 	public static final int SIGN_ERROR=503;
 	/**
-	 * 企业申请项目 用户资料未完善
-	 */
-	public static final int USER_NOT_COMPLETE=601;
-	/**
 	 * 没有默认地址
 	 */
 	public static final int RECEIVE_NOT_EXISTS=602;
@@ -100,40 +93,11 @@ public class ProcessMassage {
 	 * 是指默认地址失败
 	 */
 	public static final int SET_DEFAULTRECEIVE_FAILURE=603;
-	static {
-		Object[] codeList = new Object[]{
-			SUCCESS,"请求成功",
-			FAILURE,"请求失败",
-			NO_LOGIN,"用户未登录或登录超时",
-			NO_OBJ_ERROR_PASS,"用户不存在或密码错误",
-			INNER_ERROR,"系统内部错误",
-			NULL_ARGUMENT,"传入的参数为空或null",
-			ILLEGAL_ARGUMENT,"不合法的参数",
-			NO_PRI,"无此权限",
-			WRONG_PASSWORD,"用户名或密码错误",
-			USER_EXISTS,"用户已存在",
-			OBJ_EXISTS,"对象已存在",
-			USER_NOT_EXISTS,"用户不存在",
-			OBJ_NOT_EXISTS,"对象不存在",
-			OBJ_NOT_BIND,"用户未绑定",
-			USER_NOT_COMPLETE,"用户资料未完善"
-		};
-		_codeDict = new HashMap<Integer , String>();
-		for(int i = 0 ; i < codeList.length / 2 ; i++ ){
-			_codeDict.put(Integer.parseInt(codeList[i*2].toString()),
-						codeList[i*2+1].toString());
-		}			
-	}
-	
-	public static String GetErrorDesc(int code){
-		if(!_codeDict.containsKey(code))
-			return "";
-		else
-			return _codeDict.get(code);
-	}
-	
-	public static String GetErrorDesc(String code){
-		return GetErrorDesc(Integer.parseInt(code.trim()));
-	}
+	//状态：开启
+	public final static String STATUS_Y="Y";
+	//状态：关闭
+	public final static String STATUS_N="N";
+	//用户默认头像
+	public final static String USERINFO_HEADIMGURL="";
 
 }

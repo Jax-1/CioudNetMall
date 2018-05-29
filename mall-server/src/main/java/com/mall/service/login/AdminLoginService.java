@@ -2,8 +2,8 @@ package com.mall.service.login;
 
 import javax.servlet.http.HttpServletRequest;
 
-import com.mall.code.ProcessResult;
 import com.mall.entity.login.Admin;
+import com.mall.message.ProcessResult;
 
 public interface AdminLoginService {
 	/**

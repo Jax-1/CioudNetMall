@@ -5,13 +5,14 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.transaction.annotation.Transactional;
 
-import com.mall.code.ProcessMassage;
-import com.mall.code.ProcessResult;
-import com.mall.code.SystemCode;
 import com.mall.dao.login.UserInfoMapper;
 import com.mall.dao.login.UserMapper;
 import com.mall.entity.login.User;
 import com.mall.entity.login.UserInfo;
+import com.mall.message.MessageUtil;
+import com.mall.message.MsgPoolCode;
+import com.mall.message.ProcessResult;
+import com.mall.message.SystemCode;
 import com.mall.service.login.UserLoginService;
 import com.mall.util.DateFormatUtil;
 import com.mall.util.MD5Util;
@@ -31,7 +32,7 @@ public class UserLoginServiceImpl implements UserLoginService {
 		User model = userMapper.selectByPrimaryKey(user.getUser_name());
 		//状态验证
 		if(SystemCode.STATUS_N.equals(model.getStatus())) {
-			result.setMsg(SystemCode.USER_STATUS_N_MSG);
+			result.setMsg(MessageUtil.getMsgByLan(MsgPoolCode.USER_STATUS_N_MSG));
 			return result;
 		}
 		if(Validate.notNull(model)) {
@@ -39,15 +40,15 @@ public class UserLoginServiceImpl implements UserLoginService {
 			String password = MD5Util.encoder(user.getPassword(),model.getRand());
 			if(password.equals(model.getPassword())) {
 				SessionUtil.setUser(request, model);
-				result.setRes(ProcessMassage.SUCCESS);
-				result.setMsg(SystemCode.LOGIN_SUCESS);
+				result.setRes(SystemCode.SUCCESS);
+				result.setMsg(MessageUtil.getMsgByLan(MsgPoolCode.LOGIN_SUCESS));
 			}else {
-				result.setRes(ProcessMassage.FAILURE);
-				result.setMsg(SystemCode.LOGIN_FAILURE);
+				result.setRes(SystemCode.FAILURE);
+				result.setMsg(MessageUtil.getMsgByLan(MsgPoolCode.NO_OBJ_ERROR_PASS));
 			}
 			
 		}else {
-			result.setMsg(SystemCode.LOGIN_FAILURE);
+			result.setMsg(MessageUtil.getMsgByLan(MsgPoolCode.NO_OBJ_ERROR_PASS));
 		}
 		return result;
 	}
@@ -61,7 +62,7 @@ public class UserLoginServiceImpl implements UserLoginService {
 	@Override
 	public ProcessResult<User> loginOut(HttpServletRequest request) {
 		request.getSession().invalidate();
-		return new ProcessResult<User>(ProcessMassage.SUCCESS,SystemCode.LOGIN_OUT_SUCESS);
+		return new ProcessResult<User>(SystemCode.SUCCESS,MessageUtil.getMsgByLan(MsgPoolCode.LOGIN_OUT_SUCESS));
 	}
 
 	@Override

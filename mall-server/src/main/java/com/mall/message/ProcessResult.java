@@ -1,4 +1,4 @@
-package com.mall.code;
+package com.mall.message;
 
 import java.io.Serializable;
 import java.util.List;
@@ -45,8 +45,8 @@ public class ProcessResult<T> implements Serializable {
     private List<T> list;
 
     public ProcessResult(){
-    	this.res=ProcessMassage.FAILURE;
-    	this.msg=ProcessMassage.GetErrorDesc(this.res);
+    	this.res=SystemCode.FAILURE;
+    	this.msg=MessageUtil.getMsgByLan(MsgPoolCode.FAILURE);
     } 
     public ProcessResult(int res){
     	this.res=res;

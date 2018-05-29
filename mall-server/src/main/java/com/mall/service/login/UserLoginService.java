@@ -2,9 +2,9 @@ package com.mall.service.login;
 
 import javax.servlet.http.HttpServletRequest;
 
-import com.mall.code.ProcessResult;
 import com.mall.entity.login.User;
 import com.mall.entity.login.UserInfo;
+import com.mall.message.ProcessResult;
 
 public interface UserLoginService {
 	/**

@@ -14,7 +14,7 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import com.mall.code.ProcessResult;
+import com.mall.message.ProcessResult;
 
 /**
 *
