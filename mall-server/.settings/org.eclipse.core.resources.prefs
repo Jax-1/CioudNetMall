@@ -2,4 +2,5 @@ eclipse.preferences.version=1
 encoding//src/main/java=UTF-8
 encoding//src/main/java/com/mall/message/MsgPool_zh_CN.properties=UTF-8
 encoding//src/main/resources=UTF-8
+encoding//src/main/resources/static/ueditor/jsp/config.json=UTF-8
 encoding/<project>=UTF-8
