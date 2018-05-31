@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mall.dao.cms.FilePathMapper">
+  <resultMap id="BaseResultMap" type="com.mall.entity.cms.FilePath">
+    <id column="fileid" jdbcType="VARCHAR" property="fileid" />
+    <result column="belongid" jdbcType="INTEGER" property="belongid" />
+    <result column="path" jdbcType="VARCHAR" property="path" />
+    <result column="fileidname" jdbcType="VARCHAR" property="fileidname" />
+    <result column="filename" jdbcType="VARCHAR" property="filename" />
+    <result column="filetype" jdbcType="VARCHAR" property="filetype" />
+    <result column="filesize" jdbcType="VARCHAR" property="filesize" />
+    <result column="status" jdbcType="VARCHAR" property="status" />
+    <result column="createby" jdbcType="TIMESTAMP" property="createby" />
+    <result column="createat" jdbcType="TIMESTAMP" property="createat" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    fileid, belongid, path, fileidname, filename, filetype, filesize, status, createby, 
+    createat
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_file_path
+    where fileid = #{fileid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from t_file_path
+    where fileid = #{fileid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.mall.entity.cms.FilePath">
+    insert into t_file_path (fileid, belongid, path, 
+      fileidname, filename, filetype, 
+      filesize, status, createby, 
+      createat)
+    values (#{fileid,jdbcType=VARCHAR}, #{belongid,jdbcType=INTEGER}, #{path,jdbcType=VARCHAR}, 
+      #{fileidname,jdbcType=VARCHAR}, #{filename,jdbcType=VARCHAR}, #{filetype,jdbcType=VARCHAR}, 
+      #{filesize,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, #{createby,jdbcType=TIMESTAMP}, 
+      #{createat,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.mall.entity.cms.FilePath">
+    insert into t_file_path
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="fileid != null">
+        fileid,
+      </if>
+      <if test="belongid != null">
+        belongid,
+      </if>
+      <if test="path != null">
+        path,
+      </if>
+      <if test="fileidname != null">
+        fileidname,
+      </if>
+      <if test="filename != null">
+        filename,
+      </if>
+      <if test="filetype != null">
+        filetype,
+      </if>
+      <if test="filesize != null">
+        filesize,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="createby != null">
+        createby,
+      </if>
+      <if test="createat != null">
+        createat,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="fileid != null">
+        #{fileid,jdbcType=VARCHAR},
+      </if>
+      <if test="belongid != null">
+        #{belongid,jdbcType=INTEGER},
+      </if>
+      <if test="path != null">
+        #{path,jdbcType=VARCHAR},
+      </if>
+      <if test="fileidname != null">
+        #{fileidname,jdbcType=VARCHAR},
+      </if>
+      <if test="filename != null">
+        #{filename,jdbcType=VARCHAR},
+      </if>
+      <if test="filetype != null">
+        #{filetype,jdbcType=VARCHAR},
+      </if>
+      <if test="filesize != null">
+        #{filesize,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="createby != null">
+        #{createby,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createat != null">
+        #{createat,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.mall.entity.cms.FilePath">
+    update t_file_path
+    <set>
+      <if test="belongid != null">
+        belongid = #{belongid,jdbcType=INTEGER},
+      </if>
+      <if test="path != null">
+        path = #{path,jdbcType=VARCHAR},
+      </if>
+      <if test="fileidname != null">
+        fileidname = #{fileidname,jdbcType=VARCHAR},
+      </if>
+      <if test="filename != null">
+        filename = #{filename,jdbcType=VARCHAR},
+      </if>
+      <if test="filetype != null">
+        filetype = #{filetype,jdbcType=VARCHAR},
+      </if>
+      <if test="filesize != null">
+        filesize = #{filesize,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="createby != null">
+        createby = #{createby,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createat != null">
+        createat = #{createat,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where fileid = #{fileid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.mall.entity.cms.FilePath">
+    update t_file_path
+    set belongid = #{belongid,jdbcType=INTEGER},
+      path = #{path,jdbcType=VARCHAR},
+      fileidname = #{fileidname,jdbcType=VARCHAR},
+      filename = #{filename,jdbcType=VARCHAR},
+      filetype = #{filetype,jdbcType=VARCHAR},
+      filesize = #{filesize,jdbcType=VARCHAR},
+      status = #{status,jdbcType=VARCHAR},
+      createby = #{createby,jdbcType=TIMESTAMP},
+      createat = #{createat,jdbcType=TIMESTAMP}
+    where fileid = #{fileid,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByBelongId" parameterType="com.mall.entity.cms.FilePath">
+  select 
+    <include refid="Base_Column_List" />
+    from t_file_path
+    where belongid = #{belongId,jdbcType=VARCHAR}
+  </select>
+</mapper>

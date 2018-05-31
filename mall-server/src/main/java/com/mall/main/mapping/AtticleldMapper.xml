@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mall.dao.cms.AtticleldMapper">
+  <resultMap id="BaseResultMap" type="com.mall.entity.cms.Atticleld">
+    <id column="articleId" jdbcType="VARCHAR" property="articleId" />
+    <result column="atticletype" jdbcType="VARCHAR" property="atticletype" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="viewCount" jdbcType="INTEGER" property="viewCount" />
+    <result column="commentCount" jdbcType="INTEGER" property="commentCount" />
+    <result column="status" jdbcType="VARCHAR" property="status" />
+    <result column="createby" jdbcType="VARCHAR" property="createby" />
+    <result column="createat" jdbcType="TIMESTAMP" property="createat" />
+    <result column="updateTime" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.mall.entity.cms.Atticleld">
+    <result column="content" jdbcType="LONGVARCHAR" property="content" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    articleId, atticletype, title, viewCount, commentCount, status, createby, createat, 
+    updateTime
+  </sql>
+  <sql id="Blob_Column_List">
+    content
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from t_cms_articleld
+    where articleId = #{articleId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from t_cms_articleld
+    where articleId = #{articleId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.mall.entity.cms.Atticleld">
+    insert into t_cms_articleld (articleId, atticletype, title, 
+      viewCount, commentCount, status, 
+      createby, createat, updateTime, 
+      content)
+    values (#{articleId,jdbcType=VARCHAR}, #{atticletype,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, 
+      #{viewCount,jdbcType=INTEGER}, #{commentCount,jdbcType=INTEGER}, #{status,jdbcType=VARCHAR}, 
+      #{createby,jdbcType=VARCHAR}, #{createat,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{content,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.mall.entity.cms.Atticleld">
+    insert into t_cms_articleld
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="articleId != null">
+        articleId,
+      </if>
+      <if test="atticletype != null">
+        atticletype,
+      </if>
+      <if test="title != null">
+        title,
+      </if>
+      <if test="viewCount != null">
+        viewCount,
+      </if>
+      <if test="commentCount != null">
+        commentCount,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="createby != null">
+        createby,
+      </if>
+      <if test="createat != null">
+        createat,
+      </if>
+      <if test="updateTime != null">
+        updateTime,
+      </if>
+      <if test="content != null">
+        content,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="articleId != null">
+        #{articleId,jdbcType=VARCHAR},
+      </if>
+      <if test="atticletype != null">
+        #{atticletype,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null">
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="viewCount != null">
+        #{viewCount,jdbcType=INTEGER},
+      </if>
+      <if test="commentCount != null">
+        #{commentCount,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="createby != null">
+        #{createby,jdbcType=VARCHAR},
+      </if>
+      <if test="createat != null">
+        #{createat,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="content != null">
+        #{content,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.mall.entity.cms.Atticleld">
+    update t_cms_articleld
+    <set>
+      <if test="atticletype != null">
+        atticletype = #{atticletype,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null">
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="viewCount != null">
+        viewCount = #{viewCount,jdbcType=INTEGER},
+      </if>
+      <if test="commentCount != null">
+        commentCount = #{commentCount,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="createby != null">
+        createby = #{createby,jdbcType=VARCHAR},
+      </if>
+      <if test="createat != null">
+        createat = #{createat,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        updateTime = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="content != null">
+        content = #{content,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where articleId = #{articleId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.mall.entity.cms.Atticleld">
+    update t_cms_articleld
+    set atticletype = #{atticletype,jdbcType=VARCHAR},
+      title = #{title,jdbcType=VARCHAR},
+      viewCount = #{viewCount,jdbcType=INTEGER},
+      commentCount = #{commentCount,jdbcType=INTEGER},
+      status = #{status,jdbcType=VARCHAR},
+      createby = #{createby,jdbcType=VARCHAR},
+      createat = #{createat,jdbcType=TIMESTAMP},
+      updateTime = #{updateTime,jdbcType=TIMESTAMP},
+      content = #{content,jdbcType=LONGVARCHAR}
+    where articleId = #{articleId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.mall.entity.cms.Atticleld">
+    update t_cms_articleld
+    set atticletype = #{atticletype,jdbcType=VARCHAR},
+      title = #{title,jdbcType=VARCHAR},
+      viewCount = #{viewCount,jdbcType=INTEGER},
+      commentCount = #{commentCount,jdbcType=INTEGER},
+      status = #{status,jdbcType=VARCHAR},
+      createby = #{createby,jdbcType=VARCHAR},
+      createat = #{createat,jdbcType=TIMESTAMP},
+      updateTime = #{updateTime,jdbcType=TIMESTAMP}
+    where articleId = #{articleId,jdbcType=VARCHAR}
+  </update>
+</mapper>

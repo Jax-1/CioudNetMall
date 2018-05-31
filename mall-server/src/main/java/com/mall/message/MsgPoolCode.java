@@ -28,6 +28,21 @@ public class MsgPoolCode{
 	public static String LOGIN_FAILURE="LOGIN_FAILURE";
 	public static String LOGIN_OUT_SUCESS="LOGIN_OUT_SUCESS";
 	public static String REGISTERED="REGISTERED";
+	/**
+	 * CMS
+	 */
+	/**文件上传失败	 */
+	public static String FILE_UPLOAD_FAILED="FILE_UPLOAD_FAILED";
+	/**
+	 * 文件信息保存失败
+	 */
+	public static String FILE_INFO_SAVE_FAILED="FILE_INFO_SAVE_FAILED";
+	/**
+	 * 分类信息添加失败
+	 */
+	public static String CATEGORY_INFO_ADD_FAILED="CATEGORY_INFO_ADD_FAILED";
+	
+	
 	
 	
 
