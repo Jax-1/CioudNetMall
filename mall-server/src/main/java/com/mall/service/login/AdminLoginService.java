@@ -31,4 +31,9 @@ public interface AdminLoginService {
 	 * @return
 	 */
 	ProcessResult<Admin> registered(Admin admin);
+	/**
+	 * 检查用户名
+	 * @return
+	 */
+	boolean checkAdminName(String adminName);
 }

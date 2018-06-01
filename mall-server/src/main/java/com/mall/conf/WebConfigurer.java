@@ -28,17 +28,17 @@ public class WebConfigurer extends WebMvcConfigurerAdapter {
         registry.setOrder(Ordered.HIGHEST_PRECEDENCE);  
         super.addViewControllers(registry);  
     }  
-    @Override
-    public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(new QqInterceptor())
-                .addPathPatterns("/admin/*/**");
-        registry.addInterceptor(new QqWebInterceptor())
-                .addPathPatterns("/front/*/**").
-                excludePathPatterns("/front/user/user/checkCode").
-                excludePathPatterns("/front/user/user/sendCode");
-
-        super.addInterceptors(registry);
-    }
+//    @Override
+//    public void addInterceptors(InterceptorRegistry registry) {
+//        registry.addInterceptor(new QqInterceptor())
+//                .addPathPatterns("/admin/*/**");
+//        registry.addInterceptor(new QqWebInterceptor())
+//                .addPathPatterns("/front/*/**").
+//                excludePathPatterns("/front/user/user/checkCode").
+//                excludePathPatterns("/front/user/user/sendCode");
+//
+//        super.addInterceptors(registry);
+//    }
 
     @Override
     public void addCorsMappings(CorsRegistry registry) {

@@ -19,24 +19,7 @@ public class User {
 
     private String del_status;
 
-    public User() {
-		super();
-	}
-
-	public User(String user_name, String password, String rand, String status, String userinfo_id, Date create_at,
-			Date update_time, String del_status) {
-		super();
-		this.user_name = user_name;
-		this.password = password;
-		this.rand = rand;
-		this.status = status;
-		this.userinfo_id = userinfo_id;
-		this.create_at = create_at;
-		this.update_time = update_time;
-		this.del_status = del_status;
-	}
-
-	public String getUser_name() {
+    public String getUser_name() {
         return user_name;
     }
 

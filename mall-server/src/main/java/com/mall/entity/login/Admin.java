@@ -3,46 +3,28 @@ package com.mall.entity.login;
 import java.util.Date;
 
 public class Admin {
-    private String user_name;
+    private String admin_name;
 
     private String password;
 
     private String rand;
 
-    private String status;
+    private String description;
 
-    private String userinfo_id;
+    private String state;
 
-    private Date create_at;
+    private Date create_time;
 
     private Date update_time;
 
-    private String del_status;
-    
-    
-    public Admin() {
-		super();
-	}
+    private String del_state;
 
-	public Admin(String user_name, String password, String rand, String status, String userinfo_id, Date create_at,
-			Date update_time, String del_status) {
-		super();
-		this.user_name = user_name;
-		this.password = password;
-		this.rand = rand;
-		this.status = status;
-		this.userinfo_id = userinfo_id;
-		this.create_at = create_at;
-		this.update_time = update_time;
-		this.del_status = del_status;
-	}
-
-	public String getUser_name() {
-        return user_name;
+    public String getAdmin_name() {
+        return admin_name;
     }
 
-    public void setUser_name(String user_name) {
-        this.user_name = user_name;
+    public void setAdmin_name(String admin_name) {
+        this.admin_name = admin_name;
     }
 
     public String getPassword() {
@@ -61,28 +43,28 @@ public class Admin {
         this.rand = rand;
     }
 
-    public String getStatus() {
-        return status;
+    public String getDescription() {
+        return description;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
-    public String getUserinfo_id() {
-        return userinfo_id;
+    public String getState() {
+        return state;
     }
 
-    public void setUserinfo_id(String userinfo_id) {
-        this.userinfo_id = userinfo_id;
+    public void setState(String state) {
+        this.state = state;
     }
 
-    public Date getCreate_at() {
-        return create_at;
+    public Date getCreate_time() {
+        return create_time;
     }
 
-    public void setCreate_at(Date create_at) {
-        this.create_at = create_at;
+    public void setCreate_time(Date create_time) {
+        this.create_time = create_time;
     }
 
     public Date getUpdate_time() {
@@ -93,11 +75,11 @@ public class Admin {
         this.update_time = update_time;
     }
 
-    public String getDel_status() {
-        return del_status;
+    public String getDel_state() {
+        return del_state;
     }
 
-    public void setDel_status(String del_status) {
-        this.del_status = del_status;
+    public void setDel_state(String del_state) {
+        this.del_state = del_state;
     }
 }

@@ -19,24 +19,7 @@ public class UserInfo {
 
     private Date lastSign_time;
 
-    public UserInfo() {
-		super();
-	}
-
-	public UserInfo(String id, String user_name, String headimgurl, String sex, String phone, Date create_at,
-			Date update_time, Date lastSign_time) {
-		super();
-		this.id = id;
-		this.user_name = user_name;
-		this.headimgurl = headimgurl;
-		this.sex = sex;
-		this.phone = phone;
-		this.create_at = create_at;
-		this.update_time = update_time;
-		this.lastSign_time = lastSign_time;
-	}
-
-	public String getId() {
+    public String getId() {
         return id;
     }
 

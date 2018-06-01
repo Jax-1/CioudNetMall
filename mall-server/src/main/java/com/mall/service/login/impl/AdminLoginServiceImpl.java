@@ -26,9 +26,9 @@ public class AdminLoginServiceImpl implements AdminLoginService {
 	@Override
 	public ProcessResult<Admin> login(Admin admin,HttpServletRequest request) {
 		ProcessResult<Admin> result = new ProcessResult<Admin>();
-		Admin model = adminMapper.selectByPrimaryKey(admin.getUser_name());
+		Admin model = adminMapper.selectByPrimaryKey(admin.getAdmin_name());
 		//状态验证
-		if(SystemCode.STATUS_N.equals(model.getStatus())) {
+		if(model!=null&&SystemCode.STATUS_N.equals(model.getState())) {
 			result.setMsg(MessageUtil.getMsgByLan(MsgPoolCode.USER_STATUS_N_MSG));
 			return result;
 		}
@@ -63,8 +63,20 @@ public class AdminLoginServiceImpl implements AdminLoginService {
 	@Override
 	@Transactional
 	public ProcessResult<Admin> registered(Admin admin) {
-		adminMapper.insert(admin);
-		return new ProcessResult<Admin>(SystemCode.SUCCESS,MessageUtil.getMsgByLan(MsgPoolCode.LOGIN_OUT_SUCESS));
+		int insert = adminMapper.insert(admin);
+		if(insert>0) {
+			return new ProcessResult<Admin>(SystemCode.SUCCESS,MessageUtil.getMsgByLan(MsgPoolCode.REGISTERED));
+		}
+		return new ProcessResult<Admin>();
+	}
+
+	@Override
+	public boolean checkAdminName(String adminName) {
+		Admin admin = adminMapper.selectByPrimaryKey(adminName);
+		if(Validate.notNull(admin)) {
+			return true;
+		}
+		return false;
 	}
 
 }
