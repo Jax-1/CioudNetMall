@@ -84,13 +84,7 @@
             }
         });
     });
-    UE.Editor.prototype.getActionUrl = function(action) {
-        if (action == 'uploadimage' || action == 'uploadscrawl' || action == 'uploadimage') {
-            return 'http://localhost:8889/imgUpdate'; //在这里返回我们实际的上传图片地址
-        } else {
-            return this._bkGetActionUrl.call(this, action);
-        }
-    }
+   
     function isFocus(e){
         alert(UE.getEditor('editor').isFocus());
         UE.dom.domUtils.preventDefault(e)

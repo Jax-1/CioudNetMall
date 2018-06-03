@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mall.dao.sys.CodeItemMapper">
+  <resultMap id="BaseResultMap" type="com.mall.entity.sys.CodeItem">
+    <result column="TYPE_CODE" jdbcType="VARCHAR" property="TYPE_CODE" />
+    <result column="ITEM_CODE" jdbcType="VARCHAR" property="ITEM_CODE" />
+    <result column="ITEM_NAME" jdbcType="VARCHAR" property="ITEM_NAME" />
+    <result column="ITEM_NODE" jdbcType="VARCHAR" property="ITEM_NODE" />
+    <result column="CREATE_AT" jdbcType="VARCHAR" property="CREATE_AT" />
+    <result column="CREATE_BY" jdbcType="VARCHAR" property="CREATE_BY" />
+  </resultMap>
+  <insert id="insert" parameterType="com.mall.entity.sys.CodeItem">
+    insert into t_sys_code_item (TYPE_CODE, ITEM_CODE, ITEM_NAME, 
+      ITEM_NODE, CREATE_AT, CREATE_BY
+      )
+    values (#{TYPE_CODE,jdbcType=VARCHAR}, #{ITEM_CODE,jdbcType=VARCHAR}, #{ITEM_NAME,jdbcType=VARCHAR}, 
+      #{ITEM_NODE,jdbcType=VARCHAR}, #{CREATE_AT,jdbcType=VARCHAR}, #{CREATE_BY,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.mall.entity.sys.CodeItem">
+    insert into t_sys_code_item
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="TYPE_CODE != null">
+        TYPE_CODE,
+      </if>
+      <if test="ITEM_CODE != null">
+        ITEM_CODE,
+      </if>
+      <if test="ITEM_NAME != null">
+        ITEM_NAME,
+      </if>
+      <if test="ITEM_NODE != null">
+        ITEM_NODE,
+      </if>
+      <if test="CREATE_AT != null">
+        CREATE_AT,
+      </if>
+      <if test="CREATE_BY != null">
+        CREATE_BY,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="TYPE_CODE != null">
+        #{TYPE_CODE,jdbcType=VARCHAR},
+      </if>
+      <if test="ITEM_CODE != null">
+        #{ITEM_CODE,jdbcType=VARCHAR},
+      </if>
+      <if test="ITEM_NAME != null">
+        #{ITEM_NAME,jdbcType=VARCHAR},
+      </if>
+      <if test="ITEM_NODE != null">
+        #{ITEM_NODE,jdbcType=VARCHAR},
+      </if>
+      <if test="CREATE_AT != null">
+        #{CREATE_AT,jdbcType=VARCHAR},
+      </if>
+      <if test="CREATE_BY != null">
+        #{CREATE_BY,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="selectByCodeType" parameterType="java.lang.String" resultMap="BaseResultMap">
+  select 
+  *
+  from
+  t_sys_code_item
+  where
+  
+  	TYPE_CODE=#{TYPE_CODE}
+  
+  ;
+  </select>
+</mapper>

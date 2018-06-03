@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mall.dao.sys.CodeTypeMapper">
+  <resultMap id="BaseResultMap" type="com.mall.entity.sys.CodeType">
+    <id column="TYPE_CODE" jdbcType="VARCHAR" property="TYPE_CODE" />
+    <result column="TYPE_NAME" jdbcType="VARCHAR" property="TYPE_NAME" />
+    <result column="CREATE_AT" jdbcType="VARCHAR" property="CREATE_AT" />
+    <result column="CREATE_BY" jdbcType="VARCHAR" property="CREATE_BY" />
+    <result column="CREATE_BY_TXT" jdbcType="VARCHAR" property="CREATE_BY_TXT" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    TYPE_CODE, TYPE_NAME, CREATE_AT, CREATE_BY, CREATE_BY_TXT
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_sys_code_type
+    where TYPE_CODE = #{TYPE_CODE,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from t_sys_code_type
+    where TYPE_CODE = #{TYPE_CODE,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.mall.entity.sys.CodeType">
+    insert into t_sys_code_type (TYPE_CODE, TYPE_NAME, CREATE_AT, 
+      CREATE_BY, CREATE_BY_TXT)
+    values (#{TYPE_CODE,jdbcType=VARCHAR}, #{TYPE_NAME,jdbcType=VARCHAR}, #{CREATE_AT,jdbcType=VARCHAR}, 
+      #{CREATE_BY,jdbcType=VARCHAR}, #{CREATE_BY_TXT,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.mall.entity.sys.CodeType">
+    insert into t_sys_code_type
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="TYPE_CODE != null">
+        TYPE_CODE,
+      </if>
+      <if test="TYPE_NAME != null">
+        TYPE_NAME,
+      </if>
+      <if test="CREATE_AT != null">
+        CREATE_AT,
+      </if>
+      <if test="CREATE_BY != null">
+        CREATE_BY,
+      </if>
+      <if test="CREATE_BY_TXT != null">
+        CREATE_BY_TXT,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="TYPE_CODE != null">
+        #{TYPE_CODE,jdbcType=VARCHAR},
+      </if>
+      <if test="TYPE_NAME != null">
+        #{TYPE_NAME,jdbcType=VARCHAR},
+      </if>
+      <if test="CREATE_AT != null">
+        #{CREATE_AT,jdbcType=VARCHAR},
+      </if>
+      <if test="CREATE_BY != null">
+        #{CREATE_BY,jdbcType=VARCHAR},
+      </if>
+      <if test="CREATE_BY_TXT != null">
+        #{CREATE_BY_TXT,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.mall.entity.sys.CodeType">
+    update t_sys_code_type
+    <set>
+      <if test="TYPE_NAME != null">
+        TYPE_NAME = #{TYPE_NAME,jdbcType=VARCHAR},
+      </if>
+      <if test="CREATE_AT != null">
+        CREATE_AT = #{CREATE_AT,jdbcType=VARCHAR},
+      </if>
+      <if test="CREATE_BY != null">
+        CREATE_BY = #{CREATE_BY,jdbcType=VARCHAR},
+      </if>
+      <if test="CREATE_BY_TXT != null">
+        CREATE_BY_TXT = #{CREATE_BY_TXT,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where TYPE_CODE = #{TYPE_CODE,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.mall.entity.sys.CodeType">
+    update t_sys_code_type
+    set TYPE_NAME = #{TYPE_NAME,jdbcType=VARCHAR},
+      CREATE_AT = #{CREATE_AT,jdbcType=VARCHAR},
+      CREATE_BY = #{CREATE_BY,jdbcType=VARCHAR},
+      CREATE_BY_TXT = #{CREATE_BY_TXT,jdbcType=VARCHAR}
+    where TYPE_CODE = #{TYPE_CODE,jdbcType=VARCHAR}
+  </update>
+</mapper>

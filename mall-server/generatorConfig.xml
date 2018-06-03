@@ -10,25 +10,15 @@
     <jdbcConnection connectionURL="jdbc:mysql://47.93.16.119:3306/dbmall"
     	 driverClass="com.mysql.jdbc.Driver"
     	  password="zhang032111" userId="root" />
-    <javaModelGenerator targetPackage="com.mall.entity.login" targetProject="mall-server\src\main\java" />
+    <javaModelGenerator targetPackage="com.mall.entity.cms" targetProject="mall-server\src\main\java" />
     <sqlMapGenerator targetPackage="com.mall.main.mapping" targetProject="mall-server\src\main\java" />
-    <javaClientGenerator targetPackage="com.mall.dao.login" targetProject="mall-server\src\main\java" type="XMLMAPPER" />
+    <javaClientGenerator targetPackage="com.mall.dao.cms" targetProject="mall-server\src\main\java" type="XMLMAPPER" />
 
-    <table schema="" tableName="t_sys_user_info" domainObjectName="UserInfo"
+    <table schema="" tableName="t_file_path" domainObjectName="FilePath"
     enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"
     enableSelectByExample="false" selectByExampleQueryId="false" >
     <property name="useActualColumnNames" value="true"/>
 		</table>
-	<table schema="" tableName="t_sys_user_localauth" domainObjectName="User"
-    enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"
-    enableSelectByExample="false" selectByExampleQueryId="false" >
-    <property name="useActualColumnNames" value="true"/>
-	</table>
-	<table schema="" tableName="t_sys_admin_localauth" domainObjectName="Admin"
-    enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"
-    enableSelectByExample="false" selectByExampleQueryId="false" >
-    <property name="useActualColumnNames" value="true"/>
-	</table>
 	
   </context>
 </generatorConfiguration>

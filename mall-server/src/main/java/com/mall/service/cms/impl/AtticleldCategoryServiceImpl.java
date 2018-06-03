@@ -4,14 +4,18 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.springframework.stereotype.Service;
+
 import com.mall.dao.cms.AtticleldCategoryMapper;
 import com.mall.entity.cms.AtticleldCategory;
 import com.mall.message.MessageUtil;
 import com.mall.message.MsgPoolCode;
 import com.mall.message.ProcessResult;
+import com.mall.message.SystemCode;
 import com.mall.service.cms.AtticleldCategoryService;
 import com.mall.util.Validate;
 
+@Service
 public class AtticleldCategoryServiceImpl implements AtticleldCategoryService {
 	@Resource
 	private AtticleldCategoryMapper atticleldCategoryMapper;
@@ -19,12 +23,13 @@ public class AtticleldCategoryServiceImpl implements AtticleldCategoryService {
 	public ProcessResult<AtticleldCategory> insert(AtticleldCategory category) {
 		ProcessResult<AtticleldCategory> result = new ProcessResult<AtticleldCategory>();
 		result.setMsg(MessageUtil.getMsgByLan(MsgPoolCode.CATEGORY_INFO_ADD_FAILED));
-		if(Validate.notNull(category)) {
+		if(!Validate.notNull(category)) {
 			return result;
 		}
 		int insert = atticleldCategoryMapper.insert(category);
 		if(insert>0) {
-			result.setMsg("");
+			result.setRes(SystemCode.SUCCESS);
+			result.setMsg("分类信息添加成功");
 		}
 		return result;
 	}
@@ -35,4 +40,5 @@ public class AtticleldCategoryServiceImpl implements AtticleldCategoryService {
 		return atticleldCategoryMapper.queryAll();
 	}
 
+	
 }

@@ -17,8 +17,8 @@ public interface AtticleldCategoryMapper {
 
     int updateByPrimaryKey(AtticleldCategory record);
     /**
-     * 查询所有分类信息
-     * @return
+     * 查询所有分类
+     * 
      */
     List<AtticleldCategory> queryAll();
 }

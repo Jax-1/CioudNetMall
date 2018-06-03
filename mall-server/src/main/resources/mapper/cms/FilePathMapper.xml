@@ -3,14 +3,14 @@
 <mapper namespace="com.mall.dao.cms.FilePathMapper">
   <resultMap id="BaseResultMap" type="com.mall.entity.cms.FilePath">
     <id column="fileid" jdbcType="VARCHAR" property="fileid" />
-    <result column="belongid" jdbcType="INTEGER" property="belongid" />
+    <result column="belongid" jdbcType="VARCHAR" property="belongid" />
     <result column="path" jdbcType="VARCHAR" property="path" />
     <result column="fileidname" jdbcType="VARCHAR" property="fileidname" />
     <result column="filename" jdbcType="VARCHAR" property="filename" />
     <result column="filetype" jdbcType="VARCHAR" property="filetype" />
     <result column="filesize" jdbcType="VARCHAR" property="filesize" />
     <result column="status" jdbcType="VARCHAR" property="status" />
-    <result column="createby" jdbcType="TIMESTAMP" property="createby" />
+    <result column="createby" jdbcType="VARCHAR" property="createby" />
     <result column="createat" jdbcType="TIMESTAMP" property="createat" />
   </resultMap>
   <sql id="Base_Column_List">
@@ -32,9 +32,9 @@
       fileidname, filename, filetype, 
       filesize, status, createby, 
       createat)
-    values (#{fileid,jdbcType=VARCHAR}, #{belongid,jdbcType=INTEGER}, #{path,jdbcType=VARCHAR}, 
+    values (#{fileid,jdbcType=VARCHAR}, #{belongid,jdbcType=VARCHAR}, #{path,jdbcType=VARCHAR}, 
       #{fileidname,jdbcType=VARCHAR}, #{filename,jdbcType=VARCHAR}, #{filetype,jdbcType=VARCHAR}, 
-      #{filesize,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, #{createby,jdbcType=TIMESTAMP}, 
+      #{filesize,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, #{createby,jdbcType=VARCHAR}, 
       #{createat,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.mall.entity.cms.FilePath">
@@ -76,7 +76,7 @@
         #{fileid,jdbcType=VARCHAR},
       </if>
       <if test="belongid != null">
-        #{belongid,jdbcType=INTEGER},
+        #{belongid,jdbcType=VARCHAR},
       </if>
       <if test="path != null">
         #{path,jdbcType=VARCHAR},
@@ -97,7 +97,7 @@
         #{status,jdbcType=VARCHAR},
       </if>
       <if test="createby != null">
-        #{createby,jdbcType=TIMESTAMP},
+        #{createby,jdbcType=VARCHAR},
       </if>
       <if test="createat != null">
         #{createat,jdbcType=TIMESTAMP},
@@ -108,7 +108,7 @@
     update t_file_path
     <set>
       <if test="belongid != null">
-        belongid = #{belongid,jdbcType=INTEGER},
+        belongid = #{belongid,jdbcType=VARCHAR},
       </if>
       <if test="path != null">
         path = #{path,jdbcType=VARCHAR},
@@ -129,7 +129,7 @@
         status = #{status,jdbcType=VARCHAR},
       </if>
       <if test="createby != null">
-        createby = #{createby,jdbcType=TIMESTAMP},
+        createby = #{createby,jdbcType=VARCHAR},
       </if>
       <if test="createat != null">
         createat = #{createat,jdbcType=TIMESTAMP},
@@ -139,14 +139,14 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.mall.entity.cms.FilePath">
     update t_file_path
-    set belongid = #{belongid,jdbcType=INTEGER},
+    set belongid = #{belongid,jdbcType=VARCHAR},
       path = #{path,jdbcType=VARCHAR},
       fileidname = #{fileidname,jdbcType=VARCHAR},
       filename = #{filename,jdbcType=VARCHAR},
       filetype = #{filetype,jdbcType=VARCHAR},
       filesize = #{filesize,jdbcType=VARCHAR},
       status = #{status,jdbcType=VARCHAR},
-      createby = #{createby,jdbcType=TIMESTAMP},
+      createby = #{createby,jdbcType=VARCHAR},
       createat = #{createat,jdbcType=TIMESTAMP}
     where fileid = #{fileid,jdbcType=VARCHAR}
   </update>

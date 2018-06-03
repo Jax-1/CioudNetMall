@@ -17,9 +17,9 @@ public interface FilePathMapper {
 
     int updateByPrimaryKey(FilePath record);
     /**
-     * 通过所属主体Id查询一组文件信息
-     * @param belongId
+     * 通过文章ID查询附件信息
+     * @param belongid
      * @return
      */
-    List<FilePath> selectByBelongId(String belongId);
+    List<FilePath> selectByBelongId(String belongid);
 }

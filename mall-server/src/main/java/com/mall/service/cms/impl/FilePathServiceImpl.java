@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.mall.dao.cms.FilePathMapper;
@@ -15,9 +16,10 @@ import com.mall.message.SystemCode;
 import com.mall.service.cms.FilePathService;
 import com.mall.util.Validate;
 
+@Service
 public class FilePathServiceImpl implements FilePathService {
 	@Resource
-	private static FilePathMapper filePathMapper;
+	private  FilePathMapper filePathMapper;
 
 	@Override
 	public List<FilePath> queryFilePathByBelongId(String belongid) {
@@ -30,7 +32,7 @@ public class FilePathServiceImpl implements FilePathService {
 		ProcessResult<FilePath> result = new ProcessResult<FilePath>();
 		result.setMsg(MessageUtil.getMsgByLan(MsgPoolCode.FILE_INFO_SAVE_FAILED));
 		
-		return FilePathServiceImpl.save(filepath, result);
+		return FileUploadServiceUtil.save(filepath, result,filePathMapper);
 	}
 	
 	@Override
@@ -38,7 +40,7 @@ public class FilePathServiceImpl implements FilePathService {
 		ProcessResult<FilePath> result = new ProcessResult<FilePath>();
 		result.setMsg(MessageUtil.getMsgByLan(MsgPoolCode.FILE_INFO_SAVE_FAILED));
 		for(FilePath file:list) {
-			result=FilePathServiceImpl.save(file, result);
+			result=FileUploadServiceUtil.save(file, result,filePathMapper);
 		}
 		return result;
 	}
@@ -57,21 +59,5 @@ public class FilePathServiceImpl implements FilePathService {
 		result.setMsg("");
 		return result;
 	}
-	/**
-	 * 保存附件信息
-	 * @param file
-	 * @param result
-	 * @return
-	 */
-	@Transactional
-	public  static  ProcessResult<FilePath> save(FilePath file,ProcessResult<FilePath> result){
-		int insert = filePathMapper.insert(file);
-		result.setMsg(MessageUtil.getMsgByLan(MsgPoolCode.FILE_INFO_SAVE_FAILED));
-		//保存信息成功
-		if(insert>0) {
-			result.setRes(SystemCode.SUCCESS);
-			result.setMsg("");
-		}
-		return result;
-	}
+	
 }

@@ -3,6 +3,7 @@ package com.mall.service.login.impl;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.mall.dao.login.UserInfoMapper;
@@ -19,7 +20,7 @@ import com.mall.util.MD5Util;
 import com.mall.util.SessionUtil;
 import com.mall.util.UUIDUtil;
 import com.mall.util.Validate;
-
+@Service
 public class UserLoginServiceImpl implements UserLoginService {
 	@Resource
 	private UserMapper userMapper;
@@ -31,7 +32,7 @@ public class UserLoginServiceImpl implements UserLoginService {
 		ProcessResult<User> result = new ProcessResult<User>();
 		User model = userMapper.selectByPrimaryKey(user.getUser_name());
 		//状态验证
-		if(SystemCode.STATUS_N.equals(model.getStatus())) {
+		if(model==null||SystemCode.STATUS_N.equals(model.getStatus())) {
 			result.setMsg(MessageUtil.getMsgByLan(MsgPoolCode.USER_STATUS_N_MSG));
 			return result;
 		}

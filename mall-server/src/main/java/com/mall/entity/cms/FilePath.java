@@ -5,7 +5,7 @@ import java.util.Date;
 public class FilePath {
     private String fileid;
 
-    private Integer belongid;
+    private String belongid;
 
     private String path;
 
@@ -19,11 +19,32 @@ public class FilePath {
 
     private String status;
 
-    private Date createby;
+    private String createby;
 
     private Date createat;
 
-    public String getFileid() {
+    
+    
+    public FilePath() {
+		super();
+	}
+
+	public FilePath(String fileid, String belongid, String path, String fileidname, String filename, String filetype,
+			String filesize, String status, String createby, Date createat) {
+		super();
+		this.fileid = fileid;
+		this.belongid = belongid;
+		this.path = path;
+		this.fileidname = fileidname;
+		this.filename = filename;
+		this.filetype = filetype;
+		this.filesize = filesize;
+		this.status = status;
+		this.createby = createby;
+		this.createat = createat;
+	}
+
+	public String getFileid() {
         return fileid;
     }
 
@@ -31,11 +52,11 @@ public class FilePath {
         this.fileid = fileid;
     }
 
-    public Integer getBelongid() {
+    public String getBelongid() {
         return belongid;
     }
 
-    public void setBelongid(Integer belongid) {
+    public void setBelongid(String belongid) {
         this.belongid = belongid;
     }
 
@@ -87,11 +108,11 @@ public class FilePath {
         this.status = status;
     }
 
-    public Date getCreateby() {
+    public String getCreateby() {
         return createby;
     }
 
-    public void setCreateby(Date createby) {
+    public void setCreateby(String createby) {
         this.createby = createby;
     }
 

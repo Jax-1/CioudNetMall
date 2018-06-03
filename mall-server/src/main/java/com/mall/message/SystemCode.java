@@ -99,5 +99,12 @@ public class SystemCode {
 	public final static String STATUS_N="N";
 	//用户默认头像
 	public final static String USERINFO_HEADIMGURL="";
+	//文件服务器
+	public final static String FILE_SERVICE="FILE_SERVICE";
+	public final static String FILE_SERVICE_URL="URL";
+	public final static String FILE_SERVICE_PORT="PORT";
+	public final static String FILE_SERVICE_FILES_PATH="FILES_PATH";
+	public final static String FILE_SERVICE_PATH="SERVICE_PATH";
+	
 
 }

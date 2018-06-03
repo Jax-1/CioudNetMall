@@ -8,14 +8,12 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
-import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
-import com.mall.interceptor.QqInterceptor;
-import com.mall.interceptor.QqWebInterceptor;
 
 import java.util.concurrent.ThreadPoolExecutor;
+
 
 @Configuration
 public class WebConfigurer extends WebMvcConfigurerAdapter {
@@ -62,4 +60,6 @@ public class WebConfigurer extends WebMvcConfigurerAdapter {
         threadPoolTaskExecutor.setRejectedExecutionHandler(new ThreadPoolExecutor.CallerRunsPolicy());
         return  threadPoolTaskExecutor;
     }
+    
+    
 }

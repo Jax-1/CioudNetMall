@@ -17,5 +17,5 @@ public interface AtticleldCategoryService {
 	 * @return
 	 */
 	public List<AtticleldCategory> queryAll();
-
+	
 }

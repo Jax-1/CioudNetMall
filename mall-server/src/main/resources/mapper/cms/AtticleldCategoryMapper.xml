@@ -4,11 +4,12 @@
   <resultMap id="BaseResultMap" type="com.mall.entity.cms.AtticleldCategory">
     <id column="id" jdbcType="VARCHAR" property="id" />
     <result column="ladelname" jdbcType="VARCHAR" property="ladelname" />
+    <result column="parentId" jdbcType="VARCHAR" property="parentId" />
     <result column="craeatby" jdbcType="VARCHAR" property="craeatby" />
     <result column="createat" jdbcType="TIMESTAMP" property="createat" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, ladelname, craeatby, createat
+    id, ladelname, parentId, craeatby, createat
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
@@ -21,10 +22,10 @@
     where id = #{id,jdbcType=VARCHAR}
   </delete>
   <insert id="insert" parameterType="com.mall.entity.cms.AtticleldCategory">
-    insert into t_cms_atticleld_category (id, ladelname, craeatby, 
-      createat)
-    values (#{id,jdbcType=VARCHAR}, #{ladelname,jdbcType=VARCHAR}, #{craeatby,jdbcType=VARCHAR}, 
-      #{createat,jdbcType=TIMESTAMP})
+    insert into t_cms_atticleld_category (id, ladelname, parentId, 
+      craeatby, createat)
+    values (#{id,jdbcType=VARCHAR}, #{ladelname,jdbcType=VARCHAR}, #{parentId,jdbcType=VARCHAR}, 
+      #{craeatby,jdbcType=VARCHAR}, #{createat,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.mall.entity.cms.AtticleldCategory">
     insert into t_cms_atticleld_category
@@ -34,6 +35,9 @@
       </if>
       <if test="ladelname != null">
         ladelname,
+      </if>
+      <if test="parentId != null">
+        parentId,
       </if>
       <if test="craeatby != null">
         craeatby,
@@ -49,6 +53,9 @@
       <if test="ladelname != null">
         #{ladelname,jdbcType=VARCHAR},
       </if>
+      <if test="parentId != null">
+        #{parentId,jdbcType=VARCHAR},
+      </if>
       <if test="craeatby != null">
         #{craeatby,jdbcType=VARCHAR},
       </if>
@@ -63,6 +70,9 @@
       <if test="ladelname != null">
         ladelname = #{ladelname,jdbcType=VARCHAR},
       </if>
+      <if test="parentId != null">
+        parentId = #{parentId,jdbcType=VARCHAR},
+      </if>
       <if test="craeatby != null">
         craeatby = #{craeatby,jdbcType=VARCHAR},
       </if>
@@ -75,14 +85,15 @@
   <update id="updateByPrimaryKey" parameterType="com.mall.entity.cms.AtticleldCategory">
     update t_cms_atticleld_category
     set ladelname = #{ladelname,jdbcType=VARCHAR},
+      parentId = #{parentId,jdbcType=VARCHAR},
       craeatby = #{craeatby,jdbcType=VARCHAR},
       createat = #{createat,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=VARCHAR}
   </update>
-  <!-- 查询所有分类信息 -->
-  <select id="queryAll" parameterType="com.mall.entity.cms.AtticleldCategory">
-  select 
+  <select id="queryAll" resultMap="BaseResultMap">
+  		select 
     <include refid="Base_Column_List" />
     from t_cms_atticleld_category
-    </select>
+  
+  </select>
 </mapper>

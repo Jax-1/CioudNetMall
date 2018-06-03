@@ -5,18 +5,19 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.support.SpringBootServletInitializer;
+import org.springframework.cache.annotation.EnableCaching;
 //import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.context.annotation.ComponentScan;
 
 /**
  * 应用启动器
  *
  * @since 1.0.0.RELEASE
  */
-//@EnableCaching
-//@EnableScheduling
 @SpringBootApplication
 @MapperScan(basePackages = "com.mall.dao")
-//@EnableConfigurationProperties(value = AliyunOssProperties.class)
+@ComponentScan(basePackages ="com.mall")
+@EnableCaching 
 public class Application extends SpringBootServletInitializer {
 
     @Override
@@ -27,5 +28,4 @@ public class Application extends SpringBootServletInitializer {
     public static void main(String[] args) throws Exception {
         SpringApplication.run(Application.class, args);
     }
-
 }

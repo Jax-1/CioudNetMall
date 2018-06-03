@@ -22,6 +22,12 @@ import com.mall.util.Validate;
 public class AdminLoginController extends AbstractController{
 	@Resource
 	private AdminLoginService adminLoginService;
+	/**
+	 * 登陆
+	 * @param admin
+	 * @param request
+	 * @return
+	 */
 	@PostMapping("/login")
 	@ResponseBody
 	public ProcessResult<Admin> Login(Admin admin,HttpServletRequest request) {
@@ -31,13 +37,23 @@ public class AdminLoginController extends AbstractController{
 		ProcessResult<Admin> result = adminLoginService.login(admin, request);
 		return result;
 	}
-	
+	/**
+	 * 注销
+	 * @param request
+	 * @return
+	 */
 	@ResponseBody
 	@PostMapping("/logout")
 	public ProcessResult<Admin> loginOut(HttpServletRequest request){
 		ProcessResult<Admin> loginOut = adminLoginService.loginOut(request);
 		return loginOut;
 	}
+	/**
+	 * 注册
+	 * @param admin
+	 * @return
+	 */
+	
 	@PostMapping("/registered")
 	@ResponseBody
 	public ProcessResult<Admin> registered(Admin admin) {
@@ -58,6 +74,11 @@ public class AdminLoginController extends AbstractController{
 		ProcessResult<Admin> result = adminLoginService.registered(adminUser);
 		return result;
 	}
+	/**
+	 * 检查用户名
+	 * @param adminname
+	 * @return
+	 */
 	@PostMapping("/checkName")
 	@ResponseBody
 	public ProcessResult<Admin> ckeckAdminName(String adminname){

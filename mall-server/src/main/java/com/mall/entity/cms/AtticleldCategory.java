@@ -7,6 +7,8 @@ public class AtticleldCategory {
 
     private String ladelname;
 
+    private String parentId;
+
     private String craeatby;
 
     private Date createat;
@@ -25,6 +27,14 @@ public class AtticleldCategory {
 
     public void setLadelname(String ladelname) {
         this.ladelname = ladelname;
+    }
+
+    public String getParentId() {
+        return parentId;
+    }
+
+    public void setParentId(String parentId) {
+        this.parentId = parentId;
     }
 
     public String getCraeatby() {

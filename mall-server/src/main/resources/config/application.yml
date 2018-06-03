@@ -14,7 +14,7 @@ pagehelper:
 
 
 druid:
-    url: jdbc:mysql://47.93.16.119:3306/dbmall
+    url: jdbc:mysql://47.93.16.119:3306/dbmall?useUnicode=true&characterEncoding=utf8
     driver-class: com.mysql.jdbc.Driver
     username: root
     password: zhang032111
