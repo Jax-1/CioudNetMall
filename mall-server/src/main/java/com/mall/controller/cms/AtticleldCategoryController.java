@@ -1,6 +1,7 @@
 package com.mall.controller.cms;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -29,12 +30,13 @@ public class AtticleldCategoryController extends AbstractController{
 	
 	/**
 	 * 查询所有分类信息
+	 * 如传入参数为空，返回全部分类信息
 	 * @return
 	 */
 	@GetMapping("/all")
 	@ResponseBody
-	public List<AtticleldCategory> queryAllCategory(){
-		return atticleldCategoryService.queryAll();
+	public Map queryAllCategory(AtticleldCategory att){
+		return atticleldCategoryService.queryAll(att);
 	}
 	/**
 	 * 添加分类

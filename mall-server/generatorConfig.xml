@@ -14,7 +14,7 @@
     <sqlMapGenerator targetPackage="com.mall.main.mapping" targetProject="mall-server\src\main\java" />
     <javaClientGenerator targetPackage="com.mall.dao.cms" targetProject="mall-server\src\main\java" type="XMLMAPPER" />
 
-    <table schema="" tableName="t_file_path" domainObjectName="FilePath"
+    <table schema="" tableName="t_cms_atticleld_category" domainObjectName="AtticleldCategory"
     enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"
     enableSelectByExample="false" selectByExampleQueryId="false" >
     <property name="useActualColumnNames" value="true"/>

@@ -1,6 +1,8 @@
 package com.mall.service.cms.impl;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -13,6 +15,7 @@ import com.mall.message.MsgPoolCode;
 import com.mall.message.ProcessResult;
 import com.mall.message.SystemCode;
 import com.mall.service.cms.AtticleldCategoryService;
+import com.mall.util.MuneUtile;
 import com.mall.util.Validate;
 
 @Service
@@ -35,10 +38,13 @@ public class AtticleldCategoryServiceImpl implements AtticleldCategoryService {
 	}
 
 	@Override
-	public List<AtticleldCategory> queryAll() {
+	public Map queryAll(AtticleldCategory att) {
 		
-		return atticleldCategoryMapper.queryAll();
+		List<AtticleldCategory> list= atticleldCategoryMapper.queryAll();
+		
+		return MuneUtile.mune(list, att);
+		 
 	}
-
+	
 	
 }

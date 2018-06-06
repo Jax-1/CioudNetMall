@@ -16,9 +16,10 @@ public interface AtticleldCategoryMapper {
     int updateByPrimaryKeySelective(AtticleldCategory record);
 
     int updateByPrimaryKey(AtticleldCategory record);
+    
     /**
      * 查询所有分类
-     * 
+     * @return
      */
     List<AtticleldCategory> queryAll();
 }

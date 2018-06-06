@@ -168,4 +168,24 @@
       createTime = #{createTime,jdbcType=TIMESTAMP}
     where commentId = #{commentId,jdbcType=VARCHAR}
   </update>
+  <!-- 文章ID查询 -->
+  <select id="queryAtticleldComment" parameterType="com.mall.entity.cms.AtticleldComment">
+  select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from t_cms_articleld_comment
+    where articleld = #{articleld} and fatherId==null
+    limit #{start},#{column}
+  </select>
+  <!-- 查询子评论 -->
+  <select id="queryAtticleldChildComment" parameterType="com.mall.entity.cms.AtticleldComment">
+  select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from t_cms_articleld_comment
+    where  fatherId==#{fatherId}
+    limit #{start},#{column}
+  </select>
 </mapper>

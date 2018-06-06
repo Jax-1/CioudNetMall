@@ -9,6 +9,8 @@ public class AtticleldCategory {
 
     private String parentId;
 
+    private Integer hierarchy;
+
     private String craeatby;
 
     private Date createat;
@@ -35,6 +37,14 @@ public class AtticleldCategory {
 
     public void setParentId(String parentId) {
         this.parentId = parentId;
+    }
+
+    public Integer getHierarchy() {
+        return hierarchy;
+    }
+
+    public void setHierarchy(Integer hierarchy) {
+        this.hierarchy = hierarchy;
     }
 
     public String getCraeatby() {

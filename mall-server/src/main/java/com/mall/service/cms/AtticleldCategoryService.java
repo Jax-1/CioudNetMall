@@ -1,6 +1,7 @@
 package com.mall.service.cms;
 
 import java.util.List;
+import java.util.Map;
 
 import com.mall.entity.cms.AtticleldCategory;
 import com.mall.message.ProcessResult;
@@ -16,6 +17,6 @@ public interface AtticleldCategoryService {
 	 * 查询所有分类信息
 	 * @return
 	 */
-	public List<AtticleldCategory> queryAll();
+	public Map queryAll(AtticleldCategory att);
 	
 }
