@@ -38,10 +38,7 @@ public class UEditorController extends AbstractController{
 	private FilePathService filePathService;
 	
 	
-	@RequestMapping("/ue")
-	public String toIndex() {
-		return "index";
-	}
+	
     
 	@RequestMapping("/config")
 	@ResponseBody
