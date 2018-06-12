@@ -21,5 +21,5 @@ public interface AtticleldCategoryMapper {
      * 查询所有分类
      * @return
      */
-    List<AtticleldCategory> queryAll();
+    List<AtticleldCategory> queryAll(String parentId);
 }

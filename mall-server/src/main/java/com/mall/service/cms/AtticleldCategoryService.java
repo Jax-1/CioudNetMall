@@ -17,6 +17,6 @@ public interface AtticleldCategoryService {
 	 * 查询所有分类信息
 	 * @return
 	 */
-	public Map queryAll(AtticleldCategory att);
+	public List<AtticleldCategory> queryAll(String pid);
 	
 }

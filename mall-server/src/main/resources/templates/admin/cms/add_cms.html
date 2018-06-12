@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
     <meta charset="utf-8" />
     <title>云网传媒后台主页</title>
@@ -369,11 +370,9 @@
                               <div class="form-group">
                                     <label for="" class="col-sm-2 control-label">分类</label>
                                     <div class="col-sm-4">
-                                        <select class="form-control">
-                                          <option>活动中心</option>
-                                          <option>书院资讯</option>
-                                          <option>传统文化</option>
-                                          <option>传统文化</option>
+                                        <select class="form-control" >
+                                          <option th:each="ca:${Category}" th:attr="value=${ca.id}" th:text="${ca.ladelname}"></option>
+                                          
                                       </select>
                                    </div>
                               </div>

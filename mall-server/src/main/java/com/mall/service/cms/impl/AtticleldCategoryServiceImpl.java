@@ -38,11 +38,11 @@ public class AtticleldCategoryServiceImpl implements AtticleldCategoryService {
 	}
 
 	@Override
-	public Map queryAll(AtticleldCategory att) {
+	public List<AtticleldCategory> queryAll(String pid) {
 		
-		List<AtticleldCategory> list= atticleldCategoryMapper.queryAll();
+		List<AtticleldCategory> list= atticleldCategoryMapper.queryAll(pid);
 		
-		return MuneUtile.mune(list, att);
+		return list;
 		 
 	}
 	

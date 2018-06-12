@@ -1,17 +1,29 @@
 package com.mall.controller.cms;
 
+import java.util.List;
+
+import javax.annotation.Resource;
+
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.mall.entity.cms.AtticleldCategory;
+import com.mall.service.cms.AtticleldCategoryService;
+
 @Controller  
-@RequestMapping("/admin")
+@RequestMapping("/admin/cms")
 public class AdminCMSController {
+	@Resource
+	private AtticleldCategoryService atticleldCategoryService;
 	/**
 	 * 添加文章
 	 * @return
 	 */
 	@RequestMapping("/add.do")
-	public String toIndex(String id) {
+	public String toIndex(String id ,Model model) {
+		List<AtticleldCategory> list = atticleldCategoryService.queryAll(id);
+		model.addAttribute("Category", list);
 		return "/admin/cms/add_cms";
 	}
 	/**
@@ -20,7 +32,7 @@ public class AdminCMSController {
 	 * @return
 	 */
 	@RequestMapping("/list.do")
-	public String toCMSList(String id) {
+	public String toCMSList(String id ,Model model) {
 		return "/admin/cms/add_cms";
 	}
 	/**
@@ -28,7 +40,7 @@ public class AdminCMSController {
 	 * @return
 	 */
 	@RequestMapping("/classify.do")
-	public String toClassify() {
+	public String toClassify(Model model) {
 		return "/admin/cms/add_cms";
 	}
 	

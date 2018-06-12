@@ -1,17 +1,28 @@
 package com.mall.controller.login;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.mall.controller.AbstractController;
+import com.mall.entity.cms.AtticleldCategory;
 import com.mall.entity.login.Admin;
 import com.mall.message.ProcessResult;
 import com.mall.message.SystemCode;
+import com.mall.service.cms.AtticleldCategoryService;
 import com.mall.service.login.AdminLoginService;
 import com.mall.util.DateFormatUtil;
 import com.mall.util.MD5Util;
@@ -22,13 +33,35 @@ import com.mall.util.Validate;
 public class AdminLoginController extends AbstractController{
 	@Resource
 	private AdminLoginService adminLoginService;
+	@Resource
+	private AtticleldCategoryService atticleldCategoryService;
+	/**
+	 * 跳转到主界面
+	 * @return
+	 */
+	@RequestMapping("")
+	public String doIndex(Model model) {
+		//初始化界面信息
+		//cms
+		
+		
+		return "/admin/index";
+	}
+	/**
+	 * 跳转至登陆界面
+	 * @return
+	 */
+	@RequestMapping("/login.do")
+	public String doAdmin() {
+		return "/admin/admin_login";
+	}
 	/**
 	 * 登陆
 	 * @param admin
 	 * @param request
 	 * @return
 	 */
-	@PostMapping("/login.do")
+	@PostMapping("/login")
 	@ResponseBody
 	public ProcessResult<Admin> Login(Admin admin,HttpServletRequest request) {
 		if(!Validate.notNull(admin)) {
