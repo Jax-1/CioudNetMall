@@ -1,0 +1,32 @@
+.classify_list{
+
+}
+.classify_list .f_list>span{
+	font-weight: bold;
+	font-size:16px;
+}
+.classify_list .f_list>i{
+	display: inline-block;
+	margin-left: 200px;
+	background:#178a3d;
+	color:#fff;
+	padding:2px 5px;
+	font-style:normal
+}
+.c_list{
+	font-size: 16px;
+}
+.c_list li{
+	margin: 15px 10px;
+}
+.c_btn{
+	padding:5px;
+}
+.left_textbody{
+	width: 200px;
+	display: inline-block;
+}
+.queding_add{
+	background: #178a3d;
+	color:#fff;
+}
