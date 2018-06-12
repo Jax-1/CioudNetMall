@@ -28,7 +28,7 @@ public class AdminLoginController extends AbstractController{
 	 * @param request
 	 * @return
 	 */
-	@PostMapping("/login")
+	@PostMapping("/login.do")
 	@ResponseBody
 	public ProcessResult<Admin> Login(Admin admin,HttpServletRequest request) {
 		if(!Validate.notNull(admin)) {
