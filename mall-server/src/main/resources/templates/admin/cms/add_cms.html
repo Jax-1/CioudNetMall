@@ -96,7 +96,7 @@
                             </div>
                         </li>
                         <li class="nav-item">
-                            <a href="index.html" class="nav-link nav-toggle">
+                            <a href="index.html" class="nav-link nav-toggle" th:href="@{/admin}">
                                 <i class="icon-home"></i>
                                 <span class="title">主页</span>
                                 <span class="selected"></span>
@@ -128,63 +128,63 @@
                                         </li>
                                     </ul>
                                 </li>
-                                <li class="nav-item">
+                                <li class="nav-item" th:attr="class='nav-item '+${lineopen['ZPJJ']}">
                                     <a href="javascript:;" class="nav-link nav-toggle">
                                         <span class="title">作品集锦</span>
                                         <span class="arrow"></span>
                                     </a>
                                     <ul class="sub-menu">
                                         <li class="nav-item">
-                                            <a href="add_cms.html" class="nav-link ">
+                                            <a href="add_cms.html" class="nav-link " th:href="@{/admin/cms/add.do(id='01')}">
                                                 <span class="title">新增作品</span>
                                             </a>
                                         </li>
                                         <li class="nav-item">
-                                            <a href="list_cms.html" class="nav-link ">
+                                            <a href="list_cms.html" class="nav-link " th:href="@{/admin/cms/list.do(id='01')}">
                                                 <span class="title">作品列表</span>
                                             </a>
                                         </li>
                                     </ul>
                                     </a>
                                 </li>
-                                <li class="nav-item">
+                                <li class="nav-item" th:attr="class='nav-item '+${lineopen['ZXZX']}">
                                     <a href="javascript:;" class="nav-link nav-toggle">
                                         <span class="title">资讯中心</span>
                                         <span class="arrow"></span>
                                     </a>
                                     <ul class="sub-menu">
                                         <li class="nav-item">
-                                            <a href="add_cms.html" class="nav-link ">
+                                            <a href="add_cms.html" class="nav-link " th:href="@{/admin/cms/add.do(id='02')}">
                                                 <span class="title">新增资讯</span>
                                             </a>
                                         </li>
                                         <li class="nav-item">
-                                            <a href="list_cms.html" class="nav-link ">
+                                            <a href="list_cms.html" class="nav-link " th:href="@{/admin/cms/add.do(id='02')}">
                                                 <span class="title">资讯列表</span>
                                             </a>
                                         </li>
                                     </ul>
                                 </li>
-                                <li class="nav-item">
+                                <li class="nav-item" th:attr="class='nav-item '+${lineopen['CTWH']}">
                                     <a href="javascript:;" class="nav-link nav-toggle">
                                         <span class="title">传统文化</span>
                                         <span class="arrow"></span>
                                     </a>
                                     <ul class="sub-menu">
                                         <li class="nav-item">
-                                            <a href="add_cms.html" class="nav-link ">
+                                            <a href="add_cms.html" class="nav-link " th:href="@{/admin/cms/add.do(id='03')}">
                                                 <span class="title">新增传统文化</span>
                                             </a>
                                         </li>
                                         <li class="nav-item">
-                                            <a href="list_cms.html" class="nav-link ">
+                                            <a href="list_cms.html" class="nav-link " th:href="@{/admin/cms/list.do(id='03')}">
                                                 <span class="title">传统文化列表</span>
                                             </a>
                                         </li>
                                     </ul>
                                 </li>
                                 <li class="nav-item  ">
-                                    <a href="classify_cms.html" class="nav-link ">
+                                    <a href="classify_cms.html" class="nav-link " th:href="@{/admin/cms/classify.do}">
                                         <span class="title">分类管理</span>
                                     </a>
                                 </li>
@@ -353,11 +353,9 @@
                                   <div class="form-group">
                                         <label for="" class="col-sm-2 control-label">栏目</label>
                                         <div class="col-sm-4">
-                                            <select class="form-control">
-                                              <option>名家荟萃</option>
-                                              <option>作品锦集</option>
-                                              <option>资讯中心</option>
-                                              <option>传统文化</option>
+                                            <select class="form-control" >
+                                              <option  th:attr="value=${mainid}" th:text="${main}" selected>名家荟萃</option>
+                                              
                                           </select>
                                        </div>
                                   </div>

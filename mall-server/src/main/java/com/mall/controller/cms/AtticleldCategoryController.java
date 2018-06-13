@@ -35,8 +35,8 @@ public class AtticleldCategoryController extends AbstractController{
 	 */
 	@GetMapping("/all")
 	@ResponseBody
-	public Map queryAllCategory(AtticleldCategory att){
-		return atticleldCategoryService.queryAll(att);
+	public List<AtticleldCategory> queryAllCategory(String pid){
+		return atticleldCategoryService.queryAll(pid);
 	}
 	/**
 	 * 添加分类

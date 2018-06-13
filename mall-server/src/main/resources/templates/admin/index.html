@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
@@ -76,10 +75,10 @@
         <div class="clearfix"> </div>
         <!-- END HEADER & CONTENT DIVIDER -->
         <!-- BEGIN CONTAINER -->
-        <div class="page-container">
+        <div class="page-container"  style="overflow: auto;">
             <!-- BEGIN SIDEBAR -->
             <div class="page-sidebar-wrapper">
-                <div class="page-sidebar navbar-collapse collapse">
+                <div class="page-sidebar navbar-collapse collapse" id="left_menu">
                     <ul class="page-sidebar-menu  page-header-fixed " data-keep-expanded="false" data-auto-scroll="true" data-slide-speed="200" style="padding-top: 20px">
                         <li class="sidebar-toggler-wrapper hide">
                             <div class="sidebar-toggler">
@@ -87,7 +86,7 @@
                             </div>
                         </li>
                         <li class="nav-item start active open">
-                            <a href="index.html" class="nav-link nav-toggle">
+                            <a href="index_body.html" target="bodymain" class="nav-link nav-toggle" th:href="@{/admin}">
                                 <i class="icon-home"></i>
                                 <span class="title">主页</span>
                                 <span class="selected"></span>
@@ -108,12 +107,12 @@
                                     </a>
                                     <ul class="sub-menu">
                                         <li class="nav-item">
-                                            <a href="add_cms.html" class="nav-link ">
+                                            <a href="add_mingjia.html" target="bodymain" class="nav-link " th:href="@{/admin/cms/add.do(id='01')}">
                                                 <span class="title">新增名家</span>
                                             </a>
                                         </li>
                                         <li class="nav-item">
-                                            <a href="list_cms.html" class="nav-link ">
+                                            <a href="list_mingjia.html" class="nav-link " th:href="@{/admin/cms/list.do(id='01')}">
                                                 <span class="title">名家列表</span>
                                             </a>
                                         </li>
@@ -126,12 +125,12 @@
                                     </a>
                                     <ul class="sub-menu">
                                         <li class="nav-item">
-                                            <a href="add_cms.html" class="nav-link ">
+                                            <a href="add_cms.html" class="nav-link " th:href="@{/admin/cms/add.do(id='01')}">
                                                 <span class="title">新增作品</span>
                                             </a>
                                         </li>
                                         <li class="nav-item">
-                                            <a href="list_cms.html" class="nav-link ">
+                                            <a href="list_cms.html" class="nav-link " th:href="@{/admin/cms/list.do(id='01')}">
                                                 <span class="title">作品列表</span>
                                             </a>
                                         </li>
@@ -145,12 +144,12 @@
                                     </a>
                                     <ul class="sub-menu">
                                         <li class="nav-item">
-                                            <a href="add_cms.html" class="nav-link " th:href="@{/admin/cms/add.do(id='01')}">
+                                            <a href="add_cms.html" class="nav-link " th:href="@{/admin/cms/add.do(id='02')}">
                                                 <span class="title">新增资讯</span>
                                             </a>
                                         </li>
                                         <li class="nav-item">
-                                            <a href="list_cms.html" class="nav-link " th:href="@{/admin/cms/list.do(id='01')}">
+                                            <a href="list_cms.html" class="nav-link " th:href="@{/admin/cms/list.do(id='02')}">
                                                 <span class="title">资讯列表</span>
                                             </a>
                                         </li>
@@ -163,19 +162,19 @@
                                     </a>
                                     <ul class="sub-menu">
                                         <li class="nav-item">
-                                            <a href="add_cms.html" class="nav-link " th:href="@{/admin/cms/add.do(id='02')}">
+                                            <a href="add_cms.html" class="nav-link " th:href="@{/admin/cms/add.do(id='03')}">
                                                 <span class="title">新增传统文化</span>
                                             </a>
                                         </li>
                                         <li class="nav-item">
-                                            <a href="list_cms.html" class="nav-link " th:href="@{/admin/cms/list.do(id='01')}">
+                                            <a href="list_cms.html" class="nav-link " th:href="@{/admin/cms/list.do(id='03')}">
                                                 <span class="title">传统文化列表</span>
                                             </a>
                                         </li>
                                     </ul>
                                 </li>
                                 <li class="nav-item  ">
-                                    <a href="classify_cms.html" class="nav-link ">
+                                    <a href="classify_cms.html" class="nav-link " th:href="@{/admin/cms/classify.do}">
                                         <span class="title">分类管理</span>
                                     </a>
                                 </li>
@@ -313,94 +312,25 @@
                 </div>
                 <!-- END SIDEBAR -->
             </div>
-            <div class="page-content-wrapper">
-                <!-- BEGIN CONTENT BODY -->
-                <div class="page-content">
-                    <!-- BEGIN PAGE HEADER-->
-                    <!-- BEGIN PAGE BAR -->
-                    <div class="page-bar">
-                        <ul class="page-breadcrumb">
-                            <li>
-                                <a href="index.html">首页</a>
-                                <i class="fa fa-circle"></i>
-                            </li>
-                            <li>
-                                <span>主面板</span>
-                            </li>
-                        </ul>
-                    </div>
-                    <!-- END PAGE BAR -->
-                    <!-- BEGIN PAGE TITLE-->
-                    <h1 class="page-title"> 管理界面
-                            <small>云网传媒后台</small>
-                        </h1>
-                    <!-- END PAGE TITLE-->
-                    <!-- END PAGE HEADER-->
-                    <!-- BEGIN DASHBOARD STATS 1-->
-                    <div class="row">
-                        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                            <a class="dashboard-stat dashboard-stat-v2 blue" href="#">
-                                <div class="visual">
-                                    <i class="fa fa-comments"></i>
-                                </div>
-                                <div class="details">
-                                    <div class="number">
-                                        <span data-counter="counterup" data-value="1349">0</span>
-                                    </div>
-                                    <div class="desc"> 总订单量 </div>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                            <a class="dashboard-stat dashboard-stat-v2 red" href="#">
-                                <div class="visual">
-                                    <i class="fa fa-bar-chart-o"></i>
-                                </div>
-                                <div class="details">
-                                    <div class="number">
-                                        <span data-counter="counterup" data-value="10">0</span> </div>
-                                    <div class="desc"> 会员总数 </div>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                            <a class="dashboard-stat dashboard-stat-v2 green" href="#">
-                                <div class="visual">
-                                    <i class="fa fa-shopping-cart"></i>
-                                </div>
-                                <div class="details">
-                                    <div class="number">
-                                        <span data-counter="counterup" data-value="549">0</span>
-                                    </div>
-                                    <div class="desc">在售商品</div>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                            <a class="dashboard-stat dashboard-stat-v2 purple" href="#">
-                                <div class="visual">
-                                    <i class="fa fa-globe"></i>
-                                </div>
-                                <div class="details">
-                                    <div class="number">
-                                        <span data-counter="counterup" data-value="100"></span></div>
-                                    <div class="desc"> 网站访问量 </div>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="clearfix"></div>
-                    <!-- END DASHBOARD STATS 1-->
-                    <div class="row">
-                        <div class="col-lg-6 col-xs-12 col-sm-12">
-                            技术团队：猫头鹰网络云服务有限公司
-                        </div>
-                        <div class="col-lg-6 col-xs-12 col-sm-12">
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <!-- ifram -->
+             <iframe  name="bodymain"  th:replace="/admin/cms/classify_cms::html" id="mainiframe" class="page-content-wrapper" style="width:100%;background:#fff" frameborder="0">
+                
+            </iframe>-->
+              
         </div>
+        <script>
+                function changeFrameHeight(){
+                    var ifm= document.getElementById("mainiframe");
+                    ifm.height=document.documentElement.clientHeight-100;
+                  var left_menu=document.getElementById("left_menu");
+                    left_menu.height=document.documentElement.scrollHeight-100;
+                }
+                changeFrameHeight()
+                window.onresize=function(){
+                    changeFrameHeight();
+                }
+           
+        </script>
         <!-- END CONTAINER -->
         <!-- BEGIN FOOTER -->
         <div class="page-footer">

@@ -5,9 +5,11 @@
     <id column="articleId" jdbcType="VARCHAR" property="articleId" />
     <result column="atticletype" jdbcType="VARCHAR" property="atticletype" />
     <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="viewImg" jdbcType="VARCHAR" property="viewImg" />
     <result column="viewCount" jdbcType="INTEGER" property="viewCount" />
-    <result column="commentCount" jdbcType="INTEGER" property="commentCount" />
+    <result column="likeCount" jdbcType="INTEGER" property="likeCount" />
     <result column="status" jdbcType="VARCHAR" property="status" />
+    <result column="recommended" jdbcType="VARCHAR" property="recommended" />
     <result column="createby" jdbcType="VARCHAR" property="createby" />
     <result column="createat" jdbcType="TIMESTAMP" property="createat" />
     <result column="updateTime" jdbcType="TIMESTAMP" property="updateTime" />
@@ -16,8 +18,8 @@
     <result column="content" jdbcType="LONGVARCHAR" property="content" />
   </resultMap>
   <sql id="Base_Column_List">
-    articleId, atticletype, title, viewCount, commentCount, status, createby, createat, 
-    updateTime
+    articleId, atticletype, title, viewImg, viewCount, likeCount, status, recommended, 
+    createby, createat, updateTime
   </sql>
   <sql id="Blob_Column_List">
     content
@@ -36,13 +38,15 @@
   </delete>
   <insert id="insert" parameterType="com.mall.entity.cms.Atticleld">
     insert into t_cms_articleld (articleId, atticletype, title, 
-      viewCount, commentCount, status, 
-      createby, createat, updateTime, 
-      content)
+      viewImg, viewCount, likeCount, 
+      status, recommended, createby, 
+      createat, updateTime, content
+      )
     values (#{articleId,jdbcType=VARCHAR}, #{atticletype,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, 
-      #{viewCount,jdbcType=INTEGER}, #{commentCount,jdbcType=INTEGER}, #{status,jdbcType=VARCHAR}, 
-      #{createby,jdbcType=VARCHAR}, #{createat,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
-      #{content,jdbcType=LONGVARCHAR})
+      #{viewImg,jdbcType=VARCHAR}, #{viewCount,jdbcType=INTEGER}, #{likeCount,jdbcType=INTEGER}, 
+      #{status,jdbcType=VARCHAR}, #{recommended,jdbcType=VARCHAR}, #{createby,jdbcType=VARCHAR}, 
+      #{createat,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{content,jdbcType=LONGVARCHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.mall.entity.cms.Atticleld">
     insert into t_cms_articleld
@@ -56,14 +60,20 @@
       <if test="title != null">
         title,
       </if>
+      <if test="viewImg != null">
+        viewImg,
+      </if>
       <if test="viewCount != null">
         viewCount,
       </if>
-      <if test="commentCount != null">
-        commentCount,
+      <if test="likeCount != null">
+        likeCount,
       </if>
       <if test="status != null">
         status,
+      </if>
+      <if test="recommended != null">
+        recommended,
       </if>
       <if test="createby != null">
         createby,
@@ -88,14 +98,20 @@
       <if test="title != null">
         #{title,jdbcType=VARCHAR},
       </if>
+      <if test="viewImg != null">
+        #{viewImg,jdbcType=VARCHAR},
+      </if>
       <if test="viewCount != null">
         #{viewCount,jdbcType=INTEGER},
       </if>
-      <if test="commentCount != null">
-        #{commentCount,jdbcType=INTEGER},
+      <if test="likeCount != null">
+        #{likeCount,jdbcType=INTEGER},
       </if>
       <if test="status != null">
         #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="recommended != null">
+        #{recommended,jdbcType=VARCHAR},
       </if>
       <if test="createby != null">
         #{createby,jdbcType=VARCHAR},
@@ -120,14 +136,20 @@
       <if test="title != null">
         title = #{title,jdbcType=VARCHAR},
       </if>
+      <if test="viewImg != null">
+        viewImg = #{viewImg,jdbcType=VARCHAR},
+      </if>
       <if test="viewCount != null">
         viewCount = #{viewCount,jdbcType=INTEGER},
       </if>
-      <if test="commentCount != null">
-        commentCount = #{commentCount,jdbcType=INTEGER},
+      <if test="likeCount != null">
+        likeCount = #{likeCount,jdbcType=INTEGER},
       </if>
       <if test="status != null">
         status = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="recommended != null">
+        recommended = #{recommended,jdbcType=VARCHAR},
       </if>
       <if test="createby != null">
         createby = #{createby,jdbcType=VARCHAR},
@@ -148,9 +170,11 @@
     update t_cms_articleld
     set atticletype = #{atticletype,jdbcType=VARCHAR},
       title = #{title,jdbcType=VARCHAR},
+      viewImg = #{viewImg,jdbcType=VARCHAR},
       viewCount = #{viewCount,jdbcType=INTEGER},
-      commentCount = #{commentCount,jdbcType=INTEGER},
+      likeCount = #{likeCount,jdbcType=INTEGER},
       status = #{status,jdbcType=VARCHAR},
+      recommended = #{recommended,jdbcType=VARCHAR},
       createby = #{createby,jdbcType=VARCHAR},
       createat = #{createat,jdbcType=TIMESTAMP},
       updateTime = #{updateTime,jdbcType=TIMESTAMP},
@@ -161,12 +185,28 @@
     update t_cms_articleld
     set atticletype = #{atticletype,jdbcType=VARCHAR},
       title = #{title,jdbcType=VARCHAR},
+      viewImg = #{viewImg,jdbcType=VARCHAR},
       viewCount = #{viewCount,jdbcType=INTEGER},
-      commentCount = #{commentCount,jdbcType=INTEGER},
+      likeCount = #{likeCount,jdbcType=INTEGER},
       status = #{status,jdbcType=VARCHAR},
+      recommended = #{recommended,jdbcType=VARCHAR},
       createby = #{createby,jdbcType=VARCHAR},
       createat = #{createat,jdbcType=TIMESTAMP},
       updateTime = #{updateTime,jdbcType=TIMESTAMP}
     where articleId = #{articleId,jdbcType=VARCHAR}
   </update>
+  <select id="findList" parameterType="com.mall.entity.cms.Page" resultMap="ResultMapWithBLOBs">
+  select 
+  <include refid="Base_Column_List" />
+  from
+  t_cms_articleld
+  order by createat
+  LIMIT #{page.currentPage-1}*#{page.pageSize},#{page.pageSize}
+  </select>
+  <select id="findTotal" resultMap="ResultMapWithBLOBs">
+  select 
+  count(id)
+  from
+  t_cms_articleld
+  </select>
 </mapper>

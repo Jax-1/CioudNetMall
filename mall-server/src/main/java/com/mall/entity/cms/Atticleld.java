@@ -9,11 +9,15 @@ public class Atticleld {
 
     private String title;
 
+    private String viewImg;
+
     private Integer viewCount;
 
-    private Integer commentCount;
+    private Integer likeCount;
 
     private String status;
+
+    private String recommended;
 
     private String createby;
 
@@ -47,6 +51,14 @@ public class Atticleld {
         this.title = title;
     }
 
+    public String getViewImg() {
+        return viewImg;
+    }
+
+    public void setViewImg(String viewImg) {
+        this.viewImg = viewImg;
+    }
+
     public Integer getViewCount() {
         return viewCount;
     }
@@ -55,12 +67,12 @@ public class Atticleld {
         this.viewCount = viewCount;
     }
 
-    public Integer getCommentCount() {
-        return commentCount;
+    public Integer getLikeCount() {
+        return likeCount;
     }
 
-    public void setCommentCount(Integer commentCount) {
-        this.commentCount = commentCount;
+    public void setLikeCount(Integer likeCount) {
+        this.likeCount = likeCount;
     }
 
     public String getStatus() {
@@ -69,6 +81,14 @@ public class Atticleld {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getRecommended() {
+        return recommended;
+    }
+
+    public void setRecommended(String recommended) {
+        this.recommended = recommended;
     }
 
     public String getCreateby() {
