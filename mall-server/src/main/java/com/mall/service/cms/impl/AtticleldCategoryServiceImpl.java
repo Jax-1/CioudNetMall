@@ -32,7 +32,7 @@ public class AtticleldCategoryServiceImpl implements AtticleldCategoryService {
 		int insert = atticleldCategoryMapper.insert(category);
 		if(insert>0) {
 			result.setRes(SystemCode.SUCCESS);
-			result.setMsg("分类信息添加成功");
+			result.setMsg("分类信息添加成功!");
 		}
 		return result;
 	}
@@ -44,6 +44,28 @@ public class AtticleldCategoryServiceImpl implements AtticleldCategoryService {
 		
 		return list;
 		 
+	}
+
+	@Override
+	public ProcessResult<AtticleldCategory> update(AtticleldCategory category) {
+		ProcessResult<AtticleldCategory> result = new ProcessResult<AtticleldCategory>();
+		if(!Validate.notNull(category)) {
+			return result;
+		}
+		int update = atticleldCategoryMapper.updateByPrimaryKeySelective(category);
+		if(update>0) {
+			result.setRes(SystemCode.SUCCESS);
+			result.setMsg("分类信息修改成功!");
+			return result;
+		}
+		result.setMsg("分类信息修改失败!");
+		return result;
+	}
+
+	@Override
+	public ProcessResult<AtticleldCategory> delete(String id) {
+		atticleldCategoryMapper.deleteByPrimaryKey(id);
+		return new ProcessResult<AtticleldCategory>(SystemCode.SUCCESS,"");
 	}
 	
 	

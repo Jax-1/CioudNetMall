@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
     <meta charset="utf-8" />
     <title>云网传媒后台主页</title>
@@ -25,10 +26,8 @@
 <!-- END HEAD -->
 
 <body class="page-header-fixed page-sidebar-closed-hide-logo page-content-white">
-    <div class="page-wrapper">
         
-        <!-- BEGIN CONTAINER -->
-        <div class="page-container">
+   
             
              <!-- 内容部分 -->
             <div class="page-content-wrapper">
@@ -54,66 +53,50 @@
             <div class="portlet-body">
                 <div class="table-toolbar">
                     <div class="row">
+                    	<span id='msg' style="color:red"></span>
                         <div class="form-group">
                             <ul class="classify_list">
                                 <li class="f_list"><span>名家荟萃</span> <i class="btn add_child">新增子分类</i>
+                                	<span style="display:none" >04</span>
                                     <ul class="c_list">
-                                        <li> <span class="left_textbody" contenteditable="true">名人展示</span>
+                                        <li th:each="ca:${mjhc}"> <span class="left_textbody" contenteditable="true" th:text="${ca.ladelname}">名人展示</span>
+                                        	<span style="display:none" th:text="${ca.id}">04</span>
                                             <span class="btn green c_btn amend_btn">修改</span>&nbsp;
-                                            <span class="btn red c_btn">删除</span>
+                                            <span class="btn red c_btn delete_btn">删除</span>
                                         </li>
                                     </ul>
                                 </li>
                                 <li class="f_list"><span>作品锦集</span><i class="btn add_child">新增子分类</i>
+                                	<span style="display:none" >01</span>
                                     <ul class="c_list">
-                                        <li><span class="left_textbody" contenteditable="true">书法作品</span> 
+                                        <li th:each="ca:${zpjj}"> <span class="left_textbody" contenteditable="true" th:text="${ca.ladelname}">名人展示</span>
+                                        	<span style="display:none" th:text="${ca.id}">04</span>
                                             <span class="btn green c_btn amend_btn">修改</span>&nbsp;
-                                            <span class="btn red c_btn">删除</span>
+                                            <span class="btn red c_btn delete_btn">删除</span>
                                         </li>
-                                        <li><span class="left_textbody" contenteditable="true">国画作品</span>
-                                            <span class="btn green c_btn amend_btn">修改</span>&nbsp;
-                                            <span class="btn red c_btn">删除</span>
-                                        </li>
-                                        <li><span class="left_textbody" contenteditable="true">油画作品</span>
-                                            <span class="btn green c_btn amend_btn">修改</span>&nbsp;
-                                            <span class="btn red c_btn">删除</span>
-                                        </li>
-                                        <li><span class="left_textbody" contenteditable="true">民间工艺品</span>
-                                            <span class="btn green c_btn amend_btn">修改</span>&nbsp;
-                                            <span class="btn red c_btn">删除</span>
-                                        </li>
+                                        
                                     </ul>
                                 </li>
                                 <li class="f_list"><span>资讯中心</span><i class="btn add_child">新增子分类</i>
+                                	<span style="display:none" >02</span>
                                     <ul class="c_list">
-                                        <li><span class="left_textbody" contenteditable="true">书画院新闻</span>
+                                        <li th:each="ca:${zxzx}"> <span class="left_textbody" contenteditable="true" th:text="${ca.ladelname}">名人展示</span>
+                                        	<span style="display:none" th:text="${ca.id}">04</span>
                                             <span class="btn green c_btn amend_btn">修改</span>&nbsp;
-                                            <span class="btn red c_btn">删除</span>
+                                            <span class="btn red c_btn delete_btn">删除</span>
                                         </li>
-                                        <li><span class="left_textbody" contenteditable="true">书画院活动</span>
-                                            <span class="btn green c_btn amend_btn">修改</span>&nbsp;
-                                            <span class="btn red c_btn">删除</span>
-                                        </li>
-                                        <li><span class="left_textbody" contenteditable="true">保养知识</span>
-                                            <span class="btn green c_btn amend_btn">修改</span>&nbsp;
-                                            <span class="btn red c_btn">删除</span>
-                                        </li>
+                                        
                                     </ul>
                                 </li>
                                 <li class="f_list"><span>传统文化</span><i class="btn add_child">新增子分类</i>
+                                <span style="display:none" >03</span>
                                     <ul class="c_list">
-                                        <li><span class="left_textbody" contenteditable="true">推广传统文化</span>
+                                        <li th:each="ca:${ctwh}"> <span class="left_textbody" contenteditable="true" th:text="${ca.ladelname}">名人展示</span>
+                                        	<span style="display:none" th:text="${ca.id}">04</span>
                                             <span class="btn green c_btn amend_btn">修改</span>&nbsp;
-                                            <span class="btn red c_btn">删除</span>
+                                            <span class="btn red c_btn delete_btn">删除</span>
                                         </li>
-                                        <li><span class="left_textbody" contenteditable="true">公益讲座</span>
-                                            <span class="btn green c_btn amend_btn">修改</span>&nbsp;
-                                            <span class="btn red c_btn">删除</span>
-                                        </li>
-                                        <li><span class="left_textbody" contenteditable="true">云二代夏令营</span>
-                                            <span class="btn green c_btn amend_btn">修改</span>&nbsp;
-                                            <span class="btn red c_btn">删除</span>
-                                        </li>
+                                        
                                     </ul>
                                 </li>
                             </ul>
@@ -133,39 +116,59 @@
                 <!-- END CONTENT BODY -->
             </div>
         </div>
-        <div class="page-footer">
-            <div class="page-footer-inner"> 2018 &copy; By 技术团队：
-                <a target="_blank" href="http://mtyyun.com">猫头鹰网络云服务有限公司</a> &nbsp;
-            </div>
-            <div class="scroll-to-top">
-                <i class="icon-arrow-up"></i>
-            </div>
-        </div>
+        
         <!-- END FOOTER -->
-    </div>
-    <!-- BEGIN QUICK NAV -->
+    
     <div class="quick-nav-overlay"></div>
-    <script src="/admin/assets/global/plugins/jquery.min.js" type="text/javascript"></script>
-        <script src="/admin/assets/global/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
-        <script src="/admin/assets/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js" type="text/javascript"></script>
-        <script src="/admin/assets/global/scripts/app.min.js" type="text/javascript"></script>
-        <script src="/admin/assets/layouts/layout/scripts/layout.min.js" type="text/javascript"></script>
-
         <script>
             $(function(){
                 $(".add_child").click(function(){
                     //新增
-                   $(this).parent('.f_list').find('.c_list').append('<li ><span class="left_textbody" contenteditable="true">新增子分类</span><span class="btn c_btn queding_add">确定新增</span>&nbsp;<span class="btn red c_btn">取消</span></li>');
+                   $(this).parent('.f_list').find('.c_list').append('<li ><span class="left_textbody" contenteditable="true">新增子分类</span><span class="btn c_btn queding_add">新增</span>&nbsp;<span class="btn red c_btn">取消</span></li>');
                    $(this).parent('.f_list').find('.c_list').children("li:last-child").find('.left_textbody').focus();
 
                    $(".queding_add").click(function(){
-                        console.log($(this).prev().text()); 
+                	   $.post("/category/add",
+                			   {ladelname:$(this).prev().text(),
+                		   		parentId:$(this).parent().parent().prev().text(),
+                		   		hierarchy:'2'},
+                		   		function(date){
+                		   			if(date.res=='1'){
+                		   				//成功
+                		   				window.location.reload();
+                		   			}else{
+                		   				$("#msg").text(adte.msg);
+                		   			}
+                		   		},'json'
+                			   )
+                      
                     })
                 })
 
+                $(".delete_btn").click(function(){
+                	console.log($(this).prev().prev().text());
+                    $.post("/category/delete",
+             			   {id:$(this).prev().prev().text()
+             		   		},
+             		   		function(date){
+             		   		//成功
+        		   				window.location.reload();
+             		   			
+             		   		},'json'
+             			   )
+             			   
+                })
                 $(".amend_btn").click(function(){
-                    $(this).prev().text()
-                     console.log($(this).prev().text()); 
+                    $.post("/category/update",
+             			   {id:$(this).prev().text(),
+                    		ladelname:$(this).prev().prev().text()
+                    		
+             		   		},
+             		   		function(date){
+             		   			$("#msg").text(date.msg);
+             		   		},'json'
+             			   )
+             			   
                 })
                 
             })

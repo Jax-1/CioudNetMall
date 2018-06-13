@@ -15,6 +15,7 @@ import com.mall.controller.AbstractController;
 import com.mall.entity.cms.AtticleldCategory;
 import com.mall.message.ProcessResult;
 import com.mall.service.cms.AtticleldCategoryService;
+import com.mall.util.DateFormatUtil;
 import com.mall.util.UUIDUtil;
 
 /**
@@ -47,7 +48,30 @@ public class AtticleldCategoryController extends AbstractController{
 	@ResponseBody
 	public ProcessResult<AtticleldCategory> addCategory(AtticleldCategory atticleldCategory ){
 		atticleldCategory.setId(UUIDUtil.getUUID());
+		atticleldCategory.setCreateat(DateFormatUtil.getDate());
 		return atticleldCategoryService.insert(atticleldCategory);
+	}
+	/**
+	 * 修改分类
+	 * @param atticleldCategory
+	 * @return
+	 */
+	@PostMapping("/update")
+	@ResponseBody
+	public ProcessResult<AtticleldCategory> updateCategory(AtticleldCategory atticleldCategory ){
+		
+		return atticleldCategoryService.update(atticleldCategory);
+	}
+	/**
+	 * 删除分类
+	 * @param id
+	 * @return
+	 */
+	@PostMapping("/delete")
+	@ResponseBody
+	public ProcessResult<AtticleldCategory> deleteCategory(String id ){
+		
+		return atticleldCategoryService.delete(id);
 	}
 
 }

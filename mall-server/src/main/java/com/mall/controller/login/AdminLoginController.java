@@ -44,7 +44,7 @@ public class AdminLoginController extends AbstractController{
 		//初始化界面信息
 		//cms
 		
-		
+		model.addAttribute("page", "/admin/index_body");
 		return "/admin/index";
 	}
 	/**
