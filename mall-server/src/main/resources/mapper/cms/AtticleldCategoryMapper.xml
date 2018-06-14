@@ -108,9 +108,9 @@
     <include refid="Base_Column_List" />
     from t_cms_atticleld_category
   	
-  	<if test="parentId != null">
+  	<if test="_parameter != null">
   	where
-  	 parentId=#{parentId}
+  	 parentId=#{_parameter}
   	 </if>
   </select>
 </mapper>
