@@ -2,8 +2,8 @@ package com.mall.service.cms;
 
 import java.util.List;
 
+import com.github.pagehelper.Page;
 import com.mall.entity.cms.Atticleld;
-import com.mall.entity.cms.Page;
 
 /**
  * 文章服务类
@@ -20,5 +20,6 @@ public interface AtticleldService {
 	 * 获取文章列表
 	 * @return
 	 */
-	public List<Atticleld> queryList(Page group);
+	public Page<Atticleld> queryList(String parentId,int pageNow,int pageSize);
+	
 }

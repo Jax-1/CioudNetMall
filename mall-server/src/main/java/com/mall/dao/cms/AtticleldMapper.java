@@ -3,7 +3,6 @@ package com.mall.dao.cms;
 import java.util.List;
 
 import com.mall.entity.cms.Atticleld;
-import com.mall.entity.cms.Page;
 
 public interface AtticleldMapper {
     int deleteByPrimaryKey(String articleId);
@@ -25,12 +24,12 @@ public interface AtticleldMapper {
      * @param pagger
      * @return
      */
-    public List<Atticleld> findList(Page page);
+    public List<Atticleld> findList(String parentId);
 
     /**
      * 查询记录总数
      * 
      * @return
      */
-    public int findTotal();
+    public int findTotal(String parentId);
 }

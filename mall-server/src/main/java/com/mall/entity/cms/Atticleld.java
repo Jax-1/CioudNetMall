@@ -26,8 +26,23 @@ public class Atticleld {
     private Date updateTime;
 
     private String content;
+    
+    /**
+     * 关联文章分类表
+     */
+    private AtticleldCategory atticleldCategory;
+    
+    
 
-    public String getArticleId() {
+    public AtticleldCategory getAtticleldCategory() {
+		return atticleldCategory;
+	}
+
+	public void setAtticleldCategory(AtticleldCategory atticleldCategory) {
+		this.atticleldCategory = atticleldCategory;
+	}
+
+	public String getArticleId() {
         return articleId;
     }
 

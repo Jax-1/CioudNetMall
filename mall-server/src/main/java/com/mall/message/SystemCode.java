@@ -105,6 +105,9 @@ public class SystemCode {
 	public final static String FILE_SERVICE_PORT="PORT";
 	public final static String FILE_SERVICE_FILES_PATH="FILES_PATH";
 	public final static String FILE_SERVICE_PATH="SERVICE_PATH";
+	//分页查询记录数配置
+	public final static String PAGE="PAGE";
+	public final static String ATT_PAGE="ATT_PAGE";
 	
 
 }

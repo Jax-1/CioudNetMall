@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
     <meta charset="utf-8" />
     <title>云网传媒后台主页</title>
@@ -57,10 +58,10 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="btn-group">
-                                <button id="sample_editable_1_new" class="btn sbold green"> 
-                                添加新的
-                                    <i class="fa fa-plus"></i>
-                                </button>
+	                            <a id="sample_editable_1_new" class="btn sbold green" th:href="@{/admin/cms/add.do(id=${id})}">
+	                            	添加文章 
+	                            	<i class="fa fa-plus"></i>
+	                            </a>
                             </div>
                         </div>
                     </div>
@@ -75,6 +76,7 @@
                                 </label>
                             </th>
                             <th> 文章标题 </th>
+                            <th> 文章分类 </th>
                             <th> 发布时间 </th>
                             <th> 点赞次数</th>
                             <th> 浏览数</th>
@@ -84,27 +86,27 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr class="odd gradeX">
+                        <tr class="odd gradeX" th:each="a:${list}">
                             <td>
                                 <label class="mt-checkbox mt-checkbox-single mt-checkbox-outline">
-                                    <input type="checkbox" class="checkboxes" value="1" />
+                                    <input type="checkbox" class="checkboxes" value="1"  th:attr="value=${a.articleId}"/>
                                     <span></span>
                                 </label>
                             </td>
-                            <td> 浅谈传统文化对大家的影响 </td>
-                            <td>
+                            <td   th:text="${a.title}"> 浅谈传统文化对大家的影响 </td>
+                            <td   th:text="${a.atticleldCategory.ladelname}"> 推广传统文化 </td>
+                            <td  th:text="${a.createat}">
                                 2018-06-10  18:49:20
                             </td>
-                            <td>100</td>
-                            <td>100</td>
+                            <td  th:text="${a.likeCount}">100</td>
+                            <td  th:text="${a.viewCount}">100</td>
+                            <td  th:text="${a.recommended}">推荐</td>
+                            <td class="center"  th:text="${a.createby}"> 云网传媒 </td>
                             <td>
-                                推荐
-                            </td>
-                            <td class="center"> 云网传媒 </td>
-                            <td>
-                                <button class="btn btn-xs red" type="button" > 删除
+                            	<span style="display:none"  th:text="${a.articleId}"></span>
+                                <button class="btn btn-xs red delete_btn" type="button" > 删除
                                 </button>
-                                <button class="btn btn-xs green"  type="button" > 修改</button>
+                                <button class="btn btn-xs green update_btn"  type="button" > 修改</button>
                             </td>
                         </tr>
                     </tbody>
@@ -112,9 +114,11 @@
                 <div class="row">
                         <div class="dataTables_paginate paging_bootstrap_full_number" >
                             <ul class="pagination" style="visibility: visible;">
-                                <li class="prev disabled">  <a href="#">
-                                    <i class="fa fa-angle-double-left"></i>
-                                    </a></li>
+                            	
+                                	<li class="prev ">  
+	                                	<a href="#" >
+	                                    	<i class="fa fa-angle-double-left"></i>
+	                                    </a></li>
                                     <li class="prev disabled">
                                         <a href="#" title="Prev">
                                             <i class="fa fa-angle-left"></i>
@@ -129,7 +133,8 @@
                                         </a>
                                     </li>
                                     <li class="next disabled">
-                                        <a href="#" title="Last"><i class="fa fa-angle-double-right"></i>
+                                        <a href="#" title="Last">
+                                        <i class="fa fa-angle-double-right"></i>
                                         </a>
                                     </li>
                                 </ul>
@@ -158,6 +163,10 @@
                 {
                     $('#radio1003').attr('checked', 'checked');
                 });
+            })
+            $(function(){
+            	
+            	
             })
         </script>
 </body>

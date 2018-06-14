@@ -9,10 +9,16 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.github.pagehelper.Page;
+import com.mall.entity.cms.Atticleld;
 import com.mall.entity.cms.AtticleldCategory;
+import com.mall.message.SystemCode;
 import com.mall.service.cms.AtticleldCategoryService;
+import com.mall.service.cms.AtticleldService;
+import com.mall.service.sys.CacheService;
 import com.mall.util.Validate;
 
 @Controller  
@@ -20,6 +26,10 @@ import com.mall.util.Validate;
 public class AdminCMSController {
 	@Resource
 	private AtticleldCategoryService atticleldCategoryService;
+	@Resource
+	private AtticleldService atticleldService;
+	@Resource
+	private CacheService cacheService;
 	/**
 	 * 添加文章
 	 * @return
@@ -28,13 +38,6 @@ public class AdminCMSController {
 	public String toIndex(String id ,Model model) {
 		List<AtticleldCategory> list = atticleldCategoryService.queryAll(id);
 		model.addAttribute("Category", list);
-		System.out.println();
-		System.out.println(id);
-		//名家荟萃
-		if(id!=null&&id.equals("04")) {
-			model.addAttribute("page", "/admin/cms/add_mingjia");
-			model.addAttribute("content", "nav-item start active open");
-		}
 		/**
 		 * CMS列展开
 		 */
@@ -74,12 +77,51 @@ public class AdminCMSController {
 		return "/admin/cms/add_cms";
 	}
 	/**
-	 * 列表
+	 * 添加名家
+	 * @param id
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping("/addwriter.do")
+	public String toAddWriter(String id ,Model model) {
+		model.addAttribute("page", "/admin/cms/add_mingjia");
+		model.addAttribute("content", "nav-item start active open");
+		return "/admin/index";
+	}
+	/**
+	 * 名家荟萃列表
+	 * @param id
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping("/writerlist.do")
+	public String toWriterList(String id ,Model model) {
+		model.addAttribute("page", "/admin/cms/list_cms");
+		model.addAttribute("content", "nav-item start active open");
+		return "/admin/index";
+	}
+	/**
+	 * 文章列表
 	 * @param str
 	 * @return
 	 */
-	@RequestMapping("/list.do")
-	public String toCMSList(String id ,Model model) {
+	@GetMapping("/list.do")
+	public String toCMSList(String id ,Model model,Integer pageNow,String operation) {
+		/**
+		 * 分页处理
+		 */
+		if(!Validate.notNull(pageNow)||pageNow<=0) {
+			//初始化显示第一页
+			pageNow=1;
+		}
+		int pageSize  =  Integer.parseInt(cacheService.getCache(SystemCode.PAGE).get(SystemCode.ATT_PAGE));
+		Page<Atticleld> page = atticleldService.queryList( id,pageNow,pageSize);
+		
+		model.addAttribute("id", id);
+		model.addAttribute("list", page.getResult());
+		//总页数
+		model.addAttribute("pageCount", page.getPages());
+		model.addAttribute("pageNow", pageNow);
 		model.addAttribute("page", "/admin/cms/list_cms");
 		model.addAttribute("content", "nav-item start active open");
 		return "/admin/index";

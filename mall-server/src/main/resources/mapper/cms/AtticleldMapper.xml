@@ -195,18 +195,49 @@
       updateTime = #{updateTime,jdbcType=TIMESTAMP}
     where articleId = #{articleId,jdbcType=VARCHAR}
   </update>
-  <select id="findList" parameterType="com.mall.entity.cms.Page" resultMap="ResultMapWithBLOBs">
-  select 
-  <include refid="Base_Column_List" />
-  from
-  t_cms_articleld
-  order by createat
-  LIMIT #{page.currentPage-1}*#{page.pageSize},#{page.pageSize}
+  
+  <!-- 关联文章分类，查询列表 -->
+  <resultMap id="orderResultMap" type="com.mall.entity.cms.Atticleld">
+    <id column="articleId" jdbcType="VARCHAR" property="articleId" />
+    <result column="atticletype" jdbcType="VARCHAR" property="atticletype" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="viewImg" jdbcType="VARCHAR" property="viewImg" />
+    <result column="viewCount" jdbcType="INTEGER" property="viewCount" />
+    <result column="likeCount" jdbcType="INTEGER" property="likeCount" />
+    <result column="status" jdbcType="VARCHAR" property="status" />
+    <result column="recommended" jdbcType="VARCHAR" property="recommended" />
+    <result column="createby" jdbcType="VARCHAR" property="createby" />
+    <result column="createat" jdbcType="TIMESTAMP" property="createat" />
+    <result column="updateTime" jdbcType="TIMESTAMP" property="updateTime" />
+    <association property="atticleldCategory" javaType="com.mall.entity.cms.AtticleldCategory">
+            <id column="id" jdbcType="VARCHAR" property="id" />
+		    <result column="ladelname" jdbcType="VARCHAR" property="ladelname" />
+		    <result column="parentId" jdbcType="VARCHAR" property="parentId" />
+		    <result column="hierarchy" jdbcType="INTEGER" property="hierarchy" />
+		    <result column="craeatby_c" jdbcType="VARCHAR" property="craeatby" />
+		    <result column="createat_c" jdbcType="TIMESTAMP" property="createat" />
+     </association>
+  </resultMap>
+  <select id="findList" resultMap="orderResultMap">
+		SELECT
+			t1.*,t2.id, t2.ladelname, t2.parentId, t2.hierarchy, t2.craeatby craeatby_c, t2.createat createat_c
+		FROM
+			t_cms_articleld AS t1 ,t_cms_atticleld_category as t2
+		WHERE
+			t1.atticletype IN ( SELECT id FROM t_cms_atticleld_category WHERE parentId = #{_parameter} ) and t1.atticletype=t2.id
+			
+		ORDER BY
+			t1.createat 
+	
+	
   </select>
+  <!-- 查询总记录数 -->
   <select id="findTotal" resultMap="ResultMapWithBLOBs">
   select 
-  count(id)
+  	count(*)
   from
-  t_cms_articleld
+  	t_cms_articleld
+  where 
+  	atticletype IN ( SELECT id FROM t_cms_atticleld_category WHERE parentId = #{parentId} )
   </select>
 </mapper>
