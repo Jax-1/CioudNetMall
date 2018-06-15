@@ -116,24 +116,24 @@
                             <ul class="pagination" style="visibility: visible;">
                             	
                                 	<li class="prev ">  
-	                                	<a href="#" >
+	                                	<a href="#" th:href="@{/admin/cms/list.do(id=${id},pageNow=${1})}">
 	                                    	<i class="fa fa-angle-double-left"></i>
 	                                    </a></li>
-                                    <li class="prev disabled">
-                                        <a href="#" title="Prev">
+                                    <li class="prev ">
+                                        <a href="#" title="Prev" th:href="@{/admin/cms/list.do(id=${id},pageNow=${pageNow}-1>0?${pageNow}-1:1)}">
                                             <i class="fa fa-angle-left"></i>
                                         </a>
                                     </li>
                                     <li class="active">
                                         <a href="#">1</a>
                                     </li>
-                                    <li class="next disabled">
-                                        <a href="#" title="Next">
+                                    <li class="next ">
+                                        <a href="#" title="Next" th:href="@{/admin/cms/list.do(id=${id},pageNow=${pageNow}==${page}?${page}:${pageNow}+1)}">
                                             <i class="fa fa-angle-right"></i>
                                         </a>
                                     </li>
-                                    <li class="next disabled">
-                                        <a href="#" title="Last">
+                                    <li class="next ">
+                                        <a href="#" title="Last" th:href="@{/admin/cms/list.do(id=${id},pageNow=${page})}">
                                         <i class="fa fa-angle-double-right"></i>
                                         </a>
                                     </li>
