@@ -4,6 +4,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -27,6 +28,31 @@ public class UserLoginController {
 	private UserLoginService userLoginService;
 	@Resource
 	private UserLoginUtil userLoginUtil;
+	/**
+	 * 跳转到主页
+	 * @return
+	 */
+	@RequestMapping("")
+	public String toIndex(Model model) {
+		
+		model.addAttribute("page", "/mall/index_body");
+		return "/mall/index";
+	}
+	/**
+	 * 
+	 * @return
+	 */
+	@RequestMapping("/login.do")
+	public String toLogin(Model model) {
+		model.addAttribute("page", "/mall/index_body");
+		return "/mall/index";
+	}
+	@RequestMapping("/register.do")
+	public String toRegister(Model model) {
+		model.addAttribute("page", "/mall/index_body");
+		return "/mall/index";
+	}
+	
 	/**
 	 * 登录
 	 * @return

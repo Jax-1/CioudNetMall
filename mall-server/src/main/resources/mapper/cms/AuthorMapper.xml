@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mall.dao.cms.AuthorMapper">
+  <resultMap id="BaseResultMap" type="com.mall.entity.cms.Author">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="authorname" jdbcType="VARCHAR" property="authorname" />
+    <result column="columns" jdbcType="VARCHAR" property="columns" />
+    <result column="classification" jdbcType="VARCHAR" property="classification" />
+    <result column="address" jdbcType="VARCHAR" property="address" />
+    <result column="position" jdbcType="VARCHAR" property="position" />
+    <result column="viewimg" jdbcType="VARCHAR" property="viewimg" />
+    <result column="recommended" jdbcType="VARCHAR" property="recommended" />
+    <result column="viewCount" jdbcType="INTEGER" property="viewCount" />
+    <result column="likeCount" jdbcType="INTEGER" property="likeCount" />
+    <result column="status" jdbcType="VARCHAR" property="status" />
+    <result column="createby" jdbcType="VARCHAR" property="createby" />
+    <result column="createat" jdbcType="TIMESTAMP" property="createat" />
+    <result column="updateTime" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.mall.entity.cms.AuthorWithBLOBs">
+    <result column="Introduction" jdbcType="LONGVARCHAR" property="introduction" />
+    <result column="content" jdbcType="LONGVARCHAR" property="content" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, authorname, columns, classification, address, position, viewimg, recommended, 
+    viewCount, likeCount, status, createby, createat, updateTime
+  </sql>
+  <sql id="Blob_Column_List">
+    Introduction, content
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from t_cms_author
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from t_cms_author
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.mall.entity.cms.AuthorWithBLOBs">
+    insert into t_cms_author (id, authorname, columns, 
+      classification, address, position, 
+      viewimg, recommended, viewCount, 
+      likeCount, status, createby, 
+      createat, updateTime, Introduction, 
+      content)
+    values (#{id,jdbcType=VARCHAR}, #{authorname,jdbcType=VARCHAR}, #{columns,jdbcType=VARCHAR}, 
+      #{classification,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, #{position,jdbcType=VARCHAR}, 
+      #{viewimg,jdbcType=VARCHAR}, #{recommended,jdbcType=VARCHAR}, #{viewCount,jdbcType=INTEGER}, 
+      #{likeCount,jdbcType=INTEGER}, #{status,jdbcType=VARCHAR}, #{createby,jdbcType=VARCHAR}, 
+      #{createat,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{introduction,jdbcType=LONGVARCHAR}, 
+      #{content,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.mall.entity.cms.AuthorWithBLOBs">
+    insert into t_cms_author
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="authorname != null">
+        authorname,
+      </if>
+      <if test="columns != null">
+        columns,
+      </if>
+      <if test="classification != null">
+        classification,
+      </if>
+      <if test="address != null">
+        address,
+      </if>
+      <if test="position != null">
+        position,
+      </if>
+      <if test="viewimg != null">
+        viewimg,
+      </if>
+      <if test="recommended != null">
+        recommended,
+      </if>
+      <if test="viewCount != null">
+        viewCount,
+      </if>
+      <if test="likeCount != null">
+        likeCount,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="createby != null">
+        createby,
+      </if>
+      <if test="createat != null">
+        createat,
+      </if>
+      <if test="updateTime != null">
+        updateTime,
+      </if>
+      <if test="introduction != null">
+        Introduction,
+      </if>
+      <if test="content != null">
+        content,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="authorname != null">
+        #{authorname,jdbcType=VARCHAR},
+      </if>
+      <if test="columns != null">
+        #{columns,jdbcType=VARCHAR},
+      </if>
+      <if test="classification != null">
+        #{classification,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null">
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="position != null">
+        #{position,jdbcType=VARCHAR},
+      </if>
+      <if test="viewimg != null">
+        #{viewimg,jdbcType=VARCHAR},
+      </if>
+      <if test="recommended != null">
+        #{recommended,jdbcType=VARCHAR},
+      </if>
+      <if test="viewCount != null">
+        #{viewCount,jdbcType=INTEGER},
+      </if>
+      <if test="likeCount != null">
+        #{likeCount,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="createby != null">
+        #{createby,jdbcType=VARCHAR},
+      </if>
+      <if test="createat != null">
+        #{createat,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="introduction != null">
+        #{introduction,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="content != null">
+        #{content,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.mall.entity.cms.AuthorWithBLOBs">
+    update t_cms_author
+    <set>
+      <if test="authorname != null">
+        authorname = #{authorname,jdbcType=VARCHAR},
+      </if>
+      <if test="columns != null">
+        columns = #{columns,jdbcType=VARCHAR},
+      </if>
+      <if test="classification != null">
+        classification = #{classification,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null">
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="position != null">
+        position = #{position,jdbcType=VARCHAR},
+      </if>
+      <if test="viewimg != null">
+        viewimg = #{viewimg,jdbcType=VARCHAR},
+      </if>
+      
+        recommended = #{recommended,jdbcType=VARCHAR},
+      
+      <if test="viewCount != null">
+        viewCount = #{viewCount,jdbcType=INTEGER},
+      </if>
+      <if test="likeCount != null">
+        likeCount = #{likeCount,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="createby != null">
+        createby = #{createby,jdbcType=VARCHAR},
+      </if>
+      <if test="createat != null">
+        createat = #{createat,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        updateTime = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="introduction != null">
+        Introduction = #{introduction,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="content != null">
+        content = #{content,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.mall.entity.cms.AuthorWithBLOBs">
+    update t_cms_author
+    set authorname = #{authorname,jdbcType=VARCHAR},
+      columns = #{columns,jdbcType=VARCHAR},
+      classification = #{classification,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      position = #{position,jdbcType=VARCHAR},
+      viewimg = #{viewimg,jdbcType=VARCHAR},
+      recommended = #{recommended,jdbcType=VARCHAR},
+      viewCount = #{viewCount,jdbcType=INTEGER},
+      likeCount = #{likeCount,jdbcType=INTEGER},
+      status = #{status,jdbcType=VARCHAR},
+      createby = #{createby,jdbcType=VARCHAR},
+      createat = #{createat,jdbcType=TIMESTAMP},
+      updateTime = #{updateTime,jdbcType=TIMESTAMP},
+      Introduction = #{introduction,jdbcType=LONGVARCHAR},
+      content = #{content,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.mall.entity.cms.Author">
+    update t_cms_author
+    set authorname = #{authorname,jdbcType=VARCHAR},
+      columns = #{columns,jdbcType=VARCHAR},
+      classification = #{classification,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      position = #{position,jdbcType=VARCHAR},
+      viewimg = #{viewimg,jdbcType=VARCHAR},
+      recommended = #{recommended,jdbcType=VARCHAR},
+      viewCount = #{viewCount,jdbcType=INTEGER},
+      likeCount = #{likeCount,jdbcType=INTEGER},
+      status = #{status,jdbcType=VARCHAR},
+      createby = #{createby,jdbcType=VARCHAR},
+      createat = #{createat,jdbcType=TIMESTAMP},
+      updateTime = #{updateTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <resultMap extends="ResultMapWithBLOBs" id="authorResultMap" type="com.mall.entity.cms.AuthorWithBLOBs">
+    <association property="atticleldCategory" javaType="com.mall.entity.cms.AtticleldCategory">
+            <id column="id_c" jdbcType="VARCHAR" property="id" />
+		    <result column="ladelname" jdbcType="VARCHAR" property="ladelname" />
+		    <result column="parentId" jdbcType="VARCHAR" property="parentId" />
+		    <result column="hierarchy" jdbcType="INTEGER" property="hierarchy" />
+		    <result column="craeatby_c" jdbcType="VARCHAR" property="craeatby" />
+		    <result column="createat_c" jdbcType="TIMESTAMP" property="createat" />
+     </association>
+  </resultMap>
+  <!-- 查询列表 -->
+  <select id="getPageFront" parameterType="com.mall.entity.cms.AuthorWithBLOBs" resultMap="authorResultMap">
+	  SELECT
+		t1.id, t1.authorname, t1.columns, t1.classification, t1.address, t1.position, t1.viewimg, t1.recommended, 
+	    t1.viewCount, t1.likeCount, t1.status, t1.createby, t1.createat, t1.updateTime,
+		 t2.id id_c, ladelname, parentId, hierarchy, t2.craeatby craeatby_c, t2.createat createat_c
+	FROM
+		t_cms_author t1,
+		t_cms_atticleld_category t2 
+	WHERE
+		t1.classification = t2.id 
+		<if test="classification != null">
+		AND t1.classification = #{classification}
+		</if>
+		AND t1.status='Y'
+	ORDER BY t1.createat desc
+  </select>
+  <!-- 删除，软删除，更改状态 -->
+  <update id="chengeStatus" parameterType="com.mall.entity.cms.Author">
+  update t_cms_author set status='N' where id=#{id}
+  </update>
+  <!-- 查询作家信息（完整） -->
+  <select id="selectInfo" parameterType="com.mall.entity.cms.Author" resultMap="authorResultMap">
+  SELECT
+		t1.id, t1.authorname, t1.columns, t1.classification, t1.address, t1.position, t1.viewimg, t1.recommended, 
+	    t1.viewCount, t1.likeCount, t1.status, t1.createby, t1.createat, t1.updateTime,t1.Introduction,t1.content,
+	 	t2.id id_c, ladelname, parentId, hierarchy, t2.craeatby craeatby_c, t2.createat createat_c
+	FROM
+		t_cms_author t1,
+		t_cms_atticleld_category t2 
+	WHERE
+		t1.classification = t2.id 
+		AND t1.id = #{id}
+  </select>
+</mapper>

@@ -3,4 +3,6 @@ encoding//src/main/java=UTF-8
 encoding//src/main/java/com/mall/message/MsgPool_zh_CN.properties=UTF-8
 encoding//src/main/resources=UTF-8
 encoding//src/main/resources/templates/admin/index_body.html=UTF-8
+encoding//src/main/resources/templates/mall/base/footer.html=UTF-8
+encoding//src/main/resources/templates/mall/cms/cms_lists.html=UTF-8
 encoding/<project>=UTF-8

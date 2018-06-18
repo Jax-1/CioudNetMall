@@ -65,6 +65,8 @@ spring:
         multipart:
             max-file-size: 500MB
             max-request-size: 20MB
+    jackson:
+       date-format: yyyy-MM-dd HH:mm:ss
 
 server:
 ##  context-path: /webapp

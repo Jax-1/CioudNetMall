@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<body>
+		<!-- 内容部分 -->
+	<div class="content_box">
+		<div class="register_box">
+			<div class="reg_tit">
+				新用户注册
+			</div>
+			<div class="form_ground_box">
+				<lable class="reg_lab">手机号：</lable>
+				<input type="text" class="input_width">
+			</div>
+			<div class="form_ground_box">
+				<lable class="reg_lab">密码设置：</lable>
+				<input type="password" class="input_width">
+			</div>
+			<div class="form_ground_box">
+				<lable class="reg_lab">确认密码：</lable>
+				<input type="password" class="input_width">
+			</div>
+			<div class="form_ground_box">
+				<lable class="reg_lab">验证码：</lable>
+				<input type="text" class="input_width_min">
+				<img class="validate_img" src="images/validateCode.jpg" alt="">
+			</div>
+			<div class="form_ground_box">
+				<lable class="reg_lab">短信验证码：</lable>
+				<input type="text" class="input_width_min">
+				<button class="validate_img valid_btn">获取短信验证</button>
+			</div>
+			<div class="form_ground_box center">
+				<input type="checkbox" class="agreeMent" id="agreeMent">
+				<label for="agreeMent">我已阅读并同意</label> <span><a href="#">云网传媒协议规则</a></span>
+			</div>
+			<div class="form_ground_box center">
+				<div class="submitBtn">
+					立即注册
+				</div>
+			</div>
+			<div class="go_login">
+				已经注册过了，<a href="login.html">去登录</a>
+			</div>
+			
+		</div>
+	</div>
+	<!-- 内容部分结束 -->
+</body>
+</html>

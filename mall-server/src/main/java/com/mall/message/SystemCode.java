@@ -93,6 +93,14 @@ public class SystemCode {
 	 * 是指默认地址失败
 	 */
 	public static final int SET_DEFAULTRECEIVE_FAILURE=603;
+	/**
+	 * 表单操作：保存
+	 */
+	public final static String TYPE_SAVE="SAVE";
+	/**
+	 * 表单操作：更新
+	 */
+	public final static String TYPE_UPDATE="UPDATE";
 	//状态：开启
 	public final static String STATUS_Y="Y";
 	//状态：关闭
@@ -108,6 +116,7 @@ public class SystemCode {
 	//分页查询记录数配置
 	public final static String PAGE="PAGE";
 	public final static String ATT_PAGE="ATT_PAGE";
+	public final static String AUT_PAGE="AUT_PAGE";
 	
 
 }

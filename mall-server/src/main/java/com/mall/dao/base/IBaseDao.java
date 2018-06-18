@@ -63,7 +63,7 @@ public interface IBaseDao<T> {
      * @throws Exception
      * @throws
      */
-    public int deleteByPrimaryKey(int id) throws Exception;
+    public int deleteByPrimaryKey(String id) throws Exception;
 
     /**
      * 删除数据
@@ -82,7 +82,7 @@ public interface IBaseDao<T> {
      * @throws Exception
      * @throws
      */
-    public T selectByPrimaryKey(int id);
+    public T selectByPrimaryKey(String id);
 
     /**
      * 根据对象查询单个记录
@@ -129,6 +129,17 @@ public interface IBaseDao<T> {
     
     public List<T> getAll();
     public List<T> getAllBySelect(T entity);
+    /**
+     * 更改状态，软删除
+     * @return
+     */
+    public int chengeStatus(T entity);
+    /**
+     * 查询完整信息，关联查询时使用
+     * @param entity
+     * @return
+     */
+    public T  selectInfo(T entity);
      
 }
 

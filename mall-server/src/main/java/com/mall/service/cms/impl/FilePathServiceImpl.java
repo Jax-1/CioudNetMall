@@ -54,7 +54,7 @@ public class FilePathServiceImpl implements FilePathService {
 			return result;
 		}
 		for(FilePath file :list) {
-			filePathMapper.updateByPrimaryKey(file);
+			filePathMapper.updateByPrimaryKeySelective(file);
 		}
 		result.setMsg("");
 		return result;

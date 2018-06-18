@@ -8,27 +8,7 @@
     <meta content="width=device-width, initial-scale=1" name="viewport" />
     <meta content="Preview page of Metronic Admin Theme #1 for statistics, charts, recent events and reports" name="description" />
     <meta content="" name="author" />
-    <link href="/admin/assets/global/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
-    <link href="/admin/assets/global/plugins/simple-line-icons/simple-line-icons.min.css" rel="stylesheet" type="text/css" />
-    <link href="/admin/assets/global/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-    <link href="/admin/assets/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css" rel="stylesheet" type="text/css" />
-    <!-- END GLOBAL MANDATORY STYLES -->
-    <!-- BEGIN PAGE LEVEL PLUGINS -->
-    <link href="/admin/assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.css" rel="stylesheet" type="text/css" />
-    <link href="/admin/assets/global/plugins/morris/morris.css" rel="stylesheet" type="text/css" />
-    <link href="/admin/assets/global/plugins/fullcalendar/fullcalendar.min.css" rel="stylesheet" type="text/css" />
-    <link href="/admin/assets/global/plugins/jqvmap/jqvmap/jqvmap.css" rel="stylesheet" type="text/css" />
-    <!-- END PAGE LEVEL PLUGINS -->
-    <!-- BEGIN THEME GLOBAL STYLES -->
-    <link href="/admin/assets/global/css/components.min.css" rel="stylesheet" id="style_components" type="text/css" />
-    <!-- END THEME GLOBAL STYLES -->
-    <!-- BEGIN THEME LAYOUT STYLES -->
-    <link href="/admin/assets/layouts/layout/css/layout.min.css" rel="stylesheet" type="text/css" />
-    <link href="/admin/assets/layouts/layout/css/themes/darkblue.min.css" rel="stylesheet" type="text/css" id="style_color" />
-    <link href="/admin/assets/layouts/layout/css/custom.min.css" rel="stylesheet" type="text/css" />
-    <!-- END THEME LAYOUT STYLES -->
-    <link rel="shortcut icon" href="favicon.ico" /> </head>
-    <script src="/admin/assets/global/plugins/jquery.min.js" type="text/javascript"></script>
+    
 <!-- END HEAD -->
 
 <body class="page-header-fixed page-sidebar-closed-hide-logo page-content-white">
@@ -58,12 +38,16 @@
                     <div class="portlet light bordered">
                     <div class="row">
                         <div class="col-md-12">
-                            <form class="form-horizontal">
+                            <form class="form-horizontal" id='addform' action='/admin/cms/save' method="post">
+                            	<!-- 操作类型 -->
+                    				<input type='text'  name='type' style="display:none" th:value="${att==null}?'SAVE':'UPDATE'">
+                    				<input type='text'  name='id' style="display:none" th:value="${att==null}?'':${att.id}">
+                    				<input type='text'  name='Pid' style="display:none" th:value="${Pid}">
                                   <div class="form-group">
                                         <label for="" class="col-sm-2 control-label">栏目</label>
                                         <div class="col-sm-4">
-                                            <select class="form-control" >
-                                              <option  th:attr="value=${mainid}" th:text="${main}" selected>名家荟萃</option>
+                                            <select class="form-control" name='columns'>
+                                              <option  th:attr="value=${Pid}" th:text="${main}" selected>名家荟萃</option>
                                               
                                           </select>
                                        </div>
@@ -71,13 +55,13 @@
                               <div class="form-group">
                                 <label for="" class="col-sm-2 control-label">标题</label>
                                 <div class="col-sm-4">
-                                  <input type="text" class="form-control"  placeholder="请输入标题">
+                                  <input type="text" class="form-control"  placeholder="请输入标题" name='title' th:value="${att}==null?'':${att.title}">
                                 </div>
                               </div>
                               <div class="form-group">
                                     <label for="" class="col-sm-2 control-label">分类</label>
                                     <div class="col-sm-4">
-                                        <select class="form-control" >
+                                        <select class="form-control" name='classification' >
                                           <option th:each="ca:${Category}" th:attr="value=${ca.id}" th:text="${ca.ladelname}"></option>
                                           
                                       </select>
@@ -86,13 +70,18 @@
                               <div class="form-group">
                                     <label for="" class="col-sm-2 control-label">图片上传</label>
                                     <div class="col-sm-2">
-                                        <input type="file"  enctype="multipart/form-data"  class="form-control"  placeholder="点击上传图片">
+                                        <input type="file"  enctype="multipart/form-data"  class="form-control"  placeholder="点击上传图片" id='files' name='file'>
                                    </div>
                                    <div class="col-sm-2">
-                                        <button class="btn btn-defulat">点击上传</button>
+                                   		
+                                   		<input type='text' id='viewImg' name='viewImg' style="display:none" th:value="${att}==null?'':${att.viewImg}">
+                                        <button  type='button' class="btn btn-defulat" id='uploadefile'>点击上传</button>
                                    </div>
+                                   <span id='uploadmsg'></span>
+                                   
                               </div>
-                              
+                              <img src='' id='mainimg' class='btn btn-defulat'>
+                              <img src=""  style='width:100px' class='btn btn-defulat' th:each="entry : ${att}==null?'entry':${att.filePath}" th:attr="src=${att}==null?'':${fileServicePath}+'/'+${entry.path}+'/'+${entry.fileidname}+'.'+${entry.filetype}"/>
                               <!-- 编辑器 -->
                               <script type="text/javascript" charset="utf-8" src="/ueditor/ueditor.config.js"></script>
                               <script type="text/javascript" charset="utf-8" src="/ueditor/ueditor.all.min.js"> </script>
@@ -106,36 +95,13 @@
                                    </div>
                               </div>
 
-                              <script type="text/javascript">
-                                //实例化编辑器
-                                //建议使用工厂方法getEditor创建和引用编辑器实例，如果在某个闭包下引用该编辑器，直接调用UE.getEditor('editor')就能拿到相关的实例
-                                var ue = UE.getEditor('editor');
-                                $("#submit").click(function(){
-                                    var data = UE.getEditor('editor').getContent();
-                                    $.ajax({
-                                        cache: true,
-                                        type: "GET",
-                                        url: "http://localhost:8888/submit",
-                            　　　　　　　　data: {
-                            　　　　　　　　　　"edit": data
-                            　　　　　　　　},
-
-                                        async: false,
-                                        error: function(request) {
-                                            alert("Connection error");
-                                        },
-                                        success: function(){
-                                            alert("success");
-                                        }
-                                    });
-                                });
-                            </script>
+                              
                              
                              <div class="form-group">
                                 <div class="col-sm-offset-2 col-sm-10">
                                   <div class="checkbox">
                                     <label>
-                                      <input type="checkbox">设为推荐
+                                      <input type="checkbox"  name='recommended' th:attr="checked=${att!=null and att.recommended=='on'}?'checked':''">设为推荐
                                     </label>
                                   </div>
                                 </div>
@@ -143,7 +109,7 @@
                               
                               <div class="form-group">
                                 <div class="col-sm-offset-2 col-sm-10">
-                                  <button type="submit" class="btn btn-success">保存</button>
+                                  <button type="submit" class="btn btn-success" id='submit'>保存</button>
                                 </div>
                               </div>
                             </form>
@@ -159,7 +125,72 @@
         
     <!-- BEGIN QUICK NAV -->
     <div class="quick-nav-overlay"></div>
+    <script src="http://malsup.github.com/jquery.form.js"></script>
+    <script src="/admin/assets/layouts/global/scripts/quick-sidebar.min.js" type="text/javascript"></script>
+    <script src="/admin/assets/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js" type="text/javascript"></script>
+    <script src="/admin/assets/global/plugins/jquery.blockui.min.js" type="text/javascript"></script>
+    <script src="/admin/assets/global/plugins/js.cookie.min.js" type="text/javascript"></script>
+    <script src="/admin/assets/global/plugins/jquery-slimscroll/jquery.slimscroll.min.js" type="text/javascript"></script>
+    <script type="text/javascript" th:inline="javascript">
+                                //实例化编辑器
+                                //建议使用工厂方法getEditor创建和引用编辑器实例，如果在某个闭包下引用该编辑器，直接调用UE.getEditor('editor')就能拿到相关的实例
+                                var ue = UE.getEditor('editor');
+                                
+                                
+                                var blg=[[${att}!=null]];
+                                var att=[[${att}]];
+                                
+                                $(document).ready(function () {
+                                    
+                                    ue.ready(function () {
+                                    	if(blg){
+                                			console.log('-----------------------');
+                                			//初始化编辑器
+                                			var content=[[${att}==null?'':${att.content}]];
+                                			ue.setContent(content);
+                                			
+                                		}
+                                    });
+                                   
+                                });
 
+                            </script>
+	<script type="text/javascript" th:inline="javascript">
+	$(function(){
+		
+		$('#uploadefile').click(function(){
+			console.log(document.getElementById("files").files);
+			//上传首页图片
+			
+			var option = {
+	            url:'/ueditor/uploade',//如果不指定url那么就使用使用提交表单的url，如果指定就使用当前的url
+	            type:"POST",
+	            dataType:"json",
+	            success:function(date){
+	            	if(date==null){
+						//图片上传失败
+						$("#uploadmsg").text='上传失败！';
+					}
+					for(var i=0,l=date.length;i<l;i++){
+						//上传成功
+						console.log(date[i].id);
+						$("#viewImg").attr('value',date[i].id);
+						$("#mainimg").attr('src',date[i].host+'/'+date[i].path);
+						$("#mainimg").attr('width','100px');
+					
+					}
+	            },
+	            error:function(){
+	                alert("系统错误");
+	            }
+	       };
+	      $("#addform").ajaxSubmit(option);
+		})
+		
+		
+	})
+	
+	</script>
 
 </body>
 

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
     <meta charset="utf-8" />
     <title>云网传媒后台主页</title>
@@ -56,10 +57,10 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="btn-group">
-                                <button id="sample_editable_1_new" class="btn sbold green"> 
-                                添加新的
-                                    <i class="fa fa-plus"></i>
-                                </button>
+                                <a id="sample_editable_1_new" class="btn sbold green" th:href="@{/admin/cms/addwriter.do(Pid=${Pid})}">
+	                            	添加作家
+	                            	<i class="fa fa-plus"></i>
+	                            </a>
                             </div>
                         </div>
                     </div>
@@ -74,34 +75,37 @@
                                 </label>
                             </th>
                             <th> 名家姓名</th>
-                            <th> 职位 </th>
+                            <th> 职位 </th>	
                             <th> 地区</th>
                             <th> 艺术分类</th>
+                            <th> 浏览数</th>
                             <th> 状态 </th>
                             <th> 操作 </th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr class="odd gradeX">
+                        <tr class="odd gradeX" th:each="a:${list.dataList}">
                             <td>
                                 <label class="mt-checkbox mt-checkbox-single mt-checkbox-outline">
                                     <input type="checkbox" class="checkboxes" value="1" />
                                     <span></span>
                                 </label>
                             </td>
-                            <td> 宋金高</td>
-                            <td>
+                            <td th:text="${a.authorname}"> 宋金高</td>
+                            <td th:text="${a.position}">
                                 民间大家
                             </td>
-                            <td>山东</td>
-                            <td>书法</td>
-                            <td>
+                            <td th:text="${a.address}">山东</td>
+                            <td th:text="${a.atticleldCategory.ladelname}">书法</td>
+                            <td th:text="${a.viewCount}">0</td>
+                            <td th:text="${a.recommended}=='on'?'推荐':''">
                                 推荐
                             </td>
-                            <td>
-                                <button class="btn btn-xs red" type="button" > 删除
+                            <td >
+                            	<span style="display:none"  th:text="${a.id}"></span>
+                                <button class="btn btn-xs red delete_btn" type="button" > 删除
                                 </button>
-                                <button class="btn btn-xs green"  type="button" > 修改</button>
+                                <button class="btn btn-xs green update_btn"  type="button" > 修改</button>
                             </td>
                         </tr>
                     </tbody>
@@ -109,24 +113,27 @@
                 <div class="row">
                         <div class="dataTables_paginate paging_bootstrap_full_number" >
                             <ul class="pagination" style="visibility: visible;">
-                                <li class="prev disabled">  <a href="#">
+                            	<li class="prev "> 
+                            		 <span th:text="'共'+ ${list.pages}+'页'"></span>
+                            		</li>
+                                <li class="prev ">  <a href="#" th:href="@{/admin/cms/writerlist.do(Pid=${Pid},pageNo=${1})}">
                                     <i class="fa fa-angle-double-left"></i>
                                     </a></li>
-                                    <li class="prev disabled">
-                                        <a href="#" title="Prev">
+                                    <li class="prev ">
+                                        <a href="#" title="Prev" th:href="@{/admin/cms/writerlist.do(Pid=${Pid},pageNo=${list.pageNo}-1>0?${list.pageNo}-1:1)}">
                                             <i class="fa fa-angle-left"></i>
                                         </a>
                                     </li>
                                     <li class="active">
-                                        <a href="#">1</a>
+                                        <a href="#" th:text="${list.pageNo}">1</a>
                                     </li>
-                                    <li class="next disabled">
-                                        <a href="#" title="Next">
+                                    <li class="next ">
+                                        <a href="#" title="Next" th:href="@{/admin/cms/writerlist.do(Pid=${Pid},pageNo=${list.pageNo}==${list.pages}?${list.pages}:${list.pageNo}+1)}">
                                             <i class="fa fa-angle-right"></i>
                                         </a>
                                     </li>
-                                    <li class="next disabled">
-                                        <a href="#" title="Last"><i class="fa fa-angle-double-right"></i>
+                                    <li class="next " >
+                                        <a href="#" title="Last" th:href="@{/admin/cms/writerlist.do(Pid=${Pid},pageNo=${list.pages})}"><i class="fa fa-angle-double-right"></i>
                                         </a>
                                     </li>
                                 </ul>
@@ -144,13 +151,33 @@
                 <!-- END CONTENT BODY -->
             </div>
         
-        <script>
+        <script th:inline="javascript">
             $(document).ready(function()
             {
                 $('#clickmewow').click(function()
                 {
                     $('#radio1003').attr('checked', 'checked');
                 });
+            })
+            $(function(){
+            	$('.delete_btn').click(function(){
+            		//
+            		$.post('/admin/cms/auth/delete',
+            				{id:$(this).prev().text()},
+            				function(date){
+            				if(date.res=='1'){
+            					//成功
+            					window.location.reload();
+            				}
+            		})
+            		
+            	})
+            	$('.update_btn').click(function(){
+            		var id=[[${Pid}]];
+            		console.log(id);
+            		$(window).attr('location','/admin/cms/editorWriter.do?id='+$(this).prev().prev().text()+'&Pid='+id);
+            	})
+            	
             })
         </script>
 </body>

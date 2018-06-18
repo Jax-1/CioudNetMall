@@ -1,5 +1,6 @@
 package com.mall.util;
 
+import java.io.Serializable;
 import java.util.List;
 
 import com.github.pagehelper.Page;
@@ -11,7 +12,7 @@ import com.github.pagehelper.Page;
  * 
  *
  */
-public class PageResult<T> {
+public class PageResult<T> implements Serializable{
 	
 	/*serialVersionUID*/
 	private static final long serialVersionUID = 1L;
@@ -25,6 +26,9 @@ public class PageResult<T> {
 	private long total;//总条数
 	
 	private int pages;//总页面数目
+	
+	
+
 
 	public List<T> getDataList() {
 		return dataList;
@@ -39,7 +43,7 @@ public class PageResult<T> {
 	}
 
 	public void setPageNo(int pageNo) {
-		this.pageNo = pageNo;
+		this.pageNo = pageNo+""==null?0:pageNo;
 	}
 
 	public int getPageSize() {

@@ -9,7 +9,8 @@ import java.util.Map;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
-import org.springframework.stereotype.Controller;  
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
@@ -21,6 +22,7 @@ import com.mall.message.SystemCode;
 import com.mall.service.cms.FilePathService;
 import com.mall.service.sys.CacheService;
 import com.mall.util.UpLoad;
+import com.mall.util.Validate;
 
  
 /**
@@ -37,45 +39,44 @@ public class UEditorController extends AbstractController{
 	@Resource
 	private FilePathService filePathService;
 	
+	/**
+	 * 多文件上传
+	 * @param request
+	 * @return
+	 */
+	@PostMapping("/uploade")
+	@ResponseBody
+	private List<Map<String, String>> uploadefile(HttpServletRequest request) {
+		
+		Map<String, String> cache = cacheService.getCache(SystemCode.FILE_SERVICE);
+		List<MultipartFile> multipartFiles = UpLoad.getMultipartFiles(request);
+		List<Map<String, String>> list = UpLoad.upLoadFies(multipartFiles, cache, filePathService);
+		
+		return list;
+	}
 	
-	
-    
+    /**
+     * Ueditor配置
+     * @param request
+     * @param action
+     * @return
+     */
 	@RequestMapping("/config")
 	@ResponseBody
 	private String config(HttpServletRequest request,String action) {
 		//上传图片、视频、文件执行
 		if("uploadimage".equals(action)||"uploadvideo".equals(action)||"uploadfile".equals(action)) {
-			 List<MultipartFile> files = new ArrayList<MultipartFile>(); 
-			 String path=null;
-		        try {  
-		            CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver(  
-		                    request.getSession().getServletContext());  
-		            if (request instanceof MultipartHttpServletRequest) {  
-		                // 将request变成多部分request  
-		                MultipartHttpServletRequest multiRequest = (MultipartHttpServletRequest) request;  
-		                Iterator<String> iter = multiRequest.getFileNames();  
-		                // 检查form中是否有enctype="multipart/form-data"  
-		                if (multipartResolver.isMultipart(request) && iter.hasNext()) {  
-		                    // 获取multiRequest 中所有的文件名  
-		                    while (iter.hasNext()) {  
-		                        // 适配名字重复的文件  
-		                        List<MultipartFile> fileRows = multiRequest  
-		                                .getFiles(iter.next().toString());  
-		                        if (fileRows != null && fileRows.size() != 0) {  
-		                            for (MultipartFile file1 : fileRows) {  
-		                                if (file1 != null && !file1.isEmpty()) { 
-		                                	path=UpLoad.fileUpload(file1,cacheService,filePathService);
-		                                    files.add(file1);  
-		                                }  
-		                            }  
-		                        }  
-		                    }  
-		                }  
-		            }  
-		        } catch (Exception ex) {  
-		        }
+			 
+			List<MultipartFile> files = UpLoad.getMultipartFiles(request);
+			if(!Validate.notNull(files)) {
+				return null;
+			}
+			Map<String, String> cache = cacheService.getCache(SystemCode.FILE_SERVICE);
+			Map<String, String> uploadeFile = UpLoad.uploadeFile(files.get(0),cache,filePathService);
 		    //上传结果
-		    String state=!"false".equals(path)?"SUCCESS":"";
+		    String state=Validate.notNull(uploadeFile)?"SUCCESS":"";
+		    //访问路径
+		    String path=Validate.notNull(uploadeFile)?uploadeFile.get("path"):"";
 			String config =
 	                "{\n" +
 	                "            \"state\": \""+state+"\",\n" +

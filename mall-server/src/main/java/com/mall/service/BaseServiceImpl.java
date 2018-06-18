@@ -7,6 +7,7 @@ import org.apache.log4j.Logger;
 
 import com.github.pagehelper.PageHelper;
 import com.mall.dao.base.IBaseDao;
+import com.mall.entity.cms.AuthorWithBLOBs;
 import com.mall.util.PageResult;
 
 
@@ -56,7 +57,7 @@ public abstract class BaseServiceImpl<T> implements IBaseService<T> {
         return result;
     }
     @Override
-    public int deleteByPrimaryKey(int id) throws Exception {
+    public int deleteByPrimaryKey(String id) throws Exception {
           int  result = getMapper().deleteByPrimaryKey(id);
         return result;
     }
@@ -68,7 +69,7 @@ public abstract class BaseServiceImpl<T> implements IBaseService<T> {
     }
 
     @Override
-    public T selectByPrimaryKey(int id) {
+    public T selectByPrimaryKey(String id) {
         T obj = null;
         try {
             obj = getMapper().selectByPrimaryKey(id);
@@ -113,7 +114,7 @@ public abstract class BaseServiceImpl<T> implements IBaseService<T> {
 	public PageResult<T> queryByPage(PageResult<T> t,T entity) {
     	int pageNo=t.getPageNo();
     	int pageSize=t.getPageSize();
-		pageNo = pageNo == 0?1:pageNo;
+		pageNo = pageNo == 0||pageNo+"" ==null?1:pageNo;
 		pageSize = pageSize == 0?10:pageSize;
 		PageHelper.startPage(pageNo,pageSize); 
 		return PageResult.toPageResult(getPage(entity),t);
@@ -168,5 +169,24 @@ public abstract class BaseServiceImpl<T> implements IBaseService<T> {
 		PageHelper.startPage(pageNo,pageSize); 
 		return PageResult.toPageResult(getPageFront(entity),t);
 	}
-    
+    /**
+     * 更改状态，软删除
+     * @return
+     */
+    @Override
+    public int chengeStatus(T entity) {
+    	int chengeStatus = getMapper().chengeStatus(entity);
+    	return chengeStatus;
+    }
+    /**
+     * 查询完整信息，关联查询时使用
+     * @param entity
+     * @return
+     */
+    @Override
+    public T  selectInfo(T entity) {
+    	T info = getMapper().selectInfo(entity);
+    	return info;
+    }
+
 }

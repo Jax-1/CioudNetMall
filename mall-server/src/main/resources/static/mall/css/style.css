@@ -1,0 +1,554 @@
+*,
+*:before,
+*:after {
+  -webkit-box-sizing: border-box; }
+
+html {
+  font-size: 10px;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0); }
+
+html,
+body {
+  height: 100%;
+  width: 100%;
+  /*overflow: hidden;*/ }
+
+body,
+ul,
+li,
+dl,
+dt,
+dd,
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+input {
+  padding: 0;
+  margin: 0;
+  outline: none;
+  border: none; }
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  margin: 0; }
+
+input,
+button {
+  border-radius: 0; }
+
+body {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  line-height: 1.42857143; }
+
+a {
+  text-decoration: none; }
+
+img {
+  border: 0; }
+
+body,
+.footer-box,
+.header-top-back,
+.header-top,
+ul li {
+  list-style-type: none; }
+
+.body_bg {
+  background-color: #f4e4c3;
+  background-repeat: repeat-y;
+  background-size: 100% auto; }
+
+.header_top_img img {
+  width: 100%;
+  height: auto;
+  margin: 0;
+  padding: 0; }
+
+.head_login {
+  height: 40px;
+  margin-top: -5px;
+  background: rgba(225, 207, 175, 0.7); }
+  .head_login .head_login_box {
+    width: 1280px;
+    margin: 0 auto;
+    text-align: right; }
+    .head_login .head_login_box span {
+      color: #666; }
+      .head_login .head_login_box span a {
+        color: #666; }
+    .head_login .head_login_box .user_img_min {
+      border-radius: 20px;
+      width: 38px;
+      height: 38px;
+      display: inline-block;
+      vertical-align: middle; }
+    .head_login .head_login_box span {
+      line-height: 40px; }
+
+.header_box {
+  background-image: url(../images/logo_box_bg.png);
+  background-repeat: no-repeat; }
+  .header_box .logo_box {
+    width: 1280px;
+    margin: 0 auto;
+    height: 80px; }
+    .header_box .logo_box .logo_left {
+      float: left; }
+      .header_box .logo_box .logo_left img {
+        width: 130px;
+        height: 42px;
+        margin-top: 18px; }
+    .header_box .logo_box .logo_right {
+      float: right;
+      overflow: hidden; }
+      .header_box .logo_box .logo_right .header_erweima {
+        margin-left: 30px;
+        float: left; }
+        .header_box .logo_box .logo_right .header_erweima img {
+          width: 60px;
+          height: 60px; }
+        .header_box .logo_box .logo_right .header_erweima p {
+          text-align: center;
+          margin-top: -5px;
+          color: #6d3a06; }
+      .header_box .logo_box .logo_right .mg_10 {
+        margin-left: 10px; }
+      .header_box .logo_box .logo_right .serach_box {
+        float: left; }
+        .header_box .logo_box .logo_right .serach_box input {
+          background: transparent;
+          border: 1px solid #ab8e72;
+          width: 700px;
+          height: 36px;
+          line-height: 36px;
+          margin-top: 22px;
+          border-radius: 5px 0px 0px 5px;
+          padding-left: 20px;
+          float: left; }
+        .header_box .logo_box .logo_right .serach_box .search_btn {
+          float: right;
+          background-color: #ab8e72;
+          background-image: url(../images/search_img.png);
+          background-position: center;
+          background-repeat: no-repeat;
+          border: none;
+          outline: none;
+          border-radius: 0px 5px 5px 0px;
+          width: 60px;
+          height: 36px;
+          margin-top: 22px; }
+          .header_box .logo_box .logo_right .serach_box .search_btn:active {
+            background-color: #977a5e; }
+
+.top_nav_box {
+  background: url(../images/nav_bg.png); }
+  .top_nav_box .top_nav {
+    width: 1280px;
+    margin: 0 auto;
+    line-height: 45px;
+    overflow: hidden;
+    clear: both; }
+    .top_nav_box .top_nav li {
+      width: 130px;
+      display: inline-block;
+      float: left; }
+      .top_nav_box .top_nav li a {
+        color: #f5e9c9;
+        display: block;
+        height: 100%;
+        text-align: center;
+        font-size: 18px; }
+      .top_nav_box .top_nav li a:hover {
+        background: rgba(0, 0, 0, 0.25); }
+      .top_nav_box .top_nav li .active {
+        background: rgba(0, 0, 0, 0.25); }
+
+.footer_box {
+  background-color: #ab8e72;
+  background-image: url(../images/footer_bg_shan.png);
+  background-size: cover;
+  height: 350px; }
+  .footer_box .footer_img img {
+    width: 100%;
+    height: auto; }
+  .footer_box .footer_cont {
+    width: 1280px;
+    margin: auto;
+    padding-bottom: 15px;
+    overflow: hidden;
+    border-bottom: 1px solid  #d1c4b9; }
+  .footer_box .footer_list_box {
+    float: left; }
+    .footer_box .footer_list_box .f_li {
+      float: left;
+      width: 170px;
+      border-right: 1px solid #d1c4b9;
+      height: 115px;
+      text-align: center; }
+      .footer_box .footer_list_box .f_li h3 {
+        color: #fff;
+        font-weight: 400; }
+      .footer_box .footer_list_box .f_li .c_ui {
+        margin-top: 10px; }
+        .footer_box .footer_list_box .f_li .c_ui a {
+          color: #edd5be; }
+        .footer_box .footer_list_box .f_li .c_ui a:hover {
+          color: #fea958; }
+  .footer_box .footer_bar {
+    margin-top: 10px;
+    text-align: center;
+    line-height: 35px;
+    color: #fff; }
+    .footer_box .footer_bar a {
+      color: #fff; }
+  .footer_box .lianxi_box {
+    float: right;
+    width: 400px; }
+    .footer_box .lianxi_box .p_box {
+      color: #fff0b9;
+      width: 330px;
+      padding: 5px 10px;
+      margin-top: 5px;
+      border: 1px #fff0b9 solid;
+      line-height: 30px;
+      font-size: 22px; }
+    .footer_box .lianxi_box .phone_icon_box {
+      margin-top: 10px; }
+      .footer_box .lianxi_box .phone_icon_box img {
+        width: 55px;
+        display: inline-block;
+        vertical-align: middle; }
+      .footer_box .lianxi_box .phone_icon_box .phone_right {
+        display: inline-block;
+        vertical-align: middle;
+        margin-left: 10px; }
+        .footer_box .lianxi_box .phone_icon_box .phone_right .p_t {
+          color: #ddd;
+          font-size: 12px; }
+        .footer_box .lianxi_box .phone_icon_box .phone_right .p_b {
+          font-size: 18px;
+          color: #eee; }
+
+.content_box {
+  min-height: 380px;
+  background-image: url(../images/content_box.png);
+  background-repeat: no-repeat;
+  background-position: right bottom; }
+  .content_box .cms_show_box {
+    width: 1280px;
+    margin: 0 auto;
+    background: #fff;
+    margin-top: 10px;
+    padding: 15px;
+    overflow: hidden; }
+    .content_box .cms_show_box .content_bar {
+      padding-left: 30px;
+      margin-top: 10px;
+      font-size: 16px;
+      color: #595959; }
+    .content_box .cms_show_box .content_left {
+      width: 900px;
+      float: left;
+      padding: 10px; }
+      .content_box .cms_show_box .content_left .content_text {
+        border: 1px solid #eae9ed;
+        box-shadow: 1px 1px 5px #ccc;
+        padding: 20px; }
+        .content_box .cms_show_box .content_left .content_text .cont_text_tit {
+          font-size: 24px; }
+        .content_box .cms_show_box .content_left .content_text .cont_text_bar {
+          font-size: 14px;
+          margin-top: 10px; }
+        .content_box .cms_show_box .content_left .content_text .cont_text_main {
+          margin-top: 30px; }
+      .content_box .cms_show_box .content_left .content_zan {
+        text-align: center;
+        padding-top: 10px; }
+        .content_box .cms_show_box .content_left .content_zan .zan {
+          display: inline-block;
+          cursor: pointer;
+          height: 30px;
+          width: 30px;
+          background-image: url(../images/zan.png);
+          background-repeat: no-repeat;
+          background-position: 0px 0px;
+          display: inline-block;
+          vertical-align: middle; }
+        .content_box .cms_show_box .content_left .content_zan .zan_active {
+          background-position: -30px 0px; }
+    .content_box .cms_show_box .content_right {
+      margin-top: 10px;
+      width: 340px;
+      float: right; }
+      .content_box .cms_show_box .content_right .cms_tuijian .cms_tuijian_tit {
+        font-size: 16px;
+        color: #fff;
+        background: #ab8e72;
+        padding-left: 15px;
+        line-height: 34px; }
+      .content_box .cms_show_box .content_right .cms_tuijian .cms_tuijian_list {
+        box-shadow: 1px 1px 5px #ccc;
+        border: 1px solid #eae9ed; }
+        .content_box .cms_show_box .content_right .cms_tuijian .cms_tuijian_list ul {
+          padding: 10px 15px; }
+          .content_box .cms_show_box .content_right .cms_tuijian .cms_tuijian_list ul a {
+            color: #ab8e72;
+            font-size: 14px;
+            line-height: 25px; }
+          .content_box .cms_show_box .content_right .cms_tuijian .cms_tuijian_list ul a:hover {
+            color: #977a5e; }
+      .content_box .cms_show_box .content_right .cms_tuijian .cms_classify_list {
+        overflow: hidden; }
+        .content_box .cms_show_box .content_right .cms_tuijian .cms_classify_list li {
+          width: 50%;
+          float: left; }
+      .content_box .cms_show_box .content_right .cms_paihang {
+        background: #f7f7f7;
+        box-shadow: 1px 1px 5px #ccc;
+        margin-top: 15px; }
+        .content_box .cms_show_box .content_right .cms_paihang .cms_paihang_tit {
+          font-size: 16px;
+          color: #434343;
+          padding-left: 15px;
+          line-height: 34px;
+          border-bottom: 1px solid #ab8e72; }
+        .content_box .cms_show_box .content_right .cms_paihang .cms_paihang_list ul {
+          padding: 10px 15px; }
+          .content_box .cms_show_box .content_right .cms_paihang .cms_paihang_list ul a {
+            color: #ab8e72;
+            font-size: 14px;
+            line-height: 25px;
+            display: block;
+            overflow: hidden;
+            border-bottom: 1px solid #ddddde;
+            padding: 15px 0; }
+            .content_box .cms_show_box .content_right .cms_paihang .cms_paihang_list ul a img {
+              float: left;
+              display: block;
+              width: 87px;
+              height: 50px; }
+            .content_box .cms_show_box .content_right .cms_paihang .cms_paihang_list ul a .f_r {
+              margin-left: 10px;
+              width: 210px;
+              float: right; }
+          .content_box .cms_show_box .content_right .cms_paihang .cms_paihang_list ul a:hover {
+            color: #977a5e; }
+
+.list_cms_ul li {
+  padding: 20px 0;
+  border-bottom: 1px solid #eae9ed; }
+  .list_cms_ul li a {
+    display: block;
+    overflow: hidden; }
+    .list_cms_ul li a .img_th {
+      width: 180px;
+      height: 100px;
+      float: left;
+      overflow: hidden; }
+      .list_cms_ul li a .img_th img {
+        width: 100%;
+        height: auto; }
+    .list_cms_ul li a .list_cms_rbox {
+      margin-left: 30px;
+      float: left;
+      width: 628px; }
+      .list_cms_ul li a .list_cms_rbox h3 {
+        font-size: 18px;
+        color: #595959; }
+      .list_cms_ul li a .list_cms_rbox .list_cms_classify {
+        color: #ab8e72;
+        border: 1px solid #ab8e72;
+        padding: 5px  10px;
+        margin-top: 10px;
+        width: 100px;
+        text-align: center;
+        font-weight: 600; }
+      .list_cms_ul li a .list_cms_rbox .list_cms_bar {
+        margin-top: 10px;
+        color: #999; }
+        .list_cms_ul li a .list_cms_rbox .list_cms_bar span {
+          margin-right: 20px; }
+
+.pagination_Box {
+  margin: 0 auto;
+  text-align: center;
+  width: 100%;
+  margin-top: 40px;
+  padding-bottom: 60px; }
+  .pagination_Box ul {
+    overflow: hidden;
+    margin: 0 auto; }
+    .pagination_Box ul li {
+      margin-right: 7px;
+      border: #ececec 1px solid;
+      padding: 4px 5px;
+      font-size: 14px;
+      display: inline-block;
+      min-width: 18px;
+      min-height: 10px; }
+      .pagination_Box ul li a {
+        display: block;
+        color: #777;
+        min-width: 18px;
+        font-size: 14px;
+        text-align: center; }
+      .pagination_Box ul li a:hover {
+        text-decoration: underline; }
+    .pagination_Box ul .active {
+      border: 1px solid #ab8e72;
+      color: #ab8e72; }
+
+.login_box {
+  width: 100%;
+  height: 380px;
+  background: #EBE9E7; }
+  .login_box .inputAreaBg {
+    width: 1280px;
+    height: 380px;
+    margin: 0 auto; }
+    .login_box .inputAreaBg .inputArea {
+      float: right;
+      width: 320px;
+      height: 300px;
+      margin-top: 30px;
+      background: #FFFFFF;
+      text-align: center; }
+      .login_box .inputAreaBg .inputArea .textDiv {
+        width: 100%;
+        height: 40px;
+        overflow: hidden;
+        float: left; }
+        .login_box .inputAreaBg .inputArea .textDiv .loginText {
+          float: left;
+          margin-top: 10px;
+          margin-left: 30px;
+          font-weight: 550;
+          font-size: 18px;
+          color: #676661; }
+        .login_box .inputAreaBg .inputArea .textDiv .registerText {
+          float: right;
+          margin-top: 14px;
+          margin-right: 30px;
+          font-size: 12px;
+          cursor: pointer; }
+          .login_box .inputAreaBg .inputArea .textDiv .registerText a {
+            color: #87511d; }
+      .login_box .inputAreaBg .inputArea .msg {
+        color: #e4393c;
+        background-color: #ffebeb;
+        border: 1px solid #e4393c;
+        width: 260px;
+        height: 25px;
+        margin: 0 auto;
+        background: #FFD6D2;
+        clear: both; }
+      .login_box .inputAreaBg .inputArea .nickNameDiv,
+      .login_box .inputAreaBg .inputArea .passwordDiv {
+        float: left;
+        height: 36px;
+        margin-left: 30px;
+        margin-right: 30px;
+        margin-top: 10px; }
+        .login_box .inputAreaBg .inputArea .nickNameDiv .textInput,
+        .login_box .inputAreaBg .inputArea .passwordDiv .textInput {
+          color: #999999;
+          width: 260px;
+          height: 100%;
+          line-height: 40px;
+          border: solid 1px #D0CCC7;
+          padding-left: 10px; }
+      .login_box .inputAreaBg .inputArea .autoLoginDiv {
+        float: left;
+        margin-left: 30px;
+        margin-top: 20px;
+        clear: both; }
+        .login_box .inputAreaBg .inputArea .autoLoginDiv .rememberMe {
+          -webkit-appearance: checkbox;
+          display: inline-block;
+          vertical-align: middle; }
+      .login_box .inputAreaBg .inputArea .loginBtn {
+        float: left;
+        margin-top: 20px;
+        margin-left: 30px;
+        margin-right: 30px;
+        background: #FF0040;
+        color: white;
+        font-size: 18px;
+        width: 260px;
+        height: 40px;
+        line-height: 40px;
+        text-align: center;
+        cursor: pointer; }
+        .login_box .inputAreaBg .inputArea .loginBtn:hover {
+          background-color: #e34871; }
+
+.register_box {
+  width: 400px;
+  margin: 0 auto; }
+  .register_box .reg_tit {
+    font-size: 20px;
+    color: #666;
+    margin-top: 20px;
+    font-weight: 600; }
+  .register_box .form_ground_box {
+    margin-top: 15px; }
+    .register_box .form_ground_box .reg_lab {
+      display: inline-block;
+      width: 90px;
+      text-align: right; }
+    .register_box .form_ground_box .input_width,
+    .register_box .form_ground_box .input_width_min {
+      color: #999999;
+      width: 300px;
+      height: 36px;
+      line-height: 40px;
+      border: solid 1px #D0CCC7;
+      padding: 5px; }
+    .register_box .form_ground_box .input_width_min {
+      width: 140px; }
+    .register_box .form_ground_box .validate_img {
+      width: 140px;
+      height: 36px;
+      display: inline-block;
+      vertical-align: middle;
+      margin-left: 10px; }
+    .register_box .form_ground_box .valid_btn {
+      background: #FF6633;
+      border: none;
+      color: #fff;
+      outline: none; }
+      .register_box .form_ground_box .valid_btn:active {
+        background: #eb521f; }
+    .register_box .form_ground_box .agreeMent {
+      width: 18px;
+      height: 18px;
+      display: inline-block;
+      vertical-align: middle; }
+    .register_box .form_ground_box a {
+      color: #87511d; }
+    .register_box .form_ground_box .submitBtn {
+      margin: 0 auto;
+      background: #FF0040;
+      color: white;
+      font-size: 18px;
+      width: 260px;
+      height: 40px;
+      line-height: 40px;
+      text-align: center;
+      cursor: pointer; }
+      .register_box .form_ground_box .submitBtn:hover {
+        background-color: #e34871; }
+  .register_box .center {
+    text-align: center; }
+  .register_box .go_login {
+    margin: 10px;
+    text-align: center;
+    font-size: 14px;
+    color: #666; }
+    .register_box .go_login a {
+      color: #87511d; }
