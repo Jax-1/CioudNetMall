@@ -1,5 +1,7 @@
 package com.mall.entity.cms;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
 import com.mall.message.SystemCode;
@@ -17,6 +19,18 @@ public class AuthorWithBLOBs extends Author {
 	 */
 	private AtticleldCategory atticleldCategory;
 	
+	private List<FilePath> filePath;
+	
+	
+	
+	public List<FilePath> getFilePath() {
+		return filePath;
+	}
+
+	public void setFilePath(List<FilePath> filePath) {
+		this.filePath = filePath;
+	}
+
 	public AtticleldCategory getAtticleldCategory() {
 		return atticleldCategory;
 	}

@@ -253,9 +253,23 @@
 		    <result column="craeatby_c" jdbcType="VARCHAR" property="craeatby" />
 		    <result column="createat_c" jdbcType="TIMESTAMP" property="createat" />
      </association>
+     <collection property="filePath" ofType="com.mall.entity.cms.FilePath"  column="id">
+     	 <id column="fileid" jdbcType="VARCHAR" property="fileid" />
+	    <result column="belongid" jdbcType="VARCHAR" property="belongid" />
+	    <result column="path" jdbcType="VARCHAR" property="path" />
+	    <result column="fileidname" jdbcType="VARCHAR" property="fileidname" />
+	    <result column="filename" jdbcType="VARCHAR" property="filename" />
+	    <result column="filetype" jdbcType="VARCHAR" property="filetype" />
+	    <result column="filesize" jdbcType="VARCHAR" property="filesize" />
+	    <result column="status_c" jdbcType="VARCHAR" property="status" />
+	    <result column="createby_c1" jdbcType="VARCHAR" property="createby" />
+	    <result column="createat_c1" jdbcType="TIMESTAMP" property="createat" />
+     </collection>
   </resultMap>
   <!-- 查询列表 -->
   <select id="getPageFront" parameterType="com.mall.entity.cms.AuthorWithBLOBs" resultMap="authorResultMap">
+  select a.*,b.fileid, b.belongid,b.path, b.fileidname, b.filename, b.filetype, b.filesize, b.status status_c, b.createby createby_c1, 
+    b.createat createat_c1 from(
 	  SELECT
 		t1.id, t1.authorname, t1.columns, t1.classification, t1.address, t1.position, t1.viewimg, t1.recommended, 
 	    t1.viewCount, t1.likeCount, t1.status, t1.createby, t1.createat, t1.updateTime,
@@ -270,13 +284,16 @@
 		</if>
 		AND t1.status='Y'
 	ORDER BY t1.createat desc
+	)a LEFT JOIN t_file_path b ON a.id = b.belongid
   </select>
   <!-- 删除，软删除，更改状态 -->
   <update id="chengeStatus" parameterType="com.mall.entity.cms.Author">
   update t_cms_author set status='N' where id=#{id}
   </update>
   <!-- 查询作家信息（完整） -->
-  <select id="selectInfo" parameterType="com.mall.entity.cms.Author" resultMap="authorResultMap">
+  <select id="selectInfo" parameterType="com.mall.entity.cms.AuthorWithBLOBs" resultMap="authorResultMap">
+    select a.*,b.fileid, b.belongid,b.path, b.fileidname, b.filename, b.filetype, b.filesize, b.status status_c, b.createby createby_c1, 
+    b.createat createat_c1 from(
   SELECT
 		t1.id, t1.authorname, t1.columns, t1.classification, t1.address, t1.position, t1.viewimg, t1.recommended, 
 	    t1.viewCount, t1.likeCount, t1.status, t1.createby, t1.createat, t1.updateTime,t1.Introduction,t1.content,
@@ -287,5 +304,39 @@
 	WHERE
 		t1.classification = t2.id 
 		AND t1.id = #{id}
+		)a LEFT JOIN t_file_path b ON a.id = b.belongid
   </select>
+  <!-- 推荐作家 -->
+  <select id="queryRecommendAtt" resultMap="authorResultMap">
+  	select a.*,b.fileid, b.belongid,b.path, b.fileidname, b.filename, b.filetype, b.filesize, b.status status_c, b.createby createby_c1, 
+    b.createat createat_c1 from(
+	  SELECT
+		t1.id, t1.authorname, t1.columns, t1.classification, t1.address, t1.position, t1.viewimg, t1.recommended, 
+	    t1.viewCount, t1.likeCount, t1.status, t1.createby, t1.createat, t1.updateTime,
+		 t2.id id_c, ladelname, parentId, hierarchy, t2.craeatby craeatby_c, t2.createat createat_c
+	FROM
+		t_cms_author t1,
+		t_cms_atticleld_category t2 
+	WHERE
+		t1.classification = t2.id 
+		<if test="columns!=null">
+		AND t1.columns=#{auth.columns}
+		</if>
+		AND t1.status='Y'
+		AND t1.recommended	='on'
+	ORDER BY t1.createat,t1.viewCount desc
+	)a LEFT JOIN t_file_path b ON a.id = b.belongid limit 0.${pageSize}
+  
+  </select>
+  <!-- 更新点赞数或查看次数 -->
+ <update id="updateLikeAndViewCount" parameterType="com.mall.entity.cms.AuthorWithBLOBs" >
+	  update t_cms_author set
+	  <if test="viewCount!=null">
+	  viewCount=#{viewCount}
+	  </if>
+	  <if test="likeCount!=null">
+	  likeCount=#{likeCount}
+	  </if>
+	  where id=#{id}
+ </update>
 </mapper>

@@ -1,7 +1,6 @@
 package com.mall.controller.cms;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,23 +13,18 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.github.pagehelper.Page;
 import com.mall.controller.AbstractController;
-import com.mall.dao.cms.AuthorMapper;
 import com.mall.entity.cms.Atticleld;
 import com.mall.entity.cms.AtticleldCategory;
 import com.mall.entity.cms.AuthorWithBLOBs;
 import com.mall.entity.cms.FilePath;
-import com.mall.message.ProcessResult;
 import com.mall.message.SystemCode;
 import com.mall.service.cms.AtticleldCategoryService;
 import com.mall.service.cms.AtticleldService;
 import com.mall.service.cms.AuthorWithBLOBsService;
 import com.mall.service.cms.FilePathService;
 import com.mall.service.sys.CacheService;
-import com.mall.util.DateFormatUtil;
 import com.mall.util.PageResult;
 import com.mall.util.Validate;
 
@@ -53,8 +47,6 @@ public class AdminCMSController extends AbstractController{
 	private FilePathService filePathService;
 	@Resource
 	private AuthorWithBLOBsService authorWithBLOBsService;
-	@Resource
-	AuthorMapper authorMapper;
 	/**
 	 * 添加文章
 	 * @return

@@ -117,6 +117,11 @@ public class SystemCode {
 	public final static String PAGE="PAGE";
 	public final static String ATT_PAGE="ATT_PAGE";
 	public final static String AUT_PAGE="AUT_PAGE";
+	public final static String MALL_ATT_PAGE="MALL_ATT_PAGE";
+	public final static String MALL_AUT_PAGE="MALL_AUT_PAGE";
+	public final static String MALL_ATT_REC_PAGE="MALL_ATT_REC_PAGE";
+	public final static String MALL_AUT_REC_PAGE="MALL_AUT_REC_PAGE";
+	
 	
 
 }

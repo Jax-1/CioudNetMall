@@ -3,8 +3,9 @@
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
 	<meta charset="UTF-8">
-	<title>内容列表页面</title>
+	<title>云网传媒</title>
 	<link rel="stylesheet" href="/mall/css/style.css">
+	 <script src="/admin/assets/global/plugins/jquery.min.js" type="text/javascript"></script>
 </head>
 <body class="body_bg">
 	<!-- 头部 -->
@@ -15,8 +16,8 @@
 		<div class="head_login_box">
 			<img class="user_img_min" src="/mall/images/touxiang.png" alt="">
 			<span>&nbsp;&nbsp;<a href="">sdfsadf</a>  </span>
-			<span>&nbsp;&nbsp;<a href="">请登录</a>  /</span>  
-			<span>&nbsp;&nbsp;<a href="">注册</a>  /</span>
+			<span>&nbsp;&nbsp;<a href="/mall/login.do">请登录</a>  /</span>  
+			<span>&nbsp;&nbsp;<a href="/mall/register.do">注册</a>  /</span>
 			<span>&nbsp;&nbsp;<a href="">个人中心</a>  /</span>
 		</div>
 	</div>
@@ -40,18 +41,43 @@
 		</div>
 		<div class="top_nav_box">
 			<ul class="top_nav">
-				<li><a href="">首页</a></li>
-				<li><a href="">在线商城</a></li>
-				<li><a href="">拍卖中心</a></li>
-				<li><a href="">限时秒杀</a></li>
-				<li><a href="">名家荟萃</a></li>
-				<li><a class="active" href="">作品锦集</a></li>
-				<li><a href="">传统文化</a></li>
-				<li><a href="">资讯中心</a></li>
-				<li><a href="">关于我们</a></li>
+				<li><a href="/mall" id='home' >首页</a></li>
+				<li><a href="" id="mall" >在线商城</a></li>
+				<li><a href="" id="auction" >拍卖中心</a></li>
+				<li><a href="" id="seckill" >限时秒杀</a></li>
+				<li><a href="/mall/authlist.do?Pid=MJHC" id="auth" >名家荟萃</a></li>
+				<li><a href="/mall/list.do?Pid=ZPJJ" id='works' >作品锦集</a></li>
+				<li><a href="/mall/list.do?Pid=CTWH" id='culture' >传统文化</a></li>
+				<li><a href="/mall/list.do?Pid=ZXZX" id='news' >资讯中心</a></li>
+				<li><a href="" id='about' >关于我们</a></li>
 			</ul>
 		</div>
 	</div>
+	<script type="text/javascript" th:inline="javascript">
+		$(function(){
+			
+			var Pid=[[${Pid}]]
+			console.log(Pid);
+			switch(Pid)
+			{
+			case "MJHC":
+				 $("#auth").attr("class","active")
+			  break;
+			case "ZPJJ":
+				 $("#works").attr("class","active")
+			  break;
+			case "CTWH":
+				 $("#culture").attr("class","active")
+				  break;
+			case "ZXZX":
+				 $("#news").attr("class","active")
+				  break;
+			default:
+			   $("#home").attr("class","active")
+			}
+		})
+	
+	</script>
 	        
  </body>
  </html>

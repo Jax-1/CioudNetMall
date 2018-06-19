@@ -229,6 +229,9 @@
      </collection>
   </resultMap>
   <select id="getPageFront" parameterType="com.mall.entity.cms.Atticleld" resultMap="orderResultMap">
+  select a.*,b.fileid, b.belongid,b.path, b.fileidname, b.filename, b.filetype, b.filesize, b.status status_c, b.createby createby_c1, 
+    b.createat createat_c1
+		FROM(
 		SELECT
 			t1.id,columns, classification, title, viewImg, viewCount, likeCount, status, recommended, 
     		t1.createby, t1.createat, updateTime,
@@ -240,6 +243,8 @@
 			and t1.status='Y'
 		ORDER BY
 			t1.createat  desc
+			) a
+			LEFT JOIN t_file_path b ON a.id = b.belongid
 	
 	
   </select>
@@ -287,4 +292,37 @@
 			) a
 			LEFT JOIN t_file_path b ON a.id = b.belongid
   </select>
+  <!-- 热门文章 -->
+  <select id="queryHotAtt"  resultMap="orderResultMap">
+  	  select a.*,b.fileid, b.belongid,b.path, b.fileidname, b.filename, b.filetype, b.filesize, b.status status_c, b.createby createby_c1, 
+    b.createat createat_c1
+		FROM (
+	SELECT
+			t1.id,columns, classification, title, viewImg, viewCount, likeCount, status, recommended, 
+    		t1.createby, t1.createat, updateTime,
+			t2.id id_c, t2.ladelname, t2.parentId, t2.hierarchy, t2.craeatby craeatby_c, t2.createat createat_c
+		FROM
+			t_cms_articleld AS t1 ,t_cms_atticleld_category as t2
+		WHERE
+			t1.columns=#{att.columns} and t1.classification=t2.id
+			and t1.status='Y'
+		ORDER BY
+			t1.viewCount  desc
+			) a
+			LEFT JOIN t_file_path b ON a.id = b.belongid limit 0,#{pageSize}
+			
+  
+  </select>
+  <!-- 更新点赞数或查看次数 -->
+  <update id="updateLikeAndViewCount" parameterType="com.mall.entity.cms.Atticleld">
+  update set
+  <if test="viewCount!=null">
+  viewCount=#{viewCount}
+  </if>
+  <if test="likeCount!=null">
+  likeCount=#{likeCount}
+  </if>
+  where id=#{id}
+  
+  </update>
 </mapper>

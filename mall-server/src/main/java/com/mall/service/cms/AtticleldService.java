@@ -2,9 +2,8 @@ package com.mall.service.cms;
 
 import java.util.List;
 
-import com.github.pagehelper.Page;
+
 import com.mall.entity.cms.Atticleld;
-import com.mall.message.ProcessResult;
 import com.mall.service.IBaseService;
 
 /**
@@ -13,5 +12,16 @@ import com.mall.service.IBaseService;
  *
  */
 public interface AtticleldService extends IBaseService<Atticleld>{
+	/**
+	 * 热门文章
+	 * @return
+	 */
+	public List<Atticleld> queryHotAtt(Atticleld att);
+	/**
+	 * 更新点赞数或查看次数
+	 * @param att
+	 * @return
+	 */
+	public int updateLikeAndViewCount(Atticleld att);
 	
 }

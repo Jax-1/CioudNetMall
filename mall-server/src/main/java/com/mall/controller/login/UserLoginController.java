@@ -39,6 +39,7 @@ public class UserLoginController {
 	@RequestMapping("")
 	public String toIndex(Model model) {
 		cacheService.getCache(SystemCode.PAGE);
+		
 		model.addAttribute("page", "/mall/base/index_body");
 		return "/mall/index";
 	}
@@ -48,6 +49,7 @@ public class UserLoginController {
 	 */
 	@RequestMapping("/login.do")
 	public String toLogin(Model model) {
+		 
 		model.addAttribute("page", "/mall/login/login");
 		return "/mall/index";
 	}
@@ -58,6 +60,7 @@ public class UserLoginController {
 	 */
 	@RequestMapping("/register.do")
 	public String toRegister(Model model) {
+		 
 		model.addAttribute("page", "/mall/login/register");
 		return "/mall/index";
 	}

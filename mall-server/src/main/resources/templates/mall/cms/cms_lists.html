@@ -12,92 +12,42 @@
 <!-- END HEAD -->
 
 <body class="page-header-fixed page-sidebar-closed-hide-logo page-content-white">
-<!-- 鍐呭閮ㄥ垎 -->
+<!-- 内容部分 -->
 	<div class="content_box">
 		<div class="cms_show_box">
 			<div class="content_bar">
-				鎮ㄦ墍鍦ㄧ殑浣嶇疆锛�<span>浼犵粺鏂囧寲</span>	
+				您所在的位置：<span>传统文化</span>	
 			</div>
 			<div class="content_left">
-				<!-- 鏂囩珷鍐呭 -->
+				<!-- 文章内容 -->
 				<div class="content_text">
 					<ul class="list_cms_ul">
-						<li>
+						<li th:each="a:${list.dataList}">
 							<a href="">
 								<div class="img_th">
-									<img src="/mall/images/noimage_big.png" alt="">
+									<img src="images/noimage_big.png" alt="">
 								</div>
 								<div class="list_cms_rbox">
-									<h3>娓呪�滅棝鐥団�濈摲锛屼簯绾规祬璋堬紒</h3>
-									<div class="list_cms_classify">
-										涔︽硶浜ゆ祦浼�
+									<h3 th:text="${a.title}">清“痛症”瓷，云纹浅谈！</h3>
+									<div class="list_cms_classify" th:text="${a.atticleldCategory.ladelname}">
+										书法交流会
 									</div>
 									<div class="list_cms_bar">
-										娴忚<span>15</span>
-										<span>2018-05-09 14锛�48</span>
+										浏览<span th:text="${a.viewCount}">15</span>
+										<span th:text="${a.createat}">2018-05-09 14：48</span>
 									</div>
 								</div>
 							</a>
 						</li>
-						<li>
-							<a href="">
-								<div class="img_th">
-									<img src="/mall/images/noimage_big.png" alt="">
-								</div>
-								<div class="list_cms_rbox">
-									<h3>娓呪�滅棝鐥団�濈摲锛屼簯绾规祬璋堬紒</h3>
-									<div class="list_cms_classify">
-										涔︽硶浜ゆ祦浼�
-									</div>
-									<div class="list_cms_bar">
-										娴忚<span>15</span>
-										<span>2018-05-09 14锛�48</span>
-									</div>
-								</div>
-							</a>
-						</li>
-						<li>
-							<a href="">
-								<div class="img_th">
-									<img src="/mall/images/noimage_big.png" alt="">
-								</div>
-								<div class="list_cms_rbox">
-									<h3>娓呪�滅棝鐥団�濈摲锛屼簯绾规祬璋堬紒</h3>
-									<div class="list_cms_classify">
-										涔︽硶浜ゆ祦浼�
-									</div>
-									<div class="list_cms_bar">
-										娴忚<span>15</span>
-										<span>2018-05-09 14锛�48</span>
-									</div>
-								</div>
-							</a>
-						</li>
-						<li>
-							<a href="">
-								<div class="img_th">
-									<img src="/mall/images/noimage_big.png" alt="">
-								</div>
-								<div class="list_cms_rbox">
-									<h3>娓呪�滅棝鐥団�濈摲锛屼簯绾规祬璋堬紒</h3>
-									<div class="list_cms_classify">
-										涔︽硶浜ゆ祦浼�
-									</div>
-									<div class="list_cms_bar">
-										娴忚<span>15</span>
-										<span>2018-05-09 14锛�48</span>
-									</div>
-								</div>
-							</a>
-						</li>
+						
 					</ul>
 
 					
-					<!-- 鍒嗛〉 -->
+					<!-- 分页 -->
 					<div class="pagination_Box">
 						<ul>
-							<li><a href="" class="demo">棣栭〉</a></li>
-							<li><a href=""  class="demo">涓婁竴椤�</a></li>
+							<li><a href="" class="demo">首页</a></li>
+							<li><a href=""  class="demo">上一页</a></li>
 							<li class="active">
 								<a  href="">1</a>
 							</li>
@@ -111,10 +61,10 @@
 								<a  href="">4</a>
 							</li>
 							<li>
-								<a href="">涓嬩竴椤�</a>
+								<a href="">下一页</a>
 							</li>
 							<li>
-								<a  href="">鏈〉</a>
+								<a  href="">末页</a>
 							</li>
 						</ul>
 					</div>
@@ -122,69 +72,41 @@
 				</div>
 				
 			</div>
-			<!-- 宸︿晶鍐呭缁撴潫 -->
-			<!-- 鍙充晶鍐呭 -->
+			<!-- 左侧内容结束 -->
+			<!-- 右侧内容 -->
 			<div class="content_right">
 				<div class="cms_tuijian">
 					<div class="cms_tuijian_tit">
-						鎵�鏈夊垎绫�
+						所有分类
 					</div>
 					<div class="cms_tuijian_list">
 						<ul class="cms_classify_list">
-							<li><a href="#">鎺ㄥ箍浼犵粺鏂囧寲 </a></li>
-							<li><a href="#">浜戜簩浠ｅ浠よ惀 </a></li>
-							<li><a href="#">鍏泭璁插骇</a></li>
-							<li><a href="#">璇讳功浼�</a></li>
+							<li th:each="ca:${Category}"><a href="#" th:text="${ca.ladelname}">推广传统文化 </a></li>
+							
 						</ul>
 					</div>
 				</div>
-				<!-- 鎺掕 -->
+				<!-- 排行 -->
 				<div class="cms_paihang">
 					<div class="cms_paihang_tit">
-						鐑棬鏂囩珷鎺掕
+						热门文章排行
 					</div>
 					<div class="cms_paihang_list">
 						<ul>
-							<li>
+							<li  th:each="a:${hotAtt}">
 								<a href="">
-									<img src="/mall/images/noimg.png" alt="">
-									<div class="f_r">绾补鐨勪釜浜轰富涔夊悓浠栫殑鐢变簬涓�鑸�
-									鏋佸叿娆ф床鐗硅壊</div>
+									<img src="images/noimg.png" alt="">
+									<div class="f_r" th:text="${a.title}">纯粹的个人主义同他的由于一般
+									极具欧洲特色</div>
 								</a>
 							</li>
-							<li>
-								<a href="">
-									<img src="/mall/images/noimg.png" alt="">
-									<div class="f_r">绾补鐨勪釜浜轰富涔夊悓浠栫殑鐢变簬涓�鑸�
-									鏋佸叿娆ф床鐗硅壊</div>
-								</a>
-							</li>
-							<li>
-								<a href="">
-									<img src="/mall/images/noimg.png" alt="">
-									<div class="f_r">绾补鐨勪釜浜轰富涔夊悓浠栫殑鐢变簬涓�鑸�
-									鏋佸叿娆ф床鐗硅壊</div>
-								</a>
-							</li>
-							<li>
-								<a href="">
-									<img src="/mall/images/noimg.png" alt="">
-									<div class="f_r">绾补鐨勪釜浜轰富涔夊悓浠栫殑鐢变簬涓�鑸�
-									鏋佸叿娆ф床鐗硅壊</div>
-								</a>
-							</li>
-							<li>
-								<a href="">
-									<img src="/mall/images/noimg.png" alt="">
-									<div class="f_r">绾补鐨勪釜浜轰富涔夊悓浠栫殑鐢变簬涓�鑸�
-									鏋佸叿娆ф床鐗硅壊</div>
-								</a>
-							</li>
+	
 						</ul>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-	<!-- 鍐呭閮ㄥ垎缁撴潫 -->
+	<!-- 内容部分结束 -->
 </body>
+</html>

@@ -1,23 +1,24 @@
 package com.mall.dao.cms;
 
+import java.util.List;
+
+import org.apache.ibatis.annotations.Param;
+
 import com.mall.dao.base.IBaseDao;
 import com.mall.entity.cms.AuthorWithBLOBs;
-import com.mall.entity.cms.Author;
 
 public interface AuthorMapper extends IBaseDao<AuthorWithBLOBs>{
 
-	int deleteByPrimaryKey(String id);
-
-	int insert(AuthorWithBLOBs record);
-
-	int insertSelective(AuthorWithBLOBs record);
-
-	AuthorWithBLOBs selectByPrimaryKey(String id);
-
-	int updateByPrimaryKeySelective(AuthorWithBLOBs record);
-
-	int updateByPrimaryKeyWithBLOBs(AuthorWithBLOBs record);
-
-	int updateByPrimaryKey(Author record);
+	/**
+	 * 推荐作家
+	 * @return
+	 */
+	public List<AuthorWithBLOBs> queryRecommendAtt(@Param("auth")AuthorWithBLOBs auth,@Param("pageSize")int pageSize);
+	/**
+	 * 更新点赞数或查看次数
+	 * @param att
+	 * @return
+	 */
+	public int updateLikeAndViewCount(AuthorWithBLOBs auth);
 
 }
