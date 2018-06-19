@@ -21,6 +21,8 @@ import com.mall.util.MD5Util;
 import com.mall.util.UUIDUtil;
 import com.mall.util.Validate;
 
+import com.mall.service.sys.CacheService;
+
 @Controller
 @RequestMapping("/mall")
 public class UserLoginController {
@@ -28,28 +30,35 @@ public class UserLoginController {
 	private UserLoginService userLoginService;
 	@Resource
 	private UserLoginUtil userLoginUtil;
+	@Resource
+	private CacheService cacheService;
 	/**
 	 * 跳转到主页
 	 * @return
 	 */
 	@RequestMapping("")
 	public String toIndex(Model model) {
-		
-		model.addAttribute("page", "/mall/index_body");
+		cacheService.getCache(SystemCode.PAGE);
+		model.addAttribute("page", "/mall/base/index_body");
 		return "/mall/index";
 	}
 	/**
-	 * 
+	 * 跳转到登录界面
 	 * @return
 	 */
 	@RequestMapping("/login.do")
 	public String toLogin(Model model) {
-		model.addAttribute("page", "/mall/index_body");
+		model.addAttribute("page", "/mall/login/login");
 		return "/mall/index";
 	}
+	/**
+	 * 跳转到注册界面
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping("/register.do")
 	public String toRegister(Model model) {
-		model.addAttribute("page", "/mall/index_body");
+		model.addAttribute("page", "/mall/login/register");
 		return "/mall/index";
 	}
 	

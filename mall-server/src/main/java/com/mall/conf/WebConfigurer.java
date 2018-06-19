@@ -3,6 +3,7 @@ package com.mall.conf;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
@@ -18,6 +19,7 @@ import java.util.concurrent.ThreadPoolExecutor;
 
 
 @Configuration
+@EnableCaching 
 public class WebConfigurer extends WebMvcConfigurerAdapter {
 
     private final Logger log = LoggerFactory.getLogger(WebConfigurer.class);

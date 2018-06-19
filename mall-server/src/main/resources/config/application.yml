@@ -59,7 +59,10 @@ spring:
 #            naming:
 #                strategy:
 #            ddl-auto: update
-
+   #cache
+    cache:
+       ehcache:
+          config:classpath:/config/ehcache.xml
     #上传文件大小
     http:
         multipart:
@@ -67,6 +70,7 @@ spring:
             max-request-size: 20MB
     jackson:
        date-format: yyyy-MM-dd HH:mm:ss
+   
 
 server:
 ##  context-path: /webapp
