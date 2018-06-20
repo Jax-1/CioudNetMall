@@ -1,15 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
-<head>
-    <meta charset="utf-8" />
-    <title>云网传媒后台主页</title>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta content="width=device-width, initial-scale=1" name="viewport" />
-    <meta content="Preview page of Metronic Admin Theme #1 for statistics, charts, recent events and reports" name="description" />
-    <meta content="" name="author" />
-    
-<!-- END HEAD -->
+
 
 <body class="page-header-fixed page-sidebar-closed-hide-logo page-content-white">
 <!-- 内容部分 -->
@@ -23,7 +15,7 @@
 				<div class="content_text">
 					<ul class="list_cms_ul">
 						<li th:each="a:${list.dataList}">
-							<a href="" th:href="@{/mall/content.do(Pid=${Pid},id=${a.id})}">
+							<a href="" th:href="@{/mall/cms/content.do(Pid=${Pid},id=${a.id})}">
 								<div class="img_th">
 									<img src="images/noimage_big.png" alt="" style="weith:180px" th:each="entry : ${a}==null?'':${a.filePath}" th:attr="src=${a}==null?'':${fileServicePath}+'/'+${entry.path}+'/'+${entry.fileidname}+'.'+${entry.filetype}">
 								</div>
@@ -46,10 +38,10 @@
 					<!-- 分页 -->
 					<div class="pagination_Box">
 						<ul>
-							<li><a href="" class="demo">首页</a></li>
-							<li><a href=""  class="demo">上一页</a></li>
-							<li class="active">
-								<a  href="">1</a>
+							<li><a href="" class="demo" th:href="@{/mall/cms/list.do(Pid=${Pid},pageNo=${1})}">首页</a></li>
+							<li><a href=""  class="demo" th:href="@{/mall/cms/list.do(Pid=${Pid},pageNo=${list.pageNo}-1>0?${list.pageNo}-1:1)}">上一页</a></li>
+							<li class="active" id="activepage">
+								<a  th:text="${list.pageNo}">1</a>
 							</li>
 							<li>
 								<a  href="">2</a>
@@ -61,10 +53,10 @@
 								<a  href="">4</a>
 							</li>
 							<li>
-								<a href="">下一页</a>
+								<a href="" th:href="@{/mall/cms/list.do(Pid=${Pid},pageNo=${list.pageNo}==${list.pages}?${list.pages}:${list.pageNo}+1)}">下一页</a>
 							</li>
 							<li>
-								<a  href="">末页</a>
+								<a  href="" th:href="@{/mall/cms/list.do(Pid=${Pid},pageNo=${list.pages})}"><i class="fa fa-angle-double-right">末页</a>
 							</li>
 						</ul>
 					</div>
@@ -81,7 +73,7 @@
 					</div>
 					<div class="cms_tuijian_list">
 						<ul class="cms_classify_list">
-							<li th:each="ca:${Category}"><a href="#" th:href="@{/mall/list.do(Pid=${Pid},classification=${ca.id})}" th:text="${ca.ladelname}">推广传统文化 </a></li>
+							<li th:each="ca:${Category}"><a href="#" th:href="@{/mall/cms/list.do(Pid=${Pid},classification=${ca.id})}" th:text="${ca.ladelname}">推广传统文化 </a></li>
 							
 						</ul>
 					</div>
@@ -94,7 +86,7 @@
 					<div class="cms_paihang_list">
 						<ul>
 							<li  th:each="a:${hotAtt}">
-								<a href=""  th:href="@{/mall/content.do(Pid=${Pid},id=${a.id})}">
+								<a href=""  th:href="@{/mall/cms/content.do(Pid=${Pid},id=${a.id})}">
 									<img src="images/noimg.png" alt="" style="weith:87px" th:each="entry : ${a}==null?'':${a.filePath}" th:attr="src=${a}==null?'':${fileServicePath}+'/'+${entry.path}+'/'+${entry.fileidname}+'.'+${entry.filetype}">
 									<div class="f_r" th:text="${a.title}">纯粹的个人主义同他的由于一般
 									极具欧洲特色</div>
@@ -108,5 +100,14 @@
 		</div>
 	</div>
 	<!-- 内容部分结束 -->
+	<script type="text/javascript" th:inline="javascript">
+		var pid=[[${Pid}]];
+		var pageNo=[[${list.pageNo}]];
+		for(var i=2;i<pageNo&&i>0;i--){
+			
+		}
+	
+	
+	</script>
 </body>
 </html>

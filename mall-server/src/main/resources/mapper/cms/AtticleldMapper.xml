@@ -239,7 +239,11 @@
 		FROM
 			t_cms_articleld AS t1 ,t_cms_atticleld_category as t2
 		WHERE
-			t1.columns=#{columns} and t1.classification=t2.id
+			t1.columns=#{columns} 
+			<if test="classification!=null">
+			and t1.classification=#{classification}
+			</if>
+			and t1.classification=t2.id
 			and t1.status='Y'
 		ORDER BY
 			t1.createat  desc

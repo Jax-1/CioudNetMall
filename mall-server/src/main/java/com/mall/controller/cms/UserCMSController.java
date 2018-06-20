@@ -29,7 +29,7 @@ import com.mall.util.PageResult;
  *
  */
 @Controller
-@RequestMapping("/mall")
+@RequestMapping("/mall/cms")
 public class UserCMSController extends AbstractController{
 	@Resource
 	private CacheService cacheService;
@@ -47,7 +47,7 @@ public class UserCMSController extends AbstractController{
 	 * @param model
 	 * @return
 	 */
-	@GetMapping("list.do")
+	@GetMapping("/list.do")
 	public String toCmsList(String Pid,Model model,PageResult<Atticleld> list,Atticleld att) {
 		int pageSize  =  Integer.parseInt(cacheService.getCache(SystemCode.PAGE).get(SystemCode.MALL_ATT_PAGE));
 		list.setPageSize(pageSize);
@@ -55,7 +55,7 @@ public class UserCMSController extends AbstractController{
 		list = atticleldService.queryByPageFront(list, att);
 		model.addAttribute("list", list);
 		logger.info("size:"+Pid);
-		logger.info("size:"+list.getDataList().size());
+		logger.info("size:"+att.getClassification());
 		List<AtticleldCategory> category = atticleldCategoryService.queryAll(Pid);
 		List<Atticleld> hotAtt = atticleldService.queryHotAtt(att);
 		Map<String, String> cache = cacheService.getCache(SystemCode.FILE_SERVICE);
