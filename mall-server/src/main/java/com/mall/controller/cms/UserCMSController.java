@@ -2,6 +2,7 @@ package com.mall.controller.cms;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -57,7 +58,13 @@ public class UserCMSController extends AbstractController{
 		logger.info("size:"+list.getDataList().size());
 		List<AtticleldCategory> category = atticleldCategoryService.queryAll(Pid);
 		List<Atticleld> hotAtt = atticleldService.queryHotAtt(att);
-		
+		Map<String, String> cache = cacheService.getCache(SystemCode.FILE_SERVICE);
+		String url=cache.get(SystemCode.FILE_SERVICE_URL);
+		String port=cache.get(SystemCode.FILE_SERVICE_PORT);
+		String filePath=cache.get(SystemCode.FILE_SERVICE_FILES_PATH);
+		String fileUrlPrefix=url+":"+port+"/"+filePath;
+		//文件服务器路径
+		model.addAttribute("fileServicePath", fileUrlPrefix);
 		model.addAttribute("hotAtt", hotAtt);
 		model.addAttribute("Category", category);
 		model.addAttribute("list", list);

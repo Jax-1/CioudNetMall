@@ -109,10 +109,17 @@ public class SystemCode {
 	public final static String USERINFO_HEADIMGURL="";
 	//文件服务器
 	public final static String FILE_SERVICE="FILE_SERVICE";
+	public final static String FILE_SERVICE_CON="FILE_SERVICE_CON";
 	public final static String FILE_SERVICE_URL="URL";
 	public final static String FILE_SERVICE_PORT="PORT";
 	public final static String FILE_SERVICE_FILES_PATH="FILES_PATH";
 	public final static String FILE_SERVICE_PATH="SERVICE_PATH";
+	//Sftp
+	public final static String FILE_SFTP_SERVICE_HOST="SFTP_SERVICE_HOST";
+	public final static String FILE_SFTP_SERVICE_PORT="SFTP_SERVICE_PORT";
+	public final static String FILE_SFTP_USERNAME="SFTP_USERNAME";
+	public final static String FILE_SFTP_PASSWORD="SFTP_PASSWORD";
+	
 	//分页查询记录数配置
 	public final static String PAGE="PAGE";
 	public final static String ATT_PAGE="ATT_PAGE";

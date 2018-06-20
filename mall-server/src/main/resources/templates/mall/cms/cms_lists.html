@@ -23,9 +23,9 @@
 				<div class="content_text">
 					<ul class="list_cms_ul">
 						<li th:each="a:${list.dataList}">
-							<a href="">
+							<a href="" th:href="@{/mall/content.do(Pid=${Pid},id=${a.id})}">
 								<div class="img_th">
-									<img src="images/noimage_big.png" alt="">
+									<img src="images/noimage_big.png" alt="" style="weith:180px" th:each="entry : ${a}==null?'':${a.filePath}" th:attr="src=${a}==null?'':${fileServicePath}+'/'+${entry.path}+'/'+${entry.fileidname}+'.'+${entry.filetype}">
 								</div>
 								<div class="list_cms_rbox">
 									<h3 th:text="${a.title}">清“痛症”瓷，云纹浅谈！</h3>
@@ -81,7 +81,7 @@
 					</div>
 					<div class="cms_tuijian_list">
 						<ul class="cms_classify_list">
-							<li th:each="ca:${Category}"><a href="#" th:text="${ca.ladelname}">推广传统文化 </a></li>
+							<li th:each="ca:${Category}"><a href="#" th:href="@{/mall/list.do(Pid=${Pid},classification=${ca.id})}" th:text="${ca.ladelname}">推广传统文化 </a></li>
 							
 						</ul>
 					</div>
@@ -94,8 +94,8 @@
 					<div class="cms_paihang_list">
 						<ul>
 							<li  th:each="a:${hotAtt}">
-								<a href="">
-									<img src="images/noimg.png" alt="">
+								<a href=""  th:href="@{/mall/content.do(Pid=${Pid},id=${a.id})}">
+									<img src="images/noimg.png" alt="" style="weith:87px" th:each="entry : ${a}==null?'':${a.filePath}" th:attr="src=${a}==null?'':${fileServicePath}+'/'+${entry.path}+'/'+${entry.fileidname}+'.'+${entry.filetype}">
 									<div class="f_r" th:text="${a.title}">纯粹的个人主义同他的由于一般
 									极具欧洲特色</div>
 								</a>

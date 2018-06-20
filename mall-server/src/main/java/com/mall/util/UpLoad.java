@@ -17,6 +17,8 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
+import com.jcraft.jsch.ChannelSftp;
+import com.jcraft.jsch.JSchException;
 import com.mall.entity.cms.FilePath;
 import com.mall.message.SystemCode;
 import com.mall.service.cms.FilePathService;
@@ -108,12 +110,41 @@ public class UpLoad {
         String serviceFileName=UUIDUtil.getUUID();
         File dest = new File(path + "/" + serviceFileName+"."+fileName.substring(fileName.lastIndexOf(".") + 1));
         logger.info("保存文件："+path + "/" + serviceFileName+"."+fileName.substring(fileName.lastIndexOf(".") + 1));
-        if(!dest.getParentFile().exists()){ //判断文件父目录是否存在
-            dest.getParentFile().mkdir();
-        }
+        
         try {
         	Map<String ,String> map =new HashMap<String ,String>();
-            file.transferTo(dest); //保存文件
+        	if("FTP".equals(cache.get(SystemCode.FILE_SERVICE_CON))) {
+        		//通过FTP上传
+        		SftpUtil sf = new SftpUtil(); 
+        		String host=cache.get(SystemCode.FILE_SFTP_SERVICE_HOST);
+        		int sftpport=Integer.parseInt(cache.get(SystemCode.FILE_SFTP_SERVICE_PORT));
+        		String username=cache.get(SystemCode.FILE_SFTP_USERNAME);
+        		String password=cache.get(SystemCode.FILE_SFTP_PASSWORD);
+        		try {
+					ChannelSftp sftp = sf.connect(host, sftpport, username, password);
+					logger.info("PATH:"+path+"  ,"+serviceFileName+"."+fileName.substring(fileName.lastIndexOf(".") + 1));
+					sf.upload(path, file.getInputStream(),serviceFileName+"."+fileName.substring(fileName.lastIndexOf(".") + 1), sftp);
+				} catch (NullPointerException e) {
+					logger.error("文件服务器连接失败！");
+					e.printStackTrace();
+					return null;
+				} catch (JSchException e) {
+					logger.error("文件服务器连接失败！");
+					e.printStackTrace();
+					return null;
+				}  catch (Exception e) {
+					logger.error("文件保存失败！");
+					e.printStackTrace();
+					return null;
+				}
+        		
+        	}else {
+        		if(!dest.getParentFile().exists()){ //判断文件父目录是否存在
+                    dest.getParentFile().mkdir();
+                }
+        		file.transferTo(dest); //保存文件
+        	}
+            
             //文件类型
             String fileType=fileName.substring(fileName.lastIndexOf(".") + 1);
             FilePath filePath = new FilePath(serviceFileName,"",day,serviceFileName,
