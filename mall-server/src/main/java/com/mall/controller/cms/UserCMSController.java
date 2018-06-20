@@ -80,6 +80,33 @@ public class UserCMSController extends AbstractController{
 	 */
 	@GetMapping("/content.do")
 	public String toCmsContent(String Pid,Model model,Atticleld att) {
+		//推荐文章
+		int pageSize  =  Integer.parseInt(cacheService.getCache(SystemCode.PAGE).get(SystemCode.MALL_ATT_REC_PAGE));
+		att.setRecommended("on");
+		att.setColumns(Pid);
+		PageResult<Atticleld> list=new PageResult<Atticleld>();
+		list.setPageSize(pageSize);
+		list = atticleldService.queryByPageFront(list, att);
+		System.out.println(list.getDataList().size());
+		//文章信息
+		Atticleld att1 = atticleldService.selectInfo(att);
+		//增加浏览数
+		att1.setViewCount(att1.getViewCount()+1);
+		atticleldService.updateLikeAndViewCount(att1);
+		//热门文章
+		List<Atticleld> hotAtt = atticleldService.queryHotAtt(att);
+		
+		Map<String, String> cache = cacheService.getCache(SystemCode.FILE_SERVICE);
+		String url=cache.get(SystemCode.FILE_SERVICE_URL);
+		String port=cache.get(SystemCode.FILE_SERVICE_PORT);
+		String filePath=cache.get(SystemCode.FILE_SERVICE_FILES_PATH);
+		String fileUrlPrefix=url+":"+port+"/"+filePath;
+		model.addAttribute("hotAtt", hotAtt);
+		model.addAttribute("att", att1);
+		model.addAttribute("list", list);
+		model.addAttribute("Pid", Pid);
+		//文件服务器路径
+		model.addAttribute("fileServicePath", fileUrlPrefix);
 		model.addAttribute("page", "/mall/cms/cms_show");
 		return "/mall/index";
 	}

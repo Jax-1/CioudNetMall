@@ -95,7 +95,7 @@
                             </td>
                             <td   th:text="${a.title}"> 浅谈传统文化对大家的影响 </td>
                             <td   th:text="${a.atticleldCategory.ladelname}"> 推广传统文化 </td>
-                            <td  th:text="${a.createat}">
+                            <td  th:text="${#dates.format(a.createat,'yyyy-MM-dd HH:mm:ss')}">
                                 2018-06-10  18:49:20
                             </td>
                             <td  th:text="${a.likeCount}">100</td>

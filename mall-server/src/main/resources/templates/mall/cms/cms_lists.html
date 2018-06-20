@@ -8,7 +8,7 @@
 	<div class="content_box">
 		<div class="cms_show_box">
 			<div class="content_bar">
-				您所在的位置：<span>传统文化</span>	
+				您所在的位置：<span id="subtitle">传统文化</span>	
 			</div>
 			<div class="content_left">
 				<!-- 文章内容 -->
@@ -26,7 +26,7 @@
 									</div>
 									<div class="list_cms_bar">
 										浏览<span th:text="${a.viewCount}">15</span>
-										<span th:text="${a.createat}">2018-05-09 14：48</span>
+										<span  th:text="${#dates.format(a.createat,'yyyy-MM-dd HH:mm:ss')}">2018-05-09 14：48</span>
 									</div>
 								</div>
 							</a>
@@ -42,15 +42,6 @@
 							<li><a href=""  class="demo" th:href="@{/mall/cms/list.do(Pid=${Pid},pageNo=${list.pageNo}-1>0?${list.pageNo}-1:1)}">上一页</a></li>
 							<li class="active" id="activepage">
 								<a  th:text="${list.pageNo}">1</a>
-							</li>
-							<li>
-								<a  href="">2</a>
-							</li>
-							<li>
-								<a  href="">3</a>
-							</li>
-							<li>
-								<a  href="">4</a>
 							</li>
 							<li>
 								<a href="" th:href="@{/mall/cms/list.do(Pid=${Pid},pageNo=${list.pageNo}==${list.pages}?${list.pages}:${list.pageNo}+1)}">下一页</a>
@@ -104,7 +95,28 @@
 		var pid=[[${Pid}]];
 		var pageNo=[[${list.pageNo}]];
 		for(var i=2;i<pageNo&&i>0;i--){
-			
+			var dome="<li><a  href='/mall/cms/list.do?Pid="+pid+"&pageNo="+pageNo-i+"'>3</a></li>";
+			$("activepage").after(dome);
+		}
+		for(var i=2;i<pageNo&&i>0;i--){
+			var dome="<li><a  href='/mall/cms/list.do?Pid="+pid+"&pageNo="+pageNo+i+"'>3</a></li>";
+			$("activepage").before(dome);
+		}
+		switch(pid)
+		{
+		case "MJHC":
+			 $("#subtitle").text("名家荟萃");
+		  break;
+		case "ZPJJ":
+			$("#subtitle").text("作品集锦");
+		  break;
+		case "CTWH":
+			$("#subtitle").text("传统文化");
+			  break;
+		case "ZXZX":
+			$("#subtitle").text("资讯中心");
+			  break;
+		default:
 		}
 	
 	

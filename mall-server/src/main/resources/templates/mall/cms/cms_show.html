@@ -6,31 +6,22 @@
 	<div class="content_box">
 		<div class="cms_show_box">
 			<div class="content_bar">
-				您所在的位置：<span>传统文化</span>->
+				您所在的位置：<span id="subtitle">传统文化</span>->
 				<span>内容页</span>		
 			</div>
 			<div class="content_left">
 				<!-- 文章内容 -->
 				<div class="content_text">
-					<h4 class="cont_text_tit">只靠画鸡成为国礼大师的王世军（下）
+					<h4 class="cont_text_tit" th:text="${att.title}">只靠画鸡成为国礼大师的王世军（下）
 					</h4>
 					<div class="cont_text_bar">
-						作者：<span>云网传媒</span>
-						发布时间: <span>2018-05-09</span>
-						浏览: <span>500</span>
-						点赞: <span>20</span>
+						作者：<span th:text="${att.createby}">云网传媒</span>
+						发布时间: <span  th:text="${#dates.format(att.createat,'yyyy-MM-dd HH:mm:ss')}">2018-05-09</span>
+						浏览: <span th:text="${att.viewCount+1}">500</span>
+						点赞: <span th:text="${att.likeCount}" id="value_zan">20</span>
 					</div>
-					<div class="cont_text_main">
-						<!-- 此处为内容详情 -->
-						<p>王世军的国画艺术创作，不仅在于工笔重彩，画技超群，更在于他通透以写意，意境深邃。  </p>
-						<p>王世军的国画艺术创作，不仅在于工笔重彩，画技超群，更在于他通透以写意，意境深邃。 王世军的国画艺术创作，不
-						仅在于工笔重彩，画技超群，更在于他通透以写意，意境深邃。王世军的国画艺术创作，不仅在于工笔重彩，画技超群，
-						更在于他通透以写意，意境深邃。 </p>
-						<p>王世军的国画艺术创作，不仅在于工笔重彩，画技超群，更在于他通透以写意，意境深邃。 王世军的国画艺术创作，不
-						仅在于工笔重彩，画技超群，更在于他通透以写意，意境深邃。王世军的国画艺术创作，不仅在于工笔重彩，画技超群，
-						更在于他通透以写意，意境深邃。 王世军的国画艺术创作，不仅在于工笔重彩，画技超群，更在于他通透以写意，意境
-						深邃。 王世军的国画艺术创作，不仅在于工笔重彩，画技超群，</p>
-						<!-- 此处为内容详情 -->
+					<div class="cont_text_main" th:utext="${att.content}">
+						
 					</div>
 				</div>
 				<!-- 文章内容结束 -->
@@ -58,14 +49,11 @@
 					</div>
 					<div class="cms_tuijian_list">
 						<ul>
-							<li><a href="#">[艺术]  在古画中寻找消失的亭台楼阁</a></li>
-							<li><a href="#">[艺术]  在古画中寻找消失的亭台楼阁</a></li>
-							<li><a href="#">[艺术]  在古画中寻找消失的亭台楼阁</a></li>
-							<li><a href="#">[艺术]  在古画中寻找消失的亭台楼阁</a></li>
-							<li><a href="#">[艺术]  在古画中寻找消失的亭台楼阁</a></li>
-							<li><a href="#">[艺术]  在古画中寻找消失的亭台楼阁</a></li>
-							<li><a href="#">[艺术]  在古画中寻找消失的亭台楼阁</a></li>
-							<li><a href="#">[艺术]  在古画中寻找消失的亭台楼阁</a></li>
+							<li th:each="a:${list.dataList}">
+							<span class="recommended-title"></span>
+							<a href="#" th:href="@{/mall/cms/content.do(Pid=${Pid},id=${a.id})}" th:text="${a.title}">[艺术]  在古画中寻找消失的亭台楼阁</a>
+							</li>
+							
 						</ul>
 					</div>
 				</div>
@@ -76,31 +64,11 @@
 					</div>
 					<div class="cms_paihang_list">
 						<ul>
-							<li>
-								<a href="">
-									<img src="images/noimg.png" alt="">
-									<div class="f_r">纯粹的个人主义同他的由于一般
-									极具欧洲特色</div>
-								</a>
-							</li>
-							<li>
-								<a href="">
-									<img src="images/noimg.png" alt="">
-									<div class="f_r">纯粹的个人主义同他的由于一般
-									极具欧洲特色</div>
-								</a>
-							</li>
-							<li>
-								<a href="">
-									<img src="images/noimg.png" alt="">
-									<div class="f_r">纯粹的个人主义同他的由于一般
-									极具欧洲特色</div>
-								</a>
-							</li>
-							<li>
-								<a href="">
-									<img src="images/noimg.png" alt="">
-									<div class="f_r">纯粹的个人主义同他的由于一般
+							
+							<li  th:each="a:${hotAtt}">
+								<a href=""  th:href="@{/mall/cms/content.do(Pid=${Pid},id=${a.id})}">
+									<img src="images/noimg.png" alt="" style="weith:87px" th:each="entry : ${a}==null?'':${a.filePath}" th:attr="src=${a}==null?'':${fileServicePath}+'/'+${entry.path}+'/'+${entry.fileidname}+'.'+${entry.filetype}">
+									<div class="f_r" th:text="${a.title}">纯粹的个人主义同他的由于一般
 									极具欧洲特色</div>
 								</a>
 							</li>
@@ -111,5 +79,42 @@
 		</div>
 	</div>
 	<!-- 内容部分结束 -->
+	<script type="text/javascript" th:inline="javascript">
+		var pid=[[${Pid}]];
+		var att=[[${att}]];
+		switch(pid)
+		{
+		case "MJHC":
+			 $("#subtitle").text("名家荟萃");
+		  break;
+		case "ZPJJ":
+			$("#subtitle").text("作品集锦");
+			 $(".recommended-title").text("[作品集锦]-")
+		  break;
+		case "CTWH":
+			$("#subtitle").text("传统文化");
+			 $(".recommended-title").text("[传统文化]-")
+			  break;
+		case "ZXZX":
+			$("#subtitle").text("资讯中心");
+			 $(".recommended-title").text("[资讯中心]-")
+			  break;
+		default:
+		}
+		$("#cont_zan").click(function(){
+			$.post('/admin/cms/att/like',
+					{id:att.id,
+				     likeCount:att.likeCount},
+					function(date){
+					if(date.res=='1'){
+						//成功
+						$("#value_zan").text(att.likeCount+1);
+					}
+			})
+			
+		})
+	
+	</script>
 </body>
+
 </html>

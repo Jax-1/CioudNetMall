@@ -243,6 +243,9 @@
 			<if test="classification!=null">
 			and t1.classification=#{classification}
 			</if>
+			<if test="recommended!=null">
+			and t1.recommended=#{recommended}
+			</if>
 			and t1.classification=t2.id
 			and t1.status='Y'
 		ORDER BY
@@ -319,12 +322,12 @@
   </select>
   <!-- 更新点赞数或查看次数 -->
   <update id="updateLikeAndViewCount" parameterType="com.mall.entity.cms.Atticleld">
-  update set
+  update t_cms_articleld set
   <if test="viewCount!=null">
-  viewCount=#{viewCount}
+  viewCount=#{viewCount},
   </if>
   <if test="likeCount!=null">
-  likeCount=#{likeCount}
+   likeCount=#{likeCount}
   </if>
   where id=#{id}
   

@@ -3,6 +3,7 @@ package com.mall.controller.cms;
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -37,6 +38,20 @@ public class AtticleldController extends AbstractController{
 			return res;
 		}
 		res.setMsg("删除文章失败！");
+		return res;
+	}
+	/**
+	 * 点赞文章
+	 * @param att
+	 * @return
+	 */
+	@PostMapping("/like")
+	@ResponseBody
+	public ProcessResult<Atticleld> toLike(Atticleld att) {
+		ProcessResult<Atticleld> res=new ProcessResult<Atticleld>();
+		att.setLikeCount(att.getLikeCount()+1);
+		atticleldService.updateLikeAndViewCount(att);
+		res.setRes(SystemCode.SUCCESS);
 		return res;
 	}
 	
