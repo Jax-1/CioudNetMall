@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
@@ -15,10 +17,8 @@
 				 <div class="mingjia_bar_ground">
 				 	<span class="m_t">艺术分类:</span>
 				 	<ul>
-				 		<li><a href="" class="active">国画</a></li>/
-				 		<li><a href="">油画</a></li>/
-				 		<li><a href="">书法</a></li>/
-				 		<li><a href="">版画</a></li>/
+				 		<li th:each="ca:${Category}"><a href="" class="active" th:href="@{/mall/cms/authlist.do(Pid=${Pid},classification=${ca.id})}" th:text="${ca.ladelname}">国画</a></li>
+				 		
 				 	</ul>
 				 </div>
 				 <div class="mingjia_bar_ground">
@@ -67,36 +67,12 @@
 			</div>
 			<!-- 名家列表内容 -->
 			<div class="mingjia_cont_box">
-				<a href="#" class="mingjia_ground">
-					<img src="images/mingjia.png" alt="">
-					<p>焕春英</p>
-					<p>国家一级美术师</p>	
+				<a href="#" class="mingjia_ground"  th:each="a:${list.dataList}">
+					<img src="/mall/images/mingjia.png" alt="" th:each="entry : ${a}==null?'':${a.filePath}" th:attr="src=${a}==null?'':${fileServicePath}+'/'+${entry.path}+'/'+${entry.fileidname}+'.'+${entry.filetype}">
+					<p th:text="${a.authorname}">焕春英</p>
+					<p th:text="${a.position}">国家一级美术师</p>	
 				</a>
-				<a href="#" class="mingjia_ground">
-					<img src="images/mingjia.png" alt="">
-					<p>焕春英</p>
-					<p>国家一级美术师</p>	
-				</a>
-				<a href="#" class="mingjia_ground">
-					<img src="images/mingjia.png" alt="">
-					<p>焕春英</p>
-					<p>国家一级美术师</p>	
-				</a>
-				<a href="#" class="mingjia_ground">
-					<img src="images/mingjia.png" alt="">
-					<p>焕春英</p>
-					<p>国家一级美术师</p>	
-				</a>
-				<a href="#" class="mingjia_ground">
-					<img src="images/mingjia.png" alt="">
-					<p>焕春英</p>
-					<p>国家一级美术师</p>	
-				</a>
-				<a href="#" class="mingjia_ground">
-					<img src="images/mingjia.png" alt="">
-					<p>焕春英</p>
-					<p>国家一级美术师</p>	
-				</a>
+				
 				<!-- clear -->
 				<div class="clear"></div>
 				<!-- 分页 -->
@@ -128,7 +104,7 @@
 		</div>
 	</div>
 	<div class="footer_baozhen">
-		<img src="images/baozhen.png" alt="">
+		<img src="/mall/images/baozhen.png" alt="">
 	</div>
 	<!-- 内容部分结束 -->
 	

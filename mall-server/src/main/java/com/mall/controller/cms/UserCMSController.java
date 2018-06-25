@@ -118,8 +118,24 @@ public class UserCMSController extends AbstractController{
 	 * @return
 	 */
 	@GetMapping("/authlist.do")
-	public String toCmsAuthList(String Pid,Model model ,PageResult<AuthorWithBLOBs> list) {
-		model.addAttribute("page", "/mall/cms/cms_show");
+	public String toCmsAuthList(String Pid,Model model ,PageResult<AuthorWithBLOBs> list,AuthorWithBLOBs auth) {
+		int pageSize  =  Integer.parseInt(cacheService.getCache(SystemCode.PAGE).get(SystemCode.MALL_AUT_PAGE));
+		list.setPageSize(pageSize);
+		auth.setColumns(Pid);
+		list = authorWithBLOBsService.queryByPageFront(list, auth);
+		logger.info("info:"+list.getDataList().size());
+		List<AtticleldCategory> category = atticleldCategoryService.queryAll(Pid);
+		Map<String, String> cache = cacheService.getCache(SystemCode.FILE_SERVICE);
+		String url=cache.get(SystemCode.FILE_SERVICE_URL);
+		String port=cache.get(SystemCode.FILE_SERVICE_PORT);
+		String filePath=cache.get(SystemCode.FILE_SERVICE_FILES_PATH);
+		String fileUrlPrefix=url+":"+port+"/"+filePath;
+		//文件服务器路径
+		model.addAttribute("fileServicePath", fileUrlPrefix);
+		model.addAttribute("list", list);
+		model.addAttribute("Category", category);
+		model.addAttribute("Pid", Pid);
+		model.addAttribute("page", "/mall/cms/mingjia_list");
 		return "/mall/index";
 	}
 	/**
@@ -131,7 +147,7 @@ public class UserCMSController extends AbstractController{
 	 */
 	@GetMapping("/authcontent.do")
 	public String toCmsAuthContent(String Pid,Model model,AuthorWithBLOBs auth) {
-		model.addAttribute("page", "/mall/cms/cms_show");
+		model.addAttribute("page", "/mall/cms/mingjia_show");
 		return "/mall/index";
 	}
 
