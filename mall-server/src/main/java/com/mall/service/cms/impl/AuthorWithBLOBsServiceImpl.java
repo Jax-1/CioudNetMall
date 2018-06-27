@@ -36,6 +36,15 @@ public class AuthorWithBLOBsServiceImpl extends BaseServiceImpl<AuthorWithBLOBs>
 		
 		return authorMapper.updateLikeAndViewCount(auth);
 	}
+	@Override
+	public List<AuthorWithBLOBs> queryAddress() {
+		
+		return authorMapper.queryAddress();
+	}
+	@Override
+	public List<AuthorWithBLOBs> queryPosition() {
+		return authorMapper.queryPosition();
+	}
 
 	
 }

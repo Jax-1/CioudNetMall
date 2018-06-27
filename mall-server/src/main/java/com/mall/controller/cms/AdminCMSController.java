@@ -124,11 +124,19 @@ public class AdminCMSController extends AbstractController{
 				logger.info("更新文章信息：文章名："+att.getTitle()+", ID="+att.getId());
 				try {
 					atticleldService.updateByPrimaryKeySelective(att);
+					List<FilePath> fileList=new ArrayList<FilePath>();
+					FilePath file=new FilePath();
+					file.setBelongid(att.getId());
+					file.setFileid(att.getViewImg());
+					logger.info("info:"+att.getId()+","+att.getViewImg());
+					fileList.add(file);
+					filePathService.update(fileList);
 				} catch (Exception e) {
 					logger.error("更新文章信息失败：文章名："+att.getTitle()+", ID="+att.getId());
 					logger.error(e);
 					e.printStackTrace();
 				}
+				
 			}
 			
 			
@@ -150,11 +158,12 @@ public class AdminCMSController extends AbstractController{
 	@PostMapping("/saveAuth")
 	public String toSaveAuth(String Pid ,AuthorWithBLOBs auth,String editorValue,String type,Model model,HttpServletRequest request) {
 		if(Validate.notNull(auth)) {
+			List<FilePath> fileList=new ArrayList<FilePath>();
 			if(SystemCode.TYPE_SAVE.equals(type)) {
 				//保存操作
 					//初始化
 				AuthorWithBLOBs initAuth = AuthorWithBLOBs.init(auth, request, editorValue);
-				List<FilePath> fileList=new ArrayList<FilePath>();
+				
 				System.out.println(initAuth.getId());
 				
 				try {
@@ -173,6 +182,11 @@ public class AdminCMSController extends AbstractController{
 				logger.info("更新作家信息：姓名："+auth.getAuthorname()+", ID="+auth.getId());
 				try {
 					authorWithBLOBsService.updateByPrimaryKeySelective(auth);
+					FilePath file=new FilePath();
+					file.setBelongid(auth.getId());
+					file.setFileid(auth.getViewimg());
+					fileList.add(file);
+					filePathService.update(fileList);
 				} catch (Exception e) {
 					logger.info("更新作家信息结果：姓名："+auth.getAuthorname()+", ID="+auth.getId()+".失败！");
 					logger.error(e);

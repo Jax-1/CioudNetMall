@@ -125,6 +125,10 @@ public class UserCMSController extends AbstractController{
 		list = authorWithBLOBsService.queryByPageFront(list, auth);
 		logger.info("info:"+list.getDataList().size());
 		List<AtticleldCategory> category = atticleldCategoryService.queryAll(Pid);
+		//地区分布
+		List<AuthorWithBLOBs> address = authorWithBLOBsService.queryAddress();
+		//职位分布
+		List<AuthorWithBLOBs> position = authorWithBLOBsService.queryPosition();
 		Map<String, String> cache = cacheService.getCache(SystemCode.FILE_SERVICE);
 		String url=cache.get(SystemCode.FILE_SERVICE_URL);
 		String port=cache.get(SystemCode.FILE_SERVICE_PORT);
@@ -132,7 +136,9 @@ public class UserCMSController extends AbstractController{
 		String fileUrlPrefix=url+":"+port+"/"+filePath;
 		//文件服务器路径
 		model.addAttribute("fileServicePath", fileUrlPrefix);
+		model.addAttribute("address", address);
 		model.addAttribute("list", list);
+		model.addAttribute("position", position);
 		model.addAttribute("Category", category);
 		model.addAttribute("Pid", Pid);
 		model.addAttribute("page", "/mall/cms/mingjia_list");
@@ -147,6 +153,16 @@ public class UserCMSController extends AbstractController{
 	 */
 	@GetMapping("/authcontent.do")
 	public String toCmsAuthContent(String Pid,Model model,AuthorWithBLOBs auth) {
+		auth = authorWithBLOBsService.selectInfo(auth);
+		Map<String, String> cache = cacheService.getCache(SystemCode.FILE_SERVICE);
+		String url=cache.get(SystemCode.FILE_SERVICE_URL);
+		String port=cache.get(SystemCode.FILE_SERVICE_PORT);
+		String filePath=cache.get(SystemCode.FILE_SERVICE_FILES_PATH);
+		String fileUrlPrefix=url+":"+port+"/"+filePath;
+		//文件服务器路径
+		model.addAttribute("fileServicePath", fileUrlPrefix);
+		model.addAttribute("auth", auth);
+		model.addAttribute("Pid", Pid);
 		model.addAttribute("page", "/mall/cms/mingjia_show");
 		return "/mall/index";
 	}

@@ -282,6 +282,15 @@
 		<if test="classification != null">
 		AND t1.classification = #{classification}
 		</if>
+		<if test="address != null">
+		AND t1.address = #{address}
+		</if>
+		<if test="position != null">
+		AND t1.position = #{position}
+		</if>
+		<if test="authorname != null and authorname!=''">
+		AND t1.authorname LIKE CONCAT('%',#{authorname},'%')
+		</if>
 		AND t1.status='Y'
 	ORDER BY t1.createat desc
 	)a LEFT JOIN t_file_path b ON a.id = b.belongid
@@ -339,4 +348,38 @@
 	  </if>
 	  where id=#{id}
  </update>
+ <!--查询作家地区分布  -->
+ <select id="queryAddress" resultMap="authorResultMap">
+	 SELECT
+		
+		a.address
+	FROM
+		t_cms_author a
+	WHERE
+		a.id IN (
+			SELECT
+				max(id)
+			FROM
+				t_cms_author
+			GROUP BY
+				address
+		)
+ </select>
+ <!--查询作家职位分布  -->
+ <select id="queryPosition" resultMap="authorResultMap">
+	 SELECT
+		
+		a.position
+	FROM
+		t_cms_author a
+	WHERE
+		a.id IN (
+			SELECT
+				max(id)
+			FROM
+				t_cms_author
+			GROUP BY
+				position
+		)
+ </select>
 </mapper>

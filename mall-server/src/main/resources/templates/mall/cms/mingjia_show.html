@@ -12,13 +12,13 @@
 	<div class="content_box">
 		<div class="cms_show_box">
 			<div class="ming_detail_header">
-				<p class="name">宋高金</p>
-				<p class="sign"><span>山东美术协会会员</span> <span>山东省</span> <span>国画</span></p>
+				<p class="name" th:text="${auth.authorname}">宋高金</p>
+				<p class="sign"><span th:text="${auth.position}">山东美术协会会员</span> <span th:text="${auth.address}">山东省</span> <span th:text="${auth.atticleldCategory.ladelname}">国画</span></p>
 				<div class="mingjia_jianjie">
 					<div class="mingjia_img">
 						<img src="/mall/images/mingjia.png" alt="">
 					</div>
-					<div class="mingjia_text">
+					<div class="mingjia_text" th:text="${auth.introduction}">
 						名家简介，国家一级美术师国家一级美术师国家一级美术师国家一级美术师国家一级美术师国家一级美术师国家一级美术师国家一级美术师国家
 						国家一级美术师国家一级美术师国家一级美术师国家一级美术师国家一级美术师国家一级美术师国家一级美术师国家一级美术师国家
 
@@ -29,7 +29,7 @@
 
 			<div class="mingjia_detail_body">
 				<h3>艺术家年表</h3>
-				<div class="mingjia_detail_text">
+				<div class="mingjia_detail_text" th:utext="${auth.content}">
 					-- 2008年获中国水墨画研究院第三届（2008）年度创作展银奖。<br>
 					-- 2008年获中国水墨画研究院第三届（2008）年度创作展银奖。<br>
 					-- 2008年获中国水墨画研究院第三届（2008）年度创作展银奖。<br>

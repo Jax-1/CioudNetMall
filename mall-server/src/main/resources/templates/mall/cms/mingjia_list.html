@@ -24,50 +24,26 @@
 				 <div class="mingjia_bar_ground">
 				 	<span class="m_t">名家地区:</span>
 				 	<ul>
-				 		<li><a href="" class="active">湖南</a></li>/
-				 		<li><a href="">湖北</a></li>/
-				 		<li><a href="">湖北</a></li>/
-				 		<li><a href="">湖北</a></li>/
-				 		<li><a href="">湖北</a></li>/
-						<li><a href="">湖北</a></li>/
-				 		<li><a href="">湖北</a></li>/
-				 		<li><a href="">湖北</a></li>/
-				 		<li><a href="">湖北</a></li>/
-				 		<li><a href="">湖北</a></li>/
-				 		<li><a href="">湖北</a></li>/
-				 		<li><a href="">湖北</a></li>/
-				 		<li><a href="">湖北</a></li>/
-				 		<li><a href="">湖北</a></li>/
-				 		<li><a href="">湖北</a></li>/
-				 		<li><a href="">湖北</a></li>/
-				 		<li><a href="">湖北</a></li>/
-				 		<li><a href="">湖北</a></li>/
-				 		<li><a href="">湖北</a></li>/
-				 		<li><a href="">湖北</a></li>/
-				 		<li><a href="">湖北</a></li>/
-				 		<li><a href="">湖北</a></li>/
-				 		<li><a href="">湖北</a></li>/
-				 		<li><a href="">湖北</a></li>/
-				 		<li><a href="">湖北</a></li>/
-				 		<li><a href="">湖北</a></li>/
-				 		<li><a href="">湖北</a></li>/
+				 		<li th:each="a:${address}"><a href="" class="active"  th:href="@{/mall/cms/authlist.do(Pid=${Pid},address=${a.address})}" th:text="${a.address}">湖南</a></li>
+				 		
+				 		
 				 	</ul>
 				 </div>
 				 <div class="mingjia_bar_ground">
 				 	<span class="m_t">职&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;位:</span>
 				 	<ul>
-				 		<li><a href="" class="active">八大美院</a></li>/
-				 		<li><a href="">民间大家</a></li>/
+				 		<li th:each="a:${position}"><a href="" class="active"  th:href="@{/mall/cms/authlist.do(Pid=${Pid},position=${a.position})}" th:text="${a.position}">八大美院</a></li>
+				 		
 				 	</ul>
 				 </div>
 				 <div class="mingjia_serach_box">
-				 	<input type="text" placeholder="艺术名家">
-				 	<a href="" class="search_btn"><span></span>搜索</a>
+				 	<input type="text" placeholder="艺术名家" id="queryAuthName">
+				 	<a href="" class="search_btn" id='queryByName'><span></span>搜索</a>
 				 </div>
 			</div>
 			<!-- 名家列表内容 -->
 			<div class="mingjia_cont_box">
-				<a href="#" class="mingjia_ground"  th:each="a:${list.dataList}">
+				<a href="#" class="mingjia_ground"  th:each="a:${list.dataList}" th:href="@{/mall/cms/authcontent.do(Pid=${Pid},id=${a.id})}">
 					<img src="/mall/images/mingjia.png" alt="" th:each="entry : ${a}==null?'':${a.filePath}" th:attr="src=${a}==null?'':${fileServicePath}+'/'+${entry.path}+'/'+${entry.fileidname}+'.'+${entry.filetype}">
 					<p th:text="${a.authorname}">焕春英</p>
 					<p th:text="${a.position}">国家一级美术师</p>	
@@ -78,25 +54,16 @@
 				<!-- 分页 -->
 				<div class="pagination_Box">
 						<ul>
-							<li><a href="" class="demo">首页</a></li>
-							<li><a href=""  class="demo">上一页</a></li>
-							<li class="active">
-								<a  href="">1</a>
+							<li><a href="" class="demo" th:href="@{/mall/cms/authlist.do(Pid=${Pid},pageNo=${1})}">首页</a></li>
+							<li><a href=""  class="demo" th:href="@{/mall/cms/authlist.do(Pid=${Pid},pageNo=${list.pageNo}-1>0?${list.pageNo}-1:1)}">上一页</a></li>
+							<li class="active" id="activepage">
+								<a  th:text="${list.pageNo}">1</a>
 							</li>
 							<li>
-								<a  href="">2</a>
+								<a href="" th:href="@{/mall/cms/authlist.do(Pid=${Pid},pageNo=${list.pageNo}==${list.pages}?${list.pages}:${list.pageNo}+1)}">下一页</a>
 							</li>
 							<li>
-								<a  href="">3</a>
-							</li>
-							<li>
-								<a  href="">4</a>
-							</li>
-							<li>
-								<a href="">下一页</a>
-							</li>
-							<li>
-								<a  href="">末页</a>
+								<a  href="" th:href="@{/mall/cms/authlist.do(Pid=${Pid},pageNo=${list.pages})}"><i class="fa fa-angle-double-right">末页</a>
 							</li>
 						</ul>
 					</div>
@@ -107,7 +74,28 @@
 		<img src="/mall/images/baozhen.png" alt="">
 	</div>
 	<!-- 内容部分结束 -->
-	
+	<script type="text/javascript" th:inline="javascript">
+		var pid=[[${Pid}]];
+		var pageNo=[[${list.pageNo}]];
+		for(var i=2;i<pageNo&&i>0;i--){
+			var dome="<li><a  href='/mall/cms/list.do?Pid="+pid+"&pageNo="+pageNo-i+"'>3</a></li>";
+			$("activepage").after(dome);
+		}
+		for(var i=2;i<pageNo&&i>0;i--){
+			var dome="<li><a  href='/mall/cms/list.do?Pid="+pid+"&pageNo="+pageNo+i+"'>3</a></li>";
+			$("activepage").before(dome);
+		}
+		$(function(){
+			var Pid=[[${Pid}]];
+			
+			$('#queryAuthName').on('input',function(){
+				console.log($('#queryAuthName').val());
+			   $('#queryByName').attr('href','/mall/cms/authlist.do?Pid='+Pid+'&authorname='+$('#queryAuthName').val());
+			})
+			
+			
+		})
+		</script>
 
 </body>
 </html>

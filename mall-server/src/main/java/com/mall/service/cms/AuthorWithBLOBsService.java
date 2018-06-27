@@ -19,5 +19,15 @@ public interface AuthorWithBLOBsService extends IBaseService<AuthorWithBLOBs>{
 	 * @return
 	 */
 	public int updateLikeAndViewCount(AuthorWithBLOBs auth);
+	/**
+	 * 查询作家地区分布
+	 * @return
+	 */
+	public List<AuthorWithBLOBs> queryAddress();
+	/**
+	 * 查询作家职位分布
+	 * @return
+	 */
+	public List<AuthorWithBLOBs> queryPosition();
 
 }
