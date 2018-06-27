@@ -128,6 +128,13 @@ public class SystemCode {
 	public final static String MALL_AUT_PAGE="MALL_AUT_PAGE";
 	public final static String MALL_ATT_REC_PAGE="MALL_ATT_REC_PAGE";
 	public final static String MALL_AUT_REC_PAGE="MALL_AUT_REC_PAGE";
+	//短信配置
+	public final static String SMS="SMS";
+	public final static String ACCESSSKEYID="ACCESSSKEYID";
+	public final static String ACCESSSKEYSECRET="ACCESSSKEYSECRET";
+	public final static String SIGNNAME="SIGNNAME";
+	public final static String REGISTERED_TEMPLATECODE="REGISTERED_TEMPLATECODE";
+	
 	
 	
 

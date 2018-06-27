@@ -23,12 +23,14 @@
 			<div class="form_ground_box">
 				<lable class="reg_lab">验证码：</lable>
 				<input type="text" class="input_width_min">
-				<img class="validate_img" src="images/validateCode.jpg" alt="">
+				<a href="#" onclick="changeImg()">
+				<img id="imgObj" class="validate_img" src="/code/getcode" alt="点击更换验证码" >
+				</a>
 			</div>
 			<div class="form_ground_box">
 				<lable class="reg_lab">短信验证码：</lable>
 				<input type="text" class="input_width_min">
-				<button class="validate_img valid_btn">获取短信验证</button>
+				<button class="validate_img valid_btn" id="getSMS">获取短信验证</button>
 			</div>
 			<div class="form_ground_box center">
 				<input type="checkbox" class="agreeMent" id="agreeMent">
@@ -46,5 +48,21 @@
 		</div>
 	</div>
 	<!-- 内容部分结束 -->
+	<script type="text/javascript">
+		function changeImg() {        
+			        var imgSrc = $("#imgObj");    
+			        imgSrc.attr("src", chgUrl());
+		}
+		// 时间戳
+	    // 为了使每次生成图片不一致，即不让浏览器读缓存，所以需要加上时间戳
+	    function chgUrl() {
+	        var timestamp = (new Date()).valueOf();
+	        var url='/code/getcode'+"?timestamp=" + timestamp;
+	        console.log(url);
+	        return url;
+	    }
+	
+	
+	</script>
 </body>
 </html>

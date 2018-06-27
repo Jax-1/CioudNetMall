@@ -24,15 +24,14 @@ import com.mall.util.Validate;
 @Controller
 @RequestMapping("/code")
 public class CheckCodeController extends AbstractController{
-	@PostMapping("/getcode")
-	@ResponseBody
-	public ProcessResult ProcessCode(HttpServletRequest req,HttpServletResponse res) {
-		ProcessResult process = new ProcessResult();
+	@RequestMapping("/getcode")
+	public void ProcessCode(HttpServletRequest req,HttpServletResponse res) {
 		// 调用工具类生成的验证码和验证码图片
         Map<String, Object> codeMap = CodeUtil.generateCodeAndPic();
 
         // 将四位数字的验证码保存到Session中。
         HttpSession session = req.getSession();
+        session.removeAttribute("code");
         session.setAttribute("code", codeMap.get("code").toString());
 
         // 禁止图像缓存。
@@ -42,17 +41,15 @@ public class CheckCodeController extends AbstractController{
 
         res.setContentType("image/jpeg");
 
-        // 将图像输出到Servlet输出流中。
-        ServletOutputStream sos;
+        
         try {
-            sos = res.getOutputStream();
-            ImageIO.write((RenderedImage) codeMap.get("codePic"), "jpeg", sos);
-            sos.close();
-        } catch (IOException e) {
-            return process;
-        }
-        process.setRes(SystemCode.SUCCESS);
-        return process;
+        	ServletOutputStream  sos = res.getOutputStream();
+			ImageIO.write((RenderedImage) codeMap.get("codePic"), "jpeg", sos);
+			 sos.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+       
         
 
 	}
