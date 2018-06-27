@@ -74,10 +74,9 @@ public class UserLoginServiceImpl implements UserLoginService {
 	}
 
 	@Override
-	public ProcessResult<User> registered(User user, UserInfo userInfo) {
+	public ProcessResult<User> registered(User user) {
 		ProcessResult<User> result = new ProcessResult<User>();
 		userMapper.insert(user);
-		userInfoMapper.insert(userInfo);
 		return result;
 	}
 

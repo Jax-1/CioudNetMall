@@ -4,33 +4,34 @@
 <body>
 		<!-- 内容部分 -->
 	<div class="content_box">
-		<div class="register_box">
+		<div class="register_box"  id="registerform">
 			<div class="reg_tit">
 				新用户注册
 			</div>
 			<div class="form_ground_box">
 				<lable class="reg_lab">手机号：</lable>
-				<input type="text" class="input_width">
+				<input type="text" class="input_width" name='user_name' id='user_name'>
+				<span class="checkExistRong" id="checkExistPhone"></span>
 			</div>
 			<div class="form_ground_box">
 				<lable class="reg_lab">密码设置：</lable>
-				<input type="password" class="input_width">
+				<input type="password" class="input_width" id='password' name='password'>
 			</div>
 			<div class="form_ground_box">
 				<lable class="reg_lab">确认密码：</lable>
-				<input type="password" class="input_width">
+				<input type="password" class="input_width" id='Inputagain' name ='Inputagain'>
 			</div>
 			<div class="form_ground_box">
 				<lable class="reg_lab">验证码：</lable>
 				<input type="text" class="input_width_min">
 				<a href="#" onclick="changeImg()">
-				<img id="imgObj" class="validate_img" src="/code/getcode" alt="点击更换验证码" >
+				<img id="imgObj" class="validate_img" src="/img/getcode" alt="点击更换验证码" >
 				</a>
 			</div>
 			<div class="form_ground_box">
 				<lable class="reg_lab">短信验证码：</lable>
 				<input type="text" class="input_width_min">
-				<button class="validate_img valid_btn" id="getSMS">获取短信验证</button>
+				<button class="validate_img valid_btn" onclick="getphonecode()">获取短信验证</button>
 			</div>
 			<div class="form_ground_box center">
 				<input type="checkbox" class="agreeMent" id="agreeMent">
@@ -48,6 +49,7 @@
 		</div>
 	</div>
 	<!-- 内容部分结束 -->
+	<script src="http://static.runoob.com/assets/jquery-validation-1.14.0/dist/jquery.validate.min.js"></script>
 	<script type="text/javascript">
 		function changeImg() {        
 			        var imgSrc = $("#imgObj");    
@@ -57,11 +59,76 @@
 	    // 为了使每次生成图片不一致，即不让浏览器读缓存，所以需要加上时间戳
 	    function chgUrl() {
 	        var timestamp = (new Date()).valueOf();
-	        var url='/code/getcode'+"?timestamp=" + timestamp;
-	        console.log(url);
+	        var url='/img/getcode'+"?timestamp=" + timestamp;
 	        return url;
 	    }
-	
+		
+		function getphonecode(){
+			$.post('/sms/getcode',{phone:$("#user_name").val()},function(data){
+				console.log(data);
+				if(data==null||data.code!='ok'){
+					//短信发送失败
+					
+				}else{
+					//短信发送成功、发送短信按钮60S不可点击
+				}
+			});
+			
+		}
+		$().ready(function(){
+			$("#registerform").validate({
+				
+				rules:{
+					user_name:{
+						required:true,
+						userTel:true,
+						checkUser:true
+						
+					},
+					password:{
+						required:true
+					},
+					Inputagain:{
+						required:true,
+						Inputagain:true
+					}
+					
+				},
+				messages:{
+					user_name:{
+						required: "请输入手机号"
+					},
+					password:{
+						required:"密码不得为空！"
+					},
+					Inputagain:{
+						required:"请再次输入密码！"
+					}
+				}
+			});
+			
+			
+		})
+		$.validator.addMethod("userTel",function(value,element,params){
+			 var pattern = /^1[34578]\d{9}$/;
+            return this.optional(element)||(checkEmail.test(value));
+        },"请输入正确的手机号！");
+		$.validator.addMethod("checkUser",function(value,element,params){
+			var flg=false;
+			 $.post('/mall/checkname',{username:this.val()},function(data){
+				 if(data!=null&&data.res=='1'){
+					flg=true;
+				 }
+			 });
+           return flg;
+       },"该手机号已注册！");
+		$.validator.addMethod("Inputagain",function(value,element,params){
+			
+			 if( this.val()==null|| this.val()!=$("#password").val()){
+				 return false;
+			 }
+           return true;
+       },"两次密码输入不一致！");
 	
 	</script>
 </body>

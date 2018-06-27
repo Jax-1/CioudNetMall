@@ -99,7 +99,12 @@ public class UserLoginController {
 	 */
 	@PostMapping("/register")
 	@ResponseBody
-	public ProcessResult<User> registered(User user,UserInfo userInfo){
+	public ProcessResult<User> registered(User user){
+		/**
+		 * 校验验证信息
+		 */
+		
+		
 		/**
 		 * 用户信息处理
 		 */
@@ -107,7 +112,6 @@ public class UserLoginController {
 			return new ProcessResult<User>(SystemCode.FAILURE,"用户信息错误！");
 		}
 		User usermodel = new User();
-		String userinfouuid = UUIDUtil.getUUID();
 		String rand = MD5Util.getRand();
 		usermodel.setUser_name(user.getUser_name());
 		usermodel.setCreate_at(DateFormatUtil.getDate());
@@ -115,11 +119,7 @@ public class UserLoginController {
 		usermodel.setPassword(MD5Util.encoder(user.getPassword(), rand));
 		usermodel.setRand(rand);
 		usermodel.setStatus(SystemCode.STATUS_Y);
-		usermodel.setUserinfo_id(userinfouuid);
-		//用户信息
-		userInfo.setId(userinfouuid);
-		userInfo.setCreate_at(DateFormatUtil.getDate());
-		return userLoginService.registered(usermodel, userInfo);
+		return userLoginService.registered(usermodel);
 	}
 	/**
 	 * 注销

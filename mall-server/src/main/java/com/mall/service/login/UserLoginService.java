@@ -44,5 +44,5 @@ public interface UserLoginService {
 	 * @param userInfo
 	 * @return
 	 */
-	ProcessResult<User> registered(User user,UserInfo userInfo);
+	ProcessResult<User> registered(User user);
 }

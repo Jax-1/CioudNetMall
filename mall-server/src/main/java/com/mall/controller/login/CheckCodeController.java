@@ -21,9 +21,19 @@ import com.mall.message.SystemCode;
 import com.mall.util.CodeUtil;
 import com.mall.util.Validate;
 
+/**
+ * 图片验证码工具类
+ * @author Jang
+ *
+ */
 @Controller
-@RequestMapping("/code")
+@RequestMapping("/img")
 public class CheckCodeController extends AbstractController{
+	/**
+	 * 获取图片验证码
+	 * @param req
+	 * @param res
+	 */
 	@RequestMapping("/getcode")
 	public void ProcessCode(HttpServletRequest req,HttpServletResponse res) {
 		// 调用工具类生成的验证码和验证码图片
@@ -31,9 +41,9 @@ public class CheckCodeController extends AbstractController{
 
         // 将四位数字的验证码保存到Session中。
         HttpSession session = req.getSession();
-        session.removeAttribute("code");
-        session.setAttribute("code", codeMap.get("code").toString());
-
+        session.removeAttribute("imgcode");
+        session.setAttribute("imgcode", codeMap.get("code").toString());
+        logger.info("获取图片验证码！");
         // 禁止图像缓存。
         res.setHeader("Pragma", "no-cache");
         res.setHeader("Cache-Control", "no-cache");
@@ -53,18 +63,27 @@ public class CheckCodeController extends AbstractController{
         
 
 	}
+	/**
+	 * 校验图片验证码
+	 * @param imgcode
+	 * @param req
+	 * @param res
+	 * @return
+	 */
 	@PostMapping("/checkcode")
 	@ResponseBody
-	public ProcessResult checkCode(String code,HttpServletRequest req, HttpServletResponse res) {
+	@SuppressWarnings("rawtypes")
+	public ProcessResult checkCode(String imgcode,HttpServletRequest req, HttpServletResponse res) {
+		
 		ProcessResult process=new ProcessResult();
-		if(!Validate.notNull(code)) {
+		if(!Validate.notNull(imgcode)) {
 			process.setMsg("验证码不得为空！");
 			return process;
 		}
 		// 验证验证码
-        String sessionCode = req.getSession().getAttribute("code").toString();
-        if (code != null && !"".equals(code) && sessionCode != null && !"".equals(sessionCode)) {
-            if (code.equalsIgnoreCase(sessionCode)) {
+        String sessionCode = req.getSession().getAttribute("imgcode").toString();
+        if (imgcode != null && !"".equals(imgcode) && sessionCode != null && !"".equals(sessionCode)) {
+            if (imgcode.equalsIgnoreCase(sessionCode)) {
             	process.setRes(SystemCode.SUCCESS);
             	
             } else {
