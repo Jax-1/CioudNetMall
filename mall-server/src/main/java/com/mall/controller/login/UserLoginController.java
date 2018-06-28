@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.jcraft.jsch.Logger;
+import com.mall.controller.AbstractController;
 import com.mall.entity.login.Admin;
 import com.mall.entity.login.User;
 import com.mall.entity.login.UserInfo;
@@ -25,7 +27,7 @@ import com.mall.service.sys.CacheService;
 
 @Controller
 @RequestMapping("/mall")
-public class UserLoginController {
+public class UserLoginController  extends AbstractController{
 	@Resource
 	private UserLoginService userLoginService;
 	@Resource
@@ -99,12 +101,39 @@ public class UserLoginController {
 	 */
 	@PostMapping("/register")
 	@ResponseBody
-	public ProcessResult<User> registered(User user){
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	public ProcessResult<User> registered(User user,String imgcode,String phonecode,HttpServletRequest req){
 		/**
 		 * 校验验证信息
 		 */
-		
-		
+		ProcessResult process=new ProcessResult();
+		if(!Validate.notNull(imgcode)||!Validate.notNull(phonecode)) {
+			process.setMsg("验证码不得为空！");
+			return process;
+		}
+		// 验证图片验证码
+        String sessionCode = req.getSession().getAttribute("imgcode").toString();
+        if (Validate.notNull(imgcode)&&Validate.notNull(sessionCode)) {
+            if (!imgcode.equalsIgnoreCase(sessionCode)) {
+            	process.setMsg("验证失败！");
+            	return process;
+            } 
+        }else {
+        	process.setMsg("验证失败！");
+        	return process;
+        } 
+        //验证手机验证码
+        String sessionPhoneCode = req.getSession().getAttribute("phonecode").toString();
+        if (Validate.notNull(phonecode)&&Validate.notNull(sessionPhoneCode)) {
+            if (!phonecode.equals(sessionPhoneCode)) {
+            	process.setMsg("手机验证失败1！");
+            	return process;
+            } 
+        }else {
+        	process.setMsg("手机验证失败2！");
+        	return process;
+        } 
+        logger.info("用户注册，验证码校验成功！");
 		/**
 		 * 用户信息处理
 		 */

@@ -4,10 +4,12 @@
 <body>
 		<!-- 内容部分 -->
 	<div class="content_box">
-		<div class="register_box"  id="registerform">
+		<div class="register_box"  >
 			<div class="reg_tit">
 				新用户注册
 			</div>
+			<span id="msg"></span>
+			<form action="" id="registerform">
 			<div class="form_ground_box">
 				<lable class="reg_lab">手机号：</lable>
 				<input type="text" class="input_width" name='user_name' id='user_name'>
@@ -23,33 +25,33 @@
 			</div>
 			<div class="form_ground_box">
 				<lable class="reg_lab">验证码：</lable>
-				<input type="text" class="input_width_min">
+				<input type="text" class="input_width_min" id='imgcode' name="imgcode">
 				<a href="#" onclick="changeImg()">
 				<img id="imgObj" class="validate_img" src="/img/getcode" alt="点击更换验证码" >
 				</a>
 			</div>
 			<div class="form_ground_box">
 				<lable class="reg_lab">短信验证码：</lable>
-				<input type="text" class="input_width_min">
-				<button class="validate_img valid_btn" onclick="getphonecode()">获取短信验证</button>
+				<input type="text" class="input_width_min" id='phonecode' name="phonecode">
+				<button type ="button" class="vali _img valid_btn" onclick="getphonecode()">获取短信验证</button>
 			</div>
 			<div class="form_ground_box center">
 				<input type="checkbox" class="agreeMent" id="agreeMent">
 				<label for="agreeMent">我已阅读并同意</label> <span><a href="#">云网传媒协议规则</a></span>
 			</div>
 			<div class="form_ground_box center">
-				<div class="submitBtn">
+				<div class="submitBtn" id="submit">
 					立即注册
 				</div>
 			</div>
 			<div class="go_login">
 				已经注册过了，<a href="/mall/login.do">去登录</a>
 			</div>
-			
+			</form>
 		</div>
 	</div>
 	<!-- 内容部分结束 -->
-	<script src="http://static.runoob.com/assets/jquery-validation-1.14.0/dist/jquery.validate.min.js"></script>
+	<script src="/mall/js/jquery.validate.min.js"></script>
 	<script type="text/javascript">
 		function changeImg() {        
 			        var imgSrc = $("#imgObj");    
@@ -82,7 +84,7 @@
 					user_name:{
 						required:true,
 						userTel:true,
-						checkUser:true
+						checkUser:false
 						
 					},
 					password:{
@@ -104,6 +106,7 @@
 					Inputagain:{
 						required:"请再次输入密码！"
 					}
+					
 				}
 			});
 			
@@ -111,25 +114,50 @@
 		})
 		$.validator.addMethod("userTel",function(value,element,params){
 			 var pattern = /^1[34578]\d{9}$/;
-            return this.optional(element)||(checkEmail.test(value));
+            return this.optional(element)||pattern.test(value)
         },"请输入正确的手机号！");
 		$.validator.addMethod("checkUser",function(value,element,params){
 			var flg=false;
-			 $.post('/mall/checkname',{username:this.val()},function(data){
+			console.log(element.value);
+			 $.post('/mall/checkname',{username:element.value},function(data){
 				 if(data!=null&&data.res=='1'){
+					 console.log(data);
 					flg=true;
 				 }
 			 });
            return flg;
        },"该手机号已注册！");
 		$.validator.addMethod("Inputagain",function(value,element,params){
-			
-			 if( this.val()==null|| this.val()!=$("#password").val()){
+			 if( element.value==null|| element.value!=$("#password").val()){
 				 return false;
 			 }
            return true;
        },"两次密码输入不一致！");
-	
+		$("#submit").click(function(){
+			$.post('/mall/register',
+					{user_name:$("#user_name").val(),
+					password:$("#password").val(),
+					imgcode:$("#imgcode").val(),
+					phonecode:$("#phonecode").val()
+					},
+					function(data){
+						console.log(data);
+					if(data!=null&&data.res=="1"){
+						//注册成功
+						$("#msg").text('');
+						$("#msg").text(data.msg);
+						setTimeout('showRes()',2000);
+					}else{
+						$("#msg").text('');
+						$("#msg").text(data.msg);
+					}
+				
+			});
+		})
+		//跳转到登录界面
+		function showRes(){
+			window.location.href="/mall/login.do";
+		}
 	</script>
 </body>
 </html>

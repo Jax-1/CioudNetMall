@@ -75,7 +75,7 @@ public class UserLoginServiceImpl implements UserLoginService {
 
 	@Override
 	public ProcessResult<User> registered(User user) {
-		ProcessResult<User> result = new ProcessResult<User>();
+		ProcessResult<User> result = new ProcessResult<User>(SystemCode.SUCCESS,"注册成功！");
 		userMapper.insert(user);
 		return result;
 	}

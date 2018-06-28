@@ -1,6 +1,7 @@
 package com.mall.controller.login;
 
 import java.util.Map;
+import java.util.Random;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -37,7 +38,8 @@ public class SMSController extends AbstractController{
 	@ResponseBody
 	public SendSmsResponse getSMSCode(String phone,HttpServletRequest req) {
 		Map<String, String> sms = cacheService.getCache(SystemCode.SMS);
-		String code=Double.toString((Math.random()*9+1)*100000);
+		String code=Integer.toString(new Random().nextInt(999999));
+		
 		SmsEntity smsentity=new SmsEntity(sms.get(SystemCode.ACCESSSKEYID),sms.get(SystemCode.ACCESSSKEYSECRET),sms.get(SystemCode.SIGNNAME),sms.get(SystemCode.REGISTERED_TEMPLATECODE),phone,code);
 		SendSmsResponse sendSms=null;
 		try {
