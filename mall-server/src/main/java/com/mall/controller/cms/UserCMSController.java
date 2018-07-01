@@ -69,8 +69,8 @@ public class UserCMSController extends AbstractController{
 		model.addAttribute("Category", category);
 		model.addAttribute("list", list);
 		model.addAttribute("Pid", Pid);
-		model.addAttribute("page", "/mall/cms/cms_lists");
-		return "/mall/index";
+		model.addAttribute("page", "mall/cms/cms_lists");
+		return "mall/index";
 	}
 	/**
 	 * 作品、资讯、传统文化详细视图
@@ -107,8 +107,8 @@ public class UserCMSController extends AbstractController{
 		model.addAttribute("Pid", Pid);
 		//文件服务器路径
 		model.addAttribute("fileServicePath", fileUrlPrefix);
-		model.addAttribute("page", "/mall/cms/cms_show");
-		return "/mall/index";
+		model.addAttribute("page", "mall/cms/cms_show");
+		return "mall/index";
 	}
 	/**
 	 * 作家列表
@@ -141,8 +141,8 @@ public class UserCMSController extends AbstractController{
 		model.addAttribute("position", position);
 		model.addAttribute("Category", category);
 		model.addAttribute("Pid", Pid);
-		model.addAttribute("page", "/mall/cms/mingjia_list");
-		return "/mall/index";
+		model.addAttribute("page", "mall/cms/mingjia_list");
+		return "mall/index";
 	}
 	/**
 	 * 作家详细页面
@@ -154,6 +154,10 @@ public class UserCMSController extends AbstractController{
 	@GetMapping("/authcontent.do")
 	public String toCmsAuthContent(String Pid,Model model,AuthorWithBLOBs auth) {
 		auth = authorWithBLOBsService.selectInfo(auth);
+		//增加查看次数
+		auth.setViewCount(auth.getViewCount()+1);
+		authorWithBLOBsService.updateLikeAndViewCount(auth);
+		
 		Map<String, String> cache = cacheService.getCache(SystemCode.FILE_SERVICE);
 		String url=cache.get(SystemCode.FILE_SERVICE_URL);
 		String port=cache.get(SystemCode.FILE_SERVICE_PORT);
@@ -163,8 +167,8 @@ public class UserCMSController extends AbstractController{
 		model.addAttribute("fileServicePath", fileUrlPrefix);
 		model.addAttribute("auth", auth);
 		model.addAttribute("Pid", Pid);
-		model.addAttribute("page", "/mall/cms/mingjia_show");
-		return "/mall/index";
+		model.addAttribute("page", "mall/cms/mingjia_show");
+		return "mall/index";
 	}
 
 }

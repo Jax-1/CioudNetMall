@@ -2,16 +2,32 @@ package com.mall.entity.login;
 
 import java.util.Date;
 
+import com.mall.util.DateFormatUtil;
+
 public class UserInfo {
     private String id;
 
     private String user_name;
 
-    private String headimgurl;
+    private String name;
 
     private String sex;
 
     private String phone;
+
+    private String email;
+
+    private String qq;
+
+    private String address_province;
+
+    private String address_city;
+
+    private String address_area;
+
+    private String address_street;
+
+    private String headimgurl;
 
     private Date create_at;
 
@@ -35,12 +51,12 @@ public class UserInfo {
         this.user_name = user_name;
     }
 
-    public String getHeadimgurl() {
-        return headimgurl;
+    public String getName() {
+        return name;
     }
 
-    public void setHeadimgurl(String headimgurl) {
-        this.headimgurl = headimgurl;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getSex() {
@@ -57,6 +73,62 @@ public class UserInfo {
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getQq() {
+        return qq;
+    }
+
+    public void setQq(String qq) {
+        this.qq = qq;
+    }
+
+    public String getAddress_province() {
+        return address_province;
+    }
+
+    public void setAddress_province(String address_province) {
+        this.address_province = address_province;
+    }
+
+    public String getAddress_city() {
+        return address_city;
+    }
+
+    public void setAddress_city(String address_city) {
+        this.address_city = address_city;
+    }
+
+    public String getAddress_area() {
+        return address_area;
+    }
+
+    public void setAddress_area(String address_area) {
+        this.address_area = address_area;
+    }
+
+    public String getAddress_street() {
+        return address_street;
+    }
+
+    public void setAddress_street(String address_street) {
+        this.address_street = address_street;
+    }
+
+    public String getHeadimgurl() {
+        return headimgurl;
+    }
+
+    public void setHeadimgurl(String headimgurl) {
+        this.headimgurl = headimgurl;
     }
 
     public Date getCreate_at() {
@@ -81,5 +153,19 @@ public class UserInfo {
 
     public void setLastSign_time(Date lastSign_time) {
         this.lastSign_time = lastSign_time;
+    }
+    /**
+     * 初始化用户信息
+     * @return
+     */
+    public static UserInfo init(User user,String id) {
+    	UserInfo userInfo = new UserInfo();
+    	userInfo.setUser_name(user.getUser_name());
+    	userInfo.setId(id);
+    	userInfo.setCreate_at(DateFormatUtil.getDate());
+    	userInfo.setName("用户"+user.getUser_name());
+    	userInfo.setPhone(user.getUser_name());
+    	
+    	return userInfo;
     }
 }

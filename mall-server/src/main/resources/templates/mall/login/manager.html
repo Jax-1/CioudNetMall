@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+<head>
+<meta charset="UTF-8">
+</head>
+<body >
+	<!-- 用户信息 -->
+	
+	<div class="my_right_box" th:fragment="info">
+		<div class="my_right_tit">
+			个人信息
+		</div>
+		<div class="my_rt_b">
+			<div class="my_form_box">
+				<input style="display:none" th:value="${session.user.userInfo.id}">
+				<div class="form_ground">
+					<label for="">登录帐号</label>
+					<div class="input_box">
+						<input type="text" th:value="${session.user.user_name}">
+					</div>
+				</div>
+				<div class="form_ground f_r">
+					<label for="">真实姓名</label>
+					<div class="input_box">
+						<input type="text" value="阿杰" th:value="${session.user.userInfo.name}">
+					</div>
+				</div>
+				<div class="form_ground">
+					<label for="">性别</label>
+					<div class="input_box">
+						<select name="" id="" >
+							<option value="1">男</option>
+							<option value="0">女</option>
+						</select>
+					</div>
+				</div>
+				<div class="form_ground f_r">
+					<label for="">邮箱</label>
+					<div class="input_box">
+						<input type="text" value="770637705@qq.com" th:value="${session.user.userInfo.email}">
+					</div>
+				</div>
+				<div class="form_ground">
+					<label for="">电话</label>
+					<div class="input_box">
+						<input type="text" value="13823595211" th:value="${session.user.userInfo.phone}">
+					</div>
+				</div>
+				<div class="form_ground  f_r">
+					<label for="">QQ</label>
+					<div class="input_box">
+						<input type="text" value="770637705" th:value="${session.user.userInfo.qq}">
+					</div>
+				</div>
+				<div class="form_ground">
+					<label for="">所在地</label>
+					<div>
+					<select name="province"></select><select name="city"></select><select name="area"></select>
+					</div>
+				</div>
+				<div class="form_ground_t">
+					<label for="">地址</label>
+					<div class="input_box">
+						<textarea name="" id="" cols="30" rows="10" th:value="${session.user.userInfo.address_street}"></textarea>
+					</div>
+				</div>
+				<div class="save_btn">
+					<input type="submit" value="保存" />
+				</div>
+				
+			</div>
+			<div class="my_img">
+				<div class="my_header_img">
+					<img th:attr="src=${session.user!=null&&session.user.filePath!=null}?'':'/mall/images/u106.png'" alt="">
+				</div>
+				<div class="filed_btn">上传头像</div>
+			</div>
+		</div>
+		<script type="text/javascript" src="/mall/js/PCASClass.js"></script>
+		<script type="text/javascript" th:inline="javascript">
+		  $(function(){
+			  
+			  var userinfo =[[${session.user.userInfo}]];
+				new PCAS("province","city","area",userinfo.address_province,userinfo.address_city,userinfo.address_area);
+			  
+		  })
+			
+			
+			</script>
+	</div>
+	
+	<!-- 用户信息end -->
+	<!-- 密码修改 -->
+	<div class="my_right_box" th:fragment="modify_pwd">
+		<div class="my_right_tit">
+			密码修改
+		</div>
+		<div class="my_rt_b">
+			<div class="alert-success">
+				<h4>操作提示：</h4>
+				<ul>
+					<li>1. 请正确输入下方图形验证码，如看不清可点击图片进行更换，输入完成后进行下一步操作。</li>
+					<li>2.收到安全验证码后，请在30分钟内完成验证。</li>
+				</ul>
+			</div>
+			<div class="ncm-default-form">
+				<dl>
+					<dt><i class="required">*</i>选择身份认证方式：</dt>
+					<dd>
+						<p><select name="auth_type" id="auth_type" class="valid">
+								<option value="mobile">手机 [138****5211]</option>
+                         </select><a href="javascript:void(0);" id="send_auth_code" class="ncm-btn"><span id="sending" style="display:none">正在</span><span class="send_success_tips" style="display: none;"><strong id="show_times" class="red mr5"></strong>秒后再次</span>获取安全验证码</a></p>
+                         <p class="send_success_tips" style="display: none;">“安全验证码”已发出，请注意查收，请在<strong>“30分种”</strong>内完成验证。</p>
+					</dd>
+				</dl>
+				<dl>
+		        	<dt><i class="required">*</i>请输入安全验证码：</dt>
+			        <dd>
+			          <input type="text" class="text" maxlength="6" value="" name="auth_code" size="10" id="auth_code" autocomplete="off">
+			          <label for="email" generated="true" class="error"></label>
+			        </dd>
+		      </dl>
+		      <dl>
+		        	<dt><i class="required">*</i>图形验证码：</dt>
+		        <dd>
+		          <input type="text" name="captcha" class="text" id="captcha" maxlength="4" size="10" autocomplete="off">
+		          <a href="#" onclick="changeImg()">
+		         <img src="/img/getcode" class="vm" id="imgObj" alt="点击更换验证码" >
+		         </a>
+		          <label for="captcha" generated="true" class="error"></label>
+		        </dd>
+		      </dl>
+		      <dl class="bottom">
+		        <dt>&nbsp;</dt>
+		        <dd>
+		          <label class="submit-border">
+		            <input type="button" class="submit" value="确认，进入下一步">
+		          </label>
+		        </dd>
+		      </dl>
+			</div>
+
+			<div class="ncm-default-form">
+				<dl>
+			        <dt><i class="required">*</i>设置新密码：</dt>
+			        <dd>
+			          <input type="password" maxlength="40" class="text" name="password" id="password">
+			          <label for="password" generated="true" class="error"></label>
+			          <p class="hint">6-20位字符，可由英文、数字及标点符号组成。</p>
+			         </dd>
+		      </dl>
+		      <dl>
+		        <dt><i class="required">*</i>确认新密码：</dt>
+		        <dd>
+		          <input type="password" maxlength="40" class="text" name="confirm_password" id="confirm_password">
+		          <label for="confirm_password" generated="true" class="error"></label>
+		        </dd>
+		      </dl>
+		      <dl class="bottom">
+		        <dt>&nbsp;</dt>
+		        <dd><label class="submit-border">
+		          <input type="submit" class="submit" value="确认提交"></label>
+		        </dd>
+		      </dl>
+			</div>
+			
+		</div>
+		<script type="text/javascript">
+		function changeImg() {        
+	        var imgSrc = $("#imgObj");    
+	        imgSrc.attr("src", chgUrl());
+		}
+		// 时间戳
+		// 为了使每次生成图片不一致，即不让浏览器读缓存，所以需要加上时间戳
+		function chgUrl() {
+		    var timestamp = (new Date()).valueOf();
+		    var url='/img/getcode'+"?timestamp=" + timestamp;
+		    return url;
+		}
+		</script>
+	</div>
+	<!-- 密码修改end -->
+	
+</body>
+</html>

@@ -3,10 +3,10 @@ package com.mall.service.login;
 import javax.servlet.http.HttpServletRequest;
 
 import com.mall.entity.login.User;
-import com.mall.entity.login.UserInfo;
 import com.mall.message.ProcessResult;
+import com.mall.service.IBaseService;
 
-public interface UserLoginService {
+public interface UserLoginService extends IBaseService<User>{
 	/**
 	 * 登陆
 	 * @param user 用户账号信息
@@ -26,18 +26,6 @@ public interface UserLoginService {
 	 * @return
 	 */
 	ProcessResult<User> loginOut(HttpServletRequest request);
-	/**
-	 * 查询登陆用户信息
-	 * @param request
-	 * @return
-	 */
-	UserInfo queryUserInfo(HttpServletRequest request);
-	/**
-	 * 查询用户信息
-	 * @param user
-	 * @return
-	 */
-	UserInfo queryUserInfo(User user);
 	/**
 	 * 注册
 	 * @param user

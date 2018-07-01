@@ -6,7 +6,7 @@ import java.util.Enumeration;
 import java.util.ResourceBundle;
 
 public class MessageUtil {
-    private static String RESOURCE="com.mall.message.MsgPool_zh_CN";
+    private static String RESOURCE="message/MsgPool_zh_CN";
     /**
      * 读取msg
      * @param MessageID

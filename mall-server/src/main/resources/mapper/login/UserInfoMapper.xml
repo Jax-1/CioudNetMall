@@ -3,16 +3,24 @@
 <mapper namespace="com.mall.dao.login.UserInfoMapper">
   <resultMap id="BaseResultMap" type="com.mall.entity.login.UserInfo">
     <id column="id" jdbcType="VARCHAR" property="id" />
-    <result column="User_name" jdbcType="VARCHAR" property="user_name" />
-    <result column="headimgurl" jdbcType="VARCHAR" property="headimgurl" />
+    <result column="user_name" jdbcType="VARCHAR" property="user_name" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
     <result column="Sex" jdbcType="VARCHAR" property="sex" />
     <result column="Phone" jdbcType="VARCHAR" property="phone" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="qq" jdbcType="VARCHAR" property="qq" />
+    <result column="address_province" jdbcType="VARCHAR" property="address_province" />
+    <result column="address_city" jdbcType="VARCHAR" property="address_city" />
+    <result column="address_area" jdbcType="VARCHAR" property="address_area" />
+    <result column="address_street" jdbcType="VARCHAR" property="address_street" />
+    <result column="headimgurl" jdbcType="VARCHAR" property="headimgurl" />
     <result column="Create_at" jdbcType="TIMESTAMP" property="create_at" />
     <result column="Update_time" jdbcType="TIMESTAMP" property="update_time" />
     <result column="LastSign_time" jdbcType="TIMESTAMP" property="lastSign_time" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, User_name, headimgurl, Sex, Phone, Create_at, Update_time, LastSign_time
+    id, user_name, name, Sex, Phone, email, qq, address_province, address_city, address_area, 
+    address_street, headimgurl, Create_at, Update_time, LastSign_time
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
@@ -25,12 +33,18 @@
     where id = #{id,jdbcType=VARCHAR}
   </delete>
   <insert id="insert" parameterType="com.mall.entity.login.UserInfo">
-    insert into t_sys_user_info (id, User_name, headimgurl, 
-      Sex, Phone, Create_at, 
-      Update_time, LastSign_time)
-    values (#{id,jdbcType=VARCHAR}, #{user_name,jdbcType=VARCHAR}, #{headimgurl,jdbcType=VARCHAR}, 
-      #{sex,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{create_at,jdbcType=TIMESTAMP}, 
-      #{update_time,jdbcType=TIMESTAMP}, #{lastSign_time,jdbcType=TIMESTAMP})
+    insert into t_sys_user_info (id, user_name, name, 
+      Sex, Phone, email, 
+      qq, address_province, address_city, 
+      address_area, address_street, headimgurl, 
+      Create_at, Update_time, LastSign_time
+      )
+    values (#{id,jdbcType=VARCHAR}, #{user_name,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
+      #{sex,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, 
+      #{qq,jdbcType=VARCHAR}, #{address_province,jdbcType=VARCHAR}, #{address_city,jdbcType=VARCHAR}, 
+      #{address_area,jdbcType=VARCHAR}, #{address_street,jdbcType=VARCHAR}, #{headimgurl,jdbcType=VARCHAR}, 
+      #{create_at,jdbcType=TIMESTAMP}, #{update_time,jdbcType=TIMESTAMP}, #{lastSign_time,jdbcType=TIMESTAMP}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.mall.entity.login.UserInfo">
     insert into t_sys_user_info
@@ -39,16 +53,37 @@
         id,
       </if>
       <if test="user_name != null">
-        User_name,
+        user_name,
       </if>
-      <if test="headimgurl != null">
-        headimgurl,
+      <if test="name != null">
+        name,
       </if>
       <if test="sex != null">
         Sex,
       </if>
       <if test="phone != null">
         Phone,
+      </if>
+      <if test="email != null">
+        email,
+      </if>
+      <if test="qq != null">
+        qq,
+      </if>
+      <if test="address_province != null">
+        address_province,
+      </if>
+      <if test="address_city != null">
+        address_city,
+      </if>
+      <if test="address_area != null">
+        address_area,
+      </if>
+      <if test="address_street != null">
+        address_street,
+      </if>
+      <if test="headimgurl != null">
+        headimgurl,
       </if>
       <if test="create_at != null">
         Create_at,
@@ -67,14 +102,35 @@
       <if test="user_name != null">
         #{user_name,jdbcType=VARCHAR},
       </if>
-      <if test="headimgurl != null">
-        #{headimgurl,jdbcType=VARCHAR},
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
       </if>
       <if test="sex != null">
         #{sex,jdbcType=VARCHAR},
       </if>
       <if test="phone != null">
         #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="qq != null">
+        #{qq,jdbcType=VARCHAR},
+      </if>
+      <if test="address_province != null">
+        #{address_province,jdbcType=VARCHAR},
+      </if>
+      <if test="address_city != null">
+        #{address_city,jdbcType=VARCHAR},
+      </if>
+      <if test="address_area != null">
+        #{address_area,jdbcType=VARCHAR},
+      </if>
+      <if test="address_street != null">
+        #{address_street,jdbcType=VARCHAR},
+      </if>
+      <if test="headimgurl != null">
+        #{headimgurl,jdbcType=VARCHAR},
       </if>
       <if test="create_at != null">
         #{create_at,jdbcType=TIMESTAMP},
@@ -91,16 +147,37 @@
     update t_sys_user_info
     <set>
       <if test="user_name != null">
-        User_name = #{user_name,jdbcType=VARCHAR},
+        user_name = #{user_name,jdbcType=VARCHAR},
       </if>
-      <if test="headimgurl != null">
-        headimgurl = #{headimgurl,jdbcType=VARCHAR},
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
       </if>
       <if test="sex != null">
         Sex = #{sex,jdbcType=VARCHAR},
       </if>
       <if test="phone != null">
         Phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="qq != null">
+        qq = #{qq,jdbcType=VARCHAR},
+      </if>
+      <if test="address_province != null">
+        address_province = #{address_province,jdbcType=VARCHAR},
+      </if>
+      <if test="address_city != null">
+        address_city = #{address_city,jdbcType=VARCHAR},
+      </if>
+      <if test="address_area != null">
+        address_area = #{address_area,jdbcType=VARCHAR},
+      </if>
+      <if test="address_street != null">
+        address_street = #{address_street,jdbcType=VARCHAR},
+      </if>
+      <if test="headimgurl != null">
+        headimgurl = #{headimgurl,jdbcType=VARCHAR},
       </if>
       <if test="create_at != null">
         Create_at = #{create_at,jdbcType=TIMESTAMP},
@@ -116,10 +193,17 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.mall.entity.login.UserInfo">
     update t_sys_user_info
-    set User_name = #{user_name,jdbcType=VARCHAR},
-      headimgurl = #{headimgurl,jdbcType=VARCHAR},
+    set user_name = #{user_name,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
       Sex = #{sex,jdbcType=VARCHAR},
       Phone = #{phone,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      qq = #{qq,jdbcType=VARCHAR},
+      address_province = #{address_province,jdbcType=VARCHAR},
+      address_city = #{address_city,jdbcType=VARCHAR},
+      address_area = #{address_area,jdbcType=VARCHAR},
+      address_street = #{address_street,jdbcType=VARCHAR},
+      headimgurl = #{headimgurl,jdbcType=VARCHAR},
       Create_at = #{create_at,jdbcType=TIMESTAMP},
       Update_time = #{update_time,jdbcType=TIMESTAMP},
       LastSign_time = #{lastSign_time,jdbcType=TIMESTAMP}

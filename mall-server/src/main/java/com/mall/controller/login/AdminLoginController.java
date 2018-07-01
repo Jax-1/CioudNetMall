@@ -44,8 +44,8 @@ public class AdminLoginController extends AbstractController{
 		//初始化界面信息
 		//cms
 		
-		model.addAttribute("page", "/admin/index_body");
-		return "/admin/index";
+		model.addAttribute("page", "admin/index_body");
+		return "admin/index";
 	}
 	/**
 	 * 跳转至登陆界面
@@ -53,7 +53,7 @@ public class AdminLoginController extends AbstractController{
 	 */
 	@RequestMapping("/login.do")
 	public String doAdmin() {
-		return "/admin/admin_login";
+		return "admin/admin_login";
 	}
 	/**
 	 * 登陆

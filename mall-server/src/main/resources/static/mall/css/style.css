@@ -36,6 +36,10 @@ input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
   margin: 0; }
 
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none !important; }
+
 input,
 button {
   border-radius: 0; }
@@ -936,6 +940,9 @@ ul li {
     width: 100%;
     height: auto; }
 
+.w_100 {
+  width: 100%; }
+
 .dSmallPicBox {
   width: 1240px;
   margin: 0 auto;
@@ -1026,3 +1033,582 @@ ul li {
     background-position: -52px -87px; }
   .dSmallPicBox .sRightBtnBBan {
     background-position: -88px -87px; }
+
+.shop_index_box {
+  width: 1280px;
+  margin: 10px auto;
+  display: -webkit-box;
+  display: box; }
+  .shop_index_box .left_menu_box {
+    width: 260px;
+    background: #fff;
+    height: 420px;
+    overflow: hidden; }
+    .shop_index_box .left_menu_box .menu_dl {
+      padding: 10px; }
+      .shop_index_box .left_menu_box .menu_dl dt {
+        font-size: 16px;
+        font-weight: 600;
+        color: #808080; }
+      .shop_index_box .left_menu_box .menu_dl dd {
+        display: inline-block;
+        margin: 0 5px; }
+        .shop_index_box .left_menu_box .menu_dl dd a {
+          font-size: 14px;
+          color: #ab7e52;
+          line-height: 30px;
+          height: 30px; }
+  .shop_index_box .right_slide_box {
+    margin-left: 10px;
+    width: 1010px;
+    height: 420px;
+    background: #ccc;
+    position: relative;
+    overflow: hidden; }
+    .shop_index_box .right_slide_box .pre {
+      cursor: pointer;
+      width: 25px;
+      height: 45px;
+      position: absolute;
+      top: 200px;
+      left: 10px;
+      z-index: 10;
+      text-align: center; }
+    .shop_index_box .right_slide_box .next {
+      cursor: pointer;
+      width: 25px;
+      height: 45px;
+      position: absolute;
+      top: 200px;
+      right: 10px;
+      z-index: 10;
+      text-align: center; }
+    .shop_index_box .right_slide_box .tab_bar {
+      position: absolute;
+      bottom: 10px;
+      left: calc(50% - 80px); }
+      .shop_index_box .right_slide_box .tab_bar li {
+        display: inline-block;
+        border-radius: 5px;
+        height: 25px;
+        width: 25px;
+        background: #fff;
+        text-align: center;
+        line-height: 25px;
+        margin-left: 10px; }
+      .shop_index_box .right_slide_box .tab_bar li.active {
+        background: #a0866d;
+        color: #fff; }
+    .shop_index_box .right_slide_box .slide_cont {
+      width: 99999px;
+      position: absolute;
+      left: 0;
+      top: 0; }
+      .shop_index_box .right_slide_box .slide_cont li {
+        float: left; }
+        .shop_index_box .right_slide_box .slide_cont li a {
+          display: block; }
+          .shop_index_box .right_slide_box .slide_cont li a img {
+            width: 1010px;
+            height: 420px; }
+
+.shop_classify_min {
+  width: 1280px;
+  margin: 10px auto; }
+  .shop_classify_min .shop_tab_box ul {
+    width: 1280px;
+    padding: 0;
+    display: -webkit-box;
+    display: box;
+    border-bottom: 2px solid #ab8e72;
+    background: rgba(171, 142, 114, 0.35); }
+    .shop_classify_min .shop_tab_box ul li {
+      width: 256px;
+      height: 70px;
+      line-height: 70px;
+      font-size: 22px;
+      font-weight: 400;
+      text-align: center; }
+    .shop_classify_min .shop_tab_box ul li.active {
+      color: #b21b0f;
+      position: relative;
+      z-index: 9; }
+    .shop_classify_min .shop_tab_box ul li.active:after {
+      position: absolute;
+      z-index: 10;
+      width: 256px;
+      height: 15px;
+      content: "";
+      bottom: -8px;
+      left: 0;
+      background-repeat: no-repeat;
+      background-size: 100% auto;
+      background-image: url(../images/tab_active_bottom.png); }
+  .shop_classify_min .show_cont_box {
+    overflow: hidden;
+    width: 100%; }
+    .shop_classify_min .show_cont_box .father_tab_box {
+      left: 0;
+      height: 500px;
+      width: 600%;
+      transform: translateX(0);
+      transition: transform 0.5s;
+      -moz-transition: transform 0.5s;
+      -webkit-transition: transform 0.5s;
+      -o-transition: transform 0.5s; }
+      .shop_classify_min .show_cont_box .father_tab_box .c_box {
+        width: 1280px;
+        float: left; }
+        .shop_classify_min .show_cont_box .father_tab_box .c_box .more_btn {
+          background: rgba(171, 142, 114, 0.35);
+          line-height: 40px;
+          font-size: 16px;
+          text-align: center; }
+          .shop_classify_min .show_cont_box .father_tab_box .c_box .more_btn a {
+            color: #653d01;
+            font-weight: 400; }
+    .shop_classify_min .show_cont_box .child_ul {
+      display: box;
+      display: -webkit-box;
+      background: #fff; }
+      .shop_classify_min .show_cont_box .child_ul li {
+        width: 230px;
+        border: 1px solid #eee8e3;
+        padding: 15px;
+        margin: 0 16.5px; }
+        .shop_classify_min .show_cont_box .child_ul li:first-child {
+          margin-left: 0px; }
+        .shop_classify_min .show_cont_box .child_ul li:last-child {
+          margin-right: 0px; }
+        .shop_classify_min .show_cont_box .child_ul li a {
+          color: #666; }
+        .shop_classify_min .show_cont_box .child_ul li .price {
+          font-size: 18px;
+          color: #b21b0f;
+          padding: 10px; }
+        .shop_classify_min .show_cont_box .child_ul li .sPic img {
+          width: 200px; }
+        .shop_classify_min .show_cont_box .child_ul li p {
+          margin: 0;
+          padding-left: 10px;
+          line-height: 30px;
+          font-weight: 600; }
+
+.shop_list_box,
+.mingjiatuijian {
+  margin-top: 20px; }
+  .shop_list_box .img_tit,
+  .mingjiatuijian .img_tit {
+    text-align: center;
+    margin-bottom: 10px; }
+
+.shop_box {
+  overflow: hidden;
+  width: 1280px;
+  margin: 0 auto; }
+  .shop_box ul {
+    display: box;
+    display: -webkit-box;
+    background: #fff; }
+    .shop_box ul li {
+      width: 230px;
+      border: 1px solid #eee8e3;
+      padding: 15px;
+      margin: 0 16.5px; }
+      .shop_box ul li:first-child {
+        margin-left: 0px; }
+      .shop_box ul li:last-child {
+        margin-right: 0px; }
+      .shop_box ul li a {
+        color: #666; }
+      .shop_box ul li .price {
+        font-size: 18px;
+        color: #b21b0f;
+        padding: 10px; }
+      .shop_box ul li .sPic img {
+        width: 200px; }
+      .shop_box ul li p {
+        margin: 0;
+        padding-left: 10px;
+        line-height: 30px;
+        font-weight: 600; }
+  .shop_box .more_btn {
+    background: rgba(171, 142, 114, 0.35);
+    line-height: 40px;
+    font-size: 16px;
+    text-align: center; }
+    .shop_box .more_btn a {
+      color: #653d01;
+      font-weight: 400; }
+
+.mingjiatuijian .mingjia_box {
+  display: -webkit-box;
+  display: box; }
+  .mingjiatuijian .mingjia_box .tuijian {
+    width: 365px;
+    height: 462px;
+    position: relative; }
+    .mingjiatuijian .mingjia_box .tuijian img {
+      width: 100%;
+      height: 462px; }
+    .mingjiatuijian .mingjia_box .tuijian a {
+      position: absolute;
+      bottom: 0px;
+      left: 0px;
+      width: 100%;
+      height: 30px;
+      background: rgba(0, 0, 0, 0.5);
+      color: #fff;
+      font-size: 16px;
+      text-align: center;
+      line-height: 30px; }
+  .mingjiatuijian .mingjia_box .mingjia_list {
+    width: 900px;
+    margin-left: 15px;
+    display: flex;
+    flex-wrap: wrap; }
+    .mingjiatuijian .mingjia_box .mingjia_list .mingjia_list_ground {
+      position: relative;
+      width: 220px;
+      height: 225px;
+      margin-left: 5px; }
+      .mingjiatuijian .mingjia_box .mingjia_list .mingjia_list_ground img {
+        width: 100%;
+        height: 100%; }
+      .mingjiatuijian .mingjia_box .mingjia_list .mingjia_list_ground a {
+        position: absolute;
+        bottom: 0px;
+        left: 0px;
+        width: 100%;
+        height: 30px;
+        background: rgba(0, 0, 0, 0.5);
+        color: #fff;
+        font-size: 16px;
+        text-align: center;
+        line-height: 30px; }
+
+.sirendingzhi {
+  width: 1280px;
+  margin: 30px auto; }
+  .sirendingzhi a {
+    display: block; }
+    .sirendingzhi a img {
+      width: 100%;
+      height: auto; }
+
+.shop_show {
+  width: 1280px;
+  margin: 0 auto;
+  padding: 10px;
+  background: rgba(248, 248, 248, 0.8); }
+  .shop_show .shop_show_header {
+    display: box;
+    display: -webkit-box;
+    padding-top: 30px; }
+    .shop_show .shop_show_header .header_left_img {
+      width: 260px;
+      padding-left: 60px;
+      position: relative; }
+      .shop_show .shop_show_header .header_left_img .small_box {
+        position: relative; }
+        .shop_show .shop_show_header .header_left_img .small_box .float_layer {
+          position: absolute;
+          width: 50px;
+          height: 50px;
+          background: rgba(0, 0, 0, 0.5);
+          z-index: 13;
+          display: none; }
+        .shop_show .shop_show_header .header_left_img .small_box .mark {
+          position: absolute;
+          width: 100%;
+          height: 100%;
+          background: rgba(0, 0, 0, 0.5);
+          opacity: 0;
+          z-index: 15;
+          cursor: move; }
+        .shop_show .shop_show_header .header_left_img .small_box img {
+          width: 200px;
+          height: 324px;
+          border: 1px solid #ccc;
+          padding: 10px; }
+      .shop_show .shop_show_header .header_left_img .big_box {
+        display: none;
+        left: 260px;
+        top: 0;
+        overflow: hidden;
+        position: absolute;
+        width: 350px;
+        height: 350px;
+        overflow: hidden; }
+        .shop_show .shop_show_header .header_left_img .big_box img {
+          position: absolute; }
+    .shop_show .shop_show_header .header_right_detail {
+      width: 970px;
+      margin-left: 40px; }
+      .shop_show .shop_show_header .header_right_detail h3 {
+        font-size: 18px;
+        font-weight: 600;
+        padding-bottom: 30px;
+        border-bottom: 1px solid #f2f2f2; }
+      .shop_show .shop_show_header .header_right_detail .shop_d_box {
+        background: #f3f3f3;
+        padding: 10px; }
+        .shop_show .shop_show_header .header_right_detail .shop_d_box p {
+          line-height: 35px;
+          color: #404040;
+          padding-left: 20px; }
+          .shop_show .shop_show_header .header_right_detail .shop_d_box p .price {
+            color: #bb382d;
+            font-weight: 600;
+            font-size: 18px; }
+      .shop_show .shop_show_header .header_right_detail .wuliu {
+        line-height: 35px;
+        margin-top: 20px;
+        padding-left: 40px;
+        font-weight: 600;
+        border-bottom: 1px solid #f2f2f2;
+        padding-bottom: 15px; }
+      .shop_show .shop_show_header .header_right_detail .shop_show_buy {
+        margin-top: 20px;
+        padding-left: 30px;
+        display: -webkit-box;
+        display: box; }
+        .shop_show .shop_show_header .header_right_detail .shop_show_buy .number_box {
+          display: -webkit-box;
+          display: box;
+          border: 1px solid #eae9ed;
+          padding: 0; }
+          .shop_show .shop_show_header .header_right_detail .shop_show_buy .number_box input {
+            height: 52px;
+            line-height: 52px;
+            width: 40px;
+            text-align: center;
+            display: block; }
+          .shop_show .shop_show_header .header_right_detail .shop_show_buy .number_box button {
+            display: block;
+            height: 26px;
+            line-height: 26px;
+            width: 30px;
+            text-align: center;
+            border: none; }
+          .shop_show .shop_show_header .header_right_detail .shop_show_buy .number_box button.minus {
+            margin-top: 2px; }
+        .shop_show .shop_show_header .header_right_detail .shop_show_buy .once_buy {
+          background: #ab8e72;
+          display: inline-block;
+          line-height: 52px;
+          padding: 0 20px;
+          color: #fff;
+          font-weight: 400;
+          margin-left: 20px;
+          font-size: 20px; }
+        .shop_show .shop_show_header .header_right_detail .shop_show_buy .zixun {
+          border: 1px solid #ab8e72;
+          display: inline-block;
+          line-height: 52px;
+          padding: 0 20px;
+          color: #333;
+          font-weight: 400;
+          margin-left: 20px;
+          font-size: 20px; }
+    .shop_show .shop_show_header .msg_text {
+      font-size: 14px;
+      padding-left: 30px;
+      margin-top: 10px;
+      color: #822; }
+  .shop_show .detail_tit {
+    margin-top: 40px;
+    width: 1040px; }
+    .shop_show .detail_tit ul {
+      display: -webkit-box;
+      display: box;
+      background: #f7f7f7;
+      border-bottom: 1px solid #ab8e72; }
+      .shop_show .detail_tit ul li {
+        width: 110px;
+        height: 40px;
+        line-height: 40px;
+        text-align: center; }
+        .shop_show .detail_tit ul li a {
+          font-size: 16px;
+          color: #333333; }
+      .shop_show .detail_tit ul li.active {
+        background: #ab8e72; }
+        .shop_show .detail_tit ul li.active a {
+          color: #fff; }
+  .shop_show .show_detail_box {
+    display: -webkit-box;
+    display: box; }
+    .shop_show .show_detail_box .show_detail_left {
+      width: 1040px;
+      border: 1px solid #c9c9cb;
+      padding: 20px; }
+      .shop_show .show_detail_box .show_detail_left .jieshao {
+        margin: 20px 0;
+        overflow: hidden;
+        padding: 20px 0;
+        border: 1px solid #b9b9b9;
+        background: #f3f3f3; }
+        .shop_show .show_detail_box .show_detail_left .jieshao p {
+          display: inline-block;
+          float: left;
+          margin-left: 40px;
+          margin-top: 10px; }
+      .shop_show .show_detail_box .show_detail_left p.gaikuang {
+        font-size: 16px;
+        color: #ab8e72;
+        border-bottom: 1px solid #ab8e72;
+        font-weight: 600;
+        padding-bottom: 10px;
+        margin-top: 10px; }
+      .shop_show .show_detail_box .show_detail_left .main_img {
+        margin: 10px 0; }
+        .shop_show .show_detail_box .show_detail_left .main_img img {
+          width: 100%;
+          height: auto; }
+      .shop_show .show_detail_box .show_detail_left .show_detail_tit {
+        font-size: 28px;
+        color: #a25000;
+        text-align: center; }
+      .shop_show .show_detail_box .show_detail_left .xuzhi .tit {
+        color: #a25000;
+        font-size: 16px;
+        text-align: center;
+        margin: 20px; }
+      .shop_show .show_detail_box .show_detail_left .xuzhi .cont {
+        color: #444; }
+      .shop_show .show_detail_box .show_detail_left .pingjia_box {
+        border: 1px solid #c9c9c9;
+        padding: 20px;
+        margin-top: 10px;
+        display: -webkit-box;
+        display: box; }
+        .shop_show .show_detail_box .show_detail_left .pingjia_box .big_show_text {
+          width: 200px;
+          text-align: center; }
+          .shop_show .show_detail_box .show_detail_left .pingjia_box .big_show_text h1 {
+            color: #ab8e72;
+            font-size: 16px; }
+            .shop_show .show_detail_box .show_detail_left .pingjia_box .big_show_text h1 span {
+              font-size: 32px; }
+          .shop_show .show_detail_box .show_detail_left .pingjia_box .big_show_text p span {
+            color: #ab8e72; }
+        .shop_show .show_detail_box .show_detail_left .pingjia_box .pingjia .pingfen .text_left {
+          display: inline-block;
+          width: 100px;
+          color: #5b5b5b;
+          font-weight: 600;
+          font-size: 15px; }
+          .shop_show .show_detail_box .show_detail_left .pingjia_box .pingjia .pingfen .text_left span {
+            color: #999;
+            font-weight: normal;
+            margin-left: 5px; }
+        .shop_show .show_detail_box .show_detail_left .pingjia_box .pingjia .pingfen .base_b {
+          display: inline-block;
+          width: 200px;
+          background: #d4d4d4;
+          height: 10px;
+          position: relative; }
+          .shop_show .show_detail_box .show_detail_left .pingjia_box .pingjia .pingfen .base_b .cont {
+            position: absolute;
+            left: 0;
+            top: 0;
+            background: #ab8e72;
+            height: 10px; }
+      .shop_show .show_detail_box .show_detail_left .pingjia_list {
+        border: 1px solid #c9c9c9;
+        margin-top: 20px;
+        background: #fff; }
+        .shop_show .show_detail_box .show_detail_left .pingjia_list .pingjia_tit ul {
+          line-height: 40px;
+          font-size: 16px;
+          overflow: hidden; }
+          .shop_show .show_detail_box .show_detail_left .pingjia_list .pingjia_tit ul li {
+            display: inline-block;
+            width: 100px;
+            float: left;
+            text-align: center;
+            background: #eae9ed;
+            border: 1px solid #d4d4d7;
+            color: #999; }
+          .shop_show .show_detail_box .show_detail_left .pingjia_list .pingjia_tit ul li.active {
+            border: none;
+            border-top: 1px solid #ab8e72;
+            background: #fff;
+            color: #333; }
+        .shop_show .show_detail_box .show_detail_left .pingjia_list .show_pingjia {
+          margin-top: 10px;
+          min-height: 200px;
+          overflow: hidden;
+          position: relative; }
+          .shop_show .show_detail_box .show_detail_left .pingjia_list .show_pingjia .f_ul {
+            position: absolute;
+            width: 400%;
+            overflow: auto;
+            left: 0;
+            top: 0; }
+            .shop_show .show_detail_box .show_detail_left .pingjia_list .show_pingjia .f_ul .child_ul {
+              float: left;
+              width: 996px; }
+          .shop_show .show_detail_box .show_detail_left .pingjia_list .show_pingjia .pingjia_li {
+            padding: 10px;
+            display: -webkit-box;
+            display: box;
+            border-bottom: 1px solid #f9f9f9; }
+            .shop_show .show_detail_box .show_detail_left .pingjia_list .show_pingjia .pingjia_li .yh {
+              width: 60px; }
+              .shop_show .show_detail_box .show_detail_left .pingjia_list .show_pingjia .pingjia_li .yh img {
+                width: 60px;
+                height: 60px;
+                border-radius: 30px;
+                display: inline-block;
+                vertical-align: middle; }
+            .shop_show .show_detail_box .show_detail_left .pingjia_list .show_pingjia .pingjia_li .pingjia_detail {
+              margin-left: 10px;
+              width: 786px; }
+            .shop_show .show_detail_box .show_detail_left .pingjia_list .show_pingjia .pingjia_li .pingjia_time {
+              width: 100px;
+              color: #a9a9a9; }
+      .shop_show .show_detail_box .show_detail_left .fuwubaozhang {
+        border: 1px solid #c9c9c9;
+        margin-top: 20px;
+        background: #fff; }
+        .shop_show .show_detail_box .show_detail_left .fuwubaozhang .fuwu_tit {
+          background: #eae9ed;
+          line-height: 36px;
+          padding-left: 10px;
+          font-size: 16px; }
+        .shop_show .show_detail_box .show_detail_left .fuwubaozhang .zixun_text_box {
+          padding: 20px;
+          color: #ab8e72;
+          display: -webkit-box;
+          display: box; }
+          .shop_show .show_detail_box .show_detail_left .fuwubaozhang .zixun_text_box .zixun_text {
+            width: 80%; }
+          .shop_show .show_detail_box .show_detail_left .fuwubaozhang .zixun_text_box .zixun_btn {
+            width: 20%;
+            padding: 30px;
+            text-align: center; }
+            .shop_show .show_detail_box .show_detail_left .fuwubaozhang .zixun_text_box .zixun_btn a {
+              display: inline-block;
+              padding: 10px 20px;
+              color: #fff;
+              background: #ab8e72; }
+    .shop_show .show_detail_box .show_detail_right {
+      width: 200px;
+      margin-left: 20px; }
+      .shop_show .show_detail_box .show_detail_right .show_mingjia_box {
+        margin-top: 10px;
+        text-align: center;
+        background: #fff;
+        padding-top: 30px;
+        padding-bottom: 30px; }
+        .shop_show .show_detail_box .show_detail_right .show_mingjia_box .mingjia {
+          border-radius: 100px;
+          width: 180px;
+          height: 180px; }
+        .shop_show .show_detail_box .show_detail_right .show_mingjia_box .name_mingjia {
+          text-align: center;
+          font-size: 18px;
+          line-height: 40px;
+          font-weight: 400; }

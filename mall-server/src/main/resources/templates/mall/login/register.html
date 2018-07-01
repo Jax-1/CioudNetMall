@@ -45,7 +45,7 @@
 				</div>
 			</div>
 			<div class="go_login">
-				已经注册过了，<a href="/mall/login.do">去登录</a>
+				已经注册过了，<a href="/user/login.do">去登录</a>
 			</div>
 			</form>
 		</div>
@@ -119,7 +119,7 @@
 		$.validator.addMethod("checkUser",function(value,element,params){
 			var flg=false;
 			console.log(element.value);
-			 $.post('/mall/checkname',{username:element.value},function(data){
+			 $.post('/user/checkname',{username:element.value},function(data){
 				 if(data!=null&&data.res=='1'){
 					 console.log(data);
 					flg=true;
@@ -134,7 +134,7 @@
            return true;
        },"两次密码输入不一致！");
 		$("#submit").click(function(){
-			$.post('/mall/register',
+			$.post('/user/register',
 					{user_name:$("#user_name").val(),
 					password:$("#password").val(),
 					imgcode:$("#imgcode").val(),
@@ -146,7 +146,7 @@
 						//注册成功
 						$("#msg").text('');
 						$("#msg").text(data.msg);
-						setTimeout('showRes()',2000);
+						setTimeout('showRes()',1000);
 					}else{
 						$("#msg").text('');
 						$("#msg").text(data.msg);
@@ -156,7 +156,7 @@
 		})
 		//跳转到登录界面
 		function showRes(){
-			window.location.href="/mall/login.do";
+			window.location.href="/user/login.do";
 		}
 	</script>
 </body>

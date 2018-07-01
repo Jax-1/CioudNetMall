@@ -1,17 +1,8 @@
 package com.mall.dao.login;
 
+import com.mall.dao.base.IBaseDao;
 import com.mall.entity.login.UserInfo;
 
-public interface UserInfoMapper {
-    int deleteByPrimaryKey(String id);
-
-    int insert(UserInfo record);
-
-    int insertSelective(UserInfo record);
-
-    UserInfo selectByPrimaryKey(String id);
-
-    int updateByPrimaryKeySelective(UserInfo record);
-
-    int updateByPrimaryKey(UserInfo record);
+public interface UserInfoMapper extends IBaseDao<UserInfo>{
+    
 }

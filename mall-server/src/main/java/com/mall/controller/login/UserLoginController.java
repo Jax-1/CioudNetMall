@@ -26,7 +26,7 @@ import com.mall.util.Validate;
 import com.mall.service.sys.CacheService;
 
 @Controller
-@RequestMapping("/mall")
+@RequestMapping("/user")
 public class UserLoginController  extends AbstractController{
 	@Resource
 	private UserLoginService userLoginService;
@@ -34,17 +34,7 @@ public class UserLoginController  extends AbstractController{
 	private UserLoginUtil userLoginUtil;
 	@Resource
 	private CacheService cacheService;
-	/**
-	 * 跳转到主页
-	 * @return
-	 */
-	@RequestMapping("")
-	public String toIndex(Model model) {
-		cacheService.getCache(SystemCode.PAGE);
-		
-		model.addAttribute("page", "/mall/base/index_body");
-		return "/mall/index";
-	}
+	
 	/**
 	 * 跳转到登录界面
 	 * @return
@@ -52,8 +42,8 @@ public class UserLoginController  extends AbstractController{
 	@RequestMapping("/login.do")
 	public String toLogin(Model model) {
 		 
-		model.addAttribute("page", "/mall/login/login");
-		return "/mall/index";
+		model.addAttribute("page", "mall/login/login");
+		return "mall/index";
 	}
 	/**
 	 * 跳转到注册界面
@@ -63,8 +53,8 @@ public class UserLoginController  extends AbstractController{
 	@RequestMapping("/register.do")
 	public String toRegister(Model model) {
 		 
-		model.addAttribute("page", "/mall/login/register");
-		return "/mall/index";
+		model.addAttribute("page", "mall/login/register");
+		return "mall/index";
 	}
 	
 	/**
@@ -74,6 +64,7 @@ public class UserLoginController  extends AbstractController{
 	@PostMapping("/login")
 	@ResponseBody
 	public ProcessResult<User> toLogin(User user, HttpServletRequest request){
+		logger.info(request.getServletPath() );
 		if(!Validate.notNull(user)||!Validate.notNull(user.getUser_name())||!Validate.notNull(user.getPassword())) {
 			return  new ProcessResult<User>();
 		}
@@ -126,11 +117,11 @@ public class UserLoginController  extends AbstractController{
         String sessionPhoneCode = req.getSession().getAttribute("phonecode").toString();
         if (Validate.notNull(phonecode)&&Validate.notNull(sessionPhoneCode)) {
             if (!phonecode.equals(sessionPhoneCode)) {
-            	process.setMsg("手机验证失败1！");
+            	process.setMsg("手机验证失败！");
             	return process;
             } 
         }else {
-        	process.setMsg("手机验证失败2！");
+        	process.setMsg("手机验证失败！");
         	return process;
         } 
         logger.info("用户注册，验证码校验成功！");

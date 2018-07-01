@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+<meta charset="UTF-8">
+</head>
+<body>
+<!-- 内容部分 -->
+	<div class="content_box">
+		<div class="my_center_box">
+				<div class="content_bar">
+				您所在的位置：<span>我的中心</span>		
+				</div>
+				<div class="my_left_bar">
+					<div class="my_top_box">
+						<h3 class="my_tit">我的中心</h3>
+						<div class="my_detail_box">
+							<div class="my_img">
+								<img  th:attr="src=${session.user!=null&&session.user.filePath!=null}?'':'/mall/images/u106.png'" alt="">
+							</div>
+							<div class="my_right_bar">
+								<ul>
+									<li><a href="">修改头像</a></li>
+									<li><a href="my_info.html" target="my_iframe">修改资料</a></li>
+									<li><a href="">安全退出</a></li>
+								</ul>
+							</div>
+						</div>
+					</div>
+
+					<div class="my_menu_box">
+						<dl>
+							<dt>交易管理</dt>
+							<dd><a href="">我的收藏</a></dd>
+							<dd><a href="">我的订单</a></dd>
+							<dd><a href="">我的竞拍</a></dd>
+							<dd><a href="">订单评价</a></dd>
+						</dl>
+						<dl>
+							<dt>资金管理</dt>
+							<dd><a href="">账户余额</a></dd>
+							<dd><a href="">保证金</a></dd>
+						</dl>
+						<dl>
+							<dt>客户中心</dt>
+							<dd><a href="">在线咨询</a></dd>
+							<dd><a href="">退货及退款</a></dd>
+						</dl>
+						<dl>
+							<dt>信息管理</dt>
+							<dd><a href="/user/manager" target="my_iframe">个人信息</a></dd>
+							<dd><a href="/user/modifypwd" target="my_iframe">密码修改</a></dd>
+							<dd><a href="/user/manager" target="my_iframe">收货地址</a></dd>
+						</dl>
+					</div>
+				</div>
+				<div class="my_right_cont">
+					 <!-- content -->
+		             <iframe  name="content"  th:replace="mall/login/manager::${manager}" class="page-content-wrapper" style="width:100%;background:#fff" frameborder="0">
+		                
+		            </iframe>
+				</div>
+		</div>
+	</div>
+	<!-- 内容部分结束 -->
+
+</body>
+</html>

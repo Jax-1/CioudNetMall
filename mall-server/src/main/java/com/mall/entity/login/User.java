@@ -2,6 +2,8 @@ package com.mall.entity.login;
 
 import java.util.Date;
 
+import com.mall.entity.cms.FilePath;
+
 public class User {
     private String user_name;
 
@@ -18,8 +20,37 @@ public class User {
     private Date update_time;
 
     private String del_status;
+    
+    /**
+     * 关联用户信息表
+     */
+    private UserInfo userInfo;
+    
+    /**
+     * 关联文件信息表
+     */
+    private FilePath filePath;
+    
+    
+    
 
-    public String getUser_name() {
+    public FilePath getFilePath() {
+		return filePath;
+	}
+
+	public void setFilePath(FilePath filePath) {
+		this.filePath = filePath;
+	}
+
+	public UserInfo getUserInfo() {
+		return userInfo;
+	}
+
+	public void setUserInfo(UserInfo userInfo) {
+		this.userInfo = userInfo;
+	}
+
+	public String getUser_name() {
         return user_name;
     }
 

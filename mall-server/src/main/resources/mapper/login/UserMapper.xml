@@ -125,4 +125,71 @@
       del_status = #{del_status,jdbcType=VARCHAR}
     where user_name = #{user_name,jdbcType=VARCHAR}
   </update>
+  <!-- 关联用户信息表查询 -->
+  <resultMap extends="BaseResultMap" id="orderResultMap" type="com.mall.entity.login.User">
+    <association property="userInfo" javaType="com.mall.entity.login.UserInfo">
+            <id column="id" jdbcType="VARCHAR" property="id" />
+		    <result column="user_name_c" jdbcType="VARCHAR" property="user_name" />
+		    <result column="name" jdbcType="VARCHAR" property="name" />
+		    <result column="Sex" jdbcType="VARCHAR" property="sex" />
+		    <result column="Phone" jdbcType="VARCHAR" property="phone" />
+		    <result column="email" jdbcType="VARCHAR" property="email" />
+		    <result column="qq" jdbcType="VARCHAR" property="qq" />
+		    <result column="address_province" jdbcType="VARCHAR" property="address_province" />
+		    <result column="address_city" jdbcType="VARCHAR" property="address_city" />
+		    <result column="address_area" jdbcType="VARCHAR" property="address_area" />
+		    <result column="address_street" jdbcType="VARCHAR" property="address_street" />
+		    <result column="headimgurl" jdbcType="VARCHAR" property="headimgurl" />
+		    <result column="Create_at_c" jdbcType="TIMESTAMP" property="create_at" />
+		    <result column="Update_time_c" jdbcType="TIMESTAMP" property="update_time" />
+		    <result column="LastSign_time_c" jdbcType="TIMESTAMP" property="lastSign_time" />
+     </association>
+     <association property="filePath" javaType="com.mall.entity.cms.FilePath">
+            <id column="fileid" jdbcType="VARCHAR" property="fileid" />
+		    <result column="belongid" jdbcType="VARCHAR" property="belongid" />
+		    <result column="path" jdbcType="VARCHAR" property="path" />
+		    <result column="fileidname" jdbcType="VARCHAR" property="fileidname" />
+		    <result column="filename" jdbcType="VARCHAR" property="filename" />
+		    <result column="filetype" jdbcType="VARCHAR" property="filetype" />
+		    <result column="filesize" jdbcType="VARCHAR" property="filesize" />
+		    <result column="status_c" jdbcType="VARCHAR" property="status" />
+		    <result column="createby" jdbcType="VARCHAR" property="createby" />
+		    <result column="createat" jdbcType="TIMESTAMP" property="createat" />
+     </association>
+  </resultMap>
+  <!-- login -->
+  <select id="Login" parameterType="com.mall.entity.login.User" resultMap="orderResultMap">
+  	
+select a.*,b.fileid, b.belongid, b.path, b.fileidname, b.filename, b.filetype, b.filesize, b.status status_c, b.createby, 
+    b.createat
+from (
+SELECT
+	t1.*,
+	t2.id,
+	t2.user_name user_name_c,
+	t2.NAME,
+	t2.Sex,
+	t2.Phone,
+	t2.email,
+	t2.qq,
+	t2.address_province,
+	t2.address_city,
+	t2.address_area,
+	t2.address_street,
+	t2.headimgurl,
+	t2.Create_at Create_at_c,
+	t2.Update_time Update_time_c,
+	t2.LastSign_time LastSign_time_c
+	
+FROM
+	t_sys_user_localauth t1,
+	t_sys_user_info t2 
+	
+WHERE
+	t1.userinfo_id = t2.id 
+	AND t1.user_name = #{user_name}  
+	
+	)a left join t_file_path b on  a.headimgurl = b.fileid
+  </select>
+  
 </mapper>

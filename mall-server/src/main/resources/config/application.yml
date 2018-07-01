@@ -1,5 +1,9 @@
 mybatis:
     mapper-locations: classpath:mapper/**/*.xml
+    
+thymeleaf:
+    prefix: classpath:/templates/    #指定资源位置
+    mode: LEGACYHTML5  
 
 mapper:
 
@@ -74,7 +78,8 @@ spring:
 
 server:
 ##  context-path: /webapp
-  port: 8888
+  port: 80
+
 
 
 

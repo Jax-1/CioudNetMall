@@ -26,7 +26,7 @@ public class WebConfigurer extends WebMvcConfigurerAdapter {
 
     @Override  
     public void addViewControllers(ViewControllerRegistry registry) {  
-        registry.addViewController("/").setViewName("forward:/index.html");  
+        registry.addViewController("/").setViewName("redirect:/mall");  
         registry.setOrder(Ordered.HIGHEST_PRECEDENCE);  
         super.addViewControllers(registry);  
     }  

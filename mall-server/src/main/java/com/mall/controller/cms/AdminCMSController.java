@@ -85,9 +85,9 @@ public class AdminCMSController extends AbstractController{
 		//主分类默认选中,及显示
 		model.addAttribute("main", mainClass);
 		model.addAttribute("Pid", Pid);
-		model.addAttribute("page", "/admin/cms/add_cms");
+		model.addAttribute("page", "admin/cms/add_cms");
 		model.addAttribute("content", "nav-item start active open");
-		return "/admin/index";
+		return "admin/index";
 	}
 	/**
 	 * 保存文章
@@ -211,9 +211,9 @@ public class AdminCMSController extends AbstractController{
 		List<AtticleldCategory> list = atticleldCategoryService.queryAll(Pid);
 		model.addAttribute("Category", list);
 		model.addAttribute("Pid", Pid);
-		model.addAttribute("page", "/admin/cms/add_mingjia");
+		model.addAttribute("page", "admin/cms/add_mingjia");
 		model.addAttribute("content", "nav-item start active open");
-		return "/admin/index";
+		return "admin/index";
 	}
 	/**
 	 * 名家荟萃列表
@@ -229,9 +229,9 @@ public class AdminCMSController extends AbstractController{
 		//作家列表
 		model.addAttribute("list", list);
 		model.addAttribute("Pid", Pid);
-		model.addAttribute("page", "/admin/cms/list_mingjia");
+		model.addAttribute("page", "admin/cms/list_mingjia");
 		model.addAttribute("content", "nav-item start active open");
-		return "/admin/index";
+		return "admin/index";
 	}
 	/**
 	 * 文章列表
@@ -256,9 +256,9 @@ public class AdminCMSController extends AbstractController{
 		
 		
 		model.addAttribute("Pid", Pid);
-		model.addAttribute("page", "/admin/cms/list_cms");
+		model.addAttribute("page", "admin/cms/list_cms");
 		model.addAttribute("content", "nav-item start active open");
-		return "/admin/index";
+		return "admin/index";
 	}
 	/**
 	 * 分类
@@ -286,9 +286,9 @@ public class AdminCMSController extends AbstractController{
 		model.addAttribute("zpjj", zpjj);
 		model.addAttribute("zxzx", zxzx);
 		model.addAttribute("ctwh", ctwh);
-		model.addAttribute("page", "/admin/cms/classify_cms");
+		model.addAttribute("page", "admin/cms/classify_cms");
 		model.addAttribute("content", "nav-item start active open");
-		return "/admin/index";
+		return "admin/index";
 	}
 	
 	@RequestMapping("/editor.do")
@@ -338,9 +338,9 @@ public class AdminCMSController extends AbstractController{
 		//主分类默认选中,及显示
 		model.addAttribute("main", mainClass);
 		model.addAttribute("Pid", Pid);
-		model.addAttribute("page", "/admin/cms/add_cms");
+		model.addAttribute("page", "admin/cms/add_cms");
 		model.addAttribute("content", "nav-item start active open");
-		return "/admin/index";
+		return "admin/index";
 	}
 	/**
 	 * 编辑作家信息
@@ -366,8 +366,8 @@ public class AdminCMSController extends AbstractController{
 		model.addAttribute("auth", authInfo);
 		model.addAttribute("Category", list);
 		model.addAttribute("Pid", Pid);
-		model.addAttribute("page", "/admin/cms/add_mingjia");
+		model.addAttribute("page", "admin/cms/add_mingjia");
 		model.addAttribute("content", "nav-item start active open");
-		return "/admin/index";
+		return "admin/index";
 	}
 }
