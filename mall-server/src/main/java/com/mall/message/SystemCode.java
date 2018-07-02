@@ -133,7 +133,10 @@ public class SystemCode {
 	public final static String ACCESSSKEYID="ACCESSSKEYID";
 	public final static String ACCESSSKEYSECRET="ACCESSSKEYSECRET";
 	public final static String SIGNNAME="SIGNNAME";
+	//注册短信模板
 	public final static String REGISTERED_TEMPLATECODE="REGISTERED_TEMPLATECODE";
+	//校验短信模板
+	public final static String VARLIDATE_TEMPLATECODE="VARLIDATE_TEMPLATECODE";
 	
 	
 	

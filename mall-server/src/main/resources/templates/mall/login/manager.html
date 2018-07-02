@@ -12,62 +12,65 @@
 		<div class="my_right_tit">
 			个人信息
 		</div>
+		<span id="msg"></span>
 		<div class="my_rt_b">
 			<div class="my_form_box">
-				<input style="display:none" th:value="${session.user.userInfo.id}">
 				<div class="form_ground">
 					<label for="">登录帐号</label>
 					<div class="input_box">
-						<input type="text" th:value="${session.user.user_name}">
+						<input type="text" th:value="${session.user.user_name}" >
 					</div>
 				</div>
 				<div class="form_ground f_r">
 					<label for="">真实姓名</label>
 					<div class="input_box">
-						<input type="text" value="阿杰" th:value="${session.user.userInfo.name}">
+						<input type="text" value="阿杰" th:value="${session.user.userInfo.name}" id="name">
 					</div>
 				</div>
 				<div class="form_ground">
 					<label for="">性别</label>
 					<div class="input_box">
-						<select name="" id="" >
-							<option value="1">男</option>
-							<option value="0">女</option>
+						<select name="sex" id="sex" >
+							<option value="1" th:selected="${session.user.userInfo.sex=='1'}">男</option>
+							<option value="0" th:selected="${session.user.userInfo.sex=='0'}">女</option>
 						</select>
 					</div>
 				</div>
 				<div class="form_ground f_r">
 					<label for="">邮箱</label>
 					<div class="input_box">
-						<input type="text" value="770637705@qq.com" th:value="${session.user.userInfo.email}">
+						<input type="text" value="770637705@qq.com" th:value="${session.user.userInfo.email}" id="email">
 					</div>
 				</div>
 				<div class="form_ground">
 					<label for="">电话</label>
 					<div class="input_box">
-						<input type="text" value="13823595211" th:value="${session.user.userInfo.phone}">
+						<input type="text" value="13823595211" th:value="${session.user.userInfo.phone}" id="phone">
 					</div>
 				</div>
 				<div class="form_ground  f_r">
 					<label for="">QQ</label>
 					<div class="input_box">
-						<input type="text" value="770637705" th:value="${session.user.userInfo.qq}">
+						<input type="text" value="770637705" th:value="${session.user.userInfo.qq}" id="qq">
 					</div>
 				</div>
 				<div class="form_ground">
 					<label for="">所在地</label>
 					<div>
-					<select name="province"></select><select name="city"></select><select name="area"></select>
+					<select name="province" id="address_province"></select>
+					<select name="city" id="address_city">
+					</select><select name="area" id="address_area"></select>
 					</div>
 				</div>
 				<div class="form_ground_t">
 					<label for="">地址</label>
 					<div class="input_box">
-						<textarea name="" id="" cols="30" rows="10" th:value="${session.user.userInfo.address_street}"></textarea>
+						<textarea name="" id="address_street" cols="30" rows="10" th:text="${session.user.userInfo.address_street}"></textarea>
+						<span id="headimgurl"></span>
 					</div>
 				</div>
 				<div class="save_btn">
-					<input type="submit" value="保存" />
+					<input type="submit" value="保存" id="submit" />
 				</div>
 				
 			</div>
@@ -82,9 +85,36 @@
 		<script type="text/javascript" th:inline="javascript">
 		  $(function(){
 			  
-			  var userinfo =[[${session.user.userInfo}]];
+			  	var userinfo =[[${session.user.userInfo}]];
 				new PCAS("province","city","area",userinfo.address_province,userinfo.address_city,userinfo.address_area);
-			  
+			  	$("#submit").click(function(){
+			  		console.log($("#address_street").val());
+				  		$.post('/user/chengeuserinfo',
+					  			{
+					  			 name:$("#name").val(),
+					  			 sex:$("#sex").val(),
+					  			 phone:$("#phone").val(),
+					  			email:$("#email").val(),
+					  			qq:$("#qq").val(),
+					  			address_province:$("#address_province").val(),
+					  			address_city:$("#address_city").val(),
+					  			address_area:$("#address_area").val(),
+					  			address_street:$("#address_street").val(),
+					  			headimgurl:$("#headimgurl").text()
+					  			 },
+					  			function(data){
+					  				if(data!=null&&data.res=="1"){
+					  					//修改成功
+					  					$("#msg").text(data.msg);
+					  					setTimeout('location.reload()',1000);
+					  				}else{
+					  					//失败
+					  					$("#msg").text(data.msg);
+					  				}
+					  		
+					  	})
+			  	});
+			  	
 		  })
 			
 			
@@ -93,7 +123,7 @@
 	
 	<!-- 用户信息end -->
 	<!-- 密码修改 -->
-	<div class="my_right_box" th:fragment="modify_pwd">
+	<div class="my_right_box" th:fragment="modify_pwd_verify">
 		<div class="my_right_tit">
 			密码修改
 		</div>
@@ -111,37 +141,95 @@
 					<dd>
 						<p><select name="auth_type" id="auth_type" class="valid">
 								<option value="mobile">手机 [138****5211]</option>
-                         </select><a href="javascript:void(0);" id="send_auth_code" class="ncm-btn"><span id="sending" style="display:none">正在</span><span class="send_success_tips" style="display: none;"><strong id="show_times" class="red mr5"></strong>秒后再次</span>获取安全验证码</a></p>
-                         <p class="send_success_tips" style="display: none;">“安全验证码”已发出，请注意查收，请在<strong>“30分种”</strong>内完成验证。</p>
+                         </select><a href="javascript:getphonecode();" id="send_auth_code" class="ncm-btn"><span id="sending" style="display:none">正在</span><span class="send_success_tips" style="display: none;"><strong id="show_times" class="red mr5"></strong>秒后再次</span>获取安全验证码</a></p>
+                         <p id="send_success_tips" class="send_success_tips" style="display: none;">“安全验证码”已发出，请注意查收，请在<strong>“30分种”</strong>内完成验证。</p>
 					</dd>
 				</dl>
 				<dl>
 		        	<dt><i class="required">*</i>请输入安全验证码：</dt>
 			        <dd>
-			          <input type="text" class="text" maxlength="6" value="" name="auth_code" size="10" id="auth_code" autocomplete="off">
+			          <input type="text" class="text" maxlength="6" value="" name="auth_code" size="10" id="phonecode" autocomplete="off">
 			          <label for="email" generated="true" class="error"></label>
 			        </dd>
 		      </dl>
 		      <dl>
 		        	<dt><i class="required">*</i>图形验证码：</dt>
 		        <dd>
-		          <input type="text" name="captcha" class="text" id="captcha" maxlength="4" size="10" autocomplete="off">
+		          <input type="text" name="captcha" class="text" id="imgcode" maxlength="4" size="10" autocomplete="off">
 		          <a href="#" onclick="changeImg()">
 		         <img src="/img/getcode" class="vm" id="imgObj" alt="点击更换验证码" >
 		         </a>
 		          <label for="captcha" generated="true" class="error"></label>
 		        </dd>
 		      </dl>
+		      <span id="msg"></span>
 		      <dl class="bottom">
 		        <dt>&nbsp;</dt>
 		        <dd>
 		          <label class="submit-border">
-		            <input type="button" class="submit" value="确认，进入下一步">
+		            <input type="button" class="submit" value="确认，进入下一步" id="submit">
 		          </label>
 		        </dd>
 		      </dl>
 			</div>
 
+		</div>
+		<script type="text/javascript" th:inline="javascript">
+		var user =[[${session.user}]];
+		function changeImg() {        
+	        var imgSrc = $("#imgObj");    
+	        imgSrc.attr("src", chgUrl());
+		}
+		// 时间戳
+		// 为了使每次生成图片不一致，即不让浏览器读缓存，所以需要加上时间戳
+		function chgUrl() {
+		    var timestamp = (new Date()).valueOf();
+		    var url='/img/getcode'+"?timestamp=" + timestamp;
+		    return url;
+		}
+		function getphonecode(){
+			console.log(user.user_name);
+			
+			$.post('/sms/getCheckcode',{phone:user.user_name},function(data){
+				console.log(data!=null);
+				console.log(data.code);
+				console.log(data);
+				if(data!=null&&data.code=='Ok'){
+					//短信发送成功
+					
+					console.log(1111111111);
+					$("#send_success_tips").attr('style',"");
+				}else{
+					//短信发送失败
+					console.log(222222222);
+				}
+			});
+			
+		}
+		$("#submit").click(function(){
+			$.post("/user/checkCode",
+					{imgcode:$("#imgcode").val(),
+					phonecode:$("#phonecode").val()
+					
+					},
+					function(data){
+				if(data!=null&&data.res=="1"){
+					//成功
+					window.location.href="/user/modify_pwd"
+				}else{
+					//失败
+					$("#msg").text(data.msg);
+				}
+			})
+		})
+		</script>
+	</div>
+	<div class="my_right_box" th:fragment="modify_pwd">
+		<div class="my_right_tit">
+			密码修改
+		</div>
+		<div class="my_rt_b">
+			<form action="/user/modify">
 			<div class="ncm-default-form">
 				<dl>
 			        <dt><i class="required">*</i>设置新密码：</dt>
@@ -154,31 +242,23 @@
 		      <dl>
 		        <dt><i class="required">*</i>确认新密码：</dt>
 		        <dd>
-		          <input type="password" maxlength="40" class="text" name="confirm_password" id="confirm_password">
+		          <input type="password" maxlength="40" class="text"  id="confirm_password">
 		          <label for="confirm_password" generated="true" class="error"></label>
 		        </dd>
 		      </dl>
 		      <dl class="bottom">
 		        <dt>&nbsp;</dt>
 		        <dd><label class="submit-border">
-		          <input type="submit" class="submit" value="确认提交"></label>
+		          <input type="submit" class="submit" value="确认提交" id="submit"></label>
 		        </dd>
 		      </dl>
 			</div>
-			
+			</form>
 		</div>
 		<script type="text/javascript">
-		function changeImg() {        
-	        var imgSrc = $("#imgObj");    
-	        imgSrc.attr("src", chgUrl());
-		}
-		// 时间戳
-		// 为了使每次生成图片不一致，即不让浏览器读缓存，所以需要加上时间戳
-		function chgUrl() {
-		    var timestamp = (new Date()).valueOf();
-		    var url='/img/getcode'+"?timestamp=" + timestamp;
-		    return url;
-		}
+		//密码一致性校验
+		
+		
 		</script>
 	</div>
 	<!-- 密码修改end -->

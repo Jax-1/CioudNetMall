@@ -56,6 +56,33 @@ public class SMSController extends AbstractController{
 		
 	}
 	/**
+	 * 获取校验短信验证码
+	 * @param phone
+	 * @param req
+	 * @return
+	 */
+	@RequestMapping("/getCheckcode")
+	@ResponseBody
+	public SendSmsResponse getSMSCheckCode(String phone,HttpServletRequest req) {
+		Map<String, String> sms = cacheService.getCache(SystemCode.SMS);
+		String code=Integer.toString(new Random().nextInt(999999));
+		
+		SmsEntity smsentity=new SmsEntity(sms.get(SystemCode.ACCESSSKEYID),sms.get(SystemCode.ACCESSSKEYSECRET),sms.get(SystemCode.SIGNNAME),sms.get(SystemCode.VARLIDATE_TEMPLATECODE),phone,code);
+		SendSmsResponse sendSms=null;
+		try {
+			sendSms = SmsUtil.sendSms(smsentity);
+			HttpSession session = req.getSession();
+	        session.removeAttribute("phonecode");
+	        session.setAttribute("phonecode", code);
+	        logger.info("获取验证短信验证："+sendSms.getCode());
+		} catch (ClientException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return sendSms;
+		
+	}
+	/**
 	 * 校验手机验证码
 	 * @param phonecode
 	 * @param req
@@ -67,22 +94,17 @@ public class SMSController extends AbstractController{
 	@SuppressWarnings("rawtypes")
 	public ProcessResult checkCode(String phonecode,HttpServletRequest req, HttpServletResponse res) {
 		ProcessResult process=new ProcessResult();
-		if(!Validate.notNull(phonecode)) {
-			process.setMsg("验证码不得为空！");
-			return process;
-		}
-		// 验证验证码
-        String sessionCode = req.getSession().getAttribute("phonecode").toString();
-        if (phonecode != null && !"".equals(phonecode) && sessionCode != null && !"".equals(sessionCode)) {
-            if (phonecode.equalsIgnoreCase(sessionCode)) {
+		//验证手机验证码
+        String sessionPhoneCode = req.getSession().getAttribute("phonecode").toString();
+        if (Validate.notNull(phonecode)&&Validate.notNull(sessionPhoneCode)) {
+            if (phonecode.equals(sessionPhoneCode)) {
             	process.setRes(SystemCode.SUCCESS);
-            	
-            } else {
-            	process.setMsg("验证失败！");
-            }
-        } else {
-        	process.setMsg("验证失败！");
+            	process.setMsg("手机验证成功！");
+            	return process;
+            } 
         }
+        process.setMsg("手机验证失败！");
+        logger.info("验证码校验失败！");
     
 		return process;
 		

@@ -76,23 +76,16 @@ public class CheckCodeController extends AbstractController{
 	public ProcessResult checkCode(String imgcode,HttpServletRequest req, HttpServletResponse res) {
 		
 		ProcessResult process=new ProcessResult();
-		if(!Validate.notNull(imgcode)) {
-			process.setMsg("验证码不得为空！");
-			return process;
-		}
-		// 验证验证码
+		// 验证图片验证码
         String sessionCode = req.getSession().getAttribute("imgcode").toString();
-        if (imgcode != null && !"".equals(imgcode) && sessionCode != null && !"".equals(sessionCode)) {
+        if (Validate.notNull(imgcode)&&Validate.notNull(sessionCode)) {
             if (imgcode.equalsIgnoreCase(sessionCode)) {
             	process.setRes(SystemCode.SUCCESS);
-            	
-            } else {
-            	process.setMsg("验证失败！");
-            }
-        } else {
-        	process.setMsg("验证失败！");
+            	process.setMsg("验证成功！");
+            	return process;
+            } 
         }
-    
+        process.setMsg("验证失败！");
 		return process;
 		
 	}
