@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mall.dao.goods.GoodsCategoryMapper">
+  <resultMap id="BaseResultMap" type="com.mall.entity.goods.GoodsCategory">
+    <id column="category_id" jdbcType="VARCHAR" property="category_id" />
+    <result column="parent_id" jdbcType="VARCHAR" property="parent_id" />
+    <result column="category_name" jdbcType="VARCHAR" property="category_name" />
+    <result column="priority" jdbcType="INTEGER" property="priority" />
+    <result column="status" jdbcType="VARCHAR" property="status" />
+    <result column="simple_describe" jdbcType="VARCHAR" property="simple_describe" />
+    <result column="recommend" jdbcType="VARCHAR" property="recommend" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="create_time" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="update_time" />
+    <result column="admin_id" jdbcType="VARCHAR" property="admin_id" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    category_id, parent_id, category_name, priority, status, simple_describe, recommend, 
+    create_time, update_time, admin_id
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_goods_category
+    where category_id = #{category_id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from t_goods_category
+    where category_id = #{category_id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.mall.entity.goods.GoodsCategory">
+    insert into t_goods_category (category_id, parent_id, category_name, 
+      priority, status, simple_describe, 
+      recommend, create_time, update_time, 
+      admin_id)
+    values (#{category_id,jdbcType=VARCHAR}, #{parent_id,jdbcType=VARCHAR}, #{category_name,jdbcType=VARCHAR}, 
+      #{priority,jdbcType=INTEGER}, #{status,jdbcType=VARCHAR}, #{simple_describe,jdbcType=VARCHAR}, 
+      #{recommend,jdbcType=VARCHAR}, #{create_time,jdbcType=TIMESTAMP}, #{update_time,jdbcType=TIMESTAMP}, 
+      #{admin_id,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.mall.entity.goods.GoodsCategory">
+    insert into t_goods_category
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="category_id != null">
+        category_id,
+      </if>
+      <if test="parent_id != null">
+        parent_id,
+      </if>
+      <if test="category_name != null">
+        category_name,
+      </if>
+      <if test="priority != null">
+        priority,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="simple_describe != null">
+        simple_describe,
+      </if>
+      <if test="recommend != null">
+        recommend,
+      </if>
+      <if test="create_time != null">
+        create_time,
+      </if>
+      <if test="update_time != null">
+        update_time,
+      </if>
+      <if test="admin_id != null">
+        admin_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="category_id != null">
+        #{category_id,jdbcType=VARCHAR},
+      </if>
+      <if test="parent_id != null">
+        #{parent_id,jdbcType=VARCHAR},
+      </if>
+      <if test="category_name != null">
+        #{category_name,jdbcType=VARCHAR},
+      </if>
+      <if test="priority != null">
+        #{priority,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="simple_describe != null">
+        #{simple_describe,jdbcType=VARCHAR},
+      </if>
+      <if test="recommend != null">
+        #{recommend,jdbcType=VARCHAR},
+      </if>
+      <if test="create_time != null">
+        #{create_time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="update_time != null">
+        #{update_time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="admin_id != null">
+        #{admin_id,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.mall.entity.goods.GoodsCategory">
+    update t_goods_category
+    <set>
+      <if test="parent_id != null">
+        parent_id = #{parent_id,jdbcType=VARCHAR},
+      </if>
+      <if test="category_name != null">
+        category_name = #{category_name,jdbcType=VARCHAR},
+      </if>
+      <if test="priority != null">
+        priority = #{priority,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="simple_describe != null">
+        simple_describe = #{simple_describe,jdbcType=VARCHAR},
+      </if>
+      <if test="recommend != null">
+        recommend = #{recommend,jdbcType=VARCHAR},
+      </if>
+      <if test="create_time != null">
+        create_time = #{create_time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="update_time != null">
+        update_time = #{update_time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="admin_id != null">
+        admin_id = #{admin_id,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where category_id = #{category_id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.mall.entity.goods.GoodsCategory">
+    update t_goods_category
+    set parent_id = #{parent_id,jdbcType=VARCHAR},
+      category_name = #{category_name,jdbcType=VARCHAR},
+      priority = #{priority,jdbcType=INTEGER},
+      status = #{status,jdbcType=VARCHAR},
+      simple_describe = #{simple_describe,jdbcType=VARCHAR},
+      recommend = #{recommend,jdbcType=VARCHAR},
+      create_time = #{create_time,jdbcType=TIMESTAMP},
+      update_time = #{update_time,jdbcType=TIMESTAMP},
+      admin_id = #{admin_id,jdbcType=VARCHAR}
+    where category_id = #{category_id,jdbcType=VARCHAR}
+  </update>
+  <!-- 软删除 -->
+  <update id="chengeStatus" parameterType="com.mall.entity.goods.GoodsCategory">
+  	 update t_goods_category
+    set 
+      status = 'N'
+      
+    where category_id = #{category_id,jdbcType=VARCHAR}
+  
+  </update>
+  <!-- 分类查询 -->
+  <select id="getGoodsCategoryList" parameterType="com.mall.entity.goods.GoodsCategory" resultMap="BaseResultMap">
+  	 select 
+    <include refid="Base_Column_List" />
+    from t_goods_category
+    where 
+    <if test="parent_id!=null">
+    	parent_id=#{category_id}
+    </if>
+    <if test="parent_id==null">
+    	parent_id='' or parent_id='0'
+    </if>
+    	
+  	
+  </select>
+</mapper>

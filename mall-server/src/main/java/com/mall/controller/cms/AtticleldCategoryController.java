@@ -47,6 +47,7 @@ public class AtticleldCategoryController extends AbstractController{
 	@PostMapping("/add")
 	@ResponseBody
 	public ProcessResult<AtticleldCategory> addCategory(AtticleldCategory atticleldCategory ){
+		logger.info("添加文章分类："+atticleldCategory.getLadelname());
 		atticleldCategory.setId(UUIDUtil.getUUID());
 		atticleldCategory.setCreateat(DateFormatUtil.getDate());
 		return atticleldCategoryService.insert(atticleldCategory);

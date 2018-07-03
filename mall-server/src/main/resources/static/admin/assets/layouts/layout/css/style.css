@@ -1,9 +1,18 @@
 .classify_list{
-
+	padding-left:20px;
+	margin-left: 20px;
+	padding-top: 15px;
+	border:1px solid #eee;
+	width: 600px;
 }
 .classify_list .f_list>span{
 	font-weight: bold;
 	font-size:16px;
+	display: inline-block;
+	width: 100px;
+}
+.m_b_0{
+	margin-bottom: 0;
 }
 .classify_list .f_list>i{
 	display: inline-block;
@@ -15,18 +24,45 @@
 }
 .c_list{
 	font-size: 16px;
+	margin-left: 100px;
+	padding:0;
 }
 .c_list li{
-	margin: 15px 10px;
+	margin: 15px 0px;
 }
 .c_btn{
 	padding:5px;
 }
 .left_textbody{
-	width: 200px;
+	width: 170px;
 	display: inline-block;
+	line-height: 22px;
+	height: 22px;
+	overflow: hidden;
 }
 .queding_add{
 	background: #178a3d;
 	color:#fff;
+}
+
+.table_class_tit{
+	width: 600px;
+	background: #eee;
+	line-height: 40px;
+	margin-left: 20px;
+}
+.table_class_tit th{
+	text-align: center;
+}
+.paixu{
+	display: inline-block;
+	width: 80px;
+	margin-right: 110px;
+	text-align: center;
+	line-height: 22px;
+	height: 22px;
+}
+.add_c_m{
+	margin-right: 20px;
+	float: right;
 }

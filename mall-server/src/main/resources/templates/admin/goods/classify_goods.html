@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="/admin/assets/layouts/layout/css/style.css">
+</head>
+<body>
+<div class="page-content-wrapper">
+                <!-- BEGIN CONTENT BODY -->
+      <div class="page-content">
+	<div class="page-bar">
+            <ul class="page-breadcrumb">
+                <li>
+                    <a href="index.html">首页</a>
+                    <i class="fa fa-circle"></i>
+                </li>
+                <li>
+                    <span>分类管理</span>
+                </li>
+            </ul>
+        </div>
+
+     <!-- 内容展示 -->
+        <div class="row">
+		    <div class="col-md-12">
+		        <div class="portlet light bordered">
+		            <div class="portlet-body">
+		                <div class="table-toolbar">
+		                    <div class="row">
+		                    <div class="form-group m_b_0">
+		                    <table class="table_class_tit">
+		                    	<tr>
+		                    		<th width="100px">顶级</th>
+		                    		<th width="200px">子分类名称</th>
+		                    		<th width="80px;">排序</th>
+		                    		<th>操作</th>
+		                    	</tr>
+		                    </table>
+		                    </div>
+	                        <div class="form-group">
+	                            <ul class="classify_list">
+	                                <li class="f_list"><span>
+	                                字画</span> <i class="btn add_child add_c_m">新增子分类</i>
+	                                    <ul class="c_list">
+	                                        <li> <span class="left_textbody" contenteditable="true">名人展示</span>
+	                                        <span contenteditable="true" class="paixu">1</span>
+	                                            <span class="btn green c_btn amend_btn">修改</span>&nbsp;
+	                                            <span class="btn red c_btn">删除</span>
+	                                        </li>
+	                                    </ul>
+	                                </li>
+	                                <li class="f_list"><span>手工艺品</span><i class="btn add_child add_c_m">新增子分类</i>
+	                                    <ul class="c_list">
+	                                        <li><span class="left_textbody" contenteditable="true">油画作品</span>
+	                                        <span contenteditable="true" class="paixu">1</span>
+	                                            <span class="btn green c_btn amend_btn">修改</span>&nbsp;
+	                                            <span class="btn red c_btn">删除</span>
+	                                        </li>
+	                                    </ul>
+	                                </li>
+	                                <li class="f_list"><span>艺术品</span><i class="btn add_child add_c_m">新增子分类</i>
+	                                    <ul class="c_list">
+	                                        <li><span class="left_textbody" contenteditable="true">保养知识</span>
+	                                        <span contenteditable="true" class="paixu">1</span>
+	                                            <span class="btn green c_btn amend_btn">修改</span>&nbsp;
+	                                            <span class="btn red c_btn">删除</span>
+	                                        </li>
+	                                    </ul>
+	                                </li>
+	                                <li class="f_list"><span>文玩</span><i class="btn add_child add_c_m">新增子分类</i>
+	                                    <ul class="c_list">
+	                                        <li><span class="left_textbody" contenteditable="true">云二代夏令营</span>
+	                                        <span contenteditable="true" class="paixu">1</span>
+	                                            <span class="btn green c_btn amend_btn">修改</span>&nbsp;
+	                                            <span class="btn red c_btn">删除</span>
+	                                        </li>
+	                                    </ul>
+	                                </li>
+	                                <li class="f_list"><span>篆刻</span><i class="btn add_child add_c_m">新增子分类</i>
+	                                    <ul class="c_list">
+	                                        <li><span class="left_textbody" contenteditable="true">云二代夏令营</span>
+	                                        <span contenteditable="true" class="paixu">1</span>
+	                                            <span class="btn green c_btn amend_btn">修改</span>&nbsp;
+	                                            <span class="btn red c_btn">删除</span>
+	                                        </li>
+	                                    </ul>
+	                                </li>
+	                                <li class="f_list"><span>珠宝</span><i class="btn add_child add_c_m">新增子分类</i>
+	                                    <ul class="c_list">
+	                                        <li><span class="left_textbody" contenteditable="true">云二代夏令营</span>
+	                                        <span contenteditable="true" class="paixu">1</span>
+	                                            <span class="btn green c_btn amend_btn">修改</span>&nbsp;
+	                                            <span class="btn red c_btn">删除</span>
+	                                        </li>
+	                                    </ul>
+	                                </li>
+	                            </ul>
+		                    </div>
+		                	</div>
+		            	</div>
+		        	</div>
+		    	</div>
+			</div>
+        </div>
+        </div>
+        </div>
+		<script src="/admin/assets/global/plugins/jquery.min.js" type="text/javascript"></script>
+        <script src="/admin/assets/global/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+        <script src="/admin/assets/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js" type="text/javascript"></script>
+        <script src="/admin/assets/global/scripts/app.min.js" type="text/javascript"></script>
+        <script src="/admin/assets/layouts/layout/scripts/layout.min.js" type="text/javascript"></script>
+
+        <script>
+            $(function(){
+                $(".add_child").click(function(){
+                    //新增
+                   $(this).parent('.f_list').find('.c_list').append('<li ><span class="left_textbody" contenteditable="true">新增子分类</span><span contenteditable="true" class="paixu">1</span><span class="btn c_btn queding_add">确定</span>&nbsp;<span class="btn red c_btn">取消</span></li>');
+                   $(this).parent('.f_list').find('.c_list').children("li:last-child").find('.left_textbody').focus();
+
+                   $(".queding_add").click(function(){
+                        console.log($(this).prev().text()); 
+                    })
+                })
+
+                $(".amend_btn").click(function(){
+                    $(this).prev().text()
+                     console.log($(this).prev().text()); 
+                })
+                
+
+                //监听回车不可用或者触发保存
+                $(".left_textbody").keypress(function(e){
+                	if(e.which==13){
+                		//此处可以调用保存方法
+                		$(this).blur();
+                		return false;
+                	}
+                })
+
+            })
+        </script>
+</body>
+</html>

@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mall.dao.goods.GoodsInfoMapper">
+  <resultMap id="BaseResultMap" type="com.mall.entity.goods.GoodsInfo">
+    <id column="goods_info_id" jdbcType="VARCHAR" property="goods_info_id" />
+    <result column="category_id" jdbcType="VARCHAR" property="category_id" />
+    <result column="inventoryid" jdbcType="VARCHAR" property="inventoryid" />
+    <result column="size" jdbcType="VARCHAR" property="size" />
+    <result column="flat_feet" jdbcType="VARCHAR" property="flat_feet" />
+    <result column="auth_id" jdbcType="VARCHAR" property="auth_id" />
+    <result column="framed" jdbcType="VARCHAR" property="framed" />
+    <result column="environment" jdbcType="VARCHAR" property="environment" />
+    <result column="standard" jdbcType="VARCHAR" property="standard" />
+    <result column="ext1" jdbcType="VARCHAR" property="ext1" />
+    <result column="ext2" jdbcType="VARCHAR" property="ext2" />
+    <result column="ext3" jdbcType="VARCHAR" property="ext3" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="create_time" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="update_time" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    goods_info_id, category_id, inventoryid, size, flat_feet, auth_id, framed, environment, 
+    standard, ext1, ext2, ext3, create_time, update_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_goods_info
+    where goods_info_id = #{goods_info_id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from t_goods_info
+    where goods_info_id = #{goods_info_id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.mall.entity.goods.GoodsInfo">
+    insert into t_goods_info (goods_info_id, category_id, inventoryid, 
+      size, flat_feet, auth_id, 
+      framed, environment, standard, 
+      ext1, ext2, ext3, create_time, 
+      update_time)
+    values (#{goods_info_id,jdbcType=VARCHAR}, #{category_id,jdbcType=VARCHAR}, #{inventoryid,jdbcType=VARCHAR}, 
+      #{size,jdbcType=VARCHAR}, #{flat_feet,jdbcType=VARCHAR}, #{auth_id,jdbcType=VARCHAR}, 
+      #{framed,jdbcType=VARCHAR}, #{environment,jdbcType=VARCHAR}, #{standard,jdbcType=VARCHAR}, 
+      #{ext1,jdbcType=VARCHAR}, #{ext2,jdbcType=VARCHAR}, #{ext3,jdbcType=VARCHAR}, #{create_time,jdbcType=TIMESTAMP}, 
+      #{update_time,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.mall.entity.goods.GoodsInfo">
+    insert into t_goods_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="goods_info_id != null">
+        goods_info_id,
+      </if>
+      <if test="category_id != null">
+        category_id,
+      </if>
+      <if test="inventoryid != null">
+        inventoryid,
+      </if>
+      <if test="size != null">
+        size,
+      </if>
+      <if test="flat_feet != null">
+        flat_feet,
+      </if>
+      <if test="auth_id != null">
+        auth_id,
+      </if>
+      <if test="framed != null">
+        framed,
+      </if>
+      <if test="environment != null">
+        environment,
+      </if>
+      <if test="standard != null">
+        standard,
+      </if>
+      <if test="ext1 != null">
+        ext1,
+      </if>
+      <if test="ext2 != null">
+        ext2,
+      </if>
+      <if test="ext3 != null">
+        ext3,
+      </if>
+      <if test="create_time != null">
+        create_time,
+      </if>
+      <if test="update_time != null">
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="goods_info_id != null">
+        #{goods_info_id,jdbcType=VARCHAR},
+      </if>
+      <if test="category_id != null">
+        #{category_id,jdbcType=VARCHAR},
+      </if>
+      <if test="inventoryid != null">
+        #{inventoryid,jdbcType=VARCHAR},
+      </if>
+      <if test="size != null">
+        #{size,jdbcType=VARCHAR},
+      </if>
+      <if test="flat_feet != null">
+        #{flat_feet,jdbcType=VARCHAR},
+      </if>
+      <if test="auth_id != null">
+        #{auth_id,jdbcType=VARCHAR},
+      </if>
+      <if test="framed != null">
+        #{framed,jdbcType=VARCHAR},
+      </if>
+      <if test="environment != null">
+        #{environment,jdbcType=VARCHAR},
+      </if>
+      <if test="standard != null">
+        #{standard,jdbcType=VARCHAR},
+      </if>
+      <if test="ext1 != null">
+        #{ext1,jdbcType=VARCHAR},
+      </if>
+      <if test="ext2 != null">
+        #{ext2,jdbcType=VARCHAR},
+      </if>
+      <if test="ext3 != null">
+        #{ext3,jdbcType=VARCHAR},
+      </if>
+      <if test="create_time != null">
+        #{create_time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="update_time != null">
+        #{update_time,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.mall.entity.goods.GoodsInfo">
+    update t_goods_info
+    <set>
+      <if test="category_id != null">
+        category_id = #{category_id,jdbcType=VARCHAR},
+      </if>
+      <if test="inventoryid != null">
+        inventoryid = #{inventoryid,jdbcType=VARCHAR},
+      </if>
+      <if test="size != null">
+        size = #{size,jdbcType=VARCHAR},
+      </if>
+      <if test="flat_feet != null">
+        flat_feet = #{flat_feet,jdbcType=VARCHAR},
+      </if>
+      <if test="auth_id != null">
+        auth_id = #{auth_id,jdbcType=VARCHAR},
+      </if>
+      <if test="framed != null">
+        framed = #{framed,jdbcType=VARCHAR},
+      </if>
+      <if test="environment != null">
+        environment = #{environment,jdbcType=VARCHAR},
+      </if>
+      <if test="standard != null">
+        standard = #{standard,jdbcType=VARCHAR},
+      </if>
+      <if test="ext1 != null">
+        ext1 = #{ext1,jdbcType=VARCHAR},
+      </if>
+      <if test="ext2 != null">
+        ext2 = #{ext2,jdbcType=VARCHAR},
+      </if>
+      <if test="ext3 != null">
+        ext3 = #{ext3,jdbcType=VARCHAR},
+      </if>
+      <if test="create_time != null">
+        create_time = #{create_time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="update_time != null">
+        update_time = #{update_time,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where goods_info_id = #{goods_info_id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.mall.entity.goods.GoodsInfo">
+    update t_goods_info
+    set category_id = #{category_id,jdbcType=VARCHAR},
+      inventoryid = #{inventoryid,jdbcType=VARCHAR},
+      size = #{size,jdbcType=VARCHAR},
+      flat_feet = #{flat_feet,jdbcType=VARCHAR},
+      auth_id = #{auth_id,jdbcType=VARCHAR},
+      framed = #{framed,jdbcType=VARCHAR},
+      environment = #{environment,jdbcType=VARCHAR},
+      standard = #{standard,jdbcType=VARCHAR},
+      ext1 = #{ext1,jdbcType=VARCHAR},
+      ext2 = #{ext2,jdbcType=VARCHAR},
+      ext3 = #{ext3,jdbcType=VARCHAR},
+      create_time = #{create_time,jdbcType=TIMESTAMP},
+      update_time = #{update_time,jdbcType=TIMESTAMP}
+    where goods_info_id = #{goods_info_id,jdbcType=VARCHAR}
+  </update>
+</mapper>

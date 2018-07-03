@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mall.dao.goods.GoodsPriceMapper">
+  <resultMap id="BaseResultMap" type="com.mall.entity.goods.GoodsPrice">
+    <id column="price_id" jdbcType="VARCHAR" property="price_id" />
+    <result column="goods_id" jdbcType="VARCHAR" property="goods_id" />
+    <result column="unit_name" jdbcType="VARCHAR" property="unit_name" />
+    <result column="retail_price" jdbcType="DECIMAL" property="retail_price" />
+    <result column="buy_price" jdbcType="DECIMAL" property="buy_price" />
+    <result column="sale_price" jdbcType="DECIMAL" property="sale_price" />
+    <result column="sale" jdbcType="VARCHAR" property="sale" />
+    <result column="status" jdbcType="VARCHAR" property="status" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="create_time" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="update_time" />
+    <result column="admin_id" jdbcType="VARCHAR" property="admin_id" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    price_id, goods_id, unit_name, retail_price, buy_price, sale_price, sale, status, 
+    create_time, update_time, admin_id
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_goods_price
+    where price_id = #{price_id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from t_goods_price
+    where price_id = #{price_id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.mall.entity.goods.GoodsPrice">
+    insert into t_goods_price (price_id, goods_id, unit_name, 
+      retail_price, buy_price, sale_price, 
+      sale, status, create_time, 
+      update_time, admin_id)
+    values (#{price_id,jdbcType=VARCHAR}, #{goods_id,jdbcType=VARCHAR}, #{unit_name,jdbcType=VARCHAR}, 
+      #{retail_price,jdbcType=DECIMAL}, #{buy_price,jdbcType=DECIMAL}, #{sale_price,jdbcType=DECIMAL}, 
+      #{sale,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, #{create_time,jdbcType=TIMESTAMP}, 
+      #{update_time,jdbcType=TIMESTAMP}, #{admin_id,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.mall.entity.goods.GoodsPrice">
+    insert into t_goods_price
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="price_id != null">
+        price_id,
+      </if>
+      <if test="goods_id != null">
+        goods_id,
+      </if>
+      <if test="unit_name != null">
+        unit_name,
+      </if>
+      <if test="retail_price != null">
+        retail_price,
+      </if>
+      <if test="buy_price != null">
+        buy_price,
+      </if>
+      <if test="sale_price != null">
+        sale_price,
+      </if>
+      <if test="sale != null">
+        sale,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="create_time != null">
+        create_time,
+      </if>
+      <if test="update_time != null">
+        update_time,
+      </if>
+      <if test="admin_id != null">
+        admin_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="price_id != null">
+        #{price_id,jdbcType=VARCHAR},
+      </if>
+      <if test="goods_id != null">
+        #{goods_id,jdbcType=VARCHAR},
+      </if>
+      <if test="unit_name != null">
+        #{unit_name,jdbcType=VARCHAR},
+      </if>
+      <if test="retail_price != null">
+        #{retail_price,jdbcType=DECIMAL},
+      </if>
+      <if test="buy_price != null">
+        #{buy_price,jdbcType=DECIMAL},
+      </if>
+      <if test="sale_price != null">
+        #{sale_price,jdbcType=DECIMAL},
+      </if>
+      <if test="sale != null">
+        #{sale,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="create_time != null">
+        #{create_time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="update_time != null">
+        #{update_time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="admin_id != null">
+        #{admin_id,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.mall.entity.goods.GoodsPrice">
+    update t_goods_price
+    <set>
+      <if test="goods_id != null">
+        goods_id = #{goods_id,jdbcType=VARCHAR},
+      </if>
+      <if test="unit_name != null">
+        unit_name = #{unit_name,jdbcType=VARCHAR},
+      </if>
+      <if test="retail_price != null">
+        retail_price = #{retail_price,jdbcType=DECIMAL},
+      </if>
+      <if test="buy_price != null">
+        buy_price = #{buy_price,jdbcType=DECIMAL},
+      </if>
+      <if test="sale_price != null">
+        sale_price = #{sale_price,jdbcType=DECIMAL},
+      </if>
+      <if test="sale != null">
+        sale = #{sale,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="create_time != null">
+        create_time = #{create_time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="update_time != null">
+        update_time = #{update_time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="admin_id != null">
+        admin_id = #{admin_id,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where price_id = #{price_id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.mall.entity.goods.GoodsPrice">
+    update t_goods_price
+    set goods_id = #{goods_id,jdbcType=VARCHAR},
+      unit_name = #{unit_name,jdbcType=VARCHAR},
+      retail_price = #{retail_price,jdbcType=DECIMAL},
+      buy_price = #{buy_price,jdbcType=DECIMAL},
+      sale_price = #{sale_price,jdbcType=DECIMAL},
+      sale = #{sale,jdbcType=VARCHAR},
+      status = #{status,jdbcType=VARCHAR},
+      create_time = #{create_time,jdbcType=TIMESTAMP},
+      update_time = #{update_time,jdbcType=TIMESTAMP},
+      admin_id = #{admin_id,jdbcType=VARCHAR}
+    where price_id = #{price_id,jdbcType=VARCHAR}
+  </update>
+</mapper>

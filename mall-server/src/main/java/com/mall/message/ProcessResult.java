@@ -47,7 +47,13 @@ public class ProcessResult<T> implements Serializable {
     public ProcessResult(){
     	this.res=SystemCode.FAILURE;
     	this.msg=MessageUtil.getMsgByLan(MsgPoolCode.FAILURE);
-    } 
+    }
+    @SuppressWarnings("rawtypes")
+	public static ProcessResult success(ProcessResult rocessResult) {
+    	rocessResult.setRes(SystemCode.SUCCESS);
+    	rocessResult.setMsg(MessageUtil.getMsgByLan(MsgPoolCode.SUCCESS));
+    	return rocessResult;
+    }
     public ProcessResult(int res){
     	this.res=res;
     }

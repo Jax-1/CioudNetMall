@@ -18,7 +18,7 @@ import com.mall.util.PageResult;
  */
 public abstract class BaseServiceImpl<T> implements IBaseService<T> {
 
-    private static Logger logger = Logger.getLogger(BaseServiceImpl.class);
+    public static Logger logger = Logger.getLogger(BaseServiceImpl.class);
 
     protected abstract IBaseDao<T> getMapper();
 
