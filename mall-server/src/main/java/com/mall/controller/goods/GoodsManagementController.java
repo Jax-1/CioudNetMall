@@ -20,7 +20,9 @@ public class GoodsManagementController extends AbstractController{
 	private GoodsCategoryService goodsCategoryService;
 	@GetMapping("/category")
 	public String toClassify(Model model) {
-		
+		//查询所有分类
+		List<GoodsCategory> goodsCategoryList = goodsCategoryService.getGoodsCategoryList(null);
+		logger.info("获取商品分类列表："+goodsCategoryList.size());				model.addAttribute("goodsCategoryList", goodsCategoryList);
 		model.addAttribute("page", "admin/goods/classify_goods");
 		model.addAttribute("mall", "nav-item start active open");
 		return "admin/index";
@@ -28,9 +30,7 @@ public class GoodsManagementController extends AbstractController{
 	}
 	@RequestMapping("/list")
 	public String toGoodsList(Model model) {
-		//查询所有分类
-		List<GoodsCategory> goodsCategoryList = goodsCategoryService.getGoodsCategoryList(null);
-		model.addAttribute("goodsCategoryList", goodsCategoryList);
+		
 		model.addAttribute("page", "admin/goods/list_goods");
 		model.addAttribute("mall", "nav-item start active open");
 		return "admin/index";
