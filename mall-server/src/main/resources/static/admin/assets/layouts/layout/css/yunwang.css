@@ -83,3 +83,21 @@ margin-bottom: 20px;
 .shop_img img{
 	width: 100%;
 }
+li{
+	list-style-type: none;
+}
+
+.f_r{
+	float:right;
+	clear:both;
+	margin-right:10px;
+	width:160px;
+	display: inline-block;
+}
+.c_list li{
+	overflow:auto;
+}
+
+.f_list{
+	padding-bottom: 10px;
+}

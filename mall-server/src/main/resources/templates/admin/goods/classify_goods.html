@@ -4,6 +4,7 @@
 <head>
 <meta charset="UTF-8">
 <link rel="stylesheet" href="/admin/assets/layouts/layout/css/style.css">
+<link rel="stylesheet" href="/admin/assets/layouts/layout/css/yunwang.css">
 </head>
 <body>
 <div class="page-content-wrapper">
@@ -20,7 +21,8 @@
                 </li>
             </ul>
         </div>
-
+	
+	<span id='msg' style="color:red"></span>
      <!-- 内容展示 -->
         <div class="row">
 		    <div class="col-md-12">
@@ -32,71 +34,14 @@
 		                    <table class="table_class_tit">
 		                    	<tr>
 		                    		<th width="100px">顶级</th>
-		                    		<th width="200px">子分类名称</th>
+		                    		<th width="280px">子分类名称</th>
 		                    		<th width="80px;">排序</th>
 		                    		<th>操作</th>
 		                    	</tr>
 		                    </table>
 		                    </div>
-	                        <div class="form-group">
-	                            <ul class="classify_list">
-	                                <li class="f_list"><span>
-	                                字画</span> <i class="btn add_child add_c_m">新增子分类</i>
-	                                    <ul class="c_list">
-	                                        <li> <span class="left_textbody" contenteditable="true">名人展示</span>
-	                                        <span contenteditable="true" class="paixu">1</span>
-	                                            <span class="btn green c_btn amend_btn">修改</span>&nbsp;
-	                                            <span class="btn red c_btn">删除</span>
-	                                        </li>
-	                                    </ul>
-	                                </li>
-	                                <li class="f_list"><span>手工艺品</span><i class="btn add_child add_c_m">新增子分类</i>
-	                                    <ul class="c_list">
-	                                        <li><span class="left_textbody" contenteditable="true">油画作品</span>
-	                                        <span contenteditable="true" class="paixu">1</span>
-	                                            <span class="btn green c_btn amend_btn">修改</span>&nbsp;
-	                                            <span class="btn red c_btn">删除</span>
-	                                        </li>
-	                                    </ul>
-	                                </li>
-	                                <li class="f_list"><span>艺术品</span><i class="btn add_child add_c_m">新增子分类</i>
-	                                    <ul class="c_list">
-	                                        <li><span class="left_textbody" contenteditable="true">保养知识</span>
-	                                        <span contenteditable="true" class="paixu">1</span>
-	                                            <span class="btn green c_btn amend_btn">修改</span>&nbsp;
-	                                            <span class="btn red c_btn">删除</span>
-	                                        </li>
-	                                    </ul>
-	                                </li>
-	                                <li class="f_list"><span>文玩</span><i class="btn add_child add_c_m">新增子分类</i>
-	                                    <ul class="c_list">
-	                                        <li><span class="left_textbody" contenteditable="true">云二代夏令营</span>
-	                                        <span contenteditable="true" class="paixu">1</span>
-	                                            <span class="btn green c_btn amend_btn">修改</span>&nbsp;
-	                                            <span class="btn red c_btn">删除</span>
-	                                        </li>
-	                                    </ul>
-	                                </li>
-	                                <li class="f_list"><span>篆刻</span><i class="btn add_child add_c_m">新增子分类</i>
-	                                    <ul class="c_list">
-	                                        <li><span class="left_textbody" contenteditable="true">云二代夏令营</span>
-	                                        <span contenteditable="true" class="paixu">1</span>
-	                                            <span class="btn green c_btn amend_btn">修改</span>&nbsp;
-	                                            <span class="btn red c_btn">删除</span>
-	                                        </li>
-	                                    </ul>
-	                                </li>
-	                                <li class="f_list"><span>珠宝</span><i class="btn add_child add_c_m">新增子分类</i>
-	                                    <ul class="c_list">
-	                                        <li><span class="left_textbody" contenteditable="true">云二代夏令营</span>
-	                                        <span contenteditable="true" class="paixu">1</span>
-	                                            <span class="btn green c_btn amend_btn">修改</span>&nbsp;
-	                                            <span class="btn red c_btn">删除</span>
-	                                        </li>
-	                                    </ul>
-	                                </li>
-	                            </ul>
-		                    </div>
+		                    
+		                    <div class="form-group"  id="menu"></div>
 		                	</div>
 		            	</div>
 		        	</div>
@@ -107,29 +52,193 @@
         </div>
 		<script src="/admin/assets/global/plugins/jquery.min.js" type="text/javascript"></script>
         <script src="/admin/assets/global/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
-        <script src="/admin/assets/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js" type="text/javascript"></script>
-        <script src="/admin/assets/global/scripts/app.min.js" type="text/javascript"></script>
-        <script src="/admin/assets/layouts/layout/scripts/layout.min.js" type="text/javascript"></script>
+        <script src="../assets/global/plugins/bootbox/bootbox.min.js" type="text/javascript"></script>
 
         <script type="text/javascript" th:inline="javascript">
             $(function(){
-                $(".add_child").click(function(){
-                    //新增
-                   $(this).parent('.f_list').find('.c_list').append('<li ><span class="left_textbody" contenteditable="true">新增子分类</span><span contenteditable="true" class="paixu">1</span><span class="btn c_btn queding_add">确定</span>&nbsp;<span class="btn red c_btn">取消</span></li>');
-                   $(this).parent('.f_list').find('.c_list').children("li:last-child").find('.left_textbody').focus();
+                
+               //分类信息
+               var list=[[${goodsCategoryList}]];
+               console.log(list);
+               
+               $("#menu").html(buildMenu(list));
 
-                   $(".queding_add").click(function(){
-                        console.log($(this).prev().text()); 
+              // ----category_id= '+ obj[index].category_id+'</span>'+'<span>---parent_id='+obj[index].parent_id+'</span>';
+               function buildMenu(obj,ulcss,tier) {
+            	   var ulcss = ulcss ? ulcss : 'classify_list';
+            	   var tier= tier ? tier : 1;
+                   tier++;
+                   var str = "<ul class='"+ulcss+"'>";
+                   for(index in obj){
+                	   if (typeof(obj[index].goodsCategoryList) ==="object") {
+                    	   if(obj[index].parent_id==''){
+                        	   //一级分类
+                    		   str += "<li class='f_list'><span>"+ obj[index].category_name+"</span><i class='btn add_child add_c_m ad_child_b' data-id='"+obj[index].category_id+"'>新增子分类</i>"
+                    		   str += buildMenu(obj[index].goodsCategoryList,'c_list'); //递归判断是不是object,直到不是li 
+                               str += "</li>";
+                           }else{
+                               if(tier>=3){
+									//如果3级菜单则不需要
+                            	   str += '<li> <span class="left_textbody" contenteditable="true">'+obj[index].category_name+
+                            	   		 '</span><span class="f_r"><span class="btn green c_btn amend_btn" data-id="'+ obj[index].category_id+'">修改</span>&nbsp;<span class="btn red c_btn delete_btn" data-id="'+obj[index].category_id+'">删除</span></span>'+
+                            	   		'<span contenteditable="true" class="paixu">'+obj[index].priority+'</span></li>'
+                            	   str += buildMenu(obj[index].goodsCategoryList,'c_list',tier); //递归判断是不是object,直到不是li 
+                                   str += "</li>";
+
+                               }else{
+
+                            	   str += '<li> <span class="left_textbody" contenteditable="true">'+obj[index].category_name+
+                            	   		 '</span><span class="f_r"><span class="btn green c_btn amend_btn" data-id="'+ obj[index].category_id+'">修改</span>&nbsp;<span class="btn green c_btn amend_btn add_c" data-id="'+obj[index].category_id+'">新增子类</span>&nbsp;<span class="btn red c_btn delete_btn" data-id="'+obj[index].category_id+'">删除</span></span>'+
+                            	   		'<span contenteditable="true" class="paixu">'+obj[index].priority+'</span></li>'
+                            	   str += buildMenu(obj[index].goodsCategoryList,'c_list',tier); //递归判断是不是object,直到不是li 
+                                   str += "</li>";
+								
+                                }
+                           }
+                               
+                               
+                               
+                       }
+                	   else {
+                               str += "<li>" + index + "</li>" 
+                       }
+                   }
+                   
+               
+                   
+                   str += "</ul>";
+                   return str;
+
+               }
+
+               
+
+               $(".ad_child_b").click(function(){
+                   //新增
+                   var parent_id=$(this).data('id');
+                  $(this).parent('.f_list').children('.c_list').append('<li ><span class="left_textbody" contenteditable="true" >新增子分类</span><span class="f_r"><span class="btn c_btn queding_add" data-id="'+parent_id+'">确定</span>&nbsp;<span class="btn red c_btn">取消</span></span><span contenteditable="true" class="paixu">99</span></li>');
+                  $(this).parent('.f_list').children('.c_list').children("li:last-child").find('.left_textbody').focus();
+				
+                //新增请求
+                  $(".queding_add").click(function(){
+                     
+                      var parmet={
+                    	    parent_id:$(this).data('id'),
+          		   			category_name:$(this).parent().parent().find('.left_textbody').text(),
+          		   			priority:$(this).parent().parent().find('.paixu').text()
+                          }
+                      
+                	   $.post("/admin/goods/category/save",
+                			   parmet,
+                		   		function(date){
+                		   			if(date.res=='1'){
+                		   				//成功
+                		   				$("#msg").text('新增成功,一秒跳转');
+                		   				setTimeout(function(){
+                    		   				window.location.reload();
+                    		   				},1000)
+                		   			}else{
+                		   				$("#msg").text(adte.msg);
+                		   			}
+                		   		},'json'
+                			   )  
                     })
-                })
 
-                $(".amend_btn").click(function(){
+               })
+
+                $(".add_c").click(function(){
+                   //新增
+                   var parent_id=$(this).data('id');
+                  $(this).parent().parent().append('<ul class="c_list"><li ><span class="left_textbody" contenteditable="true">新增子分类</span><span class="f_r"><span class="btn c_btn queding_add" data-id="'+parent_id+'">确定</span>&nbsp;<span class="btn red c_btn">取消</span></span><span contenteditable="true" class="paixu">99</span></li></ul>');
+                  $(this).parent().parent().children('.c_list').find('.left_textbody').focus();
+
+                  //新增请求
+                  $(".queding_add").click(function(){
+                     
+                      var parmet={
+                    	    parent_id:$(this).data('id'),
+          		   			category_name:$(this).parent().parent().find('.left_textbody').text(),
+          		   			priority:$(this).parent().parent().find('.paixu').text()
+                          }
+                      
+                	  $.post("/admin/goods/category/save",
+                			   parmet,
+                		   		function(date){
+                		   			if(date.res=='1'){
+                		   				//成功
+                		   			  bootbox.alert("新增成功,一秒跳转");
+                		   				setTimeout(function(){
+                    		   				window.location.reload();
+                    		   				},1000)
+                		   			}else{
+                		   				$("#msg").text(adte.msg);
+                		   			}
+                		   		},'json'
+                			   )   
+                    })
+               })
+               
+               	//数据修改
+               	 $(".amend_btn").click(function(){
                     $(this).prev().text()
-                     console.log($(this).prev().text()); 
+                    var parmet={
+                    	category_id:$(this).data('id'),
+                    	category_name:$(this).parent().prev().text(),
+                    	priority:$(this).parent().next().text()
+                      }
+                    $.post("/admin/goods/category/update",
+             			   parmet,
+             		   		function(date){
+             		   			if(date.res=='1'){
+             		   				//成功
+             		   			bootbox.alert("修改成功");
+             		   			setTimeout(function(){
+             		   				bootbox.hideAll();
+        		   				},800)
+             		   			 
+             		   			}else{
+             		   				$("#msg").text(adte.msg);
+             		   			}
+             		   		},'json'
+             			   )  
+                    
                 })
                 
+                
+                //删除数据
+               	 $(".delete_btn").click(function(){
+               		bootbox.confirm("删除将不可恢复，你娶定要删除?", function(result) {
+                        if(result){
+                        	var parmet={
+                                	category_id:$(this).data('id')
+                            }
+                        	$.post("/admin/goods/category/delete",
+                      			   parmet,
+                      		   		function(date){
+                      		   			if(date.res=='1'){
+                      		   				//成功
+                      		   			bootbox.alert("删除成功,1秒跳转");
+                      		   		   setTimeout(function(){
+                		   			    	window.location.reload();
+                		   				},1000)
+                      		   			 
+                      		   			}else{
+                      		   				$("#msg").text(adte.msg);
+                      		   			}
+                      		   		},'json'
+                      			   ) 
+                        }else{
+                        	bootbox.hideAll();
+                        	return false;
+                         }
+                    }); 
+   
+                    
+                })
+                
+               	
 
-                //监听回车不可用或者触发保存
+               //监听回车不可用或者触发保存
                 $(".left_textbody").keypress(function(e){
                 	if(e.which==13){
                 		//此处可以调用保存方法
@@ -137,10 +246,8 @@
                 		return false;
                 	}
                 })
-               //分类信息
-               var list=[[${goodsCategoryList}]];
-               console.log(list);
-               
+
+             
 
             })
         </script>
