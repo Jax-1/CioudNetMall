@@ -14,7 +14,10 @@ import com.mall.controller.AbstractController;
 import com.mall.entity.goods.Goods;
 import com.mall.entity.goods.GoodsCategory;
 import com.mall.service.goods.GoodsCategoryService;
+import com.mall.service.goods.GoodsInfoService;
+import com.mall.service.goods.GoodsPriceService;
 import com.mall.service.goods.GoodsService;
+import com.mall.service.inventory.InventoryService;
 
 @Controller
 @RequestMapping("/admin/goods")
@@ -23,6 +26,13 @@ public class GoodsManagementController extends AbstractController{
 	private GoodsCategoryService goodsCategoryService;
 	@Resource
 	private GoodsService goodsService;
+	@Resource
+	private GoodsInfoService GoodsInfoService;
+	@Resource
+	private GoodsPriceService GoodsPriceService;
+	@Resource
+	private InventoryService InventoryService;
+	
 	@GetMapping("/category")
 	public String toClassify(Model model) {
 		//查询所有分类
@@ -52,7 +62,17 @@ public class GoodsManagementController extends AbstractController{
 	@RequestMapping("/save")
 	public String toGoodsSave(Model model,Goods goods,HttpServletRequest request,String editorValue) {
 		goods.init(goods, request, editorValue);
-		goodsService.insertGoods(goods);
+		logger.info("保存商品信息："+goods.getGoods_name());
+		try {
+			goodsService.insertSelective(goods);
+			GoodsInfoService.insertSelective(goods.getGoodsInfo());
+			GoodsPriceService.insertSelective(goods.getGoodsPrice());
+			InventoryService.insertSelective(goods.getGoodsInfo().getInventory());
+		} catch (Exception e) {
+			logger.error("保存商品信息：失败"+e.getMessage());
+			e.printStackTrace();
+		}
+		
 		model.addAttribute("page", "admin/goods/list_goods");
 		model.addAttribute("mall", "nav-item start active open");
 		return "admin/index";

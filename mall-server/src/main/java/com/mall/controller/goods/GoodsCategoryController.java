@@ -44,6 +44,7 @@ public class GoodsCategoryController extends AbstractController{
 	@PostMapping("/delete")
 	@ResponseBody
 	public ProcessResult<GoodsCategory> delete(GoodsCategory goodsCategory){
+		logger.info("删除分类信息："+goodsCategory.getCategory_id());
 		goodsCategoryService.chengeStatus(goodsCategory);
 		return new ProcessResult<GoodsCategory>(SystemCode.SUCCESS,"删除商品分类信息成功！");
 	}

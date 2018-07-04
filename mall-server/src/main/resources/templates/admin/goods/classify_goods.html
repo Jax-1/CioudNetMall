@@ -215,6 +215,7 @@
                         	$.post("/admin/goods/category/delete",
                       			   parmet,
                       		   		function(date){
+                        				console.log(date);
                       		   			if(date.res=='1'){
                       		   				//成功
                       		   			bootbox.alert("删除成功,1秒跳转");

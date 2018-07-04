@@ -310,7 +310,7 @@
   	</association>
   </resultMap>
   <insert id="insertGoods" parameterType="com.mall.entity.goods.Goods">
-  begin
+  
   	 insert into t_goods
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="goods_id != null">
@@ -416,170 +416,162 @@
     <!-- 插入商品信息 -->
       insert into t_goods_info
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="goods_info_id != null">
+      <if test="goodsInfo.goods_info_id != null">
         goods_info_id,
       </if>
-      <if test="category_id != null">
+      <if test="goodsInfo.category_id != null">
         category_id,
       </if>
-      <if test="inventoryid != null">
+      <if test="goodsInfo.inventoryid != null">
         inventoryid,
       </if>
-      <if test="size != null">
+      <if test="goodsInfo.size != null">
         size,
       </if>
-      <if test="flat_feet != null">
+      <if test="goodsInfo.flat_feet != null">
         flat_feet,
       </if>
-      <if test="auth_id != null">
+      <if test="goodsInfo.auth_id != null">
         auth_id,
       </if>
-      <if test="framed != null">
+      <if test="goodsInfo.framed != null">
         framed,
       </if>
-      <if test="environment != null">
+      <if test="goodsInfo.environment != null">
         environment,
       </if>
-      <if test="standard != null">
+      <if test="goodsInfo.standard != null">
         standard,
       </if>
-      <if test="ext1 != null">
+      <if test="goodsInfo.ext1 != null">
         ext1,
       </if>
-      <if test="ext2 != null">
+      <if test="goodsInfo.ext2 != null">
         ext2,
       </if>
-      <if test="ext3 != null">
+      <if test="goodsInfo.ext3 != null">
         ext3,
       </if>
-      <if test="create_time != null">
+      <if test="goodsInfo.create_time != null">
         create_time,
       </if>
-      <if test="update_time != null">
+      <if test="goodsInfo.update_time != null">
         update_time,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="goods_info_id != null">
+      <if test="goodsInfo.goods_info_id != null">
         #{goodsInfo.goods_info_id,jdbcType=VARCHAR},
       </if>
-      <if test="category_id != null">
+      <if test="goodsInfo.category_id != null">
         #{goodsInfo.category_id,jdbcType=VARCHAR},
       </if>
-      <if test="inventoryid != null">
+      <if test="goodsInfo.inventoryid != null">
         #{goodsInfo.inventoryid,jdbcType=VARCHAR},
       </if>
-      <if test="size != null">
+      <if test="goodsInfo.size != null">
         #{goodsInfo.size,jdbcType=VARCHAR},
       </if>
-      <if test="flat_feet != null">
+      <if test="goodsInfo.flat_feet != null">
         #{goodsInfo.flat_feet,jdbcType=VARCHAR},
       </if>
-      <if test="auth_id != null">
+      <if test="goodsInfo.auth_id != null">
         #{goodsInfo.auth_id,jdbcType=VARCHAR},
       </if>
-      <if test="framed != null">
+      <if test="goodsInfo.framed != null">
         #{goodsInfo.framed,jdbcType=VARCHAR},
       </if>
-      <if test="environment != null">
+      <if test="goodsInfo.environment != null">
         #{goodsInfo.environment,jdbcType=VARCHAR},
       </if>
-      <if test="standard != null">
+      <if test="goodsInfo.standard != null">
         #{goodsInfo.standard,jdbcType=VARCHAR},
       </if>
-      <if test="ext1 != null">
+      <if test="goodsInfo.ext1 != null">
         #{goodsInfo.ext1,jdbcType=VARCHAR},
       </if>
-      <if test="ext2 != null">
+      <if test="goodsInfo.ext2 != null">
         #{goodsInfo.ext2,jdbcType=VARCHAR},
       </if>
-      <if test="ext3 != null">
+      <if test="goodsInfo.ext3 != null">
         #{goodsInfo.ext3,jdbcType=VARCHAR},
       </if>
-      <if test="create_time != null">
+      <if test="goodsInfo.create_time != null">
         #{goodsInfo.create_time,jdbcType=TIMESTAMP},
       </if>
-      <if test="update_time != null">
+      <if test="goodsInfo.update_time != null">
         #{goodsInfo.update_time,jdbcType=TIMESTAMP},
       </if>
     </trim>;
       <!-- 插入商品价格 -->
-      insert into t_goods_price (price_id, goods_id, unit_name, 
-      retail_price, buy_price, sale_price, 
-      sale, status, create_time, 
-      update_time, admin_id)
-    values (#{goodsPrice.price_id,jdbcType=VARCHAR}, #{goodsPrice.goods_id,jdbcType=VARCHAR}, #{goodsPrice.unit_name,jdbcType=VARCHAR}, 
-      #{goodsPrice.retail_price,jdbcType=DECIMAL}, #{goodsPrice.buy_price,jdbcType=DECIMAL}, #{goodsPrice.sale_price,jdbcType=DECIMAL}, 
-      #{goodsPrice.sale,jdbcType=VARCHAR}, #{goodsPrice.status,jdbcType=VARCHAR}, #{goodsPrice.create_time,jdbcType=TIMESTAMP}, 
-      #{goodsPrice.update_time,jdbcType=TIMESTAMP}, #{goodsPrice.admin_id,jdbcType=VARCHAR});
       insert into t_goods_price
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="price_id != null">
+      <if test="goodsPrice.price_id != null">
         price_id,
       </if>
-      <if test="goods_id != null">
+      <if test="goodsPrice.goods_id != null">
         goods_id,
       </if>
-      <if test="unit_name != null">
+      <if test="goodsPrice.unit_name != null">
         unit_name,
       </if>
-      <if test="retail_price != null">
+      <if test="goodsPrice.retail_price != null">
         retail_price,
       </if>
-      <if test="buy_price != null">
+      <if test="goodsPrice.buy_price != null">
         buy_price,
       </if>
-      <if test="sale_price != null">
+      <if test="goodsPrice.sale_price != null">
         sale_price,
       </if>
-      <if test="sale != null">
+      <if test="goodsPrice.sale != null">
         sale,
       </if>
-      <if test="status != null">
+      <if test="goodsPrice.status != null">
         status,
       </if>
-      <if test="create_time != null">
+      <if test="goodsPrice.create_time != null">
         create_time,
       </if>
-      <if test="update_time != null">
+      <if test="goodsPrice.update_time != null">
         update_time,
       </if>
-      <if test="admin_id != null">
+      <if test="goodsPrice.admin_id != null">
         admin_id,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="price_id != null">
+      <if test="goodsPrice.price_id != null">
         #{goodsPrice.price_id,jdbcType=VARCHAR},
       </if>
-      <if test="goods_id != null">
+      <if test="goodsPrice.goods_id != null">
         #{goodsPrice.goods_id,jdbcType=VARCHAR},
       </if>
-      <if test="unit_name != null">
+      <if test="goodsPrice.unit_name != null">
         #{goodsPrice.unit_name,jdbcType=VARCHAR},
       </if>
-      <if test="retail_price != null">
+      <if test="goodsPrice.retail_price != null">
         #{goodsPrice.retail_price,jdbcType=DECIMAL},
       </if>
-      <if test="buy_price != null">
+      <if test="goodsPrice.buy_price != null">
         #{goodsPrice.buy_price,jdbcType=DECIMAL},
       </if>
-      <if test="sale_price != null">
+      <if test="goodsPrice.sale_price != null">
         #{goodsPrice.sale_price,jdbcType=DECIMAL},
       </if>
-      <if test="sale != null">
+      <if test="goodsPrice.sale != null">
         #{goodsPrice.sale,jdbcType=VARCHAR},
       </if>
-      <if test="status != null">
+      <if test="goodsPrice.status != null">
         #{goodsPrice.status,jdbcType=VARCHAR},
       </if>
-      <if test="create_time != null">
+      <if test="goodsPrice.create_time != null">
         #{goodsPrice.create_time,jdbcType=TIMESTAMP},
       </if>
-      <if test="update_time != null">
+      <if test="goodsPrice.update_time != null">
         #{goodsPrice.update_time,jdbcType=TIMESTAMP},
       </if>
-      <if test="admin_id != null">
+      <if test="goodsPrice.admin_id != null">
         #{goodsPrice.admin_id,jdbcType=VARCHAR},
       </if>
     </trim>;
@@ -587,41 +579,41 @@
       
       insert into t_inventory
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="inventoryid != null">
+      <if test="goodsInfo.inventory.inventoryid != null">
         inventoryid,
       </if>
-      <if test="storeHouseNumber != null">
+      <if test="goodsInfo.inventory.storeHouseNumber != null">
         StoreHouseNumber,
       </if>
-      <if test="productNumber != null">
+      <if test="goodsInfo.inventory.productNumber != null">
         ProductNumber,
       </if>
-      <if test="amount != null">
+      <if test="goodsInfo.inventory.amount != null">
         Amount,
       </if>
-      <if test="inStockTime != null">
+      <if test="goodsInfo.inventory.inStockTime != null">
         InStockTime,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="inventoryid != null">
+      <if test="goodsInfo.inventory.inventoryid != null">
         #{goodsInfo.inventory.inventoryid,jdbcType=VARCHAR},
       </if>
-      <if test="storeHouseNumber != null">
+      <if test="goodsInfo.inventory.storeHouseNumber != null">
         #{goodsInfo.inventory.storeHouseNumber,jdbcType=VARCHAR},
       </if>
-      <if test="productNumber != null">
+      <if test="goodsInfo.inventory.productNumber != null">
         #{goodsInfo.inventory.productNumber,jdbcType=VARCHAR},
       </if>
-      <if test="amount != null">
+      <if test="goodsInfo.inventory.amount != null">
         #{goodsInfo.inventory.amount,jdbcType=INTEGER},
       </if>
-      <if test="inStockTime != null">
+      <if test="goodsInfo.inventory.inStockTime != null">
         #{goodsInfo.inventory.inStockTime,jdbcType=TIMESTAMP},
       </if>
     </trim>;
       <!-- end -->
-     end;
+    
   
   </insert>
 </mapper>
