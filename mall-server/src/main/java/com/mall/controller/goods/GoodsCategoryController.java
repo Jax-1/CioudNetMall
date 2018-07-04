@@ -33,7 +33,7 @@ public class GoodsCategoryController extends AbstractController{
 		ProcessResult<GoodsCategory> res=new ProcessResult<GoodsCategory>();
 		goodsCategory=GoodsCategory.init(request, goodsCategory);
 		try {
-			goodsCategoryService.insert(goodsCategory);
+			goodsCategoryService.insertSelective(goodsCategory);
 			res=ProcessResult.success(res);
 		} catch (Exception e) {
 			logger.error("保存商品分类信息：失败！"+e.getMessage());

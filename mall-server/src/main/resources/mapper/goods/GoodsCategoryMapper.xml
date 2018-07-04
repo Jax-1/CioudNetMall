@@ -165,12 +165,14 @@
     <include refid="Base_Column_List" />
     from t_goods_category
     where 
+    	status='Y'
     <if test="parent_id!=null">
-    	parent_id=#{category_id}
+    	and parent_id=#{category_id}
     </if>
     <if test="parent_id==null">
-    	parent_id='' or parent_id='0'
+    	and parent_id='' or parent_id='0'
     </if>
+    order by priority
     	
   	
   </select>

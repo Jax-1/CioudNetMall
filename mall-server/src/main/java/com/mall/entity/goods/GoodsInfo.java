@@ -2,6 +2,8 @@ package com.mall.entity.goods;
 
 import java.util.Date;
 
+import com.mall.entity.inventory.Inventory;
+
 public class GoodsInfo {
     private String goods_info_id;
 
@@ -30,8 +32,30 @@ public class GoodsInfo {
     private Date create_time;
 
     private Date update_time;
+    
+    private GoodsCategory goodsCategory;
+    
+    private Inventory inventory;
+    
+    
 
-    public String getGoods_info_id() {
+    public GoodsCategory getGoodsCategory() {
+		return goodsCategory;
+	}
+
+	public void setGoodsCategory(GoodsCategory goodsCategory) {
+		this.goodsCategory = goodsCategory;
+	}
+
+	public Inventory getInventory() {
+		return inventory;
+	}
+
+	public void setInventory(Inventory inventory) {
+		this.inventory = inventory;
+	}
+
+	public String getGoods_info_id() {
         return goods_info_id;
     }
 
