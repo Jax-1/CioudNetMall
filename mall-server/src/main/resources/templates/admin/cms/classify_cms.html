@@ -120,6 +120,9 @@
         <!-- END FOOTER -->
     
     <div class="quick-nav-overlay"></div>
+    <script src="/admin/assets/global/plugins/jquery.min.js" type="text/javascript"></script>
+        <script src="/admin/assets/global/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+        <script src="../assets/global/plugins/bootbox/bootbox.min.js" type="text/javascript"></script>
         <script>
             $(function(){
                 $(".add_child").click(function(){
@@ -135,7 +138,10 @@
                 		   		function(date){
                 		   			if(date.res=='1'){
                 		   				//成功
-                		   				window.location.reload();
+                		   				bootbox.alert("新增成功,一秒刷新");
+                		   				setTimeout(function(){
+                    		   				window.location.reload();
+                    		   				},1000)
                 		   			}else{
                 		   				$("#msg").text(adte.msg);
                 		   			}
@@ -147,15 +153,25 @@
 
                 $(".delete_btn").click(function(){
                 	console.log($(this).prev().prev().text());
-                    $.post("/category/delete",
-             			   {id:$(this).prev().prev().text()
-             		   		},
-             		   		function(date){
-             		   		//成功
-        		   				window.location.reload();
-             		   			
-             		   		},'json'
-             			   )
+                	bootbox.confirm("删除将不可恢复，你娶定要删除?", function(result) {
+                		if(result){
+                            $.post("/category/delete",
+                     			   {id:$(this).prev().prev().text()
+                     		   		},
+                     		   		function(date){
+                     		   		//成功
+                		   				bootbox.alert("删除成功,1秒跳转");
+                      		   		   setTimeout(function(){
+                		   			    	window.location.reload();
+                		   				},1000)
+                     		   			
+                     		   		},'json'
+                     			   )	
+                		}else{
+                			bootbox.hideAll();
+							return false;
+                        }
+                	})
              			   
                 })
                 $(".amend_btn").click(function(){
@@ -165,6 +181,10 @@
                     		
              		   		},
              		   		function(date){
+             		   			bootbox.alert("修改成功");
+	             		   		setTimeout(function(){
+	         		   				bootbox.hideAll();
+	    		   				},800)
              		   			$("#msg").text(date.msg);
              		   		},'json'
              			   )
