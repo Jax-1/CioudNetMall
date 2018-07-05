@@ -153,11 +153,13 @@
 
                 $(".delete_btn").click(function(){
                 	console.log($(this).prev().prev().text());
+                	var parmet ={
+                        	id:$(this).prev().prev().text()
+     		   		};
                 	bootbox.confirm("删除将不可恢复，你娶定要删除?", function(result) {
                 		if(result){
                             $.post("/category/delete",
-                     			   {id:$(this).prev().prev().text()
-                     		   		},
+                     			   parmet,
                      		   		function(date){
                      		   		//成功
                 		   				bootbox.alert("删除成功,1秒跳转");

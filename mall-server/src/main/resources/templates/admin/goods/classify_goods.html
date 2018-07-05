@@ -13,7 +13,7 @@
 	<div class="page-bar">
             <ul class="page-breadcrumb">
                 <li>
-                    <a href="index.html">首页</a>
+                    <a href="index.html">首页11111</a>
                     <i class="fa fa-circle"></i>
                 </li>
                 <li>
@@ -88,7 +88,7 @@
                                }else{
 
                             	   str += '<li> <span class="left_textbody" contenteditable="true">'+obj[index].category_name+
-                            	   		 '</span><span class="f_r"><span class="btn green c_btn amend_btn" data-id="'+ obj[index].category_id+'">修改</span>&nbsp;<span class="btn green c_btn amend_btn add_c" data-id="'+obj[index].category_id+'">新增子类</span>&nbsp;<span class="btn red c_btn delete_btn" data-id="'+obj[index].category_id+'">删除</span></span>'+
+                            	   		 '</span><span class="f_r"><span class="btn green c_btn amend_btn" data-id="'+ obj[index].category_id+'">修改</span>&nbsp;<span class="btn green c_btn amend_btns add_c" data-id="'+obj[index].category_id+'">新增子类</span>&nbsp;<span class="btn red c_btn delete_btn" data-id="'+obj[index].category_id+'">删除</span></span>'+
                             	   		'<span contenteditable="true" class="paixu">'+obj[index].priority+'</span></li>'
                             	   str += buildMenu(obj[index].goodsCategoryList,'c_list',tier); //递归判断是不是object,直到不是li 
                                    str += "</li>";
@@ -116,7 +116,7 @@
                $(".ad_child_b").click(function(){
                    //新增
                    var parent_id=$(this).data('id');
-                  $(this).parent('.f_list').children('.c_list').append('<li ><span class="left_textbody" contenteditable="true" >新增子分类</span><span class="f_r"><span class="btn c_btn queding_add" data-id="'+parent_id+'">确定</span>&nbsp;<span class="btn red c_btn">取消</span></span><span contenteditable="true" class="paixu">99</span></li>');
+                  $(this).parent('.f_list').children('.c_list').append('<li ><span class="left_textbody" contenteditable="true" >新增子分类</span><span class="f_r"><span class="btn c_btn queding_add" data-id="'+parent_id+'">确定</span>&nbsp;<span class="btn red c_btn quxiao">取消</span></span><span contenteditable="true" class="paixu">99</span></li>');
                   $(this).parent('.f_list').children('.c_list').children("li:last-child").find('.left_textbody').focus();
 				
                 //新增请求
@@ -144,12 +144,18 @@
                 			   )  
                     })
 
+                    //取消
+                    $(".quxiao").click(function(){
+                    	$(this).parent().parent().remove();
+                       })
+                   	
+
                })
 
                 $(".add_c").click(function(){
                    //新增
                    var parent_id=$(this).data('id');
-                  $(this).parent().parent().append('<ul class="c_list"><li ><span class="left_textbody" contenteditable="true">新增子分类</span><span class="f_r"><span class="btn c_btn queding_add" data-id="'+parent_id+'">确定</span>&nbsp;<span class="btn red c_btn">取消</span></span><span contenteditable="true" class="paixu">99</span></li></ul>');
+                  $(this).parent().parent().append('<ul class="c_list"><li ><span class="left_textbody" contenteditable="true">新增子分类</span><span class="f_r"><span class="btn c_btn queding_add" data-id="'+parent_id+'">确定</span>&nbsp;<span class="btn red c_btn quxiao">取消</span></span><span contenteditable="true" class="paixu">99</span></li></ul>');
                   $(this).parent().parent().children('.c_list').find('.left_textbody').focus();
 
                   //新增请求
@@ -176,6 +182,11 @@
                 		   		},'json'
                 			   )   
                     })
+
+                    //取消
+                    $(".quxiao").click(function(){
+                       $(this).parent().parent().remove();
+                       })
                })
                
                	//数据修改
@@ -207,11 +218,12 @@
                 
                 //删除数据
                	 $(".delete_btn").click(function(){
-               		bootbox.confirm("删除将不可恢复，你娶定要删除?", function(result) {
+               		var parmet={
+                        	category_id:$(this).data('id')
+                    }
+               		 bootbox.confirm("删除将不可恢复，你娶定要删除?", function(result) {
                         if(result){
-                        	var parmet={
-                                	category_id:$(this).data('id')
-                            }
+                        	console.log(parmet)
                         	$.post("/admin/goods/category/delete",
                       			   parmet,
                       		   		function(date){
@@ -227,17 +239,18 @@
                       		   				$("#msg").text(adte.msg);
                       		   			}
                       		   		},'json'
-                      			   ) 
+                      			   )  
                         }else{
                         	bootbox.hideAll();
                         	return false;
-                         }
+                         } 
                     }); 
    
                     
                 })
                 
-               	
+                
+               
 
                //监听回车不可用或者触发保存
                 $(".left_textbody").keypress(function(e){
