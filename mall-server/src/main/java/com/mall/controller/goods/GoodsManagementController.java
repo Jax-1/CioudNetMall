@@ -67,6 +67,7 @@ public class GoodsManagementController extends AbstractController{
 		list.setPageSize(0);
 		auth.setColumns("MJHC");
 		list = authorWithBLOBsService.queryByPageFront(list, auth);
+		model.addAttribute("authlist", list);
 		model.addAttribute("page", "admin/goods/add_goods");
 		model.addAttribute("mall", "nav-item start active open");
 		return "admin/index";
