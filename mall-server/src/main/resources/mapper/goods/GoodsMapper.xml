@@ -249,7 +249,7 @@
   <!-- 商品操作 -->
   <resultMap extends="ResultMapWithBLOBs" type="com.mall.entity.goods.Goods" id="orderResultMap">
   	<association property="goodsInfo" javaType="com.mall.entity.goods.GoodsInfo">
-  		<id column="goods_info_id" jdbcType="VARCHAR" property="goods_info_id" />
+  		<id column="goods_info_id_info" jdbcType="VARCHAR" property="goods_info_id" />
 	    <result column="category_id" jdbcType="VARCHAR" property="category_id" />
 	    <result column="inventoryid" jdbcType="VARCHAR" property="inventoryid" />
 	    <result column="size" jdbcType="VARCHAR" property="size" />
@@ -261,22 +261,22 @@
 	    <result column="ext1" jdbcType="VARCHAR" property="ext1" />
 	    <result column="ext2" jdbcType="VARCHAR" property="ext2" />
 	    <result column="ext3" jdbcType="VARCHAR" property="ext3" />
-	    <result column="create_time" jdbcType="TIMESTAMP" property="create_time" />
-	    <result column="update_time" jdbcType="TIMESTAMP" property="update_time" />
+	    <result column="create_time_info" jdbcType="TIMESTAMP" property="create_time" />
+	    <result column="update_time_info" jdbcType="TIMESTAMP" property="update_time" />
 	    <association property="goodsCategory" javaType="com.mall.entity.goods.GoodsCategory">
-	    	<id column="category_id" jdbcType="VARCHAR" property="category_id" />
+	    	<id column="category_id_cat" jdbcType="VARCHAR" property="category_id" />
 		    <result column="parent_id" jdbcType="VARCHAR" property="parent_id" />
 		    <result column="category_name" jdbcType="VARCHAR" property="category_name" />
 		    <result column="priority" jdbcType="INTEGER" property="priority" />
-		    <result column="status" jdbcType="VARCHAR" property="status" />
+		    <result column="status_cat" jdbcType="VARCHAR" property="status" />
 		    <result column="simple_describe" jdbcType="VARCHAR" property="simple_describe" />
 		    <result column="recommend" jdbcType="VARCHAR" property="recommend" />
-		    <result column="create_time" jdbcType="TIMESTAMP" property="create_time" />
-		    <result column="update_time" jdbcType="TIMESTAMP" property="update_time" />
-		    <result column="admin_id" jdbcType="VARCHAR" property="admin_id" />
+		    <result column="create_time_cat" jdbcType="TIMESTAMP" property="create_time" />
+		    <result column="update_time_cat" jdbcType="TIMESTAMP" property="update_time" />
+		    <result column="admin_id_cat" jdbcType="VARCHAR" property="admin_id" />
 	    </association>
 	    <association property="inventory" javaType="com.mall.entity.inventory.Inventory">
-	    	<id column="inventoryid" jdbcType="VARCHAR" property="inventoryid" />
+	    	<id column="inventoryid_in" jdbcType="VARCHAR" property="inventoryid" />
 		    <result column="StoreHouseNumber" jdbcType="VARCHAR" property="storeHouseNumber" />
 		    <result column="ProductNumber" jdbcType="VARCHAR" property="productNumber" />
 		    <result column="Amount" jdbcType="INTEGER" property="amount" />
@@ -285,16 +285,16 @@
   	</association>
   	<association property="goodsPrice" javaType="com.mall.entity.goods.GoodsPrice">
   		 <id column="price_id" jdbcType="VARCHAR" property="price_id" />
-	    <result column="goods_id" jdbcType="VARCHAR" property="goods_id" />
+	    <result column="goods_id_pri" jdbcType="VARCHAR" property="goods_id" />
 	    <result column="unit_name" jdbcType="VARCHAR" property="unit_name" />
 	    <result column="retail_price" jdbcType="DECIMAL" property="retail_price" />
 	    <result column="buy_price" jdbcType="DECIMAL" property="buy_price" />
 	    <result column="sale_price" jdbcType="DECIMAL" property="sale_price" />
 	    <result column="sale" jdbcType="VARCHAR" property="sale" />
-	    <result column="status" jdbcType="VARCHAR" property="status" />
-	    <result column="create_time" jdbcType="TIMESTAMP" property="create_time" />
-	    <result column="update_time" jdbcType="TIMESTAMP" property="update_time" />
-	    <result column="admin_id" jdbcType="VARCHAR" property="admin_id" />
+	    <result column="status_pri" jdbcType="VARCHAR" property="status" />
+	    <result column="create_time_pri" jdbcType="TIMESTAMP" property="create_time" />
+	    <result column="update_time_pri" jdbcType="TIMESTAMP" property="update_time" />
+	    <result column="admin_id_pri" jdbcType="VARCHAR" property="admin_id" />
   	</association>
   	<association property="filePath" javaType="com.mall.entity.cms.FilePath">
   		<id column="fileid" jdbcType="VARCHAR" property="fileid" />
@@ -309,311 +309,96 @@
 	    <result column="createat" jdbcType="TIMESTAMP" property="createat" />
   	</association>
   </resultMap>
-  <insert id="insertGoods" parameterType="com.mall.entity.goods.Goods">
+  <!-- 后台商品列表 -->
+  <select id="getPageFront" parameterType="com.mall.entity.goods.Goods" resultMap="orderResultMap">
+		SELECT
+			B.*,
+			t_inventory.Amount 
+		FROM
+			(
+		SELECT
+			A.*,
+			t_goods_price.retail_price 
+		FROM
+			(
+		SELECT
+			t_goods.goods_id,
+			t_goods.goods_price_id,
+			t_goods.goods_name,
+			t_goods.nickname,
+			t_goods.is_marketable,
+			t_goods.recommend,
+			t_goods.classic,
+			t_goods.create_time,
+			t_goods_info.goods_info_id goods_info_id_info,
+			t_goods_info.category_id,
+			t_goods_info.inventoryid 
+		FROM
+			t_goods
+			LEFT JOIN t_goods_info t_goods_info ON t_goods.goods_info_id = t_goods_info.goods_info_id 
+		WHERE
+			t_goods.del_state = 'N' 
+			<!--  
+			<if test="goodsInfo.category_id!=null">
+				and t_goods_info.category_id=#{goodsInfo.category_id}
+			</if>
+			-->
+			<if test="is_marketable!=null">
+				and t_goods.is_marketable=#{is_marketable}
+			</if>
+			<if test="recommend!=null">
+				and t_goods.recommend=#{recommend}
+			</if>
+			<if test="classic!=null">
+				and t_goods.classic=#{classic}
+			</if>
+			<if test="new_product!=null">
+				and t_goods.new_product=#{new_product}
+			</if>
+			<if test="goods_name!=null">
+				AND t_goods.goods_name LIKE CONCAT('%',#{goods_name},'%')
+			</if>
+			) A
+			LEFT JOIN t_goods_price ON A.goods_price_id = t_goods_price.price_id
+			 <where>
+			 <!--  
+			 <if test="goodsPrice.sale!=null">
+			 	t_goods_price.sale=#{goodsPrice.sale}
+			 </if>
+			 -->
+			</where>
+			) B
+			LEFT JOIN t_inventory ON B.inventoryid = t_inventory.inventoryid
+  </select>
+  <!-- 删除 -->
+  <update id="batchDelete" parameterType="java.util.List">
+  	update t_goods
+  		del_state='N'
+  	where goods_id in
+  	<foreach collection="list" index="index" item="item" separator="," open="(" close=")">
+            #{item.goods_id}
+     </foreach>
   
-  	 insert into t_goods
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="goods_id != null">
-        goods_id,
-      </if>
-      <if test="goods_info_id != null">
-        goods_info_id,
-      </if>
-      <if test="goods_price_id != null">
-        goods_price_id,
-      </if>
-      <if test="goods_name != null">
-        goods_name,
-      </if>
-      <if test="nickname != null">
-        nickname,
-      </if>
-      <if test="image != null">
-        image,
-      </if>
-      <if test="simple_describe != null">
-        simple_describe,
-      </if>
-      <if test="del_state != null">
-        del_state,
-      </if>
-      <if test="is_marketable != null">
-        is_marketable,
-      </if>
-      <if test="recommend != null">
-        recommend,
-      </if>
-      <if test="classic != null">
-        classic,
-      </if>
-      <if test="new_product != null">
-        new_product,
-      </if>
-      <if test="create_time != null">
-        create_time,
-      </if>
-      <if test="update_time != null">
-        update_time,
-      </if>
-      <if test="admin_id != null">
-        admin_id,
-      </if>
-      <if test="detail_describe != null">
-        detail_describe,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="goods_id != null">
-        #{goods_id,jdbcType=VARCHAR},
-      </if>
-      <if test="goods_info_id != null">
-        #{goods_info_id,jdbcType=VARCHAR},
-      </if>
-      <if test="goods_price_id != null">
-        #{goods_price_id,jdbcType=VARCHAR},
-      </if>
-      <if test="goods_name != null">
-        #{goods_name,jdbcType=VARCHAR},
-      </if>
-      <if test="nickname != null">
-        #{nickname,jdbcType=VARCHAR},
-      </if>
-      <if test="image != null">
-        #{image,jdbcType=VARCHAR},
-      </if>
-      <if test="simple_describe != null">
-        #{simple_describe,jdbcType=VARCHAR},
-      </if>
-      <if test="del_state != null">
-        #{del_state,jdbcType=VARCHAR},
-      </if>
-      <if test="is_marketable != null">
-        #{is_marketable,jdbcType=VARCHAR},
-      </if>
-      <if test="recommend != null">
-        #{recommend,jdbcType=VARCHAR},
-      </if>
-      <if test="classic != null">
-        #{classic,jdbcType=VARCHAR},
-      </if>
-      <if test="new_product != null">
-        #{new_product,jdbcType=VARCHAR},
-      </if>
-      <if test="create_time != null">
-        #{create_time,jdbcType=TIMESTAMP},
-      </if>
-      <if test="update_time != null">
-        #{update_time,jdbcType=TIMESTAMP},
-      </if>
-      <if test="admin_id != null">
-        #{admin_id,jdbcType=VARCHAR},
-      </if>
-      <if test="detail_describe != null">
-        #{detail_describe,jdbcType=LONGVARCHAR},
-      </if>
-    </trim>;
-    
-    <!-- 插入商品信息 -->
-      insert into t_goods_info
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="goodsInfo.goods_info_id != null">
-        goods_info_id,
-      </if>
-      <if test="goodsInfo.category_id != null">
-        category_id,
-      </if>
-      <if test="goodsInfo.inventoryid != null">
-        inventoryid,
-      </if>
-      <if test="goodsInfo.size != null">
-        size,
-      </if>
-      <if test="goodsInfo.flat_feet != null">
-        flat_feet,
-      </if>
-      <if test="goodsInfo.auth_id != null">
-        auth_id,
-      </if>
-      <if test="goodsInfo.framed != null">
-        framed,
-      </if>
-      <if test="goodsInfo.environment != null">
-        environment,
-      </if>
-      <if test="goodsInfo.standard != null">
-        standard,
-      </if>
-      <if test="goodsInfo.ext1 != null">
-        ext1,
-      </if>
-      <if test="goodsInfo.ext2 != null">
-        ext2,
-      </if>
-      <if test="goodsInfo.ext3 != null">
-        ext3,
-      </if>
-      <if test="goodsInfo.create_time != null">
-        create_time,
-      </if>
-      <if test="goodsInfo.update_time != null">
-        update_time,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="goodsInfo.goods_info_id != null">
-        #{goodsInfo.goods_info_id,jdbcType=VARCHAR},
-      </if>
-      <if test="goodsInfo.category_id != null">
-        #{goodsInfo.category_id,jdbcType=VARCHAR},
-      </if>
-      <if test="goodsInfo.inventoryid != null">
-        #{goodsInfo.inventoryid,jdbcType=VARCHAR},
-      </if>
-      <if test="goodsInfo.size != null">
-        #{goodsInfo.size,jdbcType=VARCHAR},
-      </if>
-      <if test="goodsInfo.flat_feet != null">
-        #{goodsInfo.flat_feet,jdbcType=VARCHAR},
-      </if>
-      <if test="goodsInfo.auth_id != null">
-        #{goodsInfo.auth_id,jdbcType=VARCHAR},
-      </if>
-      <if test="goodsInfo.framed != null">
-        #{goodsInfo.framed,jdbcType=VARCHAR},
-      </if>
-      <if test="goodsInfo.environment != null">
-        #{goodsInfo.environment,jdbcType=VARCHAR},
-      </if>
-      <if test="goodsInfo.standard != null">
-        #{goodsInfo.standard,jdbcType=VARCHAR},
-      </if>
-      <if test="goodsInfo.ext1 != null">
-        #{goodsInfo.ext1,jdbcType=VARCHAR},
-      </if>
-      <if test="goodsInfo.ext2 != null">
-        #{goodsInfo.ext2,jdbcType=VARCHAR},
-      </if>
-      <if test="goodsInfo.ext3 != null">
-        #{goodsInfo.ext3,jdbcType=VARCHAR},
-      </if>
-      <if test="goodsInfo.create_time != null">
-        #{goodsInfo.create_time,jdbcType=TIMESTAMP},
-      </if>
-      <if test="goodsInfo.update_time != null">
-        #{goodsInfo.update_time,jdbcType=TIMESTAMP},
-      </if>
-    </trim>;
-      <!-- 插入商品价格 -->
-      insert into t_goods_price
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="goodsPrice.price_id != null">
-        price_id,
-      </if>
-      <if test="goodsPrice.goods_id != null">
-        goods_id,
-      </if>
-      <if test="goodsPrice.unit_name != null">
-        unit_name,
-      </if>
-      <if test="goodsPrice.retail_price != null">
-        retail_price,
-      </if>
-      <if test="goodsPrice.buy_price != null">
-        buy_price,
-      </if>
-      <if test="goodsPrice.sale_price != null">
-        sale_price,
-      </if>
-      <if test="goodsPrice.sale != null">
-        sale,
-      </if>
-      <if test="goodsPrice.status != null">
-        status,
-      </if>
-      <if test="goodsPrice.create_time != null">
-        create_time,
-      </if>
-      <if test="goodsPrice.update_time != null">
-        update_time,
-      </if>
-      <if test="goodsPrice.admin_id != null">
-        admin_id,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="goodsPrice.price_id != null">
-        #{goodsPrice.price_id,jdbcType=VARCHAR},
-      </if>
-      <if test="goodsPrice.goods_id != null">
-        #{goodsPrice.goods_id,jdbcType=VARCHAR},
-      </if>
-      <if test="goodsPrice.unit_name != null">
-        #{goodsPrice.unit_name,jdbcType=VARCHAR},
-      </if>
-      <if test="goodsPrice.retail_price != null">
-        #{goodsPrice.retail_price,jdbcType=DECIMAL},
-      </if>
-      <if test="goodsPrice.buy_price != null">
-        #{goodsPrice.buy_price,jdbcType=DECIMAL},
-      </if>
-      <if test="goodsPrice.sale_price != null">
-        #{goodsPrice.sale_price,jdbcType=DECIMAL},
-      </if>
-      <if test="goodsPrice.sale != null">
-        #{goodsPrice.sale,jdbcType=VARCHAR},
-      </if>
-      <if test="goodsPrice.status != null">
-        #{goodsPrice.status,jdbcType=VARCHAR},
-      </if>
-      <if test="goodsPrice.create_time != null">
-        #{goodsPrice.create_time,jdbcType=TIMESTAMP},
-      </if>
-      <if test="goodsPrice.update_time != null">
-        #{goodsPrice.update_time,jdbcType=TIMESTAMP},
-      </if>
-      <if test="goodsPrice.admin_id != null">
-        #{goodsPrice.admin_id,jdbcType=VARCHAR},
-      </if>
-    </trim>;
-      <!-- 插入库存信息 -->
-      
-      insert into t_inventory
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="goodsInfo.inventory.inventoryid != null">
-        inventoryid,
-      </if>
-      <if test="goodsInfo.inventory.storeHouseNumber != null">
-        StoreHouseNumber,
-      </if>
-      <if test="goodsInfo.inventory.productNumber != null">
-        ProductNumber,
-      </if>
-      <if test="goodsInfo.inventory.amount != null">
-        Amount,
-      </if>
-      <if test="goodsInfo.inventory.inStockTime != null">
-        InStockTime,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="goodsInfo.inventory.inventoryid != null">
-        #{goodsInfo.inventory.inventoryid,jdbcType=VARCHAR},
-      </if>
-      <if test="goodsInfo.inventory.storeHouseNumber != null">
-        #{goodsInfo.inventory.storeHouseNumber,jdbcType=VARCHAR},
-      </if>
-      <if test="goodsInfo.inventory.productNumber != null">
-        #{goodsInfo.inventory.productNumber,jdbcType=VARCHAR},
-      </if>
-      <if test="goodsInfo.inventory.amount != null">
-        #{goodsInfo.inventory.amount,jdbcType=INTEGER},
-      </if>
-      <if test="goodsInfo.inventory.inStockTime != null">
-        #{goodsInfo.inventory.inStockTime,jdbcType=TIMESTAMP},
-      </if>
-    </trim>;
-      <!-- end -->
-    
+  </update>
+  <!-- 上架 -->
+  <update id="batchMarketableUp" parameterType="java.util.List">
+  update t_goods
+  		is_marketable='Y'
+  	where goods_id in
+  	<foreach collection="list" index="index" item="item" separator="," open="(" close=")">
+            #{item.goods_id}
+     </foreach>
   
-  </insert>
+  </update>
+  <!-- 下架 -->
+  <update id="batchMarketableDown" parameterType="java.util.List">
+  update t_goods
+  		is_marketable='N'
+  	where goods_id in
+  	<foreach collection="list" index="index" item="item" separator="," open="(" close=")">
+            #{item.goods_id}
+     </foreach>
+  
+  </update>
+  
 </mapper>

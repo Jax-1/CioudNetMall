@@ -75,16 +75,7 @@
 	</div>
 	<!-- 内容部分结束 -->
 	<script type="text/javascript" th:inline="javascript">
-		var pid=[[${Pid}]];
-		var pageNo=[[${list.pageNo}]];
-		for(var i=2;i<pageNo&&i>0;i--){
-			var dome="<li><a  href='/mall/cms/list.do?Pid="+pid+"&pageNo="+pageNo-i+"'>3</a></li>";
-			$("activepage").after(dome);
-		}
-		for(var i=2;i<pageNo&&i>0;i--){
-			var dome="<li><a  href='/mall/cms/list.do?Pid="+pid+"&pageNo="+pageNo+i+"'>3</a></li>";
-			$("activepage").before(dome);
-		}
+		
 		$(function(){
 			var Pid=[[${Pid}]];
 			
@@ -92,7 +83,26 @@
 				console.log($('#queryAuthName').val());
 			   $('#queryByName').attr('href','/mall/cms/authlist.do?Pid='+Pid+'&authorname='+$('#queryAuthName').val());
 			})
-			
+			//添加分页
+			var pageNo=[[${list.pageNo}]];
+        	var pages=[[${list.pages}]];
+        	
+    		for(var i=2;i>0;i--){
+    			var pag=pageNo-i;
+    			if(pageNo-i>0){
+    				var dome="<li><a  href='/admin/goods/list?pageNo="+pag+"'>"+pag+"</a></li>";
+        			$("#activepage").before(dome);
+    			}
+    			
+    		}
+    		for(var i=2;i>0;i--){
+    			var pag=pageNo+i;
+    			if(pageNo+i<=pages){
+    				var dome="<li><a  href='/admin/goods/list?pageNo="+pag+"'>"+pag+"</a></li>";
+        			$("#activepage").after(dome);
+    			}
+    			
+    		}
 			
 		})
 		</script>

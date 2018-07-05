@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
 <meta charset="UTF-8">
 <link rel="stylesheet" href="/admin/assets/layouts/layout/css/yunwang.css">
@@ -94,24 +95,24 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr class="odd gradeX">
+                                    <tr class="odd gradeX" th:each="a:${list.dataList}">
                                         <td>
                                             <label class="mt-checkbox mt-checkbox-single mt-checkbox-outline">
                                                 <input type="checkbox" class="checkboxes" value="1" />
                                                 <span></span>
                                             </label>
                                         </td>
-                                        <td> 19950</td>
-                                        <td>
+                                        <td th:text="${a.nickname}"> 19950</td>
+                                        <td th:text="${a.goods_name}">
                                             民间艺术品《双鱼》
-                                        </td>
-                                        <td>19900</td>
-                                        <td>是</td>
-                                        <td>是</td>
-                                        <td>是</td>
-                                        <td>否</td>
-                                        <td>是</td>
-                                        <td>100</td>
+                                        </td >
+                                        <td th:text="${a.goodsPrice.retail_price}">19900</td>
+                                        <td th:text="${a.is_marketable=='Y'}?'是':'否'">是</td>
+                                        <td th:text="${a.classic=='Y'}?'是':'否'">是</td>
+                                        <td th:text="${a.new_product=='Y'}?'是':'否'">是</td>
+                                        <td th:text="${a.goodsPrice.sale=='Y'}?'是':'否'">否</td>
+                                        <td th:text="${a.recommend=='Y'}?'是':'否'">是</td>
+                                        <td th:text="${a.goodsInfo.inventory.amount}">100</td>
                                         <td>
                                             <button class="btn btn-xs red" type="button"> 删除
                                             </button>
@@ -141,30 +142,32 @@
 
                             <div class="row center-text">
                                 <div class="dataTables_paginate paging_bootstrap_full_number">
-                                    <ul class="pagination" style="visibility: visible;">
-                                        <li class="prev disabled">
-                                            <a href="#">
-                                                <i class="fa fa-angle-double-left"></i>
-                                            </a>
-                                        </li>
-                                        <li class="prev disabled">
-                                            <a href="#" title="Prev">
-                                                <i class="fa fa-angle-left"></i>
-                                            </a>
-                                        </li>
-                                        <li class="active">
-                                            <a href="#">1</a>
-                                        </li>
-                                        <li class="next disabled">
-                                            <a href="#" title="Next">
-                                                <i class="fa fa-angle-right"></i>
-                                            </a>
-                                        </li>
-                                        <li class="next disabled">
-                                            <a href="#" title="Last"><i class="fa fa-angle-double-right"></i>
+                                     <ul class="pagination" style="visibility: visible;">
+		                            	
+		                                <li class="prev ">  <a href="#" th:href="@{/admin/goods/list(pageNo=${1})}">
+		                                    <i class="fa fa-angle-double-left"></i>
+		                                    </a></li>
+		                                    <li class="prev ">
+		                                        <a href="#" title="Prev" th:href="@{/admin/goods/list(pageNo=${list.pageNo}-1>0?${list.pageNo}-1:1)}">
+		                                            <i class="fa fa-angle-left"></i>
 		                                        </a>
-                                        </li>
-                                    </ul>
+		                                    </li>
+		                                    <li class="active" id="activepage">
+		                                        <a href="#" th:text="${list.pageNo}">1</a>
+		                                    </li>
+		                                    <li class="next ">
+		                                        <a href="#" title="Next" th:href="@{/admin/goods/list(pageNo=${list.pageNo}==${list.pages}?${list.pages}:${list.pageNo}+1)}">
+		                                            <i class="fa fa-angle-right"></i>
+		                                        </a>
+		                                    </li>
+		                                    <li class="next " >
+		                                        <a href="#" title="Last" th:href="@{/admin/goods/list(pageNo=${list.pages})}"><i class="fa fa-angle-double-right"></i>
+                                        		</a>
+		                                    </li>
+		                                    <li class="prev "> 
+		                            		 <span th:text="'共'+ ${list.pages}+'页'"></span>
+		                            		</li>
+                                </ul>
                                 </div>
                             </div>
                         </div>
@@ -172,5 +175,32 @@
                 </div>
             </div>
         </div>
+        <script type="text/javascript" th:inline="javascript">
+        $(function(){
+    		var pageNo=[[${list.pageNo}]];
+        	var pages=[[${list.pages}]];
+        	
+    		for(var i=2;i>0;i--){
+    			var pag=pageNo-i;
+    			if(pageNo-i>0){
+    				var dome="<li><a  href='/admin/goods/list?pageNo="+pag+"'>"+pag+"</a></li>";
+        			$("#activepage").before(dome);
+    			}
+    			
+    		}
+    		for(var i=2;i>0;i--){
+    			var pag=pageNo+i;
+    			if(pageNo+i<=pages){
+    				var dome="<li><a  href='/admin/goods/list?pageNo="+pag+"'>"+pag+"</a></li>";
+        			$("#activepage").after(dome);
+    			}
+    			
+    		}
+        	
+        	
+        })
+		
+		
+	</script>
 </body>
 </html>

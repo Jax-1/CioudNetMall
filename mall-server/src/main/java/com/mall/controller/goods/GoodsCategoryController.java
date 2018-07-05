@@ -62,6 +62,10 @@ public class GoodsCategoryController extends AbstractController{
 		return res;
 	}
 	
+	/**
+	 * 测试API获取分类信息
+	 * @return
+	 */
 	@PostMapping("/de")
 	@ResponseBody
 	public List<GoodsCategory> getTest(){

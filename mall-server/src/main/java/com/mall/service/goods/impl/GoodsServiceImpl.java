@@ -1,5 +1,7 @@
 package com.mall.service.goods.impl;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
@@ -18,11 +20,18 @@ public class GoodsServiceImpl extends BaseServiceImpl<Goods> implements GoodsSer
 	protected IBaseDao<Goods> getMapper() {
 		return goodsMapper;
 	}
-
 	@Override
-	public int insertGoods(Goods goods) {
-		
-		return goodsMapper.insertGoods(goods);
+	public int batchDelete(List<Goods> list) {
+		return goodsMapper.batchDelete(list);
 	}
+	@Override
+	public int batchMarketableUp(List<Goods> list) {
+		return goodsMapper.batchMarketableUp(list);
+	}
+	@Override
+	public int batchMarketableDown(List<Goods> list) {
+		return goodsMapper.batchMarketableDown(list);
+	}
+
 
 }

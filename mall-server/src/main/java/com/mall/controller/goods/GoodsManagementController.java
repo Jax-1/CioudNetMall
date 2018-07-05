@@ -14,12 +14,14 @@ import com.mall.controller.AbstractController;
 import com.mall.entity.cms.AuthorWithBLOBs;
 import com.mall.entity.goods.Goods;
 import com.mall.entity.goods.GoodsCategory;
+import com.mall.message.SystemCode;
 import com.mall.service.cms.AuthorWithBLOBsService;
 import com.mall.service.goods.GoodsCategoryService;
 import com.mall.service.goods.GoodsInfoService;
 import com.mall.service.goods.GoodsPriceService;
 import com.mall.service.goods.GoodsService;
 import com.mall.service.inventory.InventoryService;
+import com.mall.service.sys.CacheService;
 import com.mall.util.PageResult;
 
 @Controller
@@ -37,19 +39,25 @@ public class GoodsManagementController extends AbstractController{
 	private InventoryService InventoryService;
 	@Resource
 	private AuthorWithBLOBsService authorWithBLOBsService;
+	@Resource
+	private CacheService cacheService;
 	@GetMapping("/category")
 	public String toClassify(Model model) {
 		//查询所有分类
 		List<GoodsCategory> goodsCategoryList = goodsCategoryService.getGoodsCategoryList(null);
-		logger.info("获取商品分类列表："+goodsCategoryList.size());				model.addAttribute("goodsCategoryList", goodsCategoryList);
+		logger.info("获取商品分类列表："+goodsCategoryList.size());				
+		model.addAttribute("goodsCategoryList", goodsCategoryList);
 		model.addAttribute("page", "admin/goods/classify_goods");
 		model.addAttribute("mall", "nav-item start active open");
 		return "admin/index";
 		
 	}
 	@RequestMapping("/list")
-	public String toGoodsList(Model model) {
-		
+	public String toGoodsList(Model model,PageResult<Goods> list,Goods goods) {
+		int pageSize  =  Integer.parseInt(cacheService.getCache(SystemCode.PAGE).get(SystemCode.MALL_ATT_PAGE));
+		list.setPageSize(pageSize);
+		list=goodsService.queryByPageFront(list, goods);
+		model.addAttribute("list",list);
 		model.addAttribute("page", "admin/goods/list_goods");
 		model.addAttribute("mall", "nav-item start active open");
 		return "admin/index";

@@ -14,6 +14,7 @@ import com.mall.controller.AbstractController;
 import com.mall.entity.cms.AuthorWithBLOBs;
 import com.mall.entity.goods.Goods;
 import com.mall.message.ProcessResult;
+import com.mall.message.SystemCode;
 import com.mall.service.goods.GoodsService;
 import com.mall.service.cms.AuthorWithBLOBsService;
 import com.mall.service.goods.GoodsInfoService;
@@ -38,6 +39,13 @@ public class GoodsController extends AbstractController{
 	@Resource
 	private AuthorWithBLOBsService authorWithBLOBsService;
 	
+	/**
+	 * 测试API
+	 * @param goods
+	 * @param request
+	 * @param editorValue
+	 * @return
+	 */
 	@PostMapping("/de")
 	@ResponseBody
 	public ProcessResult<Goods> getTest(Goods goods,HttpServletRequest request,String editorValue){
@@ -56,7 +64,10 @@ public class GoodsController extends AbstractController{
 		}
 		return res;
 	}
-	
+	/**
+	 * 测试API
+	 * @return
+	 */
 	@PostMapping("/auth")
 	@ResponseBody
 	public PageResult<AuthorWithBLOBs> getAuth() {
@@ -68,4 +79,71 @@ public class GoodsController extends AbstractController{
 		return list;
 		
 	}
+	/**
+	 * 批量删除
+	 * @param list
+	 * @return
+	 */
+	@PostMapping("/batchDelete")
+	@ResponseBody
+	public ProcessResult<Goods> batchDelete(List<Goods> list) {
+		ProcessResult<Goods> res=new ProcessResult<Goods>();
+		try {
+			int delete = goodsService.batchDelete(list);
+			if(delete>0) {
+				res.setRes(SystemCode.SUCCESS);
+				res.setMsg("批量更新完成！");
+			}
+		} catch (Exception e) {
+			logger.error("批量删除商品信息：失败！"+e.getMessage());
+		}
+		
+		return res;
+		
+	}
+	/**
+	 * 批量上架
+	 * @param list
+	 * @return
+	 */
+	@PostMapping("/batchMarketableUp")
+	@ResponseBody
+	public ProcessResult<Goods> batchMarketableUp(List<Goods> list) {
+		ProcessResult<Goods> res=new ProcessResult<Goods>();
+		try {
+			int delete = goodsService.batchMarketableUp(list);
+			if(delete>0) {
+				res.setRes(SystemCode.SUCCESS);
+				res.setMsg("批量更新完成！");
+			}
+		} catch (Exception e) {
+			logger.error("批量上架商品信息：失败！"+e.getMessage());
+		}
+		
+		return res;
+		
+	}
+	/**
+	 * 批量下架
+	 * @param list
+	 * @return
+	 */
+	@PostMapping("/batchMarketableDown")
+	@ResponseBody
+	public ProcessResult<Goods> batchMarketableDown(List<Goods> list) {
+		ProcessResult<Goods> res=new ProcessResult<Goods>();
+		try {
+			int delete = goodsService.batchMarketableDown(list);
+			if(delete>0) {
+				res.setRes(SystemCode.SUCCESS);
+				res.setMsg("批量更新完成！");
+			}
+		} catch (Exception e) {
+			logger.error("批量下架商品信息：失败！"+e.getMessage());
+		}
+		
+		return res;
+		
+	}
+	
 }
