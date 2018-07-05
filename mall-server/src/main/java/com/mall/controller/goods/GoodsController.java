@@ -11,12 +11,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.mall.controller.AbstractController;
+import com.mall.entity.cms.AuthorWithBLOBs;
 import com.mall.entity.goods.Goods;
 import com.mall.message.ProcessResult;
 import com.mall.service.goods.GoodsService;
+import com.mall.service.cms.AuthorWithBLOBsService;
 import com.mall.service.goods.GoodsInfoService;
 import com.mall.service.goods.GoodsPriceService;
 import com.mall.service.inventory.InventoryService;
+import com.mall.util.PageResult;
 
 
 @Controller
@@ -30,6 +33,10 @@ public class GoodsController extends AbstractController{
 	private GoodsPriceService GoodsPriceService;
 	@Resource
 	private InventoryService InventoryService;
+	
+	
+	@Resource
+	private AuthorWithBLOBsService authorWithBLOBsService;
 	
 	@PostMapping("/de")
 	@ResponseBody
@@ -48,5 +55,17 @@ public class GoodsController extends AbstractController{
 			e.printStackTrace();
 		}
 		return res;
+	}
+	
+	@PostMapping("/auth")
+	@ResponseBody
+	public PageResult<AuthorWithBLOBs> getAuth() {
+		PageResult<AuthorWithBLOBs> list =new PageResult<AuthorWithBLOBs>();
+		AuthorWithBLOBs auth =new AuthorWithBLOBs();
+		list.setPageSize(0);
+		auth.setColumns("MJHC");
+		list = authorWithBLOBsService.queryByPageFront(list, auth);
+		return list;
+		
 	}
 }
