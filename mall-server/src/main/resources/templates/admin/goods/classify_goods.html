@@ -13,7 +13,7 @@
 	<div class="page-bar">
             <ul class="page-breadcrumb">
                 <li>
-                    <a href="index.html">首页</a>
+                    <a href="index.html">首页11111</a>
                     <i class="fa fa-circle"></i>
                 </li>
                 <li>
@@ -207,11 +207,12 @@
                 
                 //删除数据
                	 $(".delete_btn").click(function(){
-               		bootbox.confirm("删除将不可恢复，你娶定要删除?", function(result) {
+               		var parmet={
+                        	category_id:$(this).data('id')
+                    }
+               		 bootbox.confirm("删除将不可恢复，你娶定要删除?", function(result) {
                         if(result){
-                        	var parmet={
-                                	category_id:$(this).data('id')
-                            }
+                        	console.log(parmet)
                         	$.post("/admin/goods/category/delete",
                       			   parmet,
                       		   		function(date){
@@ -227,11 +228,11 @@
                       		   				$("#msg").text(adte.msg);
                       		   			}
                       		   		},'json'
-                      			   ) 
+                      			   )  
                         }else{
                         	bootbox.hideAll();
                         	return false;
-                         }
+                         } 
                     }); 
    
                     
