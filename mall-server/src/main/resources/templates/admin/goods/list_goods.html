@@ -66,7 +66,7 @@
                                     <div class="col-md-6">
                                         <div class="btn-group">
                                             <button id="sample_editable_1_new" class="btn sbold green">
-                                                <a href="add_goods.html">添加新的</a>
+                                                <a href="/admin/goods/add">添加新的</a>
                                                 <i class="fa fa-plus"></i>
                                             </button>
                                         </div>
@@ -98,13 +98,13 @@
                                     <tr class="odd gradeX" th:each="a:${list.dataList}">
                                         <td>
                                             <label class="mt-checkbox mt-checkbox-single mt-checkbox-outline">
-                                                <input type="checkbox" class="checkboxes" value="1" />
+                                                <input type="checkbox" class="checkboxes" th:attr="value=${a.goods_id}" />
                                                 <span></span>
                                             </label>
                                         </td>
                                         <td th:text="${a.nickname}"> 19950</td>
                                         <td th:text="${a.goods_name}">
-                                            民间艺术品《双鱼》
+                                   		         民间艺术品《双鱼》
                                         </td >
                                         <td th:text="${a.goodsPrice.retail_price}">19900</td>
                                         <td th:text="${a.is_marketable=='Y'}?'是':'否'">是</td>
@@ -114,15 +114,15 @@
                                         <td th:text="${a.recommend=='Y'}?'是':'否'">是</td>
                                         <td th:text="${a.goodsInfo.inventory.amount}">100</td>
                                         <td>
-                                            <button class="btn btn-xs red" type="button"> 删除
+                                            <button class="btn btn-xs red" type="button" th:onclick="'del(\''+${a.goods_id}+'\')'" > 删除
                                             </button>
-                                            <button class="btn btn-xs green" type="button"> 修改
+                                            <button class="btn btn-xs green" type="button" th:onclick="'update(\''+${a.goods_id}+'\')'" > 修改
                                             </button>
-                                            <button class="btn btn-xs green" type="button"> 上架
+                                            <button class="btn btn-xs green" type="button" th:onclick="'tableUp(\''+${a.goods_id}+'\')'" > 上架
                                             </button>
-                                            <button class="btn btn-xs green" type="button"> 下架
+                                            <button class="btn btn-xs green" type="button" th:onclick="'tableDown(\''+${a.goods_id}+'\')'" > 下架
                                             </button>
-                                            <button class="btn btn-xs green" type="button"> 预览商品
+                                            <button class="btn btn-xs green" type="button" th:onclick="'view(\''+${a.goods_id}+'\')'" > 预览商品
                                             </button>
                                         </td>
                                     </tr>
@@ -196,10 +196,136 @@
     			}
     			
     		}
-        	
+
+
         	
         })
 		
+		//删除方法
+		function del(e){
+            var goods_id=e;
+            var parmet={
+            		list:goods_id
+            };
+
+     	   $.post("/admin/goods/batchDelete",
+     			   parmet,
+     		   		function(date){
+     		   			if(date.res=='1'){
+     		   				//成功
+     		   				console.log('删除成功')
+     		   				setTimeout(function(){
+         		   				window.location.reload();
+         		   				},1000)
+     		   			}else{
+     		   				//$("#msg").text(adte.msg);
+     		   			}
+     		   		},'json'
+     			   )  
+            
+            
+        }
+
+      //上架方法
+		function tableUp(e){
+            var goods_id=e;
+            var parmet={
+            		list:goods_id
+            };
+
+     	   $.post("/admin/goods/batchDelete",
+     			   parmet,
+     		   		function(date){
+     		   			if(date.res=='1'){
+     		   				//成功
+     		   				console.log('删除成功')
+     		   				setTimeout(function(){
+         		   				window.location.reload();
+         		   				},1000)
+     		   			}else{
+     		   				//$("#msg").text(adte.msg);
+     		   			}
+     		   		},'json'
+     			   )  
+            
+            
+        }
+
+		 //下架方法
+		function tableDown(e){
+            var goods_id=e;
+            var parmet={
+            		list:goods_id
+            };
+
+     	   $.post("/admin/goods/batchDelete",
+     			   parmet,
+     		   		function(date){
+     		   			if(date.res=='1'){
+     		   				//成功
+     		   				console.log('删除成功')
+     		   				setTimeout(function(){
+         		   				window.location.reload();
+         		   				},1000)
+     		   			}else{
+     		   				//$("#msg").text(adte.msg);
+     		   			}
+     		   		},'json'
+     			   )  
+            
+            
+        }
+
+		//修改方法
+		function updata(e){
+            var goods_id=e;
+            var parmet={
+            		list:goods_id
+            };
+
+     	   $.post("/admin/goods/batchDelete",
+     			   parmet,
+     		   		function(date){
+     		   			if(date.res=='1'){
+     		   				//成功
+     		   				console.log('删除成功')
+     		   				setTimeout(function(){
+         		   				window.location.reload();
+         		   				},1000)
+     		   			}else{
+     		   				//$("#msg").text(adte.msg);
+     		   			}
+     		   		},'json'
+     			   )  
+            
+            
+        }
+
+		//预览方法
+		function view(e){
+            var goods_id=e;
+            var parmet={
+            		list:goods_id
+            };
+
+     	   $.post("/admin/goods/batchDelete",
+     			   parmet,
+     		   		function(date){
+     		   			if(date.res=='1'){
+     		   				//成功
+     		   				console.log('删除成功')
+     		   				setTimeout(function(){
+         		   				window.location.reload();
+         		   				},1000)
+     		   			}else{
+     		   				//$("#msg").text(adte.msg);
+     		   			}
+     		   		},'json'
+     			   )  
+            
+            
+        }
+        	
 		
 	</script>
 </body>
