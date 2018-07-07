@@ -248,10 +248,10 @@
 			</if>
 			and t1.classification=t2.id
 			and t1.status='Y'
-		ORDER BY
-			t1.createat  desc
+		
 			) a
 			LEFT JOIN t_file_path b ON a.id = b.belongid
+			ORDER BY a.createat DESC
 	
 	
   </select>

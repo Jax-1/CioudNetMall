@@ -263,18 +263,6 @@
 	    <result column="ext3" jdbcType="VARCHAR" property="ext3" />
 	    <result column="create_time_info" jdbcType="TIMESTAMP" property="create_time" />
 	    <result column="update_time_info" jdbcType="TIMESTAMP" property="update_time" />
-	    <association property="goodsCategory" javaType="com.mall.entity.goods.GoodsCategory">
-	    	<id column="category_id_cat" jdbcType="VARCHAR" property="category_id" />
-		    <result column="parent_id" jdbcType="VARCHAR" property="parent_id" />
-		    <result column="category_name" jdbcType="VARCHAR" property="category_name" />
-		    <result column="priority" jdbcType="INTEGER" property="priority" />
-		    <result column="status_cat" jdbcType="VARCHAR" property="status" />
-		    <result column="simple_describe" jdbcType="VARCHAR" property="simple_describe" />
-		    <result column="recommend" jdbcType="VARCHAR" property="recommend" />
-		    <result column="create_time_cat" jdbcType="TIMESTAMP" property="create_time" />
-		    <result column="update_time_cat" jdbcType="TIMESTAMP" property="update_time" />
-		    <result column="admin_id_cat" jdbcType="VARCHAR" property="admin_id" />
-	    </association>
 	    <association property="inventory" javaType="com.mall.entity.inventory.Inventory">
 	    	<id column="inventoryid_in" jdbcType="VARCHAR" property="inventoryid" />
 		    <result column="StoreHouseNumber" jdbcType="VARCHAR" property="storeHouseNumber" />
@@ -304,7 +292,7 @@
 	    <result column="filename" jdbcType="VARCHAR" property="filename" />
 	    <result column="filetype" jdbcType="VARCHAR" property="filetype" />
 	    <result column="filesize" jdbcType="VARCHAR" property="filesize" />
-	    <result column="status" jdbcType="VARCHAR" property="status" />
+	    <result column="status_f" jdbcType="VARCHAR" property="status" />
 	    <result column="createby" jdbcType="VARCHAR" property="createby" />
 	    <result column="createat" jdbcType="TIMESTAMP" property="createat" />
   	</association>
@@ -312,37 +300,47 @@
   <!-- 后台商品列表 -->
   <select id="getPageFront" parameterType="com.mall.entity.goods.Goods" resultMap="orderResultMap">
 		SELECT
-			B.*,
-			t_inventory.Amount 
-		FROM
-			(
-		SELECT
-			A.*,
-			t_goods_price.retail_price 
-		FROM
-			(
-		SELECT
-			t_goods.goods_id,
-			t_goods.goods_price_id,
-			t_goods.goods_name,
-			t_goods.nickname,
-			t_goods.is_marketable,
-			t_goods.recommend,
-			t_goods.classic,
-			t_goods.create_time,
-			t_goods_info.goods_info_id goods_info_id_info,
-			t_goods_info.category_id,
-			t_goods_info.inventoryid 
-		FROM
-			t_goods
-			LEFT JOIN t_goods_info t_goods_info ON t_goods.goods_info_id = t_goods_info.goods_info_id 
-		WHERE
-			t_goods.del_state = 'N' 
-			<!--  
-			<if test="goodsInfo.category_id!=null">
+	C.*,
+	D.path,
+	D.fileidname,
+	D.filename,
+	D.filetype,
+	D.filesize,
+	D.STATUS status_f 
+FROM
+	(
+SELECT
+	B.*,
+	t_inventory.Amount 
+FROM
+	(
+SELECT
+	A.*,
+	t_goods_price.retail_price 
+FROM
+	(
+SELECT
+	t_goods.goods_id,
+	t_goods.goods_price_id,
+	t_goods.goods_name,
+	t_goods.image,
+	t_goods.nickname,
+	t_goods.is_marketable,
+	t_goods.recommend,
+	t_goods.classic,
+	t_goods.create_time,
+	t_goods_info.goods_info_id goods_info_id_info,
+	t_goods_info.category_id,
+	t_goods_info.inventoryid 
+FROM
+	t_goods
+	LEFT JOIN t_goods_info t_goods_info ON t_goods.goods_info_id = t_goods_info.goods_info_id 
+WHERE
+	t_goods.del_state = 'N' 
+	<if test="goodsInfo!=null and goodsInfo.category_id!=null">
 				and t_goods_info.category_id=#{goodsInfo.category_id}
 			</if>
-			-->
+			
 			<if test="is_marketable!=null">
 				and t_goods.is_marketable=#{is_marketable}
 			</if>
@@ -358,17 +356,21 @@
 			<if test="goods_name!=null">
 				AND t_goods.goods_name LIKE CONCAT('%',#{goods_name},'%')
 			</if>
-			) A
-			LEFT JOIN t_goods_price ON A.goods_price_id = t_goods_price.price_id
-			 <where>
-			 <!--  
-			 <if test="goodsPrice.sale!=null">
+	) A
+	LEFT JOIN t_goods_price ON A.goods_price_id = t_goods_price.price_id 
+	<where>
+			  
+			 <if test="goodsPrice!=null and goodsPrice.sale!=null">
 			 	t_goods_price.sale=#{goodsPrice.sale}
 			 </if>
-			 -->
+			 
 			</where>
-			) B
-			LEFT JOIN t_inventory ON B.inventoryid = t_inventory.inventoryid
+	) B
+	LEFT JOIN t_inventory ON B.inventoryid = t_inventory.inventoryid 
+	) C
+	LEFT JOIN t_file_path D ON C.image = D.fileid 
+ORDER BY
+	C.create_time DESC
   </select>
   <!-- 删除 -->
   <update id="batchDelete" parameterType="java.util.List">
@@ -400,5 +402,40 @@
      </foreach>
   
   </update>
-  
+  <!-- 查询详细信息 -->
+  <select id="selectInfo" parameterType="com.mall.entity.goods.Goods" resultMap="orderResultMap">
+  	SELECT G.*,
+	H.path, H.fileidname, H.filename, H.filetype, H.filesize, H.status status_f
+
+	FROM(
+	SELECT E.*,F.Amount
+		FROM
+			(
+				SELECT 
+			C.*,
+			D.category_id category_id_cat, D.parent_id, D.category_name, D.priority, D.recommend recommend_cat
+			FROM (
+			SELECT A.*,
+				B.unit_name, B.retail_price, B.buy_price, B.sale_price, B.sale, B.status
+			FROM (
+			SELECT 
+				t1.goods_id,  t1.goods_price_id, t1.goods_name, t1.nickname, t1.image, t1.simple_describe, 
+				t1.is_marketable, t1.recommend, t1.classic, t1.new_product, t1.create_time, t1.update_time, 
+				t1.admin_id,
+				t2.goods_info_id, t2.category_id, t2.inventoryid, t2.size, t2.flat_feet, t2.auth_id, t2.framed, t2.environment, 
+				t2.standard
+			FROM 
+			t_goods t1, t_goods_info t2 
+			WHERE 
+			t1.goods_id = #{goods_id} AND t1.goods_info_id = t2.goods_info_id 
+			) A
+			LEFT JOIN t_goods_price B ON A.goods_price_id = B.price_id
+			
+			) C LEFT JOIN t_goods_category D ON C.category_id=D.category_id
+			
+			) E LEFT JOIN t_inventory F ON E.inventoryid=F.inventoryid
+			
+			) G LEFT JOIN t_file_path H ON G.image=H.fileid
+	
+  </select>
 </mapper>

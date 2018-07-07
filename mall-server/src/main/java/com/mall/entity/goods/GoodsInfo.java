@@ -33,19 +33,11 @@ public class GoodsInfo {
 
     private Date update_time;
     
-    private GoodsCategory goodsCategory;
-    
+    /**
+     * 关联库存信息表
+     */
     private Inventory inventory;
     
-    
-
-    public GoodsCategory getGoodsCategory() {
-		return goodsCategory;
-	}
-
-	public void setGoodsCategory(GoodsCategory goodsCategory) {
-		this.goodsCategory = goodsCategory;
-	}
 
 	public Inventory getInventory() {
 		return inventory;

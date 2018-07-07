@@ -25,4 +25,5 @@ public interface GoodsMapper extends IBaseDao<Goods>{
 	 */
 	public int batchMarketableDown(List<Goods> list);
 
+
 }

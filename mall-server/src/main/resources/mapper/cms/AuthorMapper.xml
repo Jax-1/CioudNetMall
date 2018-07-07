@@ -294,6 +294,7 @@
 		AND t1.status='Y'
 	ORDER BY t1.createat desc
 	)a LEFT JOIN t_file_path b ON a.id = b.belongid
+	ORDER BY  a.createat DESC
   </select>
   <!-- 删除，软删除，更改状态 -->
   <update id="chengeStatus" parameterType="com.mall.entity.cms.Author">
@@ -328,13 +329,13 @@
 		t_cms_atticleld_category t2 
 	WHERE
 		t1.classification = t2.id 
-		<if test="columns!=null">
+		<if test="auth.columns!=null">
 		AND t1.columns=#{auth.columns}
 		</if>
 		AND t1.status='Y'
-		AND t1.recommended	='on'
+		AND t1.recommended	='Y'
 	ORDER BY t1.createat,t1.viewCount desc
-	)a LEFT JOIN t_file_path b ON a.id = b.belongid limit 0.${pageSize}
+	)a LEFT JOIN t_file_path b ON a.id = b.belongid limit 0,${pageSize}
   
   </select>
   <!-- 更新点赞数或查看次数 -->

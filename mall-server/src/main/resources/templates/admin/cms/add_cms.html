@@ -101,7 +101,7 @@
                                 <div class="col-sm-offset-2 col-sm-10">
                                   <div class="checkbox">
                                     <label>
-                                      <input type="checkbox"  name='recommended' th:attr="checked=${att!=null and att.recommended=='on'}?'checked':''">设为推荐
+                                      <input type="checkbox"  name='recommended'  th:checked="${att!=null and att.recommended=='Y'}?'true':'false'" value='Y'>设为推荐
                                     </label>
                                   </div>
                                 </div>

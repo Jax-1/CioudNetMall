@@ -180,7 +180,7 @@
                         <div class="col-sm-offset-2 col-sm-10">
                           <div class="checkbox">
                             <label>
-                              <input type="checkbox" name="recommended" th:attr="checked=${auth!=null and auth.recommended=='on'}?'checked':''">设为推荐
+                              <input type="checkbox" name="recommended"  th:checked="${auth!=null and auth.recommended=='Y'}?'true':'false'" value='Y'>设为推荐
                             </label>
                           </div>
                         </div>
