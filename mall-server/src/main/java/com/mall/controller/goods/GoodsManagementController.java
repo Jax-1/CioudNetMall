@@ -1,6 +1,7 @@
 package com.mall.controller.goods;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -80,8 +81,16 @@ public class GoodsManagementController extends AbstractController{
 		 * 编辑
 		 */
 		if(Validate.notNull(goods)) {
+			logger.info("编辑商品信息：ID="+goods.getGoods_id());
 			Goods info = goodsService.selectInfo(goods);
 			model.addAttribute("info", info);
+			Map<String, String> cache = cacheService.getCache(SystemCode.FILE_SERVICE);
+			String url=cache.get(SystemCode.FILE_SERVICE_URL);
+			String port=cache.get(SystemCode.FILE_SERVICE_PORT);
+			String filePath=cache.get(SystemCode.FILE_SERVICE_FILES_PATH);
+			String fileUrlPrefix=url+":"+port+"/"+filePath;
+			//文件服务器路径
+			model.addAttribute("fileServicePath", fileUrlPrefix);
 		}
 		model.addAttribute("goodsCategoryList", goodsCategoryList);
 		model.addAttribute("authlist", list);

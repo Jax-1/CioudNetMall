@@ -30,21 +30,21 @@
                             <div class="form-group">
                                 <label class="col-md-2 control-label"><em>*</em>商品名称</label>
                                 <div class="col-md-3">
-                                    <input type="text" class="form-control" placeholder="输入商品名称" name="goods_name">
+                                    <input type="text" class="form-control" placeholder="输入商品名称" name="goods_name" th:value="${info}==null?'':${info.goods_name}">
                                     <span class="help-block">必填项 </span>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-md-2 control-label">商品货号</label>
                                 <div class="col-md-3">
-                                    <input type="text" class="form-control" placeholder="商品货号" name="nickname">
+                                    <input type="text" class="form-control" placeholder="商品货号" name="nickname" th:value="${info}==null?'':${info.nickname}">
                                     <span class="help-block">商家货号是指商家管理商品的编号，买家不可见最多可输入20个字符，支持输入中文、字母、数字、_、/、-和小数点</span>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-md-2 control-label"><em>*</em>销售价格</label>
                                 <div class="col-md-3">
-                                    <input type="number" class="form-control" placeholder="0.00" name="goodsPrice.retail_price">
+                                    <input type="number" class="form-control" placeholder="0.00" name="goodsPrice.retail_price" th:value="${info!=null and info.goodsPrice!=null}?${info.goodsPrice.retail_price}:''">
                                     <span class="help-block"></span>
                                 </div>
                             </div>
@@ -52,7 +52,7 @@
                                 <label class="col-md-2 control-label"><em></em>是否特惠</label>
                                 <div class="col-md-3">
                                     <label class="mt-checkbox mt-checkbox-outline">
-                                        <input type="checkbox" value="Y" name="goodsPrice.sale" id="tehui">
+                                        <input type="checkbox" value="Y" name="goodsPrice.sale" id="tehui" th:checked="${info!=null and info.goodsPrice!=null and info.goodsPrice.sale=='Y'}?'true':'false'">
                                         <span></span>
                                     </label>
                                 </div>
@@ -60,7 +60,7 @@
                             <div class="form-group" id="tehui_box">
                                 <label class="col-md-2 control-label">特惠价格</label>
                                 <div class="col-md-3">
-                                    <input type="number" class="form-control" placeholder="0.00" name="goodsPrice.sale_price">
+                                    <input type="number" class="form-control" placeholder="0.00" name="goodsPrice.sale_price" th:value="${info!=null and info.goodsPrice!=null}?${info.goodsPrice.sale_price}:''">
                                     <span class="help-block"></span>
                                 </div>
                             </div>
@@ -68,7 +68,7 @@
                                 <label class="col-md-2 control-label"><em>*</em>商品分类</label>
                                 <div class="col-md-3">
                                     <select class="form-control" id="goods_category" name="goodsInfo.goodsCategory.category_id">
-                                        <option value=""> 请选择</option>
+                                        <option value="" class ="ca"> 请选择</option>
                                     </select>
                                     <span class="help-block">若没有显示的分类，请到商品分类添加</span>
                                 </div>
@@ -76,21 +76,21 @@
                             <div class="form-group">
                                 <label class="col-md-2 control-label"><em>*</em>商品尺寸</label>
                                 <div class="col-md-3">
-                                    <input type="text" class="form-control" placeholder="长X宽" name="goodsInfo.size">
+                                    <input type="text" class="form-control" placeholder="长X宽" name="goodsInfo.size" th:value="${info!=null and info.goodsInfo!=null}?${info.goodsInfo.size}:''">
                                     <span class="help-block"></span>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-md-2 control-label"><em>*</em>商品平尺(官方)</label>
                                 <div class="col-md-3">
-                                    <input type="text" class="form-control" placeholder="平尺" name="goodsInfo.flat_feet">
+                                    <input type="text" class="form-control" placeholder="平尺" name="goodsInfo.flat_feet" th:value="${info!=null and info.goodsInfo!=null}?${info.goodsInfo.flat_feet}:''">
                                     <span class="help-block"></span>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-md-2 control-label"><em>*</em>库存</label>
                                 <div class="col-md-3">
-                                    <input type="number" name="goodsInfo.inventory.amount" class="form-control" placeholder="1">
+                                    <input type="number" name="goodsInfo.inventory.amount" class="form-control" placeholder="1" th:value="${info!=null and info.goodsInfo!=null and info.goodsInfo.inventory!=null}?${info.goodsInfo.inventory.amount}:''">
                                     <span class="help-block">请填写整数</span>
                                 </div>
                             </div>
@@ -98,7 +98,7 @@
                                 <label class="col-md-2 control-label"><em>*</em>作家</label>
                                 <div class="col-md-3">
                                     <select class="form-control" id="auth_id" name="goodsInfo.auth_id">
-                                        <option th:each="a:${authlist.dataList}" th:attr="value=${a.id}" th:text="${a.authorname}"></option>
+                                        <option th:each="a:${authlist.dataList}" th:attr="value=${a.id}" th:text="${a.authorname}" th:selected="${info!=null and info.goodsInfo.auth_id==a.id}"></option>
                                     </select>
                                     <span class="help-block">请选择相应的作家</span>
                                 </div>
@@ -107,8 +107,8 @@
                                 <label class="col-md-2 control-label">装裱形式</label>
                                 <div class="col-md-3">
                                     <select class="form-control" name="goodsInfo.framed">
-                                        <option>无装裱</option>
-                                        <option>立轴</option>
+                                        <option th:selected="${info!=null and info.goodsInfo.framed=='无装裱'}">无装裱</option>
+                                        <option th:selected="${info!=null and info.goodsInfo.framed=='立轴'}">立轴</option>
                                     </select>
                                 </div>
                             </div>
@@ -116,14 +116,14 @@
                                 <label class="col-md-2 control-label">环境</label>
                                 <div class="col-md-3">
                                     <select class="form-control" name="goodsInfo.environment">
-                                        <option>客厅</option>
-                                        <option>卧室</option>
-                                        <option>斗方</option>
-                                        <option>办公室</option>
-                                        <option>餐厅</option>
-                                        <option>走廊</option>
-                                        <option>酒楼</option>
-                                        <option>其他</option>
+                                        <option th:selected="${info!=null and info.goodsInfo.environment=='客厅'}">客厅</option>
+                                        <option th:selected="${info!=null and info.goodsInfo.environment=='卧室'}">卧室</option>
+                                        <option th:selected="${info!=null and info.goodsInfo.environment=='斗方'}">斗方</option>
+                                        <option th:selected="${info!=null and info.goodsInfo.environment=='办公室'}">办公室</option>
+                                        <option th:selected="${info!=null and info.goodsInfo.environment=='餐厅'}">餐厅</option>
+                                        <option th:selected="${info!=null and info.goodsInfo.environment=='走廊'}">走廊</option>
+                                        <option th:selected="${info!=null and info.goodsInfo.environment=='酒楼'}">酒楼</option>
+                                        <option th:selected="${info!=null and info.goodsInfo.environment=='其他'}">其他</option>
                                     </select>
                                 </div>
                             </div>
@@ -131,16 +131,16 @@
                                 <label class="col-md-2 control-label">形制</label>
                                 <div class="col-md-3">
                                     <select class="form-control" name="goodsInfo.standard">
-                                        <option value="竖幅">竖幅</option>
-                                        <option value="横幅">横幅</option>
-                                        <option value="斗方">斗方</option>
-                                        <option value="条屏">条屏</option>
-                                        <option value="团扇">团扇</option>
-                                        <option value="册页">册页</option>
-                                        <option value="手卷">手卷</option>
-                                        <option value="中堂">中堂</option>
-                                        <option value="对联">对联</option>
-                                        <option value="不规则">不规则</option>
+                                        <option value="竖幅" th:selected="${info!=null and info.goodsInfo.standard=='竖幅'}">竖幅</option>
+                                        <option value="横幅" th:selected="${info!=null and info.goodsInfo.standard=='横幅'}">横幅</option>
+                                        <option value="斗方" th:selected="${info!=null and info.goodsInfo.standard=='斗方'}">斗方</option>
+                                        <option value="条屏" th:selected="${info!=null and info.goodsInfo.standard=='条屏'}">条屏</option>
+                                        <option value="团扇" th:selected="${info!=null and info.goodsInfo.standard=='团扇'}">团扇</option>
+                                        <option value="册页" th:selected="${info!=null and info.goodsInfo.standard=='册页'}">册页</option>
+                                        <option value="手卷" th:selected="${info!=null and info.goodsInfo.standard=='手卷'}">手卷</option>
+                                        <option value="中堂" th:selected="${info!=null and info.goodsInfo.standard=='中堂'}">中堂</option>
+                                        <option value="对联" th:selected="${info!=null and info.goodsInfo.standard=='对联'}">对联</option>
+                                        <option value="不规则" th:selected="${info!=null and info.goodsInfo.standard=='不规则'}">不规则</option>
                                     </select>
                                 </div>
                             </div>
@@ -149,7 +149,7 @@
                                 <div class="col-md-2">
                                     <div class="file_img">
                                         <input id="show_img_file" type="file" name="images" multiple="multiple">
-                                        <input id="imageid" type="hidden" name="image" value="">
+                                        <input id="imageid" type="hidden" name="image" value="" th:value="${info!=null}?'${info.image}':''">
                                          <label for="show_img_file">点击上传</label>
                                          <div  style="height:10px;background:red;width:0px;"></div>
                                          <!-- <div class="progress">
@@ -185,28 +185,34 @@
                                     </div>
                               </div>
 
-                              <script type="text/javascript">
+                              <script type="text/javascript" th:inline="javascript">
                                 //实例化编辑器
                                 //建议使用工厂方法getEditor创建和引用编辑器实例，如果在某个闭包下引用该编辑器，直接调用UE.getEditor('editor')就能拿到相关的实例
                                 var ue = UE.getEditor('editor');
-                                $("#submit").click(function(){
-                                    var data = UE.getEditor('editor').getContent();
-                                    $.ajax({
-                                        cache: true,
-                                        type: "GET",
-                                        url: "http://localhost:8888/submit",
-					                            　　　　　　　       　data: {
-					                            　　　　　　　　　        　"edit": data
-					                            　　　　　　　       　},
-
-                                        async: false,
-                                        error: function(request) {
-                                            alert("Connection error");
-                                        },
-                                        success: function(){
-                                            alert("success");
-                                        }
+                                var info=[[${info}]];
+                                console.log(info);
+                                var blg=[[${info}!=null]];
+ 								$(document).ready(function () {
+                                    
+                                    ue.ready(function () {
+                                    	if(blg){
+                                			console.log('-----------------------');
+                                			//初始化编辑器
+                                			var content=[[${info.detail_describe}]];
+                                			ue.setContent(content);
+                                			//分类默认选中
+                                			key=[[${info.goodsInfo.category_id}]];
+                                			 $("#goods_category option[value='"+key+"']").attr("selected","selected"); 
+                                			 var path=[[${fileServicePath}]];
+                                			
+                                			if([[${info.filePath!=null}]]){
+                                				//图片回显
+                                   			 $("#shop_img").html('<img src="'+path +'/'+info.filePath.path+'/'+info.filePath.fileidname+'.'+info.filePath.filetype+'" alt=""/>'); 
+         
+                                			}
+                                		}
                                     });
+                                   
                                 });
                             </script>
                                 </div>
@@ -215,16 +221,16 @@
                                 <label class="col-md-2 control-label"></label>
                                 <div class="col-md-5 shop_check_box">
                                     <label class="mt-checkbox mt-checkbox-outline"> 设置推荐
-                                        <input type="checkbox" value="Y" name="recommend">
+                                        <input type="checkbox" value="Y" name="recommend" th:checked="${info!=null and info.recommend=='Y'}?'true':'false'">
                                         <span></span>
                                     </label>
                                     <label class="mt-checkbox mt-checkbox-outline"> 
                                    		 设置精品
-                                        <input type="checkbox" value="Y" name="classic">
+                                        <input type="checkbox" value="Y" name="classic" th:checked="${info!=null and info.classic=='Y'}?'true':'false'">
                                         <span></span>
                                     </label>
                                     <label class="mt-checkbox mt-checkbox-outline"> 设置新品
-                                        <input type="checkbox" value="Y" name="new_product">
+                                        <input type="checkbox" value="Y" name="new_product" th:checked="${info!=null and info.new_product=='Y'}?'true':'false'">
                                         <span></span>
                                     </label>
                                 </div>
