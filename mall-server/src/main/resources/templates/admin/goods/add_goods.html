@@ -25,7 +25,11 @@
             <div class="row">
                 <div class="col-md-22">
                     <form id="addform" class="form-horizontal" role="form" action="/admin/goods/save"  method="post">
-                    	<input style="display:none" name= "type" th:attr="value=${info!=nunn}?'UPDATE':'SAVE'">
+                    	<input style="display:none" name= "type" th:attr="value=${info!=null}?'UPDATE':'SAVE'">
+                    	<input style="display:none" name= "goods_id" th:attr="value=${info!=null}?'${info.goods_id}':''">
+                    	<input style="display:none" name= "goodsPrice.price_id" th:attr="value=${info!=null}?'${info.goods_price_id}':''">
+                    	<input style="display:none" name= "goodsInfo.goods_info_id" th:attr="value=${info!=null}?'${info.goodsInfo.goods_info_id}':''">
+                    	<input style="display:none" name= "goodsInfo.inventory.inventoryid" th:attr="value=${info!=null}?'${info.goodsInfo.inventoryid}':''">
                         <div class="form-body">
                             <div class="form-group">
                                 <label class="col-md-2 control-label"><em>*</em>商品名称</label>
