@@ -64,7 +64,7 @@ public class GoodsManagementController extends AbstractController{
 		return "admin/index";
 		
 	}
-	@RequestMapping("/add")
+	@RequestMapping("/editor")
 	public String toGoodsAdd(Model model,Goods goods) {
 		//查询所有分类
 		List<GoodsCategory> goodsCategoryList = goodsCategoryService.getGoodsCategoryList(null);
@@ -119,9 +119,7 @@ public class GoodsManagementController extends AbstractController{
 			}
 			
 		}
-		model.addAttribute("page", "admin/goods/list_goods");
-		model.addAttribute("mall", "nav-item start active open");
-		return "admin/index";
+		return "redirect:/admin/goods/editor";
 		
 	}
 	

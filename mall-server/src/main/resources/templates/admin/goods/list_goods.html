@@ -34,12 +34,12 @@
                                 </select>
                             </div>
                             <div class="col-sm-1">
-                                <select class="form-control">
-                                    <option>全部</option>
-                                    <option>精品</option>
-                                    <option>推荐</option>
-                                    <option>新品</option>
-                                    <option>特惠</option>
+                                <select class="form-control" name='变化的'>
+                                    <option >全部</option>
+                                    <option value="Y">精品</option>
+                                    <option value="Y">推荐</option>
+                                    <option value="Y">新品</option>
+                                    <option value="Y">特惠</option>
                                 </select>
                             </div>
                             <div class="col-sm-1">
@@ -66,7 +66,7 @@
                                     <div class="col-md-6">
                                         <div class="btn-group">
                                             <button id="sample_editable_1_new" class="btn sbold green">
-                                                <a href="/admin/goods/add">添加新的</a>
+                                                <a href="/admin/goods/editor">添加新的</a>
                                                 <i class="fa fa-plus"></i>
                                             </button>
                                         </div>
@@ -78,7 +78,7 @@
                                     <tr>
                                         <th>
                                             <label class="mt-checkbox mt-checkbox-single mt-checkbox-outline">
-                                                <input type="checkbox" class="group-checkable" data-set="#sample_1 .checkboxes" />
+                                                <input type="checkbox" class="group-checkable" id="selectall" data-set="#sample_1 .checkboxes" />
                                                 <span></span>
                                             </label>
                                         </th>
@@ -131,7 +131,7 @@
 							<!-- 批量操作 -->
 							<div class="piliang">
 							 <label class="mt-checkbox mt-checkbox-single mt-checkbox-outline m-r-15">
-                                <input type="checkbox" class="checkboxes" value="1" />
+                                <input type="checkbox" class="group-checkable"  />
                                 <span></span>
                             </label>
 								<a href="javascript:void(0);" class="sc-btn sc-red-btn"><i class="fa fa-trash"></i>删除</a>
@@ -200,16 +200,50 @@
 
         	
         })
+        
+		$('#selectall').change(function(){
+			console.log($("#selectall").is(':checked'));
+			
+			if($(this).is(':checked')){
+				
+				$("input[type='checkbox']").attr('checked', 'true');
+			}else{
+				
+				$("input[type='checkbox']").removeAttr('checked')
+			}
+		});
 		
+	
+		//批量操作
+		function batch(type){
+			if(type=='del'){
+				//获取全部选中box值，写入arr
+	        	var arr=[];
+	        	arr.push(goods_id);
+	        	del(arr);
+				
+			}else if(type='tableUp'){
+				
+			}else if(type='tableDown'){
+				
+			}
+			
+        }
+        
 		//删除方法
 		function del(e){
-            var goods_id=e;
-            var parmet={
-            		list:goods_id
-            };
-
+			console.log(e);
+			var answers = {};
+            if(e instanceof Array){
+            	for ( var i = 0; i <e.length; i++){
+            		    console.log(e[i]);
+            		    answers['list['+i+'].goods_id'] = e[i];
+            	}
+            }else{
+            	answers['list[0].goods_id'] = e;
+            }
      	   $.post("/admin/goods/batchDelete",
-     			   parmet,
+     			  answers,
      		   		function(date){
      		   			if(date.res=='1'){
      		   				//成功
@@ -228,13 +262,18 @@
 
       //上架方法
 		function tableUp(e){
-            var goods_id=e;
-            var parmet={
-            		list:goods_id
-            };
-
+			console.log(e);
+			var answers = {};
+            if(e instanceof Array){
+            	for ( var i = 0; i <e.length; i++){
+            		    console.log(e[i]);
+            		    answers['list['+i+'].goods_id'] = e[i];
+            	}
+            }else{
+            	answers['list[0].goods_id'] = e;
+            }
      	   $.post("/admin/goods/batchDelete",
-     			   parmet,
+     			  answers,
      		   		function(date){
      		   			if(date.res=='1'){
      		   				//成功
@@ -253,13 +292,18 @@
 
 		 //下架方法
 		function tableDown(e){
-            var goods_id=e;
-            var parmet={
-            		list:goods_id
-            };
-
+			console.log(e);
+			var answers = {};
+            if(e instanceof Array){
+            	for ( var i = 0; i <e.length; i++){
+            		    console.log(e[i]);
+            		    answers['list['+i+'].goods_id'] = e[i];
+            	}
+            }else{
+            	answers['list[0].goods_id'] = e;
+            }
      	   $.post("/admin/goods/batchDelete",
-     			   parmet,
+     			  answers,
      		   		function(date){
      		   			if(date.res=='1'){
      		   				//成功

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.mall.controller.AbstractController;
 import com.mall.entity.cms.AuthorWithBLOBs;
 import com.mall.entity.goods.Goods;
+import com.mall.entity.goods.GoodsList;
 import com.mall.message.ProcessResult;
 import com.mall.message.SystemCode;
 import com.mall.service.goods.GoodsService;
@@ -86,10 +87,11 @@ public class GoodsController extends AbstractController{
 	 */
 	@PostMapping("/batchDelete")
 	@ResponseBody
-	public ProcessResult<Goods> batchDelete(List<Goods> list) {
+	public ProcessResult<Goods> batchDelete(GoodsList list) {
+		System.out.println(list.getList().size());
 		ProcessResult<Goods> res=new ProcessResult<Goods>();
 		try {
-			int delete = goodsService.batchDelete(list);
+			int delete = goodsService.batchDelete(list.getList());
 			if(delete>0) {
 				res.setRes(SystemCode.SUCCESS);
 				res.setMsg("批量更新完成！");
@@ -108,10 +110,10 @@ public class GoodsController extends AbstractController{
 	 */
 	@PostMapping("/batchMarketableUp")
 	@ResponseBody
-	public ProcessResult<Goods> batchMarketableUp(List<Goods> list) {
+	public ProcessResult<Goods> batchMarketableUp(GoodsList list) {
 		ProcessResult<Goods> res=new ProcessResult<Goods>();
 		try {
-			int delete = goodsService.batchMarketableUp(list);
+			int delete = goodsService.batchMarketableUp(list.getList());
 			if(delete>0) {
 				res.setRes(SystemCode.SUCCESS);
 				res.setMsg("批量更新完成！");
@@ -130,10 +132,10 @@ public class GoodsController extends AbstractController{
 	 */
 	@PostMapping("/batchMarketableDown")
 	@ResponseBody
-	public ProcessResult<Goods> batchMarketableDown(List<Goods> list) {
+	public ProcessResult<Goods> batchMarketableDown(GoodsList list) {
 		ProcessResult<Goods> res=new ProcessResult<Goods>();
 		try {
-			int delete = goodsService.batchMarketableDown(list);
+			int delete = goodsService.batchMarketableDown(list.getList());
 			if(delete>0) {
 				res.setRes(SystemCode.SUCCESS);
 				res.setMsg("批量更新完成！");

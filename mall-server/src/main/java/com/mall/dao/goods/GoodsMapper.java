@@ -2,6 +2,8 @@ package com.mall.dao.goods;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.mall.dao.base.IBaseDao;
 import com.mall.entity.goods.Goods;
 
@@ -11,19 +13,19 @@ public interface GoodsMapper extends IBaseDao<Goods>{
 	 * @param list
 	 * @return
 	 */
-	public int batchDelete(List<Goods> list) ;
+	public int batchDelete(@Param("list")List<Goods> list) ;
 	/**
 	 * 批量上架
 	 * @param list
 	 * @return
 	 */
-	public int batchMarketableUp(List<Goods> list);
+	public int batchMarketableUp(@Param("list")List<Goods> list);
 	/**
 	 * 批量下架
 	 * @param list
 	 * @return
 	 */
-	public int batchMarketableDown(List<Goods> list);
+	public int batchMarketableDown(@Param("list")List<Goods> list);
 
 
 }

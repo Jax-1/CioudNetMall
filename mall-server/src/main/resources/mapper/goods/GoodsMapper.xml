@@ -374,8 +374,8 @@ ORDER BY
   </select>
   <!-- 删除 -->
   <update id="batchDelete" parameterType="java.util.List">
-  	update t_goods
-  		del_state='N'
+  	update t_goods set
+  		del_state='Y'
   	where goods_id in
   	<foreach collection="list" index="index" item="item" separator="," open="(" close=")">
             #{item.goods_id}
@@ -384,7 +384,7 @@ ORDER BY
   </update>
   <!-- 上架 -->
   <update id="batchMarketableUp" parameterType="java.util.List">
-  update t_goods
+  update t_goods set 
   		is_marketable='Y'
   	where goods_id in
   	<foreach collection="list" index="index" item="item" separator="," open="(" close=")">
@@ -394,7 +394,7 @@ ORDER BY
   </update>
   <!-- 下架 -->
   <update id="batchMarketableDown" parameterType="java.util.List">
-  update t_goods
+  update t_goods set
   		is_marketable='N'
   	where goods_id in
   	<foreach collection="list" index="index" item="item" separator="," open="(" close=")">

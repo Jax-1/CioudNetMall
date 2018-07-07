@@ -25,6 +25,7 @@
             <div class="row">
                 <div class="col-md-22">
                     <form id="addform" class="form-horizontal" role="form" action="/admin/goods/save"  method="post">
+                    	<input style="display:none" name= "type" th:attr="value=${info!=nunn}?'UPDATE':'SAVE'">
                         <div class="form-body">
                             <div class="form-group">
                                 <label class="col-md-2 control-label"><em>*</em>商品名称</label>
