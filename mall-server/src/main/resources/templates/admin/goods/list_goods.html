@@ -77,7 +77,7 @@
                                 <thead>
                                     <tr>
                                         <th>
-                                            <label class="mt-checkbox mt-checkbox-single mt-checkbox-outline">
+                                            <label class="mt-checkbox mt-checkbox-single mt-checkbox-outline m-r-15">
                                                 <input type="checkbox" class="group-checkable" id="selectall" data-set="#sample_1 .checkboxes" />
                                                 <span></span>
                                             </label>
@@ -97,8 +97,8 @@
                                 <tbody>
                                     <tr class="odd gradeX" th:each="a:${list.dataList}">
                                         <td>
-                                            <label class="mt-checkbox mt-checkbox-single mt-checkbox-outline">
-                                                <input type="checkbox" class="checkboxes" th:attr="value=${a.goods_id}" />
+                                            <label class="mt-checkbox mt-checkbox-single mt-checkbox-outline m-r-15">
+                                                <input type="checkbox" class="checkboxes" name="check_list" th:attr="value=${a.goods_id}" />
                                                 <span></span>
                                             </label>
                                         </td>
@@ -131,10 +131,10 @@
 							<!-- 批量操作 -->
 							<div class="piliang">
 							 <label class="mt-checkbox mt-checkbox-single mt-checkbox-outline m-r-15">
-                                <input type="checkbox" class="group-checkable"  />
+                                <input type="checkbox" class="group-checkable" id="selectalls" />
                                 <span></span>
                             </label>
-								<a href="javascript:void(0);" class="sc-btn sc-red-btn"><i class="fa fa-trash"></i>删除</a>
+								<a href="javascript:void(0);" class="sc-btn sc-red-btn" onclick="batch('del')"><i class="fa fa-trash"></i>删除</a>
 								<a href="javascript:void(0);" class="sc-btn sc-org-btn">上架</a>
 								<a href="javascript:void(0);" class="sc-btn sc-org-btn">下架</a>
 							</div>
@@ -197,38 +197,42 @@
     			
     		}
 
+    		$('#selectall,#selectalls').click(function(){
+				if($(this).is(':checked')){
+					$("input[type='checkbox']").prop('checked', 'true');
+				}else{
+					$("input[type='checkbox']").removeAttr('checked')
+				}
+	    	})
 
+			
         	
         })
         
-		$('#selectall').change(function(){
-			console.log($("#selectall").is(':checked'));
-			
-			if($(this).is(':checked')){
-				
-				$("input[type='checkbox']").attr('checked', 'true');
-			}else{
-				
-				$("input[type='checkbox']").removeAttr('checked')
-			}
-		});
-		
-	
 		//批量操作
-		function batch(type){
-			if(type=='del'){
-				//获取全部选中box值，写入arr
-	        	var arr=[];
-	        	arr.push(goods_id);
-	        	del(arr);
+			function batch(type){
+				if(type=='del'){
+					//获取全部选中box值，写入arr
+					var val=$("input[name=check_list]:checked")
+		        	var arr=[];
+		        	for(var i=0;i<val.length;i++){
+			        	console.log(val[i].value)
+			        	arr.push(val[i].value);
+			        }
+
+		        	del(arr);
+		        	//arr.push(goods_id);
+					
+				}else if(type='tableUp'){
+					
+				}else if(type='tableDown'){
+					
+				}
 				
-			}else if(type='tableUp'){
-				
-			}else if(type='tableDown'){
-				
-			}
-			
-        }
+	        }
+	        
+		
+		
         
 		//删除方法
 		function del(e){
