@@ -1612,3 +1612,329 @@ ul li {
           font-size: 18px;
           line-height: 40px;
           font-weight: 400; }
+
+.ncc-main {
+  width: 1280px;
+  margin: 10px auto;
+  background: #fff;
+  padding: 10px;
+  min-height: 400px; }
+  .ncc-main .ncc-title {
+    height: 50px;
+    padding: 15px 0;
+    border: 1 solid #F7F7F7;
+    border-width: 1px 0 0; }
+    .ncc-main .ncc-title h3 {
+      font: lighter 24px/30px arial,"microsoft yahei";
+      color: #555; }
+    .ncc-main .ncc-title h5 {
+      font: 12px/20px arial,"microsoft yahei";
+      color: #AAA; }
+  .ncc-main .ncc-receipt-info {
+    color: #777;
+    padding: 9px 19px;
+    border: 1px solid #EEE;
+    border-top: 0;
+    margin-top: 20px; }
+    .ncc-main .ncc-receipt-info .ncc-receipt-info-title {
+      font-size: 0;
+      display: block;
+      height: 22px;
+      padding: 4px 0; }
+      .ncc-main .ncc-receipt-info .ncc-receipt-info-title h3 {
+        font: 16px/20px arial,"microsoft yahei";
+        color: #333;
+        vertical-align: middle;
+        letter-spacing: normal;
+        word-spacing: normal;
+        display: inline-block; }
+        .ncc-main .ncc-receipt-info .ncc-receipt-info-title h3 strong {
+          font: bold 18px/20px Verdana;
+          color: #F30;
+          margin-left: 4px; }
+      .ncc-main .ncc-receipt-info .ncc-receipt-info-title a {
+        font-size: 12px;
+        font-family: Arial, Helvetica, sans-serif;
+        color: #27A9E3;
+        margin-left: 10px;
+        float: right; }
+    .ncc-main .ncc-receipt-info .ncc-candidate-items ul {
+      overflow: hidden; }
+      .ncc-main .ncc-receipt-info .ncc-candidate-items ul li {
+        line-height: 20px;
+        display: block;
+        min-height: 20px;
+        padding: 5px 0 6px 0;
+        margin-top: -1px; }
+        .ncc-main .ncc-receipt-info .ncc-candidate-items ul li span {
+          line-height: 20px;
+          vertical-align: middle;
+          display: inline-block;
+          height: 20px; }
+        .ncc-main .ncc-receipt-info .ncc-candidate-items ul li .true-name {
+          font-weight: 600;
+          margin-right: 10px; }
+        .ncc-main .ncc-receipt-info .ncc-candidate-items ul li .address {
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          max-width: 650px;
+          margin-right: 20px;
+          overflow: hidden; }
+        .ncc-main .ncc-receipt-info .ncc-candidate-items ul li .phone {
+          margin-right: 20px; }
+        .ncc-main .ncc-receipt-info .ncc-candidate-items ul li .del {
+          color: #D93600; }
+    .ncc-main .ncc-receipt-info .ncc-candidate-items .hr16 {
+      margin: 16px 0 !important; }
+      .ncc-main .ncc-receipt-info .ncc-candidate-items .hr16 a.ncc-btn-red {
+        font-size: 12px;
+        vertical-align: middle;
+        letter-spacing: normal;
+        word-spacing: normal;
+        display: inline-block;
+        background-color: #DA4F49;
+        padding: 8px 12px;
+        color: #fff; }
+    .ncc-main .ncc-receipt-info .ncc-form-default .required {
+      font: 12px/16px Tahoma;
+      color: #F30;
+      vertical-align: middle;
+      margin-right: 4px; }
+    .ncc-main .ncc-receipt-info .ncc-form-default .w110 {
+      width: 110px !important; }
+    .ncc-main .ncc-receipt-info .ncc-form-default .w500 {
+      width: 500px !important; }
+    .ncc-main .ncc-receipt-info .ncc-form-default dl {
+      font-size: 0;
+      line-height: 20px;
+      clear: both;
+      padding: 0;
+      margin: 0;
+      overflow: hidden; }
+      .ncc-main .ncc-receipt-info .ncc-form-default dl dt {
+        font-size: 12px;
+        vertical-align: top;
+        letter-spacing: normal;
+        word-spacing: normal;
+        text-align: right;
+        display: inline-block;
+        width: 15%;
+        padding: 10px 1% 10px 0;
+        margin: 0; }
+      .ncc-main .ncc-receipt-info .ncc-form-default dl dd {
+        font-size: 12px;
+        vertical-align: top;
+        letter-spacing: normal;
+        word-spacing: normal;
+        display: inline-block;
+        width: 84%;
+        padding: 10px 0 10px 0; }
+        .ncc-main .ncc-receipt-info .ncc-form-default dl dd input {
+          font: 12px/20px Tahoma;
+          color: #777;
+          background-color: #FFF;
+          vertical-align: middle;
+          display: inline-block;
+          height: 20px;
+          padding: 2px 4px;
+          border: solid 1px #CCC;
+          outline: 0 none; }
+        .ncc-main .ncc-receipt-info .ncc-form-default dl dd select {
+          margin-right: 5px; }
+  .ncc-main .current_box {
+    background: rgba(255, 245, 204, 0.25);
+    padding: 7px 17px;
+    border: solid 2px #D93600;
+    color: #534535; }
+  .ncc-main .mt0 {
+    margin-top: 0; }
+  .ncc-main .zhifu {
+    color: #777; }
+    .ncc-main .zhifu h3 {
+      display: block !important;
+      clear: both !important; }
+    .ncc-main .zhifu .ncc-zhifu {
+      margin-top: 10px;
+      color: #888; }
+      .ncc-main .zhifu .ncc-zhifu .weixin {
+        border: solid 2px #52A452;
+        margin: 10px;
+        vertical-align: top;
+        letter-spacing: normal;
+        word-spacing: normal;
+        text-align: center;
+        display: inline-block;
+        padding: 10px 30px; }
+        .ncc-main .zhifu .ncc-zhifu .weixin img {
+          width: 120px;
+          height: 50px; }
+  .ncc-main .ncc-table-style {
+    width: 100%;
+    border-collapse: collapse;
+    border-style: solid;
+    border-width: 1px 1px;
+    border-color: #AAA #DDD; }
+    .ncc-main .ncc-table-style .b_r {
+      border-right: solid 1px #DDD; }
+    .ncc-main .ncc-table-style thead th {
+      line-height: 20px;
+      color: #666;
+      background-color: #F9F9F9;
+      text-align: center;
+      height: 20px;
+      padding: 8px 0;
+      border-bottom: solid 1px #DDD; }
+    .ncc-main .ncc-table-style tbody tr {
+      border: 1px solid  #DDD !important; }
+    .ncc-main .ncc-table-style tbody td {
+      background-color: #FFFDEE;
+      text-align: center; }
+      .ncc-main .ncc-table-style tbody td.t-l {
+        text-align: left;
+        padding-left: 10px; }
+      .ncc-main .ncc-table-style tbody td a {
+        color: #333; }
+      .ncc-main .ncc-table-style tbody td a:hover {
+        color: #C00; }
+      .ncc-main .ncc-table-style tbody td.tl {
+        text-align: left !important;
+        background-color: #FFF;
+        padding: 10px 20px;
+        border: solid 1px #DDD; }
+      .ncc-main .ncc-table-style tbody td .ncc-msg-textarea {
+        vertical-align: top;
+        height: 20px;
+        resize: none;
+        width: 400px;
+        font: 12px/20px Tahoma;
+        color: #777;
+        background-color: #FFF;
+        display: inline-block;
+        height: 40px;
+        padding: 2px 4px;
+        border: solid 1px #CCC;
+        outline: 0 none; }
+    .ncc-main .ncc-table-style .tr {
+      background-color: #FFF;
+      padding: 8px 0;
+      border-bottom: solid 1px #DDd; }
+      .ncc-main .ncc-table-style .tr .ncc-store-account {
+        overflow: hidden;
+        margin: 0 20px 20px 0;
+        width: 260px;
+        float: right; }
+        .ncc-main .ncc-table-style .tr .ncc-store-account dl {
+          display: -webkit-box;
+          display: box;
+          line-height: 28px;
+          color: #333; }
+          .ncc-main .ncc-table-style .tr .ncc-store-account dl.freight {
+            color: #999; }
+          .ncc-main .ncc-table-style .tr .ncc-store-account dl.total {
+            color: #37839A;
+            font-weight: 600; }
+          .ncc-main .ncc-table-style .tr .ncc-store-account dl em {
+            font-style: normal; }
+        .ncc-main .ncc-table-style .tr .ncc-store-account dt,
+        .ncc-main .ncc-table-style .tr .ncc-store-account dd {
+          width: 50%;
+          text-align: right; }
+    .ncc-main .ncc-table-style tfoot td {
+      background: #F9F9F9;
+      text-align: right;
+      height: 30px;
+      padding: 10px 0; }
+      .ncc-main .ncc-table-style tfoot td .ncc-all-account {
+        font: normal 16px/32px "microsoft yahei", Arial;
+        margin-right: 20px; }
+        .ncc-main .ncc-table-style tfoot td .ncc-all-account em {
+          font-size: 22px;
+          color: #D93600;
+          margin: 0 5px;
+          font-style: normal; }
+  .ncc-main .shangpinqingdan {
+    color: #777;
+    padding: 9px 19px;
+    border: 1px solid #EEE;
+    border-top: 0;
+    margin-top: 0px; }
+    .ncc-main .shangpinqingdan h3 {
+      font: 16px/20px arial,"microsoft yahei";
+      color: #333; }
+    .ncc-main .shangpinqingdan .w60 {
+      width: 60px !important; }
+      .ncc-main .shangpinqingdan .w60 .ncc-goods-thumb img {
+        width: 60px;
+        height: 60px; }
+    .ncc-main .shangpinqingdan .w120 {
+      width: 120px !important; }
+  .ncc-main .ncc-bottom {
+    width: 100%;
+    padding: 20px 0;
+    overflow: hidden;
+    text-align: center; }
+    .ncc-main .ncc-bottom .ncc-btn-acidblue {
+      background-color: #49AFCD;
+      text-align: center;
+      display: inline-block;
+      padding: 8px 16px;
+      float: right !important;
+      color: #fff;
+      margin-right: 20px; }
+    .ncc-main .ncc-bottom .ncc-btn-green {
+      background-color: #5BB75B;
+      text-align: center;
+      display: inline-block;
+      padding: 8px 16px;
+      color: #fff;
+      margin-right: 20px; }
+  .ncc-main .m_t10 {
+    margin-top: 10px; }
+    .ncc-main .m_t10 th {
+      text-align: left !important;
+      padding-left: 20px !important; }
+    .ncc-main .m_t10 td {
+      border-width: 0 !important; }
+  .ncc-main .w200 {
+    width: 200px !important; }
+  .ncc-main .wxpayment {
+    border-top: 2px solid #4b5b78;
+    padding: 12px 30px 0;
+    border: 1px solid #eee;
+    color: #777; }
+    .ncc-main .wxpayment .p-w-hd {
+      font-family: "Microsoft Yahei";
+      font-size: 18px;
+      margin-bottom: 20px; }
+    .ncc-main .wxpayment .p-w-bd {
+      font-family: "Microsoft Yahei";
+      font-size: 18px;
+      margin-bottom: 30px;
+      padding-left: 300px;
+      overflow: hidden; }
+      .ncc-main .wxpayment .p-w-bd .p-w-box {
+        float: left;
+        width: 300px; }
+        .ncc-main .wxpayment .p-w-bd .p-w-box .pw-box-hd img {
+          border: 1px solid #ddd; }
+        .ncc-main .wxpayment .p-w-bd .p-w-box .pw-box-ft {
+          background: url(../images/icon-red.png) no-repeat scroll 50px 8px #ff7674;
+          height: 58px;
+          padding: 8px 0 8px 125px; }
+          .ncc-main .wxpayment .p-w-bd .p-w-box .pw-box-ft p {
+            color: #fff;
+            font-size: 14px;
+            font-weight: 700;
+            line-height: 22px;
+            margin: 0; }
+    .ncc-main .wxpayment .p-w-sidebar {
+      background: url(../images/phone-bg.png) no-repeat scroll 50px 0 rgba(0, 0, 0, 0);
+      float: left;
+      height: 421px;
+      margin-top: -20px;
+      padding-left: 50px;
+      width: 379px; }
+
+#add_addr_box,
+#save_add {
+  display: none; }

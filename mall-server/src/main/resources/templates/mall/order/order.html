@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<!-- 内容部分 -->
+    <script src="/mall/js/order_form.js"></script>
+    <div class="content_box">
+        <div class="ncc-main">
+            <div class="ncc-title">
+                <h3>填写核对购物信息</h3>
+                <h5>请仔细核对填写收货、发票等信息，以确保物流快递及时准确投递。</h5>
+            </div>
+            <div class="ncc-receipt-info" id="address_box">
+                <div class="ncc-receipt-info-title">
+                    <h3>收货人信息</h3>
+                    <a href="javascript:void(0)" id="edit_reciver" style="display: block;">[修改]</a>
+                </div>
+                <div class="ncc-candidate-items">
+                    <ul id="address_list">
+                        <li>
+                            <span class="true-name">李先生</span>
+                            <span class="address">广东  深圳市  南山区&nbsp;南山区</span>
+                            <span class="phone">13823595212</span>
+                        </li>
+                        
+
+                    </ul>
+                    <div id="add_addr_box">
+                            <div class="ncc-form-default">
+                                <form method="POST" id="addr_form" action="">
+                                    <input type="hidden" value="buy" name="act">
+                                    <input type="hidden" value="add_addr" name="op">
+                                    <input type="hidden" name="form_submit" value="ok">
+                                    <dl>
+                                      <dt><i class="required">*</i>收货人姓名：</dt>
+                                      <dd>
+                                        <input type="text" class="w100" name="true_name" id="true_name" value="">
+                                      </dd>
+                                    </dl>
+                                    <dl>
+                                      <dt><i class="required">*</i>所在地区：</dt>
+                                      <dd>
+                                        <div id="region">
+                                          <select class="w110">
+                                            <option>-请选择-</option>
+                                          </select>
+                                        </div>
+                                      </dd>
+                                    </dl>
+                                    <dl>
+                                      <dt><i class="required">*</i>详细地址：</dt>
+                                      <dd>
+                                        <input type="text" class="text w500" name="address" id="address" maxlength="80" value="">
+                                        <p class="hint">请填写真实地址，不需要重复填写所在地区</p>
+                                      </dd>
+                                    </dl>
+                                    <dl>
+                                      <dt> <i class="required">*</i>手机号码：</dt>
+                                      <dd>
+                                        <input type="text" class="text w200" name="mob_phone" id="mob_phone" maxlength="15" value="">
+                                      </dd>
+                                    </dl>
+                                  </form>
+                            </div>
+                        </div>
+                    <div class="hr16" id="save_add">
+                        <a id="hide_addr_list" class="ncc-btn ncc-btn-red" href="javascript:void(0);">保存收货人信息</a>
+                    </div>
+                </div>
+            </div>
+            <!-- 支付方式 -->
+            <div class="ncc-receipt-info mt0">
+                <div class="zhifu">
+                    <h3>支付方式</h3>
+                    <div class="ncc-zhifu">
+                        在线支付
+                    </div>
+                </div>
+            </div>
+            <!-- 商品清单 -->
+            <div class="shangpinqingdan">
+                <h3>商品清单</h3>
+                <table class="ncc-table-style">
+                    <thead>
+                          <tr>
+                            <th class="w60"></th>
+                            <th>商品</th>
+                            <th class="w120">单价(元)</th>
+                            <th class="w120">数量</th>
+                            <th class="b_r w120">小计(元)</th>
+                          </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="w60"><a href="#" target="_blank" class="ncc-goods-thumb"><img src="http://images.96567.com/upload/shop/store/goods/3/3_05809056441258549_60.jpg" alt="中国国典书画院会员 石俊海《正气》"></a></td>
+                            <td class="t-l"><a href=""> 
+                                中国国典书画院会员 石俊海《正气》</a>
+                            </td>
+                            <td>199.00</td>
+                            <td>1</td>
+                            <td class="b_r">199.00</td>
+                        </tr>
+                        <tr>
+                            <td class="tl" colspan="5">买家留言：
+                              <textarea class="ncc-msg-textarea" placeholder="选填：对本次交易的说明（建议填写已经和商家达成一致的说明）" title="选填：对本次交易的说明（建议填写已经和商家达成一致的说明）" maxlength="150"></textarea>
+                            </td>
+                        </tr>
+                        <tr>
+                        <td class="tr" colspan="20">
+                            <div class="ncc-store-account">
+                                <dl class="freight">
+                                  <dt>运费：</dt>
+                                  <dd><em>0.00</em>元</dd>
+                                </dl>
+                                <dl>
+                                  <dt>商品金额：</dt>
+                                  <dd><em>199.00</em>元</dd>
+                                </dl>
+                                <dl class="total">
+                                  <dt>合计：</dt>
+                                  <dd><em >199.00</em>元</dd>
+                                </dl>
+                          </div>
+                          </td>
+                      </tr>
+                    </tbody>
+                    <tfoot>
+                      <tr>
+                        <td colspan="20">
+                            <div class="ncc-all-account">订单总金额：<em>199.00</em>元
+                            </div></td>
+                      </tr>
+                    </tfoot>
+                </table>
+            </div>
+            <div class="ncc-bottom">
+            <!-- javascript:void(0) -->
+                <a href="/mall/order/pay"
+                 class="ncc-btn-acidblue">提交订单</a> 
+            </div>
+        </div>
+    </div>
+    <!-- 内容部分结束 -->
+    <div class="footer_baozhen">
+        <img src="/mall/images/baozhen.png" alt="">
+    </div>
+
+</body>
+</html>

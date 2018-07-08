@@ -2055,3 +2055,421 @@ ul li{
 
 	}
 }
+
+//订单提交
+.ncc-main{
+	width: 1280px;
+	margin:10px auto;
+	background: #fff;
+	padding:10px;
+	min-height: 400px;
+	.ncc-title{
+		height: 50px;
+	    padding: 15px 0;
+	    border:1 solid #F7F7F7;
+	    border-width: 1px 0 0;
+	    h3 {
+		    font: lighter 24px/30px arial,"microsoft yahei";
+		    color: #555;
+		}
+		h5 {
+		    font: 12px/20px arial,"microsoft yahei";
+		    color: #AAA;
+		}
+	}	
+
+
+	.ncc-receipt-info{
+		color: #777;
+	    padding: 9px 19px;
+	    border: 1px solid #EEE;
+	    border-top: 0;
+	    margin-top: 20px;
+		.ncc-receipt-info-title{
+			font-size: 0;
+		    display: block;
+		    height: 22px;
+		    padding: 4px 0;
+			h3{
+				font: 16px/20px arial,"microsoft yahei";
+			    color: #333;
+			    vertical-align: middle;
+			    letter-spacing: normal;
+			    word-spacing: normal;
+			    display: inline-block;
+			    strong{
+			    	font: bold 18px/20px Verdana;
+				    color: #F30;
+				    margin-left: 4px;
+			    }
+			}
+			a{
+				font-size: 12px;
+			    font-family: Arial, Helvetica, sans-serif;
+			    color: #27A9E3;
+			    margin-left: 10px;
+			    float: right;
+			}
+		}
+		.ncc-candidate-items{
+			ul {
+			    overflow: hidden;
+			    li {
+				    line-height: 20px;
+				    display: block;
+				    min-height: 20px;
+				    padding: 5px 0 6px 0;
+				    margin-top: -1px;
+				    span {
+					    line-height: 20px;
+					    vertical-align: middle;
+					    display: inline-block;
+					    height: 20px;
+					}
+				    .true-name {
+					    font-weight: 600;
+					    margin-right: 10px;
+					}
+					.address {
+					    text-overflow: ellipsis;
+					    white-space: nowrap;
+					    max-width: 650px;
+					    margin-right: 20px;
+					    overflow: hidden;
+					}
+					.phone {
+					    margin-right: 20px;
+					}
+					.del {
+					    color: #D93600;
+					}
+				}
+			}
+			.hr16 {
+			    margin: 16px 0 !important;
+			    a.ncc-btn-red {
+			    	font-size: 12px;
+				    vertical-align: middle;
+				    letter-spacing: normal;
+				    word-spacing: normal;
+				    display: inline-block;
+				    background-color: #DA4F49;
+				    padding:8px 12px;
+				    color: #fff;
+				}
+			}
+		}
+		.ncc-form-default{
+			.required{
+				font: 12px/16px Tahoma;
+			    color: #F30;
+			    vertical-align: middle;
+			    margin-right: 4px;
+			}
+			.w110 {
+				    width: 110px !important;
+			}
+			.w500{
+				 width: 500px !important;
+			}
+			dl {
+			    font-size: 0;
+			    line-height: 20px;
+			    clear: both;
+			    padding: 0;
+			    margin: 0;
+			    overflow: hidden;
+
+			    dt {
+				    font-size: 12px;
+				    vertical-align: top;
+				    letter-spacing: normal;
+				    word-spacing: normal;
+				    text-align: right;
+				    display: inline-block;
+				    width: 15%;
+				    padding: 10px 1% 10px 0;
+				    margin: 0;
+				}
+				dd {
+				    font-size: 12px;
+				    vertical-align: top;
+				    letter-spacing: normal;
+				    word-spacing: normal;
+				    display: inline-block;
+				    width: 84%;
+				    padding: 10px 0 10px 0;
+				    input{
+				    	font: 12px/20px Tahoma;
+					    color: #777;
+					    background-color: #FFF;
+					    vertical-align: middle;
+					    display: inline-block;
+					    height: 20px;
+					    padding: 2px 4px;
+					    border: solid 1px #CCC;
+					    outline: 0 none;
+				    }
+				    select {
+					    margin-right: 5px;
+					}
+
+				}
+			}
+		} 
+	}
+	//红色边框
+	.current_box{
+		background: rgba(255,245,204,0.25);
+	    padding: 7px 17px;
+	    border: solid 2px #D93600;
+	    color: #534535;
+	}
+	.mt0{
+		margin-top: 0;
+	}
+	.zhifu{
+		color: #777;
+		h3{
+			display: block !important;
+			clear: both !important;
+		}
+		.ncc-zhifu{
+			margin-top: 10px;
+			color: #888;
+			.weixin{
+				border: solid 2px #52A452;
+    			margin: 10px;
+    			vertical-align: top;
+			    letter-spacing: normal;
+			    word-spacing: normal;
+			    text-align: center;
+			    display: inline-block;
+			    padding: 10px 30px;
+			    img{
+				    width: 120px;
+				    height: 50px;
+				}
+			}
+			
+		}
+	}
+	.ncc-table-style{
+	    	width: 100%;
+		    border-collapse: collapse;
+		    border-style: solid;
+		    border-width: 1px 1px;
+		    border-color: #AAA #DDD;
+		    .b_r{
+					border-right: solid 1px #DDD;
+				}
+		    thead th {
+			    line-height: 20px;
+			    color: #666;
+			    background-color: #F9F9F9;
+			    text-align: center;
+			    height: 20px;
+			    padding: 8px 0;
+			    border-bottom: solid 1px #DDD;
+			}
+			tbody tr{
+				border: 1px solid  #DDD !important;
+			}
+			tbody td {
+			    background-color: #FFFDEE;
+			    text-align: center;
+			    &.t-l{
+			    	text-align: left;
+			    	padding-left: 10px;
+			    }
+			    a{
+			    	color: #333;
+			    }
+			    a:hover{
+			    	color: #C00;
+			    }
+			    &.tl{
+					text-align: left !important;
+					background-color: #FFF;
+					padding:10px 20px;
+					border: solid 1px #DDD;
+				}
+				.ncc-msg-textarea{
+					vertical-align: top;
+				    height: 20px;
+				    resize: none;
+				    width: 400px;
+				    font: 12px/20px Tahoma;
+				    color: #777;
+				    background-color: #FFF;
+				    display: inline-block;
+				    height: 40px;
+				    padding: 2px 4px;
+				    border: solid 1px #CCC;
+				    outline: 0 none;
+				}
+			}
+			.tr{
+				background-color: #FFF;
+			    padding: 8px 0;
+			    border-bottom: solid 1px #DDd;
+			    .ncc-store-account{
+			    	overflow: hidden;
+			    	margin: 0 20px 20px 0;
+			    	width: 260px;
+			    	float: right;
+			    	dl{
+			    		display: -webkit-box;
+			    		display: box;
+			    		line-height: 28px;
+			    		color: #333;
+			    		&.freight{
+				    		color: #999;
+				    	}
+				    	&.total{
+				    		color: #37839A;
+							font-weight: 600;
+				    	}
+				    	em{
+				    		font-style: normal;
+				    	}
+			    	}
+			    	dt,
+			    	dd{
+			    		width: 50%;
+			    		text-align: right;
+			    	}
+
+			    }
+			}
+			tfoot{
+				td{
+					background: #F9F9F9;
+				    text-align: right;
+				    height: 30px;
+				    padding: 10px 0;
+				    .ncc-all-account{
+					    font: normal 16px/32px "microsoft yahei", Arial;
+						margin-right: 20px;
+						em{
+							font-size: 22px;
+						    color: #D93600;
+						    margin: 0 5px;
+						    font-style: normal;
+						}
+				    }
+				}
+			}
+	}
+	.shangpinqingdan{
+		color: #777;
+	    padding: 9px 19px;
+	    border: 1px solid #EEE;
+	    border-top: 0;
+	    margin-top: 0px;
+	    h3{
+	    	font: 16px/20px arial,"microsoft yahei";
+		    color: #333;
+	    }
+	    
+	    .w60 {
+		    width: 60px !important;
+		    .ncc-goods-thumb{
+	    		img{
+	    			width: 60px;
+	    			height: 60px;
+	    		}
+		    	}
+			}
+		.w120{
+			width: 120px !important;
+		}
+	}
+	.ncc-bottom{
+		width: 100%;
+	    padding: 20px 0;
+	    overflow: hidden;
+	    text-align: center;
+		.ncc-btn-acidblue{
+			background-color: #49AFCD;
+			text-align: center;
+		    display: inline-block;
+		    padding: 8px 16px;
+		    float: right !important;
+		    color: #fff;
+		    margin-right: 20px;
+		}
+		.ncc-btn-green{
+			background-color: #5BB75B;
+			text-align: center;
+		    display: inline-block;
+		    padding: 8px 16px;
+		    color: #fff;
+		    margin-right: 20px;
+		}
+	}
+	.m_t10{
+		margin-top: 10px;
+		th{
+			text-align: left !important;
+			padding-left: 20px !important;
+		}
+		td{
+			border-width: 0 !important;
+		}
+	}
+	.w200{
+		width: 200px !important;
+	}
+	.wxpayment{
+		border-top: 2px solid #4b5b78;
+	    padding: 12px 30px 0;
+	    border: 1px solid #eee;
+	    color: #777;
+	    .p-w-hd{
+	    	font-family: "Microsoft Yahei";
+		    font-size: 18px;
+		    margin-bottom: 20px;	
+	    }
+	    .p-w-bd{
+	    	font-family: "Microsoft Yahei";
+		    font-size: 18px;
+		    margin-bottom: 30px;
+    		padding-left: 300px;
+		    overflow: hidden;
+		    .p-w-box{
+		    	float: left;
+    			width: 300px;
+    			.pw-box-hd{
+					img{
+						border: 1px solid #ddd;
+					}
+	    		}
+	    		.pw-box-ft{
+	    			background: url(../images/icon-red.png) no-repeat scroll 50px 8px #ff7674;
+				    height: 58px;
+				    padding: 8px 0 8px 125px;
+				    p {
+					    color: #fff;
+					    font-size: 14px;
+					    font-weight: 700;
+					    line-height: 22px;
+					    margin: 0;
+					}
+	    		}
+		    }
+	    }
+	    .p-w-sidebar{
+	    	background: url(../images/phone-bg.png) no-repeat scroll 50px 0 rgba(0, 0, 0, 0);
+		    float: left;
+		    height: 421px;
+		    margin-top: -20px;
+		    padding-left: 50px;
+		    width: 379px;
+	    }
+	}
+} 
+#add_addr_box,
+#save_add{
+	display: none;
+}
