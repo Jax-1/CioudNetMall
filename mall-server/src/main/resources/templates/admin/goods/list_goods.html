@@ -109,6 +109,7 @@
                                         <td th:text="${a.goodsPrice.retail_price}">19900</td>
                                         <td th:text="${a.is_marketable=='Y'}?'是':'否'">是</td>
                                         <td th:text="${a.classic=='Y'}?'是':'否'">是</td>
+                                        
                                         <td th:text="${a.new_product=='Y'}?'是':'否'">是</td>
                                         <td th:text="${a.goodsPrice.sale=='Y'}?'是':'否'">否</td>
                                         <td th:text="${a.recommend=='Y'}?'是':'否'">是</td>
@@ -134,9 +135,9 @@
                                 <input type="checkbox" class="group-checkable" id="selectalls" />
                                 <span></span>
                             </label>
-								<a href="javascript:void(0);" class="sc-btn sc-red-btn" onclick="batch('del')"><i class="fa fa-trash"></i>删除</a>
-								<a href="javascript:void(0);" class="sc-btn sc-org-btn">上架</a>
-								<a href="javascript:void(0);" class="sc-btn sc-org-btn">下架</a>
+								<a href="javascript:batch('del');" class="sc-btn sc-red-btn" ><i class="fa fa-trash"></i>删除</a>
+								<a href="javascript:batch('tableUp');" class="sc-btn sc-org-btn">上架</a>
+								<a href="javascript:batch('tableDown');" class="sc-btn sc-org-btn">下架</a>
 							</div>
 							</div>
 
@@ -211,22 +212,25 @@
         
 		//批量操作
 			function batch(type){
-				if(type=='del'){
-					//获取全部选中box值，写入arr
-					var val=$("input[name=check_list]:checked")
-		        	var arr=[];
-		        	for(var i=0;i<val.length;i++){
-			        	console.log(val[i].value)
-			        	arr.push(val[i].value);
-			        }
+        		console.log(type);
+	        	//获取全部选中box值，写入arr
+				var val=$("input[name=check_list]:checked")
+	        	var arr=[];
+	        	for(var i=0;i<val.length;i++){
+		        	console.log(val[i].value)
+		        	arr.push(val[i].value);
+		        }
 
+				if(type=='del'){
+					
 		        	del(arr);
 		        	//arr.push(goods_id);
 					
-				}else if(type='tableUp'){
+				}else if(type=='tableUp'){
+					tableUp(arr);
 					
-				}else if(type='tableDown'){
-					
+				}else if(type=='tableDown'){
+					tableDown(arr);
 				}
 				
 	        }
@@ -276,12 +280,12 @@
             }else{
             	answers['list[0].goods_id'] = e;
             }
-     	   $.post("/admin/goods/batchDelete",
+     	   $.post("/admin/goods/batchMarketableUp",
      			  answers,
      		   		function(date){
      		   			if(date.res=='1'){
      		   				//成功
-     		   				console.log('删除成功')
+     		   				console.log('上架成功')
      		   				setTimeout(function(){
          		   				window.location.reload();
          		   				},1000)
@@ -306,12 +310,12 @@
             }else{
             	answers['list[0].goods_id'] = e;
             }
-     	   $.post("/admin/goods/batchDelete",
+     	   $.post("/admin/goods/batchMarketableDown",
      			  answers,
      		   		function(date){
      		   			if(date.res=='1'){
      		   				//成功
-     		   				console.log('删除成功')
+     		   				console.log('下架成功')
      		   				setTimeout(function(){
          		   				window.location.reload();
          		   				},1000)
@@ -325,28 +329,8 @@
         }
 
 		//修改方法
-		function updata(e){
-            var goods_id=e;
-            var parmet={
-            		list:goods_id
-            };
-
-     	   $.post("/admin/goods/batchDelete",
-     			   parmet,
-     		   		function(date){
-     		   			if(date.res=='1'){
-     		   				//成功
-     		   				console.log('删除成功')
-     		   				setTimeout(function(){
-         		   				window.location.reload();
-         		   				},1000)
-     		   			}else{
-     		   				//$("#msg").text(adte.msg);
-     		   			}
-     		   		},'json'
-     			   )  
-            
-            
+		function update(e){
+			window.location.href="/admin/goods/editor?goods_id="+e;
         }
 
 		//预览方法

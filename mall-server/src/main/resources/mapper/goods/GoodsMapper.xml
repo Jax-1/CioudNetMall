@@ -270,6 +270,18 @@
 		    <result column="Amount" jdbcType="INTEGER" property="amount" />
 		    <result column="InStockTime" jdbcType="TIMESTAMP" property="inStockTime" />
 	    </association>
+	     <association property="goodsCategory" javaType="com.mall.entity.goods.GoodsCategory">
+	    	 <id column="category_id_cat" jdbcType="VARCHAR" property="category_id" />
+		    <result column="parent_id" jdbcType="VARCHAR" property="parent_id" />
+		    <result column="category_name" jdbcType="VARCHAR" property="category_name" />
+		    <result column="priority" jdbcType="INTEGER" property="priority" />
+		    <result column="status" jdbcType="VARCHAR" property="status" />
+		    <result column="simple_describe" jdbcType="VARCHAR" property="simple_describe" />
+		    <result column="recommend_cat" jdbcType="VARCHAR" property="recommend" />
+		    <result column="create_time" jdbcType="TIMESTAMP" property="create_time" />
+		    <result column="update_time" jdbcType="TIMESTAMP" property="update_time" />
+		    <result column="admin_id_cat" jdbcType="VARCHAR" property="admin_id" />
+	    </association>
   	</association>
   	<association property="goodsPrice" javaType="com.mall.entity.goods.GoodsPrice">
   		 <id column="price_id" jdbcType="VARCHAR" property="price_id" />
@@ -316,7 +328,8 @@ FROM
 	(
 SELECT
 	A.*,
-	t_goods_price.retail_price 
+	t_goods_price.retail_price ,
+	t_goods_price.sale 
 FROM
 	(
 SELECT
@@ -328,10 +341,12 @@ SELECT
 	t_goods.is_marketable,
 	t_goods.recommend,
 	t_goods.classic,
+	t_goods.new_product,
 	t_goods.create_time,
 	t_goods_info.goods_info_id goods_info_id_info,
 	t_goods_info.category_id,
-	t_goods_info.inventoryid 
+	t_goods_info.inventoryid,
+	t_goods_info.auth_id 
 FROM
 	t_goods
 	LEFT JOIN t_goods_info t_goods_info ON t_goods.goods_info_id = t_goods_info.goods_info_id 

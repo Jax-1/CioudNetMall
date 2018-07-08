@@ -16,7 +16,7 @@
 				<p class="sign"><span th:text="${auth.position}">山东美术协会会员</span> <span th:text="${auth.address}">山东省</span> <span th:text="${auth.atticleldCategory.ladelname}">国画</span></p>
 				<div class="mingjia_jianjie">
 					<div class="mingjia_img">
-						<img src="/mall/images/mingjia.png" alt="">
+						<img  alt="" th:each="entry:${auth.filePath}" th:src="@{${fileServicePath}+'/'+${entry.path}+'/'+${entry.fileidname}+'.'+${entry.filetype}}">
 					</div>
 					<div class="mingjia_text" th:text="${auth.introduction}">
 						名家简介，国家一级美术师国家一级美术师国家一级美术师国家一级美术师国家一级美术师国家一级美术师国家一级美术师国家一级美术师国家

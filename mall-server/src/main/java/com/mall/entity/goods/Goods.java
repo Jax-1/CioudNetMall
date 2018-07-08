@@ -4,6 +4,7 @@ import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.mall.entity.cms.AuthorWithBLOBs;
 import com.mall.entity.cms.FilePath;
 import com.mall.message.ProcessResult;
 import com.mall.util.DateFormatUtil;
@@ -56,6 +57,21 @@ public class Goods {
 	 */
 	private FilePath filePath;
 	
+	/**
+	 * 作家信息
+	 */
+	private AuthorWithBLOBs auth;
+	
+	
+
+	public AuthorWithBLOBs getAuth() {
+		return auth;
+	}
+
+	public void setAuth(AuthorWithBLOBs auth) {
+		this.auth = auth;
+	}
+
 	public Goods init(Goods goods,HttpServletRequest request,String editorValue) {
 		//初始化商品信息
 		String goods_id=UUIDUtil.getUUID();

@@ -154,6 +154,7 @@ public class UserCMSController extends AbstractController{
 	@GetMapping("/authcontent.do")
 	public String toCmsAuthContent(String Pid,Model model,AuthorWithBLOBs auth) {
 		auth = authorWithBLOBsService.selectInfo(auth);
+		logger.info("增加作家查看次数："+auth.getAuthorname());
 		//增加查看次数
 		auth.setViewCount(auth.getViewCount()+1);
 		authorWithBLOBsService.updateLikeAndViewCount(auth);

@@ -15,18 +15,18 @@
                         <div class="mark" id="mark">
                         </div>
                         <span class="float_layer"></span>
-                        <img src="/mall/images/mingjia_art.jpg" alt="">
+                        <img alt="" th:src="@{${fileServicePath}+'/'+${goods.filePath.path}+'/'+${goods.filePath.fileidname}+'.'+${goods.filePath.filetype}}">
                     </div>
                     <div class="big_box">
-                        <img src="/mall/images/mingjia_art_big.jpg">
+                        <img th:src="@{${fileServicePath}+'/'+${goods.filePath.path}+'/'+${goods.filePath.fileidname}+'.'+${goods.filePath.filetype}}">
                     </div>
                 </div>
                 <div class="header_right_detail">
-                    <h3>河北省美术家协会会员 康计永《山乡自有春意在》</h3>
+                    <h3 th:text="${goods.auth.position}+'-'+${goods.auth.authorname}+'  '+'《'+${goods.goods_name}+'》'">河北省美术家协会会员 康计永《山乡自有春意在》</h3>
                     <div class="shop_d_box">
-                        <p> 价格: <span class="price">2000元</span></p>
-                        <p> 作者：<span>张孝勇</span></p>
-                        <p>尺寸：<span>34x136cmx4</span></p>
+                        <p> 价格: <span class="price" th:text="${goods.goodsPrice.retail_price}">2000元</span></p>
+                        <p> 作者：<span th:text="${goods.auth.authorname}">张孝勇</span></p>
+                        <p>尺寸：<span th:text="${goods.goodsInfo.size}">34x136cmx4</span></p>
                     </div>
                     <div class="wuliu">
                         至全国：<span>买家承担运费</span>
@@ -47,7 +47,7 @@
                         </div>
                     </div>
                     <div class="msg_text">
-                        <span>库存: 99</span>（当前库存紧张，请及时下单）
+                        <span th:text="'库存：'+${goods.goodsInfo.inventory.amount}">库存: 99</span>（当前库存紧张，请及时下单）
                     </div>
                 </div>
             </div>
@@ -64,17 +64,17 @@
                 <div class="show_detail_left">
                     <p class="gaikuang">基本参数</p>
                     <div class="jieshao">
-                        <p>作家姓名： <span>康计勇</span> </p>
-                        <p>职称： <span>地方书协美协</span></p>
-                        <p>尺寸： <span>40X16</span></p>
-                        <p>平尺： <span>4.14</span></p>
-                        <p>编号: <span>D12</span></p>
-                        <p>类别： <span>书画</span></p>
-                        <p>形制：<span>条屏</span></p>
-                        <p>装裱形式: <span>立轴</span></p>
-                        <p>环境：<span>餐厅</span>
+                        <p>作家姓名： <span th:text="${goods.auth.authorname}">康计勇</span> </p>
+                        <p>职称： <span th:text="${goods.auth.position}">地方书协美协</span></p>
+                        <p>尺寸： <span th:text="${goods.goodsInfo.size}">40X16</span></p>
+                        <p>平尺： <span th:text="${goods.goodsInfo.flat_feet}">4.14</span></p>
+                        <p>编号: <span th:text="${goods.nickname}">D12</span></p>
+                        <p>类别： <span th:text="${goods.goodsInfo.goodsCategory.category_name}">书画</span></p>
+                        <p>形制：<span th:text="${goods.goodsInfo.standard}">条屏</span></p>
+                        <p>装裱形式: <span th:text="${goods.goodsInfo.framed}">立轴</span></p>
+                        <p>环境：<span th:text="${goods.goodsInfo.environment}">餐厅</span>
                     </div>
-                    <h3 class="show_detail_tit">
+                    <h3 class="show_detail_tit" th:text="${goods.auth.position}+'-'+${goods.auth.authorname}+'  '+'《'+${goods.goods_name}+'》'">
 						河北省美术家协会会员 康计永《山乡自有春意在》
 					</h3>
                     <p class="gaikuang">作品概况</p>
@@ -300,9 +300,9 @@
                 <div class="show_detail_right">
                     <h3>艺术家</h3>
                     <div class="show_mingjia_box">
-                        <img class="mingjia" src="/mall/images/mingjia.png" alt="">
-                        <p class="name_mingjia">康计永</p>
-                        <p>河北省美术家协会会员</p>
+                        <img class="mingjia"  alt="" th:each="entry : ${goods.auth.filePath}"  th:src="@{${fileServicePath}+'/'+${entry.path}+'/'+${entry.fileidname}+'.'+${entry.filetype}}">
+                        <p class="name_mingjia" th:text="${goods.auth.authorname}">康计永</p>
+                        <p th:text="${goods.auth.position}">河北省美术家协会会员</p>
                         <p>在售作品15件</p>
                         <p>已售作品5件</p>
                     </div>
@@ -314,6 +314,6 @@
      <div class="footer_baozhen">
         <img src="/mall/images/baozhen.png" alt="">
     </div>
-
+	
 </body>
 </html>

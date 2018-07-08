@@ -342,7 +342,7 @@
  <update id="updateLikeAndViewCount" parameterType="com.mall.entity.cms.AuthorWithBLOBs" >
 	  update t_cms_author set
 	  <if test="viewCount!=null">
-	  viewCount=#{viewCount}
+	  viewCount=#{viewCount},
 	  </if>
 	  <if test="likeCount!=null">
 	  likeCount=#{likeCount}

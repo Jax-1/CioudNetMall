@@ -1,6 +1,8 @@
 package com.mall.controller.goods;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -10,12 +12,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.mall.controller.AbstractController;
 import com.mall.entity.cms.AuthorWithBLOBs;
+import com.mall.entity.goods.Goods;
 import com.mall.entity.goods.GoodsCategory;
+import com.mall.entity.goods.GoodsPrice;
 import com.mall.message.SystemCode;
 import com.mall.service.cms.AuthorWithBLOBsService;
 import com.mall.service.goods.GoodsCategoryService;
 import com.mall.service.goods.GoodsService;
 import com.mall.service.sys.CacheService;
+import com.mall.util.PageResult;
+import com.mall.util.Validate;
 
 @Controller
 @RequestMapping("/mall/goods")
@@ -35,13 +41,81 @@ public class MallGoodsController extends AbstractController{
 		logger.info("获取商品分类列表："+goodsCategoryList.size());
 		//推荐作家
 		List<AuthorWithBLOBs> auth = authorWithBLOBsService.queryRecommendAtt(new AuthorWithBLOBs());
+		logger.info("获取推荐作家："+auth.size());
+		//文件服务器路径
+		Map<String, String> cache = cacheService.getCache(SystemCode.FILE_SERVICE);
+		String url=cache.get(SystemCode.FILE_SERVICE_URL);
+		String port=cache.get(SystemCode.FILE_SERVICE_PORT);
+		String filePath=cache.get(SystemCode.FILE_SERVICE_FILES_PATH);
+		String fileUrlPrefix=url+":"+port+"/"+filePath;
+		//获取推荐商品
+		Goods goods=new Goods();
+		goods.setRecommend("Y");//推荐
+		goods.setIs_marketable("Y");//上架
+		PageResult<Goods> list =new PageResult<Goods>();
+		int pageSize  =  Integer.parseInt(cacheService.getCache(SystemCode.PAGE).get(SystemCode.MALL_GOODS_REC_PAGE));
+		list.setPageSize(pageSize);
+		PageResult<Goods> RecGoods = goodsService.queryByPageFront(list, goods);
+		logger.info("获取推荐商品："+RecGoods.getDataList().size());
+		for(Goods g:RecGoods.getDataList()) {
+			//获取商品作家信息
+			AuthorWithBLOBs a=new AuthorWithBLOBs();
+			a.setId(g.getGoodsInfo().getAuth_id());
+			a = authorWithBLOBsService.selectInfo(a);
+			g.setAuth(a);
+		}
+		model.addAttribute("RecGoods", RecGoods.getDataList());
+		//热卖商品
+		goods.setRecommend("");
+		//新品
+		goods.setNew_product("Y");
+		int pageSizeShuf  =  Integer.parseInt(cacheService.getCache(SystemCode.PAGE).get(SystemCode.MALL_GOODS_SHUF_PAGE));
+		list.setPageSize(pageSizeShuf);
+		PageResult<Goods> newGoods = goodsService.queryByPageFront(list, goods);
+		//人气
+		goods.setNew_product("");
+		
+		//精品
+		goods.setClassic("Y");
+		PageResult<Goods> classicGoods = goodsService.queryByPageFront(list, goods);
+		//特惠
+		GoodsPrice goodsPrice =new GoodsPrice();
+		goodsPrice.setSale("Y");
+		goods.setGoodsPrice(goodsPrice);
+		PageResult<Goods> saleGoods = goodsService.queryByPageFront(list, goods);
+		
+		
+		
+		model.addAttribute("newGoods", newGoods);
+		model.addAttribute("classicGoods", classicGoods);
+		model.addAttribute("saleGoods", saleGoods);
+		
+		model.addAttribute("fileServicePath", fileUrlPrefix);
+		
 		model.addAttribute("auth", auth);
 		model.addAttribute("goodsCategoryList", goodsCategoryList);
 		model.addAttribute("page", "mall/goods/goods_index");
 		return "mall/index";
 	}
-	@RequestMapping("detail")
-	public String toGoodsDetail(Model model) {
+	@RequestMapping("/detail")
+	public String toGoodsDetail(Model model,Goods goods) {
+		goods = goodsService.selectInfo(goods);
+		if(Validate.notNull(goods.getGoodsInfo().getAuth_id())) {
+			//查询商品作家信息
+			AuthorWithBLOBs a=new AuthorWithBLOBs();
+			a.setId(goods.getGoodsInfo().getAuth_id());
+			a = authorWithBLOBsService.selectInfo(a);
+			goods.setAuth(a);
+		}
+		//文件服务器路径
+		Map<String, String> cache = cacheService.getCache(SystemCode.FILE_SERVICE);
+		String url=cache.get(SystemCode.FILE_SERVICE_URL);
+		String port=cache.get(SystemCode.FILE_SERVICE_PORT);
+		String filePath=cache.get(SystemCode.FILE_SERVICE_FILES_PATH);
+		String fileUrlPrefix=url+":"+port+"/"+filePath;
+		model.addAttribute("fileServicePath", fileUrlPrefix);
+		
+		model.addAttribute("goods", goods);
 		model.addAttribute("page", "mall/goods/goods_show");
 		return "mall/index";
 	}

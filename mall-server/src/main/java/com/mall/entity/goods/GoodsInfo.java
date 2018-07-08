@@ -37,7 +37,16 @@ public class GoodsInfo {
      * 关联库存信息表
      */
     private Inventory inventory;
+    private GoodsCategory goodsCategory;
     
+
+	public GoodsCategory getGoodsCategory() {
+		return goodsCategory;
+	}
+
+	public void setGoodsCategory(GoodsCategory goodsCategory) {
+		this.goodsCategory = goodsCategory;
+	}
 
 	public Inventory getInventory() {
 		return inventory;

@@ -118,6 +118,13 @@ public class GoodsManagementController extends AbstractController{
 		}else if(SystemCode.TYPE_UPDATE.equals(type)) {
 			//更新操作
 			try {
+				//goods.setIs_marketable(goods.getIs_marketable()==null?"N":"Y");
+				//更新信息
+				goods.setRecommend(goods.getRecommend()==null?"N":"Y");
+				goods.setClassic(goods.getClassic()==null?"N":"Y");
+				goods.setNew_product(goods.getNew_product()==null?"N":"Y");
+				goods.getGoodsPrice().setSale(goods.getGoodsPrice().getSale()==null?"N":"Y");
+				
 				goodsService.updateByPrimaryKeySelective(goods);
 				GoodsInfoService.updateByPrimaryKeySelective(goods.getGoodsInfo());
 				GoodsPriceService.updateByPrimaryKeySelective(goods.getGoodsPrice());
@@ -128,7 +135,7 @@ public class GoodsManagementController extends AbstractController{
 			}
 			
 		}
-		return "redirect:/admin/goods/editor";
+		return "redirect:/admin/goods/list";
 		
 	}
 	

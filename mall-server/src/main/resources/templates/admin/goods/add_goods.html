@@ -26,10 +26,10 @@
                 <div class="col-md-22">
                     <form id="addform" class="form-horizontal" role="form" action="/admin/goods/save"  method="post">
                     	<input style="display:none" name= "type" th:attr="value=${info!=null}?'UPDATE':'SAVE'">
-                    	<input style="display:none" name= "goods_id" th:attr="value=${info!=null}?'${info.goods_id}':''">
-                    	<input style="display:none" name= "goodsPrice.price_id" th:attr="value=${info!=null}?'${info.goods_price_id}':''">
-                    	<input style="display:none" name= "goodsInfo.goods_info_id" th:attr="value=${info!=null}?'${info.goodsInfo.goods_info_id}':''">
-                    	<input style="display:none" name= "goodsInfo.inventory.inventoryid" th:attr="value=${info!=null}?'${info.goodsInfo.inventoryid}':''">
+                    	<input style="display:none" name= "goods_id" th:attr="value=${info!=null}?${info.goods_id}:''">
+                    	<input style="display:none" name= "goodsPrice.price_id" th:attr="value=${info!=null}?${info.goods_price_id}:''">
+                    	<input style="display:none" name= "goodsInfo.goods_info_id" th:attr="value=${info!=null}?${info.goods_info_id}:''">
+                    	<input style="display:none" name= "goodsInfo.inventory.inventoryid" th:attr="value=${info!=null}?${info.goodsInfo.inventoryid}:''">
                         <div class="form-body">
                             <div class="form-group">
                                 <label class="col-md-2 control-label"><em>*</em>商品名称</label>
@@ -153,7 +153,7 @@
                                 <div class="col-md-2">
                                     <div class="file_img">
                                         <input id="show_img_file" type="file" name="images" multiple="multiple">
-                                        <input id="imageid" type="hidden" name="image" value="" th:value="${info!=null}?'${info.image}':''">
+                                        <input id="imageid" type="hidden" name="image" value="" th:value="${info!=null}?${info.image}:''">
                                          <label for="show_img_file">点击上传</label>
                                          <div  style="height:10px;background:red;width:0px;"></div>
                                          <!-- <div class="progress">
@@ -202,14 +202,14 @@
                                     	if(blg){
                                 			console.log('-----------------------');
                                 			//初始化编辑器
-                                			var content=[[${info.detail_describe}]];
+                                			var content=[[${info!=null}?${info.detail_describe}:'']];
                                 			ue.setContent(content);
                                 			//分类默认选中
-                                			key=[[${info.goodsInfo.category_id}]];
+                                			key=[[${info!=null}?${info.goodsInfo.category_id}:'']];
                                 			 $("#goods_category option[value='"+key+"']").attr("selected","selected"); 
                                 			 var path=[[${fileServicePath}]];
                                 			
-                                			if([[${info.filePath!=null}]]){
+                                			if([[${info!=null and info.filePath!=null}]]){
                                 				//图片回显
                                    			 $("#shop_img").html('<img src="'+path +'/'+info.filePath.path+'/'+info.filePath.fileidname+'.'+info.filePath.filetype+'" alt=""/>'); 
          
