@@ -90,4 +90,16 @@
       InStockTime = #{inStockTime,jdbcType=TIMESTAMP}
     where inventoryid = #{inventoryid,jdbcType=VARCHAR}
   </update>
+  <!-- 检索商品库存 -->
+  <select id="inventoryRetrieve" parameterType="com.mall.entity.inventory.Inventory" resultMap="BaseResultMap">
+  	SELECT
+	t_inventory.ProductNumber,
+	t_inventory.Amount 
+	FROM
+		t_inventory 
+	WHERE
+		t_inventory.ProductNumber = #{productNumber}
+  
+  
+  </select>
 </mapper>

@@ -39,9 +39,9 @@
                                 <button class="minus">-</button>
                             </div>
                         </div>
-                        <div class="once_buy" id="once_buy">
+                        <a class="once_buy" id="once_buy" href="javascript:buy()">
                             立即购买
-                        </div>
+                        </a>
                         <div class="zixun">
                             在线咨询
                         </div>
@@ -80,11 +80,11 @@
                     <p class="gaikuang">作品概况</p>
                     <!-- 主图部分 -->
                     <div class="main_img">
-                        <img src="/mall/images/hua.png" alt="">
+                        <img  alt="" th:src="@{${fileServicePath}+'/'+${goods.filePath.path}+'/'+${goods.filePath.fileidname}+'.'+${goods.filePath.filetype}}">
                     </div>
                     <p class="gaikuang">细节展示</p>
                     <!-- 细节展示图部分 -->
-                    <div class="main_img">
+                    <div class="main_img" th:utext="${goods.detail_describe}">
                         <img src="/mall/images/xijie.png" alt="">
                     </div>
                     <p class="gaikuang">须知</p>
@@ -314,12 +314,21 @@
      <div class="footer_baozhen">
         <img src="/mall/images/baozhen.png" alt="">
     </div>
-	<script type="text/javascript">
-	$("#once_buy").click(function(){
-		window.location.href="/mall/order";
-		
-		
-	})
+	<script type="text/javascript" th:inline="javascript">
+	function buy(){
+		var goods=[[${goods}]];
+		//验证商品库存信息
+		$.post("/mall/inventory/retrieve",{productNumber:goods.goods_id},function(data){
+			console.log(data);
+			if(data!=null&&data.res=="1"){
+				//有库存
+				window.location.href="/mall/order?goods_id="+goods.goods_id;
+			}else{
+				//库存不足
+				
+			}
+		})
+	}
 	
 	</script>
 </body>

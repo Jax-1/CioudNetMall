@@ -21,6 +21,10 @@ public class InventoryServiceImpl extends BaseServiceImpl<Inventory> implements 
 	protected IBaseDao<Inventory> getMapper() {
 		return inventoryMapper;
 	}
+	@Override
+	public Inventory inventoryRetrieve(Inventory Inventory) {
+		return inventoryMapper.inventoryRetrieve(Inventory);
+	}
 
 	
 }

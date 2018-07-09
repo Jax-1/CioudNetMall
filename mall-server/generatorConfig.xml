@@ -10,16 +10,27 @@
     <jdbcConnection connectionURL="jdbc:mysql://47.93.16.119:3306/dbmall"
     	 driverClass="com.mysql.jdbc.Driver"
     	  password="zhang032111" userId="root" />
-    <javaModelGenerator targetPackage="com.mall.entity.inventory" targetProject="mall-server\src\main\java" />
+    <javaModelGenerator targetPackage="com.mall.entity.order" targetProject="mall-server\src\main\java" />
     <sqlMapGenerator targetPackage="com.mall.main.mapping" targetProject="mall-server\src\main\java" />
-    <javaClientGenerator targetPackage="com.mall.dao.inventory" targetProject="mall-server\src\main\java" type="XMLMAPPER" />
+    <javaClientGenerator targetPackage="com.mall.dao.order" targetProject="mall-server\src\main\java" type="XMLMAPPER" />
 
 
-		<table schema="" tableName="t_inventory" domainObjectName="Inventory"
+		<table schema="" tableName="t_order" domainObjectName="Order"
     enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"
     enableSelectByExample="false" selectByExampleQueryId="false" >
     <property name="useActualColumnNames" value="true"/>
 		</table>
+		<table schema="" tableName="t_order_address" domainObjectName="OrderAddress"
+    enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"
+    enableSelectByExample="false" selectByExampleQueryId="false" >
+    <property name="useActualColumnNames" value="true"/>
+		</table>
+		<table schema="" tableName="t_order_favorites" domainObjectName="Favorites"
+    enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"
+    enableSelectByExample="false" selectByExampleQueryId="false" >
+    <property name="useActualColumnNames" value="true"/>
+		</table>
+		
 		
 	
   </context>

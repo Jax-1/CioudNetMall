@@ -26,6 +26,13 @@ public interface GoodsMapper extends IBaseDao<Goods>{
 	 * @return
 	 */
 	public int batchMarketableDown(@Param("list")List<Goods> list);
+	
+	/**
+	 * 检索库存信息
+	 * @param goods
+	 * @return
+	 */
+	public Goods inventoryRetrieve(Goods goods);
 
 
 }

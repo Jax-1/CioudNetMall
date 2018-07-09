@@ -40,46 +40,7 @@ public class GoodsController extends AbstractController{
 	@Resource
 	private AuthorWithBLOBsService authorWithBLOBsService;
 	
-	/**
-	 * 测试API
-	 * @param goods
-	 * @param request
-	 * @param editorValue
-	 * @return
-	 */
-	@PostMapping("/de")
-	@ResponseBody
-	public ProcessResult<Goods> getTest(Goods goods,HttpServletRequest request,String editorValue){
-		
-		ProcessResult<Goods> res=new ProcessResult<Goods>();
-		try {
-			goods=goods.init(goods, request, editorValue);
-			goodsService.insertSelective(goods);
-			GoodsInfoService.insertSelective(goods.getGoodsInfo());
-			GoodsPriceService.insertSelective(goods.getGoodsPrice());
-			InventoryService.insertSelective(goods.getGoodsInfo().getInventory());
-			res=ProcessResult.success(res);
-		} catch (Exception e) {
-			logger.error("保存商品分类信息：失败！"+e.getMessage());
-			e.printStackTrace();
-		}
-		return res;
-	}
-	/**
-	 * 测试API
-	 * @return
-	 */
-	@PostMapping("/auth")
-	@ResponseBody
-	public PageResult<AuthorWithBLOBs> getAuth() {
-		PageResult<AuthorWithBLOBs> list =new PageResult<AuthorWithBLOBs>();
-		AuthorWithBLOBs auth =new AuthorWithBLOBs();
-		list.setPageSize(0);
-		auth.setColumns("MJHC");
-		list = authorWithBLOBsService.queryByPageFront(list, auth);
-		return list;
-		
-	}
+	
 	/**
 	 * 批量删除
 	 * @param list
