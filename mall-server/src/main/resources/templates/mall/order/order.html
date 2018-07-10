@@ -6,7 +6,6 @@
 </head>
 <body>
 <!-- 内容部分 -->
-    <script src="/mall/js/order_form.js"></script>
     <div class="content_box">
         <div class="ncc-main">
             <div class="ncc-title">
@@ -16,14 +15,15 @@
             <div class="ncc-receipt-info" id="address_box">
                 <div class="ncc-receipt-info-title">
                     <h3>收货人信息</h3>
-                    <a href="javascript:void(0)" id="edit_reciver" style="display: block;">[修改]</a>
+                    <a href="javascript:Modifyaddress()" id="edit_reciver" style="display: block;">[修改]</a>
                 </div>
                 <div class="ncc-candidate-items">
                     <ul id="address_list">
-                        <li>
-                            <span class="true-name">李先生</span>
-                            <span class="address">广东  深圳市  南山区&nbsp;南山区</span>
-                            <span class="phone">13823595212</span>
+                        <li >
+                            <span class="true-name" id='add_name'>李先生</span>
+                            <span class="address"  id="add_address">广东  深圳市  南山区&nbsp;南山区</span>
+                            <span class="phone" id="add_phone">13823595212</span>
+                            <span id="add_id" style="display:none"></span>
                         </li>
                         
 
@@ -44,16 +44,17 @@
                                       <dt><i class="required">*</i>所在地区：</dt>
                                       <dd>
                                         <div id="region">
-                                          <select class="w110">
-                                            <option>-请选择-</option>
-                                          </select>
+                                          
+                                          <select name="province" id="address_province" class="w110"></select>
+											<select name="city" id="address_city" class="w110">
+											</select><select name="area" id="address_area" class="w110"></select>
                                         </div>
                                       </dd>
                                     </dl>
                                     <dl>
                                       <dt><i class="required">*</i>详细地址：</dt>
                                       <dd>
-                                        <input type="text" class="text w500" name="address" id="address" maxlength="80" value="">
+                                        <input type="text" class="text w500" name="address" id="address_street" maxlength="80" value="">
                                         <p class="hint">请填写真实地址，不需要重复填写所在地区</p>
                                       </dd>
                                     </dl>
@@ -67,7 +68,7 @@
                             </div>
                         </div>
                     <div class="hr16" id="save_add">
-                        <a id="hide_addr_list" class="ncc-btn ncc-btn-red" href="javascript:void(0);">保存收货人信息</a>
+                        <a id="hide_addr_list" class="ncc-btn ncc-btn-red" href="javascript:addUserAddress();">保存收货人信息</a>
                     </div>
                 </div>
             </div>
@@ -147,6 +148,107 @@
     <div class="footer_baozhen">
         <img src="/mall/images/baozhen.png" alt="">
     </div>
+    <script type="text/javascript" src="/mall/js/PCASClass.js"></script>
+    <script type="text/javascript" th:inline="javascript">
+	    
+	//修改收货人地址
+    	function Modifyaddress(){
+    		var address=[[${address}]];
+    		var addlist=new Array()
+    		for(var i=0;i<address.length;i++){
+    			addlist.push({name:address[i].name,address:address[i].province+address[i].city+address[i].area+address[i].street,phone:address[i].phone,id:address[i].id})
+    		}
+    		
+
+    		var items='';
+
+    		for(var i=0;i<addlist.length;i++){
+    			items+='<li><input type="radio" id="'+addlist[i].id+'" name="addr" value="'+addlist[i].id+'">'+
+    			'<label for="'+addlist[i].id+'">'+
+    			        '<span class="true-name">'+addlist[i].name+'</span>'+
+    			        '<span class="address">'+addlist[i].address+'</span>'+
+    			        '<span class="phone">'+addlist[i].phone+'</span>'+
+    			'</label><a href="javascript:void(0);" onclick="del(\''+addlist[i].id+'\')" class="del">[ 删除 ]</a></li>';
+
+    		}
+
+    		items+='<li><input type="radio" id="new_add" name="addr" value="new">'+
+    	           '<label for="new_add"><span class="true-name">'+
+    	                        '使用新地址</span></label></li>';
+    		$("#address_list").html(items)
+
+    		$("#save_add").show();
+    		$("#address_box").addClass('current_box');
+
+    		$(":input[name=addr]").change(function(value,a){
+    			if($(this).val()=='new'){
+    				$("#add_addr_box").show();
+    			}else{
+    				$("#add_addr_box").hide();
+    			}
+    		})
+    	}
+    	
+    function del(id){
+    	
+    	$('/mall/order/address/delete',{id:id},function(data){
+    		if(data!=null&&data.res=='1'){
+    			//删除成功
+    			var dom=$(this).parent();
+    	    	dom.remove();
+    		}
+    	})
+    	console.log(id);
+    }
+    
+    function addUserAddress(){
+    	//验证表单数据
+    	//保存数据
+    	$.post("/mall/order/address/add",
+    			{
+    			name:$("#true_name").val(),
+    			phone:$("#mob_phone").val(),
+    			province:$("#address_province").val(),
+    			city:$("#address_city").val(),
+    			area:$("#address_area").val(),
+    			street:$("#address_street").val()
+    			
+		    	},
+		    	function(data){
+		    		if(data!=null&&data.res=='1'){
+		    			console.log(data);
+		    			//成功
+		    			var item=" <li ><span class='true-name'>"+$("#true_name").val()+"</span><span class='address'  >"+$("#mob_phone").val()+"</span>"
+		    					+"<span class='phone' >"+$("#mob_phone").val()+"</span>"
+                            +"<span id='add_id' style='display:none'>"+data.obj.id+"</span></li>"
+                            
+                            $("#address_list").html(item);
+                            $("#save_add").hide();
+                            $("#address_box").removeClass('current_box');
+                            $("#add_addr_box").hide();
+		    			}
+    		
+    	});
+    	
+    }
+    $(function(){
+    	//初始化显示默认地址
+    	var address=[[${address}]];
+		console.log([[${session}]]);
+		for(var i=0;i<address.length;i++){
+    		if(address[i].thedefault=='Y'){
+    			$("#add_name").text(address[i].name);
+    			$("#add_address").text(address[i].province+address[i].city+address[i].area+address[i].street);
+    			$("#add_phone").text(address[i].phone);
+    			$("#add_id").text(address[i].id);
+    		}
+    	}
+		//初始化地址下拉框
+		new PCAS("province","city","area");
+    	
+    });
+    
+    </script>
 
 </body>
 </html>

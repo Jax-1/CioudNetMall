@@ -21,10 +21,10 @@ public class InventoryController extends AbstractController{
 	private InventoryService inventoryService;
 	@PostMapping("/retrieve")
 	@ResponseBody
-	public ProcessResult<Inventory> retrieve(Inventory inventory){
+	public ProcessResult<Inventory> retrieve(Inventory inventory ,Integer amount){
 		ProcessResult<Inventory> res=new ProcessResult<Inventory>();
 		inventory =inventoryService.inventoryRetrieve(inventory);
-		if(Validate.notNull(inventory)&&inventory.getAmount()>0) {
+		if(Validate.notNull(inventory)&&inventory.getAmount()>0&&inventory.getAmount()>=amount) {
 			
 			res=ProcessResult.success(res);
 			res.setObj(inventory);

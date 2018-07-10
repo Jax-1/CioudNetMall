@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.mall.dao.base.IBaseDao;
 import com.mall.dao.order.OrderAddressMapper;
+import com.mall.entity.login.User;
 import com.mall.entity.order.OrderAddress;
 import com.mall.service.BaseServiceImpl;
 import com.mall.service.order.OrderAddressService;
@@ -20,6 +21,11 @@ public class OrderAddressServiceImpl extends BaseServiceImpl<OrderAddress> imple
 	@Override
 	protected IBaseDao<OrderAddress> getMapper() {
 		return orderAddressMapper;
+	}
+	@Override
+	public List<OrderAddress> userTakeDeliveryAddress(User user) {
+		
+		return orderAddressMapper.userTakeDeliveryAddress(user);
 	}
 
 	

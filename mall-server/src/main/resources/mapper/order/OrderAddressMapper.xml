@@ -37,7 +37,7 @@
       #{area,jdbcType=VARCHAR}, #{street,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, 
       #{thedefault,jdbcType=VARCHAR}, #{create_time,jdbcType=TIMESTAMP})
   </insert>
-  <insert id="insertSelective" parameterType="com.mall.entity.order.OrderAddress">
+  <insert id="insertSelective" parameterType="com.mall.entity.order.OrderAddress" useGeneratedKeys="true" keyProperty="id">
     insert into t_order_address
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -160,4 +160,25 @@
       create_time = #{create_time,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  <!-- 获取当前用户的收获地址 -->
+  <select id="userTakeDeliveryAddress" parameterType="com.mall.entity.login.User" resultMap="BaseResultMap">
+  	SELECT
+  		id,
+		user_id,
+		NAME,
+		phone,
+		province,
+		city,
+		area,
+		street,
+		STATUS,
+		thedefault,
+		create_time 
+	FROM
+		t_order_address t 
+	WHERE
+		user_id = #{user_name}
+		order by create_time desc
+	  
+  </select>
 </mapper>

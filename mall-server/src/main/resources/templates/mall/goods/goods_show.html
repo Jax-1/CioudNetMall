@@ -29,7 +29,7 @@
                         <p>尺寸：<span th:text="${goods.goodsInfo.size}">34x136cmx4</span></p>
                     </div>
                     <div class="wuliu">
-                        至全国：<span>买家承担运费</span>
+                        至全国：<span> 卖家承担运费</span>
                     </div>
                     <div class="shop_show_buy">
                         <div class="number_box">
@@ -48,6 +48,7 @@
                     </div>
                     <div class="msg_text">
                         <span th:text="'库存：'+${goods.goodsInfo.inventory.amount}">库存: 99</span>（当前库存紧张，请及时下单）
+                        <p><span id="msg"></span>
                     </div>
                 </div>
             </div>
@@ -318,14 +319,14 @@
 	function buy(){
 		var goods=[[${goods}]];
 		//验证商品库存信息
-		$.post("/mall/inventory/retrieve",{productNumber:goods.goods_id},function(data){
+		$.post("/mall/inventory/retrieve",{productNumber:goods.goods_id,amount:$("#amount").val()},function(data){
 			console.log(data);
 			if(data!=null&&data.res=="1"){
 				//有库存
-				window.location.href="/mall/order?goods_id="+goods.goods_id;
+				window.location.href="/mall/order?goods_id="+goods.goods_id+"amount="+$("#amount").val();
 			}else{
 				//库存不足
-				
+				$("#msg").text("库存不足！");
 			}
 		})
 	}

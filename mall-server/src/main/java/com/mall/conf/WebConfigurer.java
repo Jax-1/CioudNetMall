@@ -11,6 +11,7 @@ import org.springframework.format.FormatterRegistry;
 import org.springframework.format.datetime.DateFormatter;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
@@ -30,17 +31,15 @@ public class WebConfigurer extends WebMvcConfigurerAdapter {
         registry.setOrder(Ordered.HIGHEST_PRECEDENCE);  
         super.addViewControllers(registry);  
     }  
-//    @Override
-//    public void addInterceptors(InterceptorRegistry registry) {
-//        registry.addInterceptor(new QqInterceptor())
-//                .addPathPatterns("/admin/*/**");
-//        registry.addInterceptor(new QqWebInterceptor())
-//                .addPathPatterns("/front/*/**").
-//                excludePathPatterns("/front/user/user/checkCode").
-//                excludePathPatterns("/front/user/user/sendCode");
-//
-//        super.addInterceptors(registry);
-//    }
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+//    	registry.addInterceptor(new InitializeConnection())
+//        .addPathPatterns("/**");
+        registry.addInterceptor(new InterceptorConfig())
+                .addPathPatterns("/mall/order/**");
+        
+        super.addInterceptors(registry);
+    }
 
     @Override
     public void addCorsMappings(CorsRegistry registry) {
