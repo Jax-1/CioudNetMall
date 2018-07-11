@@ -76,9 +76,10 @@
             <div class="ncc-receipt-info mt0">
                 <div class="zhifu">
                     <h3>支付方式</h3>
-                    <div class="ncc-zhifu">
+                    <div class="ncc-zhifu" id="payment">
                         在线支付
                     </div>
+                    <input style="display:none" id= "payment_id" value="">
                 </div>
             </div>
             <!-- 商品清单 -->
@@ -96,13 +97,13 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td class="w60"><a href="#" target="_blank" class="ncc-goods-thumb"><img src="http://images.96567.com/upload/shop/store/goods/3/3_05809056441258549_60.jpg" alt="中国国典书画院会员 石俊海《正气》"></a></td>
-                            <td class="t-l"><a href=""> 
+                            <td class="w60"><a href="#" target="_blank" class="ncc-goods-thumb"><img  alt="中国国典书画院会员 石俊海《正气》" th:src="@{${fileServicePath}+'/'+${goods.filePath.path}+'/'+${goods.filePath.fileidname}+'.'+${goods.filePath.filetype}}" th:alt="${goods.auth.position}+'-'+${goods.auth.authorname}+'  '+'《'+${goods.goods_name}+'》'"></a></td>
+                            <td class="t-l"><a href="" th:text="${goods.auth.position}+'-'+${goods.auth.authorname}+'  '+'《'+${goods.goods_name}+'》'"> 
                                 中国国典书画院会员 石俊海《正气》</a>
                             </td>
-                            <td>199.00</td>
-                            <td>1</td>
-                            <td class="b_r">199.00</td>
+                            <td th:text="${goods.goodsPrice.sale=='Y'}?${goods.goodsPrice.sale_price}:${goods.goodsPrice.retail_price}">199.00</td>
+                            <td th:text="${amount}">1</td>
+                            <td class="b_r" id="">199.00</td>
                         </tr>
                         <tr>
                             <td class="tl" colspan="5">买家留言：
@@ -163,12 +164,13 @@
     		var items='';
 
     		for(var i=0;i<addlist.length;i++){
-    			items+='<li><input type="radio" id="'+addlist[i].id+'" name="addr" value="'+addlist[i].id+'">'+
+    			items+='<li><input type="radio" id="'+addlist[i].id+'" name="addr" value="'+addlist[i].id+'" onclick="select_address(this)">'+
     			'<label for="'+addlist[i].id+'">'+
     			        '<span class="true-name">'+addlist[i].name+'</span>'+
     			        '<span class="address">'+addlist[i].address+'</span>'+
     			        '<span class="phone">'+addlist[i].phone+'</span>'+
-    			'</label><a href="javascript:void(0);" onclick="del(\''+addlist[i].id+'\')" class="del">[ 删除 ]</a></li>';
+    			       
+    			'</label><a href="javascript:void(0);" onclick="del(\''+addlist[i].id+'\',this)" class="del">[ 删除 ]</a></li>';
 
     		}
 
@@ -189,18 +191,33 @@
     		})
     	}
     	
-    function del(id){
+    function del(id,obj){
     	
-    	$('/mall/order/address/delete',{id:id},function(data){
+    	$.post('/mall/order/address/delete',{id:id},function(data){
+    		console.log(data);
     		if(data!=null&&data.res=='1'){
+    			
     			//删除成功
-    			var dom=$(this).parent();
-    	    	dom.remove();
+    			$(obj).parent().remove();
     		}
     	})
     	console.log(id);
     }
-    
+    function select_address(obj){
+    	var id=$(obj).val();
+    	var name = $(obj).next().children(".true-name").text();
+    	var address=$(obj).next().children(".address").text();
+    	var phone=$(obj).next().children(".phone").text();
+    	var item=" <li ><span class='true-name'>"+name+"</span><span class='address'  >"+address+"</span>"
+				+"<span class='phone' >"+phone+"</span>"
+	   			 +"<span id='add_id' style='display:none'>"+id+"</span></li>"
+	    
+	    $("#address_list").html(item);
+	    $("#save_add").hide();
+	    $("#address_box").removeClass('current_box');
+	    $("#add_addr_box").hide();
+    	
+    }
     function addUserAddress(){
     	//验证表单数据
     	//保存数据
@@ -218,7 +235,8 @@
 		    		if(data!=null&&data.res=='1'){
 		    			console.log(data);
 		    			//成功
-		    			var item=" <li ><span class='true-name'>"+$("#true_name").val()+"</span><span class='address'  >"+$("#mob_phone").val()+"</span>"
+		    			var address=$("#address_province").val()+$("#address_city").val()+$("#address_area").val()+$("#address_street").val();
+		    			var item=" <li ><span class='true-name'>"+$("#true_name").val()+"</span><span class='address'  >"+address+"</span>"
 		    					+"<span class='phone' >"+$("#mob_phone").val()+"</span>"
                             +"<span id='add_id' style='display:none'>"+data.obj.id+"</span></li>"
                             
@@ -234,7 +252,6 @@
     $(function(){
     	//初始化显示默认地址
     	var address=[[${address}]];
-		console.log([[${session}]]);
 		for(var i=0;i<address.length;i++){
     		if(address[i].thedefault=='Y'){
     			$("#add_name").text(address[i].name);
@@ -245,6 +262,16 @@
     	}
 		//初始化地址下拉框
 		new PCAS("province","city","area");
+		//初始化支付方式
+		var payment=[[${payment}]];
+		console.log(payment);
+		for(var i=0;i<payment.length;i++){
+			if(payment[i].isGeneral){
+				
+				$("#payment").text(payment[i].name);
+				$("#payment_id").attr("value",payment[i].payment_id);
+			}
+		}
     	
     });
     

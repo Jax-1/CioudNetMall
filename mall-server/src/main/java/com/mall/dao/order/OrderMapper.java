@@ -5,4 +5,5 @@ import com.mall.entity.order.Order;
 
 public interface OrderMapper  extends IBaseDao<Order>{
 
+	
 }

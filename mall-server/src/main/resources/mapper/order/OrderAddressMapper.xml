@@ -181,4 +181,11 @@
 		order by create_time desc
 	  
   </select>
+  <!-- 删除 -->
+  <delete id="chengeStatus" parameterType="com.mall.entity.order.OrderAddress">
+     update t_order_address set STATUS='Y' 
+     where id = #{id,jdbcType=INTEGER}
+  
+  
+  </delete>
 </mapper>

@@ -5,8 +5,9 @@
     <id column="order_id" jdbcType="INTEGER" property="order_id" />
     <result column="order_number" jdbcType="VARCHAR" property="order_number" />
     <result column="user_id" jdbcType="VARCHAR" property="user_id" />
-    <result column="total_amount" jdbcType="INTEGER" property="total_amount" />
+    <result column="total_amount" jdbcType="DECIMAL" property="total_amount" />
     <result column="paid_amount" jdbcType="DECIMAL" property="paid_amount" />
+    <result column="postage_amount" jdbcType="DECIMAL" property="postage_amount" />
     <result column="discount_amount" jdbcType="DECIMAL" property="discount_amount" />
     <result column="receive_id" jdbcType="INTEGER" property="receive_id" />
     <result column="send_time" jdbcType="TIMESTAMP" property="send_time" />
@@ -21,9 +22,9 @@
     <result column="update_time" jdbcType="TIMESTAMP" property="update_time" />
   </resultMap>
   <sql id="Base_Column_List">
-    order_id, order_number, user_id, total_amount, paid_amount, discount_amount, receive_id, 
-    send_time, logistics_state, invoice_tag, del_state, payment_id, payment_seq, pay_state, 
-    comment, create_time, update_time
+    order_id, order_number, user_id, total_amount, paid_amount, postage_amount, discount_amount, 
+    receive_id, send_time, logistics_state, invoice_tag, del_state, payment_id, payment_seq, 
+    pay_state, comment, create_time, update_time
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -37,17 +38,19 @@
   </delete>
   <insert id="insert" parameterType="com.mall.entity.order.Order">
     insert into t_order (order_id, order_number, user_id, 
-      total_amount, paid_amount, discount_amount, 
-      receive_id, send_time, logistics_state, 
-      invoice_tag, del_state, payment_id, 
-      payment_seq, pay_state, comment, 
-      create_time, update_time)
+      total_amount, paid_amount, postage_amount, 
+      discount_amount, receive_id, send_time, 
+      logistics_state, invoice_tag, del_state, 
+      payment_id, payment_seq, pay_state, 
+      comment, create_time, update_time
+      )
     values (#{order_id,jdbcType=INTEGER}, #{order_number,jdbcType=VARCHAR}, #{user_id,jdbcType=VARCHAR}, 
-      #{total_amount,jdbcType=INTEGER}, #{paid_amount,jdbcType=DECIMAL}, #{discount_amount,jdbcType=DECIMAL}, 
-      #{receive_id,jdbcType=INTEGER}, #{send_time,jdbcType=TIMESTAMP}, #{logistics_state,jdbcType=TINYINT}, 
-      #{invoice_tag,jdbcType=TINYINT}, #{del_state,jdbcType=TINYINT}, #{payment_id,jdbcType=INTEGER}, 
-      #{payment_seq,jdbcType=VARCHAR}, #{pay_state,jdbcType=TINYINT}, #{comment,jdbcType=VARCHAR}, 
-      #{create_time,jdbcType=TIMESTAMP}, #{update_time,jdbcType=TIMESTAMP})
+      #{total_amount,jdbcType=DECIMAL}, #{paid_amount,jdbcType=DECIMAL}, #{postage_amount,jdbcType=DECIMAL}, 
+      #{discount_amount,jdbcType=DECIMAL}, #{receive_id,jdbcType=INTEGER}, #{send_time,jdbcType=TIMESTAMP}, 
+      #{logistics_state,jdbcType=TINYINT}, #{invoice_tag,jdbcType=TINYINT}, #{del_state,jdbcType=TINYINT}, 
+      #{payment_id,jdbcType=INTEGER}, #{payment_seq,jdbcType=VARCHAR}, #{pay_state,jdbcType=TINYINT}, 
+      #{comment,jdbcType=VARCHAR}, #{create_time,jdbcType=TIMESTAMP}, #{update_time,jdbcType=TIMESTAMP}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.mall.entity.order.Order">
     insert into t_order
@@ -66,6 +69,9 @@
       </if>
       <if test="paid_amount != null">
         paid_amount,
+      </if>
+      <if test="postage_amount != null">
+        postage_amount,
       </if>
       <if test="discount_amount != null">
         discount_amount,
@@ -115,10 +121,13 @@
         #{user_id,jdbcType=VARCHAR},
       </if>
       <if test="total_amount != null">
-        #{total_amount,jdbcType=INTEGER},
+        #{total_amount,jdbcType=DECIMAL},
       </if>
       <if test="paid_amount != null">
         #{paid_amount,jdbcType=DECIMAL},
+      </if>
+      <if test="postage_amount != null">
+        #{postage_amount,jdbcType=DECIMAL},
       </if>
       <if test="discount_amount != null">
         #{discount_amount,jdbcType=DECIMAL},
@@ -168,10 +177,13 @@
         user_id = #{user_id,jdbcType=VARCHAR},
       </if>
       <if test="total_amount != null">
-        total_amount = #{total_amount,jdbcType=INTEGER},
+        total_amount = #{total_amount,jdbcType=DECIMAL},
       </if>
       <if test="paid_amount != null">
         paid_amount = #{paid_amount,jdbcType=DECIMAL},
+      </if>
+      <if test="postage_amount != null">
+        postage_amount = #{postage_amount,jdbcType=DECIMAL},
       </if>
       <if test="discount_amount != null">
         discount_amount = #{discount_amount,jdbcType=DECIMAL},
@@ -216,8 +228,9 @@
     update t_order
     set order_number = #{order_number,jdbcType=VARCHAR},
       user_id = #{user_id,jdbcType=VARCHAR},
-      total_amount = #{total_amount,jdbcType=INTEGER},
+      total_amount = #{total_amount,jdbcType=DECIMAL},
       paid_amount = #{paid_amount,jdbcType=DECIMAL},
+      postage_amount = #{postage_amount,jdbcType=DECIMAL},
       discount_amount = #{discount_amount,jdbcType=DECIMAL},
       receive_id = #{receive_id,jdbcType=INTEGER},
       send_time = #{send_time,jdbcType=TIMESTAMP},

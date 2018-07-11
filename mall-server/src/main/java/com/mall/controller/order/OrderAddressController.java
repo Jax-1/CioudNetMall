@@ -30,12 +30,15 @@ public class OrderAddressController  extends AbstractController{
 	public ProcessResult<OrderAddress> delete(OrderAddress orderAddress){
 		ProcessResult<OrderAddress> res=new ProcessResult<OrderAddress>();
 		try {
-			orderAddressService.delete(orderAddress);
+			logger.info("删除用户收获地址！");
+			orderAddressService.chengeStatus(orderAddress);
 			res=ProcessResult.success(res);
 			return res;
 		} catch (Exception e) {
+			
 			logger.error("删除用户收货地址失败！id="+orderAddress.getId());
 			logger.error(e.getMessage());
+			e.printStackTrace();
 		}
 		res.setMsg("删除收货地址失败！");
 		return res;

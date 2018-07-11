@@ -11,5 +11,6 @@ public interface OrderAddressMapper extends IBaseDao<OrderAddress>{
 	 * 获取用户的收获地址
 	 */
 	public List<OrderAddress> userTakeDeliveryAddress( User user);
+	
 
 }
