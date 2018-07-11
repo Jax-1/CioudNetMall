@@ -1,17 +1,14 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<html lang="en">
 <head>
 	<meta charset="UTF-8">
 	<title>云网传媒</title>
 	<link rel="stylesheet" href="/mall/css/style.css">
-	<link rel="stylesheet" href="/mall/css/font.css">
-	 <script src="/admin/assets/global/plugins/jquery.min.js" type="text/javascript"></script>
 </head>
 <body class="body_bg">
 	<!-- 头部 -->
 	<div class="header_top_img">
-		<img src="/mall/images/top_fangding.png" alt="">
+		<img src="/mall/images/top_fangding_index.png" alt="">
 	</div>
 	<div class="head_login">
 		<div class="head_login_box">
@@ -48,7 +45,7 @@
 		</div>
 		<div class="top_nav_box">
 			<ul class="top_nav">
-				<li><a href="/mall" id='home' >首页</a></li>
+				<li><a href="/mall" id='home' class="active">首页</a></li>
 				<li><a href="/mall/goods" id="mall" >在线商城</a></li>
 				<!--  
 				<li><a href="" id="auction" >拍卖中心</a></li>
@@ -62,31 +59,27 @@
 			</ul>
 		</div>
 	</div>
-	<script type="text/javascript" th:inline="javascript">
-		$(function(){
-			
-			var Pid=[[${Pid}]]
-			console.log(Pid);
-			switch(Pid)
-			{
-			case "MJHC":
-				 $("#auth").attr("class","active")
-			  break;
-			case "ZPJJ":
-				 $("#works").attr("class","active")
-			  break;
-			case "CTWH":
-				 $("#culture").attr("class","active")
-				  break;
-			case "ZXZX":
-				 $("#news").attr("class","active")
-				  break;
-			default:
-			 
-			}
-		})
-	
-	</script>
-	        
- </body>
- </html>
+
+	<!-- 内容部分 -->
+	<div class="content_box">
+		<div class="index_body">
+			<img src="/mall/images/index_body_img.png" alt="">
+		</div>
+	</div>
+	<div class="footer_box index_footer">
+		<div class="footer_left_img"></div>
+		<div class="footer_right_img"></div>
+		<div class="footer_img">
+			<img src="/mall/images/footer_img_bg.png" alt="">
+		</div>
+		<div class="footer_bar">
+			<div>Copyright 2018 云网传媒有限公司 <a href="http://www.miitbeian.gov.cn" target="_blank">粤ICP备17088014号-2 </a></div>
+			<div>公司名称: 深圳云网传媒有限公司   地址：深圳市龙华区龙观东路1号望城大厦5楼5818室   网址：www.ywwhcm.com.cn</div>
+			<div>
+				联系热线：400-900-9680  手机联系：18188637872
+			</div>
+		</div>
+	</div>
+
+</body>
+</html>

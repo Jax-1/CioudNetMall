@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	
+	<div class="content_box">
+		<div class="shop_list_fbox">
+			<!-- 商品列表 -->
+			<div class="shop_list_box">
+				<div class="shop_boxs">
+					<h3 class="tit_bar"><b>选画中心</b></h3>
+					<div class="header_bar">
+						<div class="header_div">
+							<div class="left_lab">分类:</div>
+							<ul class="memu_ul">
+								<li><a href="">一级分类</a></li>
+								<li><a href="">一级分类</a></li>
+								<li><a href="">一级分类</a></li>
+							</ul>
+						</div>
+						<div class="header_div">
+							<div class="left_lab"></div>
+							<ul class="memu_ul">
+								<li><a href="">二级分类</a></li>
+								<li><a href="">二级分类</a></li>
+								<li><a href="">二级分类</a></li>
+							</ul>
+						</div>
+						<div class="header_div">
+							<div class="left_lab"></div>
+							<ul class="memu_ul">
+								<li><a href="">三级分类</a></li>
+								<li><a href="">三级分类</a></li>
+								<li><a href="">三级分类</a></li>
+							</ul>
+						</div>
+						<div class="header_div">
+							<div class="left_lab">职位:</div>
+							<ul class="memu_ul">
+							  <li class="active"><a href="">八大美院</a></li>
+                              <li><a href="">国家画院</a></li>
+                              <li><a href="">国家级工艺美术师</a></li>
+                              <li><a href="">中国美协主席团</a></li>
+                              <li><a href="">中国书协主席团</a></li>
+                              <li><a href="">中国美协理事 </a></li>
+                              <li><a href="">中国书协理事</a></li>
+                              <li><a href="">省级美协主席团 </option>
+                              <li><a href="">省级书协主席团</a></li>
+                              <li><a href="">中国美协会员</a></li>
+                              <li><a href="">中国书协会员</a></li>
+                              <li><a href="">省级美协会员</a></li>
+                              <li><a href="">中省级书协会员</a></li>
+                              <li><a href="">省级工艺美术师</a></li>
+                              <li><a href="">民间大家</a></li>
+                              <li><a href="">其他</a></li>
+							</ul>
+						</div>
+						<div class="header_div">
+							<div class="left_lab">形制:</div>
+							<ul class="memu_ul">
+                              <li><a href="">竖幅</a></li>
+                              <li><a href="">横幅</a></li>
+                              <li><a href="">斗方</a></li>
+                              <li><a href="">条屏</a></li>
+                              <li><a href="">团扇</a></li>
+                              <li><a href="">册页</a></li>
+                              <li><a href="">手卷</a></li>
+                              <li><a href="">中堂</a></li>
+                              <li><a href="">对联</a></li>
+                              <li><a href="">不规则</a></li>
+							</ul>
+						</div>
+						<div class="header_div">
+							<div class="left_lab">环境:</div>
+							<ul class="memu_ul">
+                 			    <li><a href="">客厅</a></li>
+	                            <li><a href="">卧室</a></li>
+	                            <li><a href="">办公室</a></li>
+	                            <li><a href="">餐厅</a></li>
+	                            <li><a href="">走廊</a></li>
+	                            <li><a href="">酒楼</a></li>
+	                            <li><a href="">其他</a></li>
+							</ul>
+						</div>
+						<div class="header_search">
+							<input type="text">
+							<button class="search_btn">搜索</button>
+						</div>
+					</div>
+				</div>
+				<div class="shop_boxs">
+					<h3 class="tit_bar">
+						<b>默认排序</b>
+						<span>销量↓</span>
+						<span>价格↓</span>
+						<span>人气↓</span>
+						<span class="f_r">共<i>100</i>件作品</span>
+					</h3>
+					<ul class="list_item">
+							
+		                   <li th:each="a:${RecGoods}">
+								<span class="sPic">
+		                            <img alt=""  th:src="@{${fileServicePath}+'/'+${a.filePath.path}+'/'+${a.filePath.fileidname}+'.'+${a.filePath.filetype}}">
+		                        </span>
+		                        <p><a  th:text="${a.auth.position}+'-'+${a.auth.authorname}">中国美术家协会会员 楚英</a></p>
+		                        <p><a href="" th:text="'《'+${a.goods_name}+'》'" th:href="@{/mall/goods/detail(goods_id=${a.goods_id})}">《新华一角》</a></p>
+		                        <p class="ku_c" th:text="'库存：'+${a.goodsInfo.inventory.amount}">库存：99</p>
+		                        <p class="ku_c">已出售：0</p>
+		                        <div class="price">
+		                            ￥<span th:text="${a.goodsPrice.retail_price}">2000.00</span>
+		                        </div>
+		                    </li>
+					</ul>
+					<div class="pagination_Box">
+						<ul>
+							<li><a href="" class="demo">首页</a></li>
+							<li><a href="" class="demo">上一页</a></li>
+							<li class="active">
+								<a href="">1</a>
+							</li>
+							<li>
+								<a href="">2</a>
+							</li>
+							<li>
+								<a href="">下一页</a>
+							</li>
+							<li>
+								<a href="">末页</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+				
+			</div>
+		</div>
+		
+			<div class="footer_baozhen">
+				<img src="images/baozhen.png" alt="">
+			</div>
+		</div>
+	<!-- 内容部分结束 -->
+
+</body>
+</html>

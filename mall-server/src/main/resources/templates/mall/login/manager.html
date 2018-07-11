@@ -57,9 +57,9 @@
 				<div class="form_ground">
 					<label for="">所在地</label>
 					<div>
-					<select name="province" id="address_province"></select>
-					<select name="city" id="address_city">
-					</select><select name="area" id="address_area"></select>
+					<select name="province" id="address_province" class="w110"></select>
+					<select name="city" id="address_city" class="w110">
+					</select><select name="area" id="address_area" class="w110"></select>
 					</div>
 				</div>
 				<div class="form_ground_t">
@@ -262,6 +262,306 @@
 		</script>
 	</div>
 	<!-- 密码修改end -->
+	<!-- 收货地址 -->
+	<div th:fragment="address">
+	<div class="my_right_box">
+		<div class="my_right_tit">
+			收货地址
+		</div>
+		<div class="my_rt_b bg_w posi_re">
+			<div class="btn_add_address">新增地址</div>
+			<div class="alert alert-success">
+			    <h4>操作提示：</h4>
+			    <ul>
+			      <li>最多可保存20个有效地址</li>
+			    </ul>
+			</div>
+		  <table class="ncm-default-table">
+		    <thead>
+		      <tr>
+		        <th class="w80">收货人</th>
+		        <th class="w150">所在地区</th>
+		        <th class="tl">街道地址</th>
+		        <th class="w120">电话/手机</th>
+		        <th class="w150"></th>
+		        <th class="w110">操作</th>
+		      </tr>
+		    </thead>
+		        <tbody>
+		            <tr class="bd-line">
+				        <td>爱迪生</td>
+				        <td>天津	天津市	和平区</td>
+				        <td class="tl"><em class="delivery"></em>天津朋友家</td>
+				        <td><p><i class="icon-phone"></i>13221234221</p>
+				        <td></td>
+				        <td class="ncm-table-handle"><span>
+		                    <a href="javascript:void(0);" class="btn-blue"><i class="icon-pencil2"></i>
+				          <p>编辑</p>
+				          </a>
+		                    </span> <span><a href="javascript:void(0)" class="btn-red"><i class="icon-trash"></i>
+				          <p>删除</p>
+				          </a></span></td>
+				      </tr>
+				      <tr class="bd-line default">
+				        <td>爱迪生</td>
+				        <td>天津	天津市	和平区</td>
+				        <td class="tl"><em class="delivery"></em>天津朋友家</td>
+				        <td><p><i class="icon-phone"></i>13221234221</p>
+				        <td></td>
+				        <td class="ncm-table-handle"><span>
+		                    <a href="javascript:void(0);" class="btn-blue"><i class="icon-pencil2"></i>
+				          <p>编辑</p>
+				          </a>
+		                    </span> <span><a href="javascript:void(0)" class="btn-red"><i class="icon-trash"></i>
+				          <p>删除</p>
+				          </a></span></td>
+				      </tr>
+				</tbody>
+		  </table>
+		</div>
+
+		<!-- 弹出框 -->
+		<div class="modal_far_box"></div>
+		<div class="add_modal_box">
+			<h3 class="dialog_head">
+				<span class="dialog_title">
+					<span class="dialog_title_icon">新增地址</span></span>
+				<span class="dialog_close_button">X</span>
+			</h3>
+			<div class="eject_con">
+				<dl>
+					<dt><i class="required">*</i>收货人：</dt>
+					<dd><input type="text" class="text w100" name="true_name" value="">
+			          <p class="hint">请填写您的真实姓名</p>
+			        </dd>
+				</dl>
+				<dl>
+					<dt><i class="required">*</i>收货地址：</dt>
+					<dd>
+						<select name="" class="w100">
+							<option value="">请选择</option>
+						</select>
+						<select name="" class="w100">
+							<option value="">请选择</option>
+						</select>
+						<select name="" class="w100">
+							<option value="">请选择</option>
+						</select>
+			          <p class="hint">请选择收货地址</p>
+			        </dd>
+				</dl>
+				<dl>
+			        <dt><i class="required">*</i>街道地址：</dt>
+			        <dd>
+			          <input class="text w300" type="text" name="address" value="">
+			          <p class="hint">不必重复填写地区</p>
+			        </dd>
+			    </dl>
+			    <dl>
+			        <dt><i class="required">*</i>手机号码：</dt>
+			        <dd>
+			          <input type="text" class="text w200" name="tel_phone" value="">
+			        </dd>
+			    </dl>
+			    <dl>
+			        <dt><em class="pngFix"></em>设为默认地址：</dt>
+			        <dd>
+			          <input type="checkbox" name="is_default" id="is_default" value="1">
+			          <label for="is_default">设置为默认收货地址</label>
+			        </dd>
+			    </dl>
+			    <div class="bottom">
+			        <label class="submit-border">
+			          <input type="submit" class="submit" value="新增地址">
+			        </label>
+			        <a class="ncm-btn ml5" href="javascript:DialogManager.close('my_address_edit');">取消</a>
+			    </div>
+			</div>
+		</div>
+	</div>
+	<script>
+		$(function(){
+			$(".modal_far_box,.dialog_close_button").click(function(){
+				$(".modal_far_box,.add_modal_box").hide();
+			})
+			$(".btn_add_address").click(function(){
+				$(".modal_far_box,.add_modal_box").show();
+			})
+		})
+	</script>
+	</div>
+	<!-- 收货地址 end -->
+	<!-- 我的订单 -->
+	<div>
+	<div class="my_right_box" th:fragment="order">
+	<script src="/mall/js/flatpickr.js"></script>
+		<div class="my_right_tit">
+			我的订单
+		</div>
+		<div class="my_rt_b bg_w">
+			<div class="my_header_bar">
+				<div class="ground_bar">
+					<label for="">订单状态</label>
+					<select name="" id="">
+						<option value="">所有订单</option>
+				        <option value="">待付款</option>
+				        <option value="">待发货</option>
+				        <option value="">待收货</option>
+				        <option value="">已完成</option>
+				        <option value="">待评价</option>
+				        <option value="">已取消</option>
+					</select>
+				</div>
+				<div class="ground_time">
+					<label for="">订单时间</label>
+					<input type="text" id="star_time">~
+					<input type="text" id="end_time">
+				</div>
+				<div class="ground_searche">
+					<label for="">订单号</label>
+					<input type="text">
+					<button class="butn">搜索</button>
+				</div>
+
+			</div>
+			<!-- 表格 -->
+			<table class="order_table">
+				<thead class="thead">
+					<tr>
+						<th>商品</th>
+						<th>单价(元)</th>
+						<th>数量</th>
+						<th>订单金额</th>
+						<th>交易状态</th>
+						<th>交易操作</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr class="tb_tit">
+						<td colspan="6" >
+							订单号：<span class="order_num">1000000033710601</span>
+							下单时间：<span>2018-06-06 19:26:39</span>
+						</td>
+					</tr>
+					<tr class="t_p"><td colspan="6"></td></tr>
+					<tr>
+						<td width="300px">
+							<div class="shop_img">
+								<div class="img_link">
+									<a href="">
+									<img src="images/u137.png" alt="">	
+									</a>
+								</div>
+								<div class="shop_tit">
+									<a href="">职业画家 李忠明《水仙》</a>
+								</div>
+							</div>
+						</td>
+						<td>120</td>
+						<td>1</td>
+						<td class="order_price">
+							<p class="price">140.00</p>
+							<p>(含运费20.00)</p>
+							<p>在线付款</p>
+						</td>
+						<td class="order_state">
+							<p>待付款</p>
+							<p class="a_link"><a href="">查看详情</a></p>
+						</td>
+						<td>
+							<div class="order_btn">
+								<div class="btn order_pay">
+									订单支付
+								</div>
+								<div class="btn order_cancel">
+									取消支付
+								</div>
+							</div>
+						</td>
+					</tr>
+				</tbody>
+				<tbody>
+					<tr class="tb_tit">
+						<td colspan="6" >
+							订单号：<span class="order_num">1000000033710601</span>
+							下单时间：<span>2018-06-06 19:26:39</span>
+						</td>
+					</tr>
+					<tr class="t_p"><td colspan="6"></td></tr>
+					<tr>
+						<td width="300px">
+							<div class="shop_img">
+								<div class="img_link">
+									<a href="">
+									<img src="images/u137.png" alt="">	
+									</a>
+								</div>
+								<div class="shop_tit">
+									<a href="">职业画家 李忠明《水仙》</a>
+								</div>
+							</div>
+						</td>
+						<td>120</td>
+						<td>1</td>
+						<td class="order_price">
+							<p class="price">140.00</p>
+							<p>(含运费20.00)</p>
+							<p>在线付款</p>
+						</td>
+						<td class="order_state">
+							<p>待付款</p>
+							<p class="a_link"><a href="">查看详情</a></p>
+						</td>
+						<td>
+							<div class="order_btn">
+								<div class="btn order_pay">
+									订单支付
+								</div>
+								<div class="btn order_cancel">
+									取消支付
+								</div>
+							</div>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			
+			<div class="pagination_Box">
+				<ul>
+					<li><a href="" class="demo">首页</a></li>
+					<li><a href=""  class="demo">上一页</a></li>
+					<li class="active">
+						<a  href="">1</a>
+					</li>
+					<li>
+						<a  href="">2</a>
+					</li>
+					<li>
+						<a  href="">3</a>
+					</li>
+					<li>
+						<a  href="">4</a>
+					</li>
+					<li>
+						<a href="">下一页</a>
+					</li>
+					<li>
+						<a  href="">末页</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+
+	<script>
+		$(function(){
+			$("#star_time").flatpickr();
+			$("#end_time").flatpickr();
+		})
+	</script>
+	
+	</div>
+	<!-- 我的订单 end -->
 	
 </body>
 </html>

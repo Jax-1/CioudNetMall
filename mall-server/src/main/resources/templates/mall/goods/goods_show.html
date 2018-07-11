@@ -323,7 +323,7 @@
 			console.log(data);
 			if(data!=null&&data.res=="1"){
 				//有库存
-				window.location.href="/mall/order?goods_id="+goods.goods_id+"amount="+$("#amount").val();
+				window.location.href="/mall/order?goods_id="+goods.goods_id+"&amount="+$("#amount").val();
 			}else{
 				//库存不足
 				$("#msg").text("库存不足！");

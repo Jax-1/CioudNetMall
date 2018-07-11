@@ -11,16 +11,22 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.mall.controller.AbstractController;
+import com.mall.entity.cms.AuthorWithBLOBs;
 import com.mall.entity.goods.Goods;
 import com.mall.entity.login.User;
+import com.mall.entity.order.Order;
 import com.mall.entity.order.OrderAddress;
+import com.mall.entity.order.OrderDetails;
 import com.mall.entity.payment.PaymentMethod;
 import com.mall.message.SystemCode;
+import com.mall.service.cms.AuthorWithBLOBsService;
 import com.mall.service.goods.GoodsService;
 import com.mall.service.order.OrderAddressService;
+import com.mall.service.order.OrderDetailsService;
 import com.mall.service.payment.PaymentMethodService;
 import com.mall.service.sys.CacheService;
 import com.mall.util.SessionUtil;
+import com.mall.util.Validate;
 
 /**
  * 订单
@@ -38,6 +44,10 @@ public class OrderController extends AbstractController{
 	private PaymentMethodService paymentMethodService;
 	@Resource
 	private CacheService cacheService;
+	@Resource
+	private AuthorWithBLOBsService authorWithBLOBsService;
+	@Resource
+	private OrderDetailsService orderDetailsService;
 	/**
 	 * 订单界面
 	 * @param model
@@ -52,7 +62,15 @@ public class OrderController extends AbstractController{
 		//获取当前用户的收获地址
 		List<OrderAddress> address = orderAddressService.userTakeDeliveryAddress(user);
 		//获取商品信息
+		logger.info("获取商品信息："+goods.getGoods_id());
 		goods = goodsService.selectInfo(goods);
+		if(Validate.notNull(goods.getGoodsInfo().getAuth_id())) {
+			//查询商品作家信息
+			AuthorWithBLOBs a=new AuthorWithBLOBs();
+			a.setId(goods.getGoodsInfo().getAuth_id());
+			a = authorWithBLOBsService.selectInfo(a);
+			goods.setAuth(a);
+		}
 		//获取支付方式
 		List<PaymentMethod> payment = paymentMethodService.getPaymentMethod();
 		//文件服务器路径

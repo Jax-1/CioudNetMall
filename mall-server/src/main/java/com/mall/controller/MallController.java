@@ -13,8 +13,13 @@ public class MallController {
 	 */
 	@RequestMapping("")
 	public String toIndex(Model model) {
+		return "index";
+	}
+	@RequestMapping("/about")
+	public String toAbout(Model model) {
 		
-		model.addAttribute("page", "mall/base/index_body");
+		model.addAttribute("page", "mall/about/about");
 		return "mall/index";
 	}
+	
 }

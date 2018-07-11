@@ -56,6 +56,18 @@ public class UserManagementController extends AbstractController{
 		model.addAttribute("manager", "modify_pwd_verify");
 		return "mall/index";
 	}
+	@RequestMapping("/address")
+	public String toUserModifyAddress(Model model,HttpServletRequest request) {
+		model.addAttribute("page", "mall/login/my_center");
+		model.addAttribute("manager", "address");
+		return "mall/index";
+	}
+	@RequestMapping("/order")
+	public String toUserOrder(Model model,HttpServletRequest request) {
+		model.addAttribute("page", "mall/login/my_center");
+		model.addAttribute("manager", "order");
+		return "mall/index";
+	}
 	/**
 	 * 校验验证信息
 	 * @param model
@@ -190,5 +202,6 @@ public class UserManagementController extends AbstractController{
 		
 		return res;
 	}
+	
 
 }

@@ -1,8 +1,6 @@
 $(function(){
 	//修改收货人地址
 	$("#edit_reciver").click(function(){
-		var address=[[${address}]];
-		console.log(address);
 		//变量addlist此处为请求后台的数据，需替换
 		var addlist=[{
 			name:'李先生',

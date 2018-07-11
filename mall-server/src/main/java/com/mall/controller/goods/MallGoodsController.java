@@ -119,4 +119,35 @@ public class MallGoodsController extends AbstractController{
 		model.addAttribute("page", "mall/goods/goods_show");
 		return "mall/index";
 	}
+	/**
+	 * 商品列表
+	 * @param model
+	 * @param goods
+	 * @return
+	 */
+	@RequestMapping("/list")
+	public String toGoodsList(Model model,Goods goods) {
+		PageResult<Goods> list =new PageResult<Goods>();
+		int pageSize  =  Integer.parseInt(cacheService.getCache(SystemCode.PAGE).get(SystemCode.GOODS_PAGE));
+		list.setPageSize(pageSize);
+		PageResult<Goods> RecGoods = goodsService.queryByPageFront(list, goods);
+		logger.info("获取推荐商品："+RecGoods.getDataList().size());
+		for(Goods g:RecGoods.getDataList()) {
+			//获取商品作家信息
+			AuthorWithBLOBs a=new AuthorWithBLOBs();
+			a.setId(g.getGoodsInfo().getAuth_id());
+			a = authorWithBLOBsService.selectInfo(a);
+			g.setAuth(a);
+		}
+		//文件服务器路径
+		Map<String, String> cache = cacheService.getCache(SystemCode.FILE_SERVICE);
+		String url=cache.get(SystemCode.FILE_SERVICE_URL);
+		String port=cache.get(SystemCode.FILE_SERVICE_PORT);
+		String filePath=cache.get(SystemCode.FILE_SERVICE_FILES_PATH);
+		String fileUrlPrefix=url+":"+port+"/"+filePath;
+		model.addAttribute("fileServicePath", fileUrlPrefix);
+		model.addAttribute("RecGoods", RecGoods.getDataList());
+		model.addAttribute("page", "mall/goods/goods_list");
+		return "mall/index";
+	}
 }

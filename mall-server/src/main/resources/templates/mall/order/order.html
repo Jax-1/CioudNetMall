@@ -97,17 +97,17 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td class="w60"><a href="#" target="_blank" class="ncc-goods-thumb"><img  alt="中国国典书画院会员 石俊海《正气》" th:src="@{${fileServicePath}+'/'+${goods.filePath.path}+'/'+${goods.filePath.fileidname}+'.'+${goods.filePath.filetype}}" th:alt="${goods.auth.position}+'-'+${goods.auth.authorname}+'  '+'《'+${goods.goods_name}+'》'"></a></td>
+                            <td class="w60"><a href="#" target="_blank" class="ncc-goods-thumb"><img   th:src="@{${fileServicePath}+'/'+${goods.filePath.path}+'/'+${goods.filePath.fileidname}+'.'+${goods.filePath.filetype}}" th:alt="${goods.auth.position}+'-'+${goods.auth.authorname}+'  '+'《'+${goods.goods_name}+'》'"></a></td>
                             <td class="t-l"><a href="" th:text="${goods.auth.position}+'-'+${goods.auth.authorname}+'  '+'《'+${goods.goods_name}+'》'"> 
                                 中国国典书画院会员 石俊海《正气》</a>
                             </td>
                             <td th:text="${goods.goodsPrice.sale=='Y'}?${goods.goodsPrice.sale_price}:${goods.goodsPrice.retail_price}">199.00</td>
                             <td th:text="${amount}">1</td>
-                            <td class="b_r" id="">199.00</td>
+                            <td class="b_r" th:text="${goods.goodsPrice.sale=='Y'}?${goods.goodsPrice.sale_price*amount}:${goods.goodsPrice.retail_price*amount}">199.00</td>
                         </tr>
                         <tr>
                             <td class="tl" colspan="5">买家留言：
-                              <textarea class="ncc-msg-textarea" placeholder="选填：对本次交易的说明（建议填写已经和商家达成一致的说明）" title="选填：对本次交易的说明（建议填写已经和商家达成一致的说明）" maxlength="150"></textarea>
+                              <textarea class="ncc-msg-textarea" placeholder="选填：对本次交易的说明（建议填写已经和商家达成一致的说明）" title="选填：对本次交易的说明（建议填写已经和商家达成一致的说明）" maxlength="150" id="comment"></textarea>
                             </td>
                         </tr>
                         <tr>
@@ -115,15 +115,15 @@
                             <div class="ncc-store-account">
                                 <dl class="freight">
                                   <dt>运费：</dt>
-                                  <dd><em>0.00</em>元</dd>
+                                  <dd><em id="postage_amount">0.00</em>元</dd>
                                 </dl>
                                 <dl>
                                   <dt>商品金额：</dt>
-                                  <dd><em>199.00</em>元</dd>
+                                  <dd><em id="paid_amount" th:text="${goods.goodsPrice.sale=='Y'}?${goods.goodsPrice.sale_price*amount}:${goods.goodsPrice.retail_price*amount}">199.00</em>元</dd>
                                 </dl>
                                 <dl class="total">
                                   <dt>合计：</dt>
-                                  <dd><em >199.00</em>元</dd>
+                                  <dd><em  id="total_amount">199.00</em>元</dd>
                                 </dl>
                           </div>
                           </td>
@@ -132,15 +132,16 @@
                     <tfoot>
                       <tr>
                         <td colspan="20">
-                            <div class="ncc-all-account">订单总金额：<em>199.00</em>元
+                            <div class="ncc-all-account" >订单总金额：<em id="sum_amount">199.00</em>元
                             </div></td>
                       </tr>
                     </tfoot>
                 </table>
             </div>
+             <div class="msg_text"><span id="msg"></span></div>
             <div class="ncc-bottom">
             <!-- javascript:void(0) -->
-                <a href="/mall/order/pay"
+                <a href="javascript:submitForm()"
                  class="ncc-btn-acidblue">提交订单</a> 
             </div>
         </div>
@@ -249,17 +250,92 @@
     	});
     	
     }
+    function submitForm(){
+    	var goods=[[${goods}]];
+    	var amount=[[${amount}]]
+		//验证商品库存信息
+		$.post("/mall/inventory/retrieve",{productNumber:goods.goods_id,amount:amount},function(data){
+			console.log(data);
+			if(data!=null&&data.res=="1"){
+				
+				//有库存,提交订单
+				//订单信息
+				var total_amount =$("#sum_amount").text();
+				var postage_amount =$("#postage_amount").text();
+				var receive_id =$("#add_id").text();
+				var comment=$("#comment").text();
+				//订单详情
+				var goods_id =goods.goods_id;
+				var num =amount;
+				var details_amount =$("#total_amount").text();
+				var total_amount =goods.image;
+				
+				
+				form = $("<form></form>")
+		        form.attr('action',"/mall/order/pay")
+		        form.attr('method','post')
+		        input1 = $("<input type='text' name='total_amount' value='"+total_amount+"'/>");
+				input2 = $("<input type='text' name='postage_amount' value='"+postage_amount+"'/>");
+				input3 = $("<input type='text' name='receive_id' value='"+receive_id+"'/>");
+				input4 = $("<input type='text' name='comment' value='"+comment+"'/>");
+				input5 = $("<input type='text' name='goods_id' value='"+goods_id+"'/>");
+				input6 = $("<input type='text' name='num' value='"+num+"'/>");
+				input7 = $("<input type='text' name='details_amount' value='"+details_amount+"'/>");
+				input8 = $("<input type='text' name='total_amount' value='"+total_amount+"'/>");
+		       
+		        form.append(input1);
+		        form.append(input2);
+		         form.append(input3);
+		        form.append(input4);
+		         form.append(input5);
+		        form.append(input6);
+		         form.append(input7);
+		        form.append(input8);
+		        form.appendTo("body")
+		         form.css('display','none')
+        		form.submit()
+			}else{
+				//库存不足
+				$("#msg").text("库存不足！");
+			}
+		})
+        
+	}
+    function sumTotalAmount(){
+    	//商品总价
+    	var paid=$("#paid_amount").text();
+    	//邮费
+    	var postage_amount=$("#postage_amount").text();
+    	//总计
+    	var total_amount=parseFloat(paid)+parseFloat(postage_amount);
+    	$("#total_amount").text(total_amount);
+    	$("#sum_amount").text(total_amount);
+    	
+    }
     $(function(){
     	//初始化显示默认地址
     	var address=[[${address}]];
-		for(var i=0;i<address.length;i++){
-    		if(address[i].thedefault=='Y'){
-    			$("#add_name").text(address[i].name);
-    			$("#add_address").text(address[i].province+address[i].city+address[i].area+address[i].street);
-    			$("#add_phone").text(address[i].phone);
-    			$("#add_id").text(address[i].id);
-    		}
-    	}
+		if(address==null){
+			Modifyaddress();
+		}else{
+			var flg=true;
+			for(var i=0;i<address.length;i++){
+	    		if(address[i].thedefault=='Y'){
+	    			flg=false;
+	    			$("#add_name").text(address[i].name);
+	    			$("#add_address").text(address[i].province+address[i].city+address[i].area+address[i].street);
+	    			$("#add_phone").text(address[i].phone);
+	    			$("#add_id").text(address[i].id);
+	    		}
+	    	}
+			if(flg){
+				$("#add_name").text(address[0].name);
+				$("#add_address").text(address[0].province+address[0].city+address[0].area+address[0].street);
+				$("#add_phone").text(address[0].phone);
+				$("#add_id").text(address[0].id);
+			}
+		}
+		
 		//初始化地址下拉框
 		new PCAS("province","city","area");
 		//初始化支付方式
@@ -272,6 +348,7 @@
 				$("#payment_id").attr("value",payment[i].payment_id);
 			}
 		}
+		sumTotalAmount();
     	
     });
     
