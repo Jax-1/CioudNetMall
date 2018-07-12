@@ -27,7 +27,7 @@ public class AuthorWithBLOBsServiceImpl extends BaseServiceImpl<AuthorWithBLOBs>
 	}
 	@Override
 	public List<AuthorWithBLOBs> queryRecommendAtt(AuthorWithBLOBs auth) {
-		int pageSize  =  Integer.parseInt(cacheService.getCache(SystemCode.PAGE).get(SystemCode.MALL_ATT_REC_PAGE));
+		int pageSize  =  Integer.parseInt(cacheService.getCache(SystemCode.PAGE).get(SystemCode.MALL_AUT_REC_PAGE));
 		
 		return authorMapper.queryRecommendAtt(auth, pageSize);
 	}
