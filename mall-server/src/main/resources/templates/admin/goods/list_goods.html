@@ -106,7 +106,7 @@
                                         <td th:text="${a.goods_name}">
                                    		         民间艺术品《双鱼》
                                         </td >
-                                        <td th:text="${a.goodsPrice.retail_price}">19900</td>
+                                        <td th:text="${a.goodsPrice.sale=='Y'}?${a.goodsPrice.sale_price}:${a.goodsPrice.retail_price}">19900</td>
                                         <td th:text="${a.is_marketable=='Y'}?'是':'否'">是</td>
                                         <td th:text="${a.classic=='Y'}?'是':'否'">是</td>
                                         
