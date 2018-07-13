@@ -110,12 +110,10 @@
                         </tr>
                     </tbody>
                 </table>
-                <div class="row">
+                <div class="row center-text">
                         <div class="dataTables_paginate paging_bootstrap_full_number" >
                             <ul class="pagination" style="visibility: visible;">
-                            	<li class="prev "> 
-                            		 <span th:text="'共'+ ${list.pages}+'页'"></span>
-                            		</li>
+                            	
                                 <li class="prev ">  <a href="#" th:href="@{/admin/cms/writerlist.do(Pid=${Pid},pageNo=${1})}">
                                     <i class="fa fa-angle-double-left"></i>
                                     </a></li>
@@ -124,7 +122,7 @@
                                             <i class="fa fa-angle-left"></i>
                                         </a>
                                     </li>
-                                    <li class="active">
+                                    <li class="active" id="activepage">
                                         <a href="#" th:text="${list.pageNo}">1</a>
                                     </li>
                                     <li class="next ">
@@ -136,6 +134,9 @@
                                         <a href="#" title="Last" th:href="@{/admin/cms/writerlist.do(Pid=${Pid},pageNo=${list.pages})}"><i class="fa fa-angle-double-right"></i>
                                         </a>
                                     </li>
+                                    <li class="prev "> 
+		                            		 <span th:text="'共'+ ${list.pages}+'页'"></span>
+		                            		</li>
                                 </ul>
                         </div>
                 </div>
@@ -177,7 +178,25 @@
             		console.log(id);
             		$(window).attr('location','/admin/cms/editorWriter.do?id='+$(this).prev().prev().text()+'&Pid='+id);
             	})
+            	var pageNo=[[${list.pageNo}]];
+            	var pages=[[${list.pages}]];
             	
+        		for(var i=2;i>0;i--){
+        			var pag=pageNo-i;
+        			if(pageNo-i>0){
+        				var dome="<li><a  href='/admin/cms/writerlist.do?pageNo="+pag+"'>"+pag+"</a></li>";
+            			$("#activepage").before(dome);
+        			}
+        			
+        		}
+        		for(var i=2;i>0;i--){
+        			var pag=pageNo+i;
+        			if(pageNo+i<=pages){
+        				var dome="<li><a  href='/admin/cms/writerlist.do?pageNo="+pag+"'>"+pag+"</a></li>";
+            			$("#activepage").after(dome);
+        			}
+        			
+        		}
             })
         </script>
 </body>

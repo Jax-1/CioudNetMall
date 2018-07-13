@@ -101,7 +101,7 @@
 					</h3>
 					<ul class="list_item">
 							
-		                   <li th:each="a:${RecGoods}">
+		                   <li th:each="a:${list.dataList}">
 								<span class="sPic">
 		                            <img alt=""  th:src="@{${fileServicePath}+'/'+${a.filePath.path}+'/'+${a.filePath.fileidname}+'.'+${a.filePath.filetype}}">
 		                        </span>
@@ -115,22 +115,30 @@
 		                    </li>
 					</ul>
 					<div class="pagination_Box">
-						<ul>
-							<li><a href="" class="demo">首页</a></li>
-							<li><a href="" class="demo">上一页</a></li>
-							<li class="active">
-								<a href="">1</a>
-							</li>
-							<li>
-								<a href="">2</a>
-							</li>
-							<li>
-								<a href="">下一页</a>
-							</li>
-							<li>
-								<a href="">末页</a>
-							</li>
-						</ul>
+						<ul class="pagination" style="visibility: visible;">
+		                            	
+		                                <li class="prev ">  <a href="#" th:href="@{/mall/goods/list(pageNo=${1})}">
+		                                    <i class="fa fa-angle-double-left">首页</i>
+		                                    </a></li>
+		                                    <li class="prev ">
+		                                        <a href="#" title="Prev" th:href="@{/mall/goods/list(pageNo=${list.pageNo}-1>0?${list.pageNo}-1:1)}">
+		                                            <i class="fa fa-angle-left">上一页</i>
+		                                        </a>
+		                                    </li>
+		                                    <li class="active" id="activepage">
+		                                        <a href="#" th:text="${list.pageNo}">1</a>
+		                                    </li>
+		                                    <li class="next ">
+		                                        <a href="#" title="Next" th:href="@{/mall/goods/list(pageNo=${list.pageNo}==${list.pages}?${list.pages}:${list.pageNo}+1)}">
+		                                            <i class="fa fa-angle-right">下一页</i>
+		                                        </a>
+		                                    </li>
+		                                    <li class="next " >
+		                                        <a href="#" title="Last" th:href="@{/mall/goods/list(pageNo=${list.pages})}"><i class="fa fa-angle-double-right">末页</i>
+                                        		</a>
+		                                    </li>
+		                                    
+                                </ul>
 					</div>
 				</div>
 				
@@ -142,6 +150,29 @@
 			</div>
 		</div>
 	<!-- 内容部分结束 -->
-
+	<script type="text/javascript" th:inline="javascript">
+	$(function(){
+		var pageNo=[[${list.pageNo}]];
+    	var pages=[[${list.pages}]];
+    	
+		for(var i=2;i>0;i--){
+			var pag=pageNo-i;
+			if(pageNo-i>0){
+				var dome="<li><a  href='/mall/goods/list?pageNo="+pag+"'>"+pag+"</a></li>";
+    			$("#activepage").before(dome);
+			}
+			
+		}
+		for(var i=2;i>0;i--){
+			var pag=pageNo+i;
+			if(pageNo+i<=pages){
+				var dome="<li><a  href='/mall/goods/list?pageNo="+pag+"'>"+pag+"</a></li>";
+    			$("#activepage").after(dome);
+			}
+			
+		}
+	})
+	
+	</script>
 </body>
 </html>

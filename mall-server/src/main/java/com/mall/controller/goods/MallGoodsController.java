@@ -130,9 +130,11 @@ public class MallGoodsController extends AbstractController{
 		PageResult<Goods> list =new PageResult<Goods>();
 		int pageSize  =  Integer.parseInt(cacheService.getCache(SystemCode.PAGE).get(SystemCode.GOODS_PAGE));
 		list.setPageSize(pageSize);
-		PageResult<Goods> RecGoods = goodsService.queryByPageFront(list, goods);
-		logger.info("获取推荐商品："+RecGoods.getDataList().size());
-		for(Goods g:RecGoods.getDataList()) {
+		list = goodsService.queryByPageFront(list, goods);
+		//查询所有分类
+		List<GoodsCategory> goodsCategoryList = goodsCategoryService.getGoodsCategoryList(null);
+		logger.info("获取商品分类列表："+goodsCategoryList.size());
+		for(Goods g:list.getDataList()) {
 			//获取商品作家信息
 			AuthorWithBLOBs a=new AuthorWithBLOBs();
 			a.setId(g.getGoodsInfo().getAuth_id());
@@ -146,7 +148,8 @@ public class MallGoodsController extends AbstractController{
 		String filePath=cache.get(SystemCode.FILE_SERVICE_FILES_PATH);
 		String fileUrlPrefix=url+":"+port+"/"+filePath;
 		model.addAttribute("fileServicePath", fileUrlPrefix);
-		model.addAttribute("RecGoods", RecGoods.getDataList());
+		model.addAttribute("goodsCategoryList", goodsCategoryList);
+		model.addAttribute("list", list);
 		model.addAttribute("page", "mall/goods/goods_list");
 		return "mall/index";
 	}
