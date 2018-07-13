@@ -196,7 +196,9 @@
                                 			console.log('-----------------------');
                                 			//初始化编辑器
                                 			var content=[[${info!=null}?${info.detail_describe}:'']];
-                                			ue.setContent(content);
+                                			if(content!=null&&content!=null){
+                                				ue.setContent(content);
+                                			}
                                 			//分类默认选中
                                 			key=[[${info!=null}?${info.goodsInfo.category_id}:'']];
                                 			 $("#goods_category option[value='"+key+"']").attr("selected","selected"); 

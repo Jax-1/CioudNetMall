@@ -68,20 +68,28 @@
                                    </div>
                               </div>
                               <div class="form-group">
-                                    <label for="" class="col-sm-2 control-label">图片上传</label>
-                                    <div class="col-sm-2">
-                                        <input type="file"  enctype="multipart/form-data"  class="form-control"  placeholder="点击上传图片" id='files' name='file'>
-                                   </div>
-                                   <div class="col-sm-2">
-                                   		
-                                   		<input type='text' id='viewImg' name='viewImg' style="display:none" th:value="${att}==null?'':${att.viewImg}">
-                                        <button  type='button' class="btn btn-defulat" id='uploadefile'>点击上传</button>
-                                   </div>
-                                   <span id='uploadmsg'></span>
-                                   
+                                 <label class="col-md-2 control-label"><em>*</em>图片</label>
+                                <div class="col-md-2">
+                                    <div class="file_img">
+                                        <input id="show_img_file" type="file" name="file" multiple="multiple">
+                                        <input id="imageid" type="hidden" name="viewImg" value="" th:value="${info!=null}?${info.image}:''">
+                                         <label for="show_img_file">点击上传</label>
+                                         <div  style="height:10px;background:red;width:0px;"></div>
+                                         <!-- <div class="progress">
+											    <div class="progress-bar progress-bar-success" role="progressbar"
+											         aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"
+											         id="processBar">
+											        <span class="sr-only">90% 完成（成功）</span>
+											    </div>
+											</div> -->
+                                    </div>
                               </div>
-                              <img src='' id='mainimg' class='btn btn-defulat'>
-                              <img src=""  style='width:100px' class='btn btn-defulat' th:each="entry : ${att}==null?'entry':${att.filePath}" th:attr="src=${att}==null?'':${fileServicePath}+'/'+${entry.path}+'/'+${entry.fileidname}+'.'+${entry.filetype}"/>
+                              <div class="col-md-3">
+                                    <div class="shop_img" id="shop_img">
+                                    </div>
+                                </div>
+                            </div>
+                             
                               <!-- 编辑器 -->
                               <script type="text/javascript" charset="utf-8" src="/ueditor/ueditor.config.js"></script>
                               <script type="text/javascript" charset="utf-8" src="/ueditor/ueditor.all.min.js"> </script>
@@ -126,6 +134,7 @@
     <!-- BEGIN QUICK NAV -->
     <div class="quick-nav-overlay"></div>
     <script src="/admin/assets/pages/scripts/jquery.form.js"></script>
+     <script src="/admin/assets/global/plugins/ajaxfileupload.js" type="text/javascript"></script>
     <script src="/admin/assets/layouts/global/scripts/quick-sidebar.min.js" type="text/javascript"></script>
     <script src="/admin/assets/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js" type="text/javascript"></script>
     <script src="/admin/assets/global/plugins/jquery.blockui.min.js" type="text/javascript"></script>
@@ -146,8 +155,18 @@
                                     	if(blg){
                                 			console.log('-----------------------');
                                 			//初始化编辑器
-                                			var content=[[${att}==null?' ':${att.content}]];
-                                			ue.setContent(content);
+                                			var content=[[${att}==null?'':${att.content}]];
+                                			if(content!=null&&content!=null){
+                                				ue.setContent(content);
+                                			}
+                                			var fileServicePath=[[${fileServicePath}]];
+                                			if([[${att!=null and att.filePath!=null}]]){
+                                				//图片回显
+                                					 $("#shop_img").html('<img src="'+fileServicePath +'/'+att.filePath[0].path+'/'+att.filePath[0].fileidname+'.'+att.filePath[0].filetype+'" alt=""/>'); 
+                                   			
+         
+                                			}
+                                			
                                 			
                                 		}
                                     });
@@ -158,34 +177,29 @@
 	<script type="text/javascript" th:inline="javascript">
 	$(function(){
 		
-		$('#uploadefile').click(function(){
-			console.log(document.getElementById("files").files);
+		
 			//上传首页图片
-			
-			var option = {
-	            url:'/ueditor/uploade',//如果不指定url那么就使用使用提交表单的url，如果指定就使用当前的url
-	            type:"POST",
-	            dataType:"json",
-	            success:function(date){
-	            	if(date==null){
-						//图片上传失败
-						$("#uploadmsg").text='上传失败！';
-					}
-					for(var i=0,l=date.length;i<l;i++){
-						//上传成功
-						console.log(date[i].id);
-						$("#viewImg").attr('value',date[i].id);
-						$("#mainimg").attr('src',date[i].host+'/'+date[i].path);
-						$("#mainimg").attr('width','100px');
-					
-					}
-	            },
-	            error:function(){
-	                alert("系统错误");
-	            }
-	       };
-	      $("#addform").ajaxSubmit(option);
-		})
+		 $("#show_img_file").change(function(){
+                 
+                var file=this.files[0];
+                 $.ajaxFileUpload({
+                     url:"/ueditor/uploade",
+                     fileElementId: "show_img_file", //文件上传域的ID，这里是input的ID，而不是img的
+                     type:"POST",
+     	             dataType:"json",
+                     async : true,   //是否是异步
+                     success: function (data) {
+                        // console.log(data)
+                   
+						 $("#shop_img").html('<img src="'+data[0].host +'/'+ data[0].path+'" alt=""/>'); 
+                         $("#imageid").val(data[0].id);
+                         
+                     }            
+
+                 });
+                   	      
+
+            });
 		
 		
 	})

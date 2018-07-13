@@ -58,7 +58,7 @@
                             <div class="col-sm-4">
                             	
                                 <select class="form-control" name="classification">
-                                  <option th:each="ca:${Category}" th:attr="value=${ca.id}" th:text="${ca.ladelname}">书法</option>
+                                  <option th:each="ca:${Category}" th:attr="value=${ca.id}" th:text="${ca.ladelname}" th:selected="${auth!=null and auth.classification==ca.id}">书法</option>
                                   
                               </select>
                            </div>
@@ -67,38 +67,38 @@
                             <label for="" class="col-sm-2 control-label">作者地区</label>
                             <div class="col-sm-4">
                                 <select class="form-control" name="address">
-                                  <option>北京</option>
-                                  <option>天津</option>
-                                  <option>河北</option>
-                                  <option>山西</option>
-                                  <option>内蒙古</option>
-                                  <option>辽宁</option>
-                                  <option>吉林</option>
-                                  <option>黑龙江</option>
-                                  <option>上海</option>
-                                  <option>江苏</option>
-                                  <option>浙江</option>
-                                  <option>安徽</option>
-                                  <option>福建</option>
-                                  <option>浙江</option>
-                                  <option>江西</option>
-                                  <option>山东</option>
-                                  <option>河南</option>
-                                  <option>湖南</option>
-                                  <option>湖北</option>
-                                  <option>广东</option>
-                                  <option>广西</option>
-                                  <option>海南</option>
-                                  <option>重庆</option>
-                                  <option>四川</option>
-                                  <option>贵州</option>
-                                  <option>云南</option>
-                                  <option>西藏</option>
-                                  <option>陕西</option>
-                                  <option>甘肃</option>
-                                  <option>青海</option>
-                                  <option>宁夏</option>
-                                  <option>新疆</option>
+                                  <option th:selected="${auth!=null and auth.address=='北京'}">北京</option>
+                                  <option th:selected="${auth!=null and auth.address=='天津'}">天津</option>
+                                  <option th:selected="${auth!=null and auth.address=='河北'}">河北</option>
+                                  <option th:selected="${auth!=null and auth.address=='山西'}">山西</option>
+                                  <option th:selected="${auth!=null and auth.address=='内蒙古'}">内蒙古</option>
+                                  <option th:selected="${auth!=null and auth.address=='辽宁'}">辽宁</option>
+                                  <option th:selected="${auth!=null and auth.address=='吉林'}">吉林</option>
+                                  <option th:selected="${auth!=null and auth.address=='黑龙江'}">黑龙江</option>
+                                  <option th:selected="${auth!=null and auth.address=='上海'}">上海</option>
+                                  <option th:selected="${auth!=null and auth.address=='江苏'}">江苏</option>
+                                  <option th:selected="${auth!=null and auth.address=='浙江'}">浙江</option>
+                                  <option th:selected="${auth!=null and auth.address=='安徽'}">安徽</option>
+                                  <option th:selected="${auth!=null and auth.address=='福建'}">福建</option>
+                                  <option th:selected="${auth!=null and auth.address=='浙江'}">浙江</option>
+                                  <option th:selected="${auth!=null and auth.address=='江西'}">江西</option>
+                                  <option th:selected="${auth!=null and auth.address=='山东'}">山东</option>
+                                  <option th:selected="${auth!=null and auth.address=='河南'}">河南</option>
+                                  <option th:selected="${auth!=null and auth.address=='湖南'}">湖南</option>
+                                  <option th:selected="${auth!=null and auth.address=='湖北'}">湖北</option>
+                                  <option th:selected="${auth!=null and auth.address=='广东'}">广东</option>
+                                  <option th:selected="${auth!=null and auth.address=='广西'}">广西</option>
+                                  <option th:selected="${auth!=null and auth.address=='海南'}">海南</option>
+                                  <option th:selected="${auth!=null and auth.address=='重庆'}">重庆</option>
+                                  <option th:selected="${auth!=null and auth.address=='四川'}">四川</option>
+                                  <option th:selected="${auth!=null and auth.address=='贵州'}">贵州</option>
+                                  <option th:selected="${auth!=null and auth.address=='云南'}">云南</option>
+                                  <option th:selected="${auth!=null and auth.address=='西藏'}">西藏</option>
+                                  <option th:selected="${auth!=null and auth.address=='陕西'}">陕西</option>
+                                  <option th:selected="${auth!=null and auth.address=='甘肃'}">甘肃</option>
+                                  <option th:selected="${auth!=null and auth.address=='青海'}">青海</option>
+                                  <option th:selected="${auth!=null and auth.address=='宁夏'}">宁夏</option>
+                                  <option th:selected="${auth!=null and auth.address=='新疆'}">新疆</option>
                               </select>
                            </div>
                       </div>
@@ -106,35 +106,47 @@
                             <label for="" class="col-sm-2 control-label">职位</label>
                             <div class="col-sm-4">
                                 <select class="form-control" name="position">
-                                  <option>八大美院</option>
-                                  <option>国家画院</option>
-                                  <option>国家级工艺美术师</option>
-                                  <option>中国美协主席团</option>
-                                  <option>中国书协主席团</option>
-                                  <option>中国美协理事 </option>
-                                  <option>中国书协理事  </option>
-                                  <option>省级美协主席团 </option>
-                                  <option>省级书协主席团 </option>
-                                  <option>中国美协会员  </option>
-                                  <option>中国书协会员</option>
-                                  <option>省级美协会员</option>
-                                  <option>中省级书协会员 </option>
-                                  <option>省级工艺美术师</option>
-                                  <option>民间大家</option>
-                                  <option>其他</option>
+                                  <option th:selected="${auth!=null and auth.position=='八大美院'}">八大美院</option>
+                                  <option th:selected="${auth!=null and auth.position=='国家画院'}">国家画院</option>
+                                  <option th:selected="${auth!=null and auth.position=='国家级工艺美术师'}">国家级工艺美术师</option>
+                                  <option th:selected="${auth!=null and auth.position=='中国美协主席团'}">中国美协主席团</option>
+                                  <option th:selected="${auth!=null and auth.position=='中国书协主席团'}">中国书协主席团</option>
+                                  <option th:selected="${auth!=null and auth.position=='中国美协理事 '}">中国美协理事 </option>
+                                  <option th:selected="${auth!=null and auth.position=='中国书协理事  '}">中国书协理事  </option>
+                                  <option th:selected="${auth!=null and auth.position=='省级美协主席团'}">省级美协主席团 </option>
+                                  <option th:selected="${auth!=null and auth.position=='省级书协主席团'}">省级书协主席团 </option>
+                                  <option th:selected="${auth!=null and auth.position=='中国美协会员'}">中国美协会员  </option>
+                                  <option th:selected="${auth!=null and auth.position=='中国书协会员'}">中国书协会员</option>
+                                  <option th:selected="${auth!=null and auth.position=='省级美协会员'}">省级美协会员</option>
+                                  <option th:selected="${auth!=null and auth.position=='中省级书协会员'}">中省级书协会员 </option>
+                                  <option th:selected="${auth!=null and auth.position=='省级工艺美术师'}">省级工艺美术师</option>
+                                  <option th:selected="${auth!=null and auth.position=='民间大家'}">民间大家</option>
+                                  <option th:selected="${auth!=null and auth.position=='其他'}">其他</option>
                               </select>
                            </div>
                       </div>
                       <div class="form-group">
-                            <label for="" class="col-sm-2 control-label">名家照片上传</label>
-                            <div class="col-sm-2">
-                                <input type="file"  enctype="multipart/form-data"  class="form-control"  placeholder="点击上传图片" name='file'>
-                           </div>
-                           <div class="col-sm-2">
-                           <input type='text' id='viewImg' name='viewimg' style="display:none" th:value="${auth}==null?'':${auth.viewimg}">
-                                <button type='button' class="btn btn-defulat" id='uploadefile'>点击上传</button>
-                           </div>
-                      </div>
+                                 <label class="col-md-2 control-label"><em>*</em>名家照片上传</label>
+                                <div class="col-md-2">
+                                    <div class="file_img">
+                                        <input id="show_img_file" type="file" name="file" multiple="multiple">
+                                        <input id="imageid" type="hidden" name="viewimg" value="" th:value="${auth}==null?'':${auth.viewimg}">
+                                         <label for="show_img_file">点击上传</label>
+                                         <div  style="height:10px;background:red;width:0px;"></div>
+                                         <!-- <div class="progress">
+											    <div class="progress-bar progress-bar-success" role="progressbar"
+											         aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"
+											         id="processBar">
+											        <span class="sr-only">90% 完成（成功）</span>
+											    </div>
+											</div> -->
+                                    </div>
+                              </div>
+                              <div class="col-md-3">
+                                    <div class="shop_img" id="shop_img">
+                                    </div>
+                                </div>
+                            </div>
                       <div class="form-group">
                             <label for="" class="col-sm-2 control-label">名家简介</label>
                             <div class="col-sm-4">
@@ -168,7 +180,17 @@
                         			console.log('-----------------------');
                         			//初始化编辑器
                         			var content=[[${auth}==null?' ':${auth.content}]];
-                        			ue.setContent(content);
+                        			if(content!=null&&content!=null){
+                        				ue.setContent(content);
+                        			}
+                        			//图片回显
+                        			var fileServicePath=[[${fileServicePath}]];
+                        			console.log(att.filePath);
+                        			if([[${auth!=null and auth.filePath!=null}]]){
+                        					 $("#shop_img").html('<img src="'+fileServicePath +'/'+att.filePath[0].path+'/'+att.filePath[0].fileidname+'.'+att.filePath[0].filetype+'" alt=""/>'); 
+                           			
+ 
+                        			}
                         			
                         		}
                             });
@@ -204,34 +226,27 @@
     <script type="text/javascript" th:inline="javascript">
 	$(function(){
 		
-		$('#uploadefile').click(function(){
-			
-			//上传首页图片
-			
-			var option = {
-	            url:'/ueditor/uploade',//如果不指定url那么就使用使用提交表单的url，如果指定就使用当前的url
-	            type:"POST",
-	            dataType:"json",
-	            success:function(date){
-	            	if(date==null){
-						//图片上传失败
-						$("#uploadmsg").text='上传失败！';
-					}
-					for(var i=0,l=date.length;i<l;i++){
-						//上传成功
-						console.log(date[i].id);
-						$("#viewImg").attr('value',date[i].id);
-						//$("#mainimg").attr('src',date[i].host+'/'+date[i].path);
-						//$("#mainimg").attr('width','50px');
-					
-					}
-	            },
-	            error:function(){
-	                alert("系统错误");
-	            }
-	       };
-	      $("#addform").ajaxSubmit(option);
-		})
+		 $("#show_img_file").change(function(){
+             
+             var file=this.files[0];
+              $.ajaxFileUpload({
+                  url:"/ueditor/uploade",
+                  fileElementId: "show_img_file", //文件上传域的ID，这里是input的ID，而不是img的
+                  type:"POST",
+  	             dataType:"json",
+                  async : true,   //是否是异步
+                  success: function (data) {
+                     // console.log(data)
+                
+						 $("#shop_img").html('<img src="'+data[0].host +'/'+ data[0].path+'" alt=""/>'); 
+                      $("#imageid").val(data[0].id);
+                      
+                  }            
+
+              });
+                	      
+
+         });
 		
 		
 	})

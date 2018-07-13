@@ -329,7 +329,9 @@ FROM
 SELECT
 	A.*,
 	t_goods_price.retail_price ,
-	t_goods_price.sale 
+	t_goods_price.sale ,
+	t_goods_price.buy_price,
+	t_goods_price.sale_price
 FROM
 	(
 SELECT
