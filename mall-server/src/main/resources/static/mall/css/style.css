@@ -985,10 +985,9 @@ ul li {
         color: #b21b0f;
         padding: 10px; }
       .dSmallPicBox .dSmallPic li .sPic {
-        display: block; }
+        display: block;
+        height: 324px; }
         .dSmallPicBox .dSmallPic li .sPic img {
-          display: block;
-          height: 324px;
           width: 200px; }
       .dSmallPicBox .dSmallPic li p {
         padding-left: 10px;
@@ -1040,10 +1039,11 @@ ul li {
   display: -webkit-box;
   display: box; }
   .shop_index_box .left_menu_box {
+    position: relative;
     width: 260px;
     background: #fff;
     height: 420px;
-    overflow: hidden; }
+    z-index: 99; }
     .shop_index_box .left_menu_box .menu_dl {
       padding: 10px; }
       .shop_index_box .left_menu_box .menu_dl dt {
@@ -1058,6 +1058,20 @@ ul li {
           color: #ab7e52;
           line-height: 30px;
           height: 30px; }
+        .shop_index_box .left_menu_box .menu_dl dd .menu_three {
+          display: none;
+          position: absolute;
+          top: 0;
+          background: rgba(255, 255, 255, 0.9);
+          border: 1px solid #ccc;
+          padding: 20px;
+          width: 420px;
+          z-index: 100;
+          right: -420px;
+          height: 100%; }
+          .shop_index_box .left_menu_box .menu_dl dd .menu_three a {
+            display: inline-block;
+            margin-left: 20px; }
   .shop_index_box .right_slide_box {
     margin-left: 10px;
     width: 1010px;
@@ -1186,8 +1200,11 @@ ul li {
           font-size: 18px;
           color: #b21b0f;
           padding: 10px; }
-        .shop_classify_min .show_cont_box .child_ul li .sPic img {
-          width: 200px; }
+        .shop_classify_min .show_cont_box .child_ul li .sPic {
+          display: block;
+          height: 324px; }
+          .shop_classify_min .show_cont_box .child_ul li .sPic img {
+            width: 200px; }
         .shop_classify_min .show_cont_box .child_ul li p {
           margin: 0;
           padding-left: 10px;
@@ -1225,8 +1242,11 @@ ul li {
         font-size: 18px;
         color: #b21b0f;
         padding: 10px; }
-      .shop_box ul li .sPic img {
-        width: 200px; }
+      .shop_box ul li .sPic {
+        display: block;
+        height: 324px; }
+        .shop_box ul li .sPic img {
+          width: 200px; }
       .shop_box ul li p {
         margin: 0;
         padding-left: 10px;
@@ -1988,8 +2008,11 @@ ul li {
             font-size: 18px;
             color: #b21b0f;
             padding: 10px; }
-          .shop_list_fbox .shop_list_box .shop_boxs ul.list_item li .sPic img {
-            width: 200px; }
+          .shop_list_fbox .shop_list_box .shop_boxs ul.list_item li .sPic {
+            display: block;
+            height: 324px; }
+            .shop_list_fbox .shop_list_box .shop_boxs ul.list_item li .sPic img {
+              width: 200px; }
           .shop_list_fbox .shop_list_box .shop_boxs ul.list_item li p {
             margin: 0;
             padding-left: 10px;

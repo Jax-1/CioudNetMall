@@ -10,9 +10,9 @@
 	<div class="content_box">
 		<div class="shop_index_box">
 			<div class="left_menu_box">
-				<dl class="menu_dl">
+				<!-- <dl class="menu_dl">
 					<dt>中国绘画</dt>
-					<dd><a href="">山水</a></dd>|
+					<dd> href="">山水</a></dd>|
 					<dd><a href="">山水</a></dd>|
 					<dd><a href="">山水</a></dd>|
 					<dd><a href="">山水</a></dd>|
@@ -46,7 +46,7 @@
 					<dd><a href="">山水</a></dd>|
 					<dd><a href="">山水</a></dd>
 				</dl>
-			</div>
+ -->			</div>
 			<!-- 幻灯片内容 -->
 			<div class="right_slide_box" id="playBox">
 				<div class="pre">&lt;</div>
@@ -224,6 +224,60 @@
 	<script type="text/javascript" th:inline="javascript">
 	var ca=[[${goodsCategoryList}]];
 	console.log(ca);
+	$(".left_menu_box").html(buildMenu(ca));
+
+	
+	$(".menu_dl>dd>a").hover(function(){
+		$(".menu_three").hide();
+		if($(this).next().html()!==''){ 
+			$(this).next().show();
+		}
+		})
+	$(".menu_three").mouseleave(function(){
+		$(".menu_three").hide();
+	});
+
+	function buildMenu(obj,tier){
+		 var str ='';
+		 var tier= tier ? tier : 1;
+         tier++;
+		 for(index in obj){
+      	    if (typeof(obj[index].goodsCategoryList) ==="object") {
+          	   
+          	  if(obj[index].parent_id==''){
+          	     str += '<dl class="menu_dl">';
+          		 str += '<dt>'+ obj[index].category_name+'';
+                 str += "</dt>";
+
+                 str += buildMenu(obj[index].goodsCategoryList); 
+                 str += '</dl>';
+
+              	}else{
+                  	if(tier>=3){
+                  			str += '<a href="'+obj[index].category_id+'">'+ obj[index].category_name+'';	
+                  			str += '</a>';
+                          	
+                    }else if(tier=2){
+                    	str += '<dd><a href="'+obj[index].category_id+'">'+ obj[index].category_name+'';
+                  		str += '</a>';
+                  		if(typeof(obj[index].goodsCategoryList) ==="object"){
+                    		str += '<div class="menu_three">';
+                      		str += buildMenu(obj[index].goodsCategoryList,tier); 
+                      		str += '</div>';
+                        }
+                  		str += '<dd>|';
+                    }
+                }
+      		   }
+	
+
+		 }
+		
+		
+		 return str;
+
+	}
+	
 	
 	</script>
 	<!-- 内容部分结束 -->

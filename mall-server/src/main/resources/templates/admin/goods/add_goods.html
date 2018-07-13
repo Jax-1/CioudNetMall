@@ -94,7 +94,7 @@
                             <div class="form-group">
                                 <label class="col-md-2 control-label"><em>*</em>库存</label>
                                 <div class="col-md-3">
-                                    <input type="number" name="goodsInfo.inventory.amount" class="form-control" placeholder="1" th:value="${info!=null and info.goodsInfo!=null and info.goodsInfo.inventory!=null}?${info.goodsInfo.inventory.amount}:''">
+                                    <input type="number" name="goodsInfo.inventory.amount" class="form-control"  th:value="${info!=null and info.goodsInfo!=null and info.goodsInfo.inventory!=null}?${info.goodsInfo.inventory.amount}:'1'">
                                     <span class="help-block">请填写整数</span>
                                 </div>
                             </div>
