@@ -83,7 +83,9 @@
 						<ul class="child_ul">
 							<li th:each="a:${RecGoods}">
 								<span class="sPic">
-		                            <img alt=""  th:src="@{${fileServicePath}+'/'+${a.filePath.path}+'/'+${a.filePath.fileidname}+'.'+${a.filePath.filetype}}">
+									<a href=""th:href="@{/mall/goods/detail(goods_id=${a.goods_id})}">
+		                           		 <img alt=""  th:src="@{${fileServicePath}+'/'+${a.filePath.path}+'/'+${a.filePath.fileidname}+'.'+${a.filePath.filetype}}" th:alt="'《'+${a.goods_name}+'》'" th:title="'《'+${a.goods_name}+'》'">
+		                            </a>
 		                        </span>
 		                        <p><a  th:text="${a.auth.position}+'-'+${a.auth.authorname}">中国美术家协会会员 楚英</a></p>
 		                        <p><a href="" th:text="'《'+${a.goods_name}+'》'" th:href="@{/mall/goods/detail(goods_id=${a.goods_id})}">《新华一角》</a></p>
@@ -99,7 +101,9 @@
 						<ul class="child_ul">
 							<li th:each="a:${RecGoods}">
 								<span class="sPic">
-		                            <img alt=""  th:src="@{${fileServicePath}+'/'+${a.filePath.path}+'/'+${a.filePath.fileidname}+'.'+${a.filePath.filetype}}">
+									<a href="" th:href="@{/mall/goods/detail(goods_id=${a.goods_id})}">
+		                           		 <img alt=""  th:src="@{${fileServicePath}+'/'+${a.filePath.path}+'/'+${a.filePath.fileidname}+'.'+${a.filePath.filetype}}" th:alt="'《'+${a.goods_name}+'》'" th:title="'《'+${a.goods_name}+'》'">
+		                       	    </a>
 		                        </span>
 		                        <p><a  th:text="${a.auth.position}+'-'+${a.auth.authorname}">中国美术家协会会员 楚英</a></p>
 		                        <p><a href="" th:text="'《'+${a.goods_name}+'》'" th:href="@{/mall/goods/detail(goods_id=${a.goods_id})}">《新华一角》</a></p>
@@ -114,7 +118,9 @@
 						<ul class="child_ul">
 							<li th:each="a:${RecGoods}">
 								<span class="sPic">
-		                            <img alt=""  th:src="@{${fileServicePath}+'/'+${a.filePath.path}+'/'+${a.filePath.fileidname}+'.'+${a.filePath.filetype}}">
+									<a href="" th:href="@{/mall/goods/detail(goods_id=${a.goods_id})}">
+		                           		 <img alt=""  th:src="@{${fileServicePath}+'/'+${a.filePath.path}+'/'+${a.filePath.fileidname}+'.'+${a.filePath.filetype}}" th:alt="'《'+${a.goods_name}+'》'" th:title="'《'+${a.goods_name}+'》'">
+		                            </a>
 		                        </span>
 		                        <p><a  th:text="${a.auth.position}+'-'+${a.auth.authorname}">中国美术家协会会员 楚英</a></p>
 		                        <p><a href="" th:text="'《'+${a.goods_name}+'》'" th:href="@{/mall/goods/detail(goods_id=${a.goods_id})}">《新华一角》</a></p>
@@ -129,7 +135,9 @@
 						<ul class="child_ul">
 							<li th:each="a:${RecGoods}">
 								<span class="sPic">
-		                            <img alt=""  th:src="@{${fileServicePath}+'/'+${a.filePath.path}+'/'+${a.filePath.fileidname}+'.'+${a.filePath.filetype}}">
+									<a href="" th:href="@{/mall/goods/detail(goods_id=${a.goods_id})}">
+		                            	<img alt=""  th:src="@{${fileServicePath}+'/'+${a.filePath.path}+'/'+${a.filePath.fileidname}+'.'+${a.filePath.filetype}}" th:alt="'《'+${a.goods_name}+'》'" th:title="'《'+${a.goods_name}+'》'">
+		                            </a>
 		                        </span>
 		                        <p><a  th:text="${a.auth.position}+'-'+${a.auth.authorname}">中国美术家协会会员 楚英</a></p>
 		                        <p><a href="" th:text="'《'+${a.goods_name}+'》'" th:href="@{/mall/goods/detail(goods_id=${a.goods_id})}">《新华一角》</a></p>
@@ -153,7 +161,9 @@
 					<ul class="">
 							<li th:each="a:${RecGoods}">
 								<span class="sPic">
-		                            <img alt=""  th:src="@{${fileServicePath}+'/'+${a.filePath.path}+'/'+${a.filePath.fileidname}+'.'+${a.filePath.filetype}}">
+									<a href="" th:href="@{/mall/goods/detail(goods_id=${a.goods_id})}">
+		                            	<img alt=""  th:src="@{${fileServicePath}+'/'+${a.filePath.path}+'/'+${a.filePath.fileidname}+'.'+${a.filePath.filetype}}" th:alt="'《'+${a.goods_name}+'》'" th:title="'《'+${a.goods_name}+'》'">
+		                            </a>
 		                        </span>
 		                        <p><a  th:text="${a.auth.position}+'-'+${a.auth.authorname}">中国美术家协会会员 楚英</a></p>
 		                        <p><a href="" th:text="'《'+${a.goods_name}+'》'" th:href="@{/mall/goods/detail(goods_id=${a.goods_id})}">《新华一角》</a></p>
@@ -175,7 +185,9 @@
 					<ul class="">
 							<li th:each="a:${RecGoods}">
 								<span class="sPic">
-		                            <img alt=""  th:src="@{${fileServicePath}+'/'+${a.filePath.path}+'/'+${a.filePath.fileidname}+'.'+${a.filePath.filetype}}">
+									<a href=""  th:href="@{/mall/goods/detail(goods_id=${a.goods_id})}">
+		                          	  	<img alt=""  th:src="@{${fileServicePath}+'/'+${a.filePath.path}+'/'+${a.filePath.fileidname}+'.'+${a.filePath.filetype}}" th:alt="'《'+${a.goods_name}+'》'" th:title="'《'+${a.goods_name}+'》'">
+		                            </a>
 		                        </span>
 		                        <p><a  th:text="${a.auth.position}+'-'+${a.auth.authorname}">中国美术家协会会员 楚英</a></p>
 		                        <p><a href="" th:text="'《'+${a.goods_name}+'》'" th:href="@{/mall/goods/detail(goods_id=${a.goods_id})}">《新华一角》</a></p>
@@ -202,8 +214,10 @@
 					 
 					<div class="mingjia_list" >
 						<div class="mingjia_list_ground" th:each="a:${auth}">
-							<img  alt="" th:each="entry:${a.filePath}" th:src="@{${fileServicePath}+'/'+${entry.path}+'/'+${entry.fileidname}+'.'+${entry.filetype}}">
-							<a href="" th:text="${a.authorname}" th:href="@{/mall/cms/authcontent.do(Pid=MJHC,id=${a.id})}">某某某</a>	
+							<a href="" th:each="entry:${a.filePath}"  th:href="@{/mall/cms/authcontent.do(Pid=MJHC,id=${a.id})}">
+								<img  alt="" th:src="@{${fileServicePath}+'/'+${entry.path}+'/'+${entry.fileidname}+'.'+${entry.filetype}}" th:alt="${a.authorname}" th:title="${a.authorname}">
+							</a>	
+							<a href="" class="a_tit" th:text="${a.authorname}" th:href="@{/mall/cms/authcontent.do(Pid=MJHC,id=${a.id})}">某某某</a>	
 						</div>
 						
 					</div>

@@ -48,7 +48,7 @@ margin-bottom: 20px;
 	height: 40px;
 	background: #00b7ee;
 }
-.file_img label{
+.file_img .label{
 	display: inline-block;
 	width: 100%;
 	line-height: 40px;
@@ -100,4 +100,7 @@ li{
 
 .f_list{
 	padding-bottom: 10px;
+}
+.error{
+	color:red !important;
 }
