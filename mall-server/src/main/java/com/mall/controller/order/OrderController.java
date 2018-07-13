@@ -90,7 +90,8 @@ public class OrderController extends AbstractController{
 		
 	}
 	@RequestMapping("/pay")
-	public String toOrderPay(Model model) {
+	public String toOrderPay(Model model,Order order,OrderDetails orderDetails) {
+		//
 		model.addAttribute("page", "mall/order/order_pay");
 		return "mall/index";
 		

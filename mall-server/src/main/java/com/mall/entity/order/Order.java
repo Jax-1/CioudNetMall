@@ -2,6 +2,12 @@ package com.mall.entity.order;
 
 import java.util.Date;
 
+import javax.servlet.http.HttpServletRequest;
+
+import com.mall.entity.login.User;
+import com.mall.util.DateFormatUtil;
+import com.mall.util.SessionUtil;
+
 public class Order {
     private Integer order_id;
 
@@ -38,7 +44,14 @@ public class Order {
 	private Date create_time;
 
 	private Date update_time;
-
+	public static Order init(Order order,HttpServletRequest request) {
+		User user = SessionUtil.getUser(request);
+		order.setCreate_time(DateFormatUtil.getDate());
+		order.setUser_id(user.getUser_name());
+		
+		return order;
+		
+	} 
 	public Integer getOrder_id() {
 		return order_id;
 	}

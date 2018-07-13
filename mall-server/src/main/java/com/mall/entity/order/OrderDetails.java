@@ -9,9 +9,9 @@ public class OrderDetails {
 
     private String order_number;
 
-    private Integer price_id;
+    private String price_id;
 
-    private Integer goods_id;
+    private String goods_id;
 
     private String unit_name;
 
@@ -21,7 +21,7 @@ public class OrderDetails {
 
     private Integer num;
 
-    private Integer details_amount;
+    private Long details_amount;
 
     private Date create_time;
 
@@ -51,19 +51,19 @@ public class OrderDetails {
         this.order_number = order_number;
     }
 
-    public Integer getPrice_id() {
+    public String getPrice_id() {
         return price_id;
     }
 
-    public void setPrice_id(Integer price_id) {
+    public void setPrice_id(String price_id) {
         this.price_id = price_id;
     }
 
-    public Integer getGoods_id() {
+    public String getGoods_id() {
         return goods_id;
     }
 
-    public void setGoods_id(Integer goods_id) {
+    public void setGoods_id(String goods_id) {
         this.goods_id = goods_id;
     }
 
@@ -99,11 +99,11 @@ public class OrderDetails {
         this.num = num;
     }
 
-    public Integer getDetails_amount() {
+    public Long getDetails_amount() {
         return details_amount;
     }
 
-    public void setDetails_amount(Integer details_amount) {
+    public void setDetails_amount(Long details_amount) {
         this.details_amount = details_amount;
     }
 

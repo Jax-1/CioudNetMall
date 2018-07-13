@@ -268,20 +268,20 @@
 				var goods_id =goods.goods_id;
 				var num =amount;
 				var details_amount =$("#total_amount").text();
-				var total_amount =goods.image;
+				var image =goods.image;
 				
 				
 				form = $("<form></form>")
 		        form.attr('action',"/mall/order/pay")
 		        form.attr('method','post')
-		        input1 = $("<input type='text' name='total_amount' value='"+total_amount+"'/>");
-				input2 = $("<input type='text' name='postage_amount' value='"+postage_amount+"'/>");
+		        input1 = $("<input type='text' name='total_amount' value='"+toLong(total_amount)+"'/>");
+				input2 = $("<input type='text' name='postage_amount' value='"+toLong(postage_amount)+"'/>");
 				input3 = $("<input type='text' name='receive_id' value='"+receive_id+"'/>");
 				input4 = $("<input type='text' name='comment' value='"+comment+"'/>");
 				input5 = $("<input type='text' name='goods_id' value='"+goods_id+"'/>");
 				input6 = $("<input type='text' name='num' value='"+num+"'/>");
-				input7 = $("<input type='text' name='details_amount' value='"+details_amount+"'/>");
-				input8 = $("<input type='text' name='total_amount' value='"+total_amount+"'/>");
+				input7 = $("<input type='text' name='details_amount' value='"+toLong(details_amount)+"'/>");
+				input8 = $("<input type='text' name='total_amount' value='"+image+"'/>");
 		       
 		        form.append(input1);
 		        form.append(input2);
@@ -301,6 +301,15 @@
 		})
         
 	}
+    function toLong(obj){
+    	 reg=/^\d+(\.\d){0,1}/;    
+         if(reg.test(obj)){    
+        	var data= obj.split(".");
+        	return data[0];
+         }else{
+        	 return 0;
+         }
+    }
     function sumTotalAmount(){
     	//商品总价
     	var paid=$("#paid_amount").text();
