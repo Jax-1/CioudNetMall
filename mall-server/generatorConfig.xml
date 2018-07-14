@@ -10,12 +10,12 @@
     <jdbcConnection connectionURL="jdbc:mysql://47.93.16.119:3306/dbmall"
     	 driverClass="com.mysql.jdbc.Driver"
     	  password="zhang032111" userId="root" />
-    <javaModelGenerator targetPackage="com.mall.entity.order" targetProject="mall-server\src\main\java" />
+    <javaModelGenerator targetPackage="com.mall.entity.goods" targetProject="mall-server\src\main\java" />
     <sqlMapGenerator targetPackage="com.mall.main.mapping" targetProject="mall-server\src\main\java" />
-    <javaClientGenerator targetPackage="com.mall.dao.order" targetProject="mall-server\src\main\java" type="XMLMAPPER" />
+    <javaClientGenerator targetPackage="com.mall.dao.goods" targetProject="mall-server\src\main\java" type="XMLMAPPER" />
 
 
-		<table schema="" tableName="t_order_details" domainObjectName="OrderDetails"
+		<table schema="" tableName="t_history_goods" domainObjectName="GoodsHistory"
     enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"
     enableSelectByExample="false" selectByExampleQueryId="false" >
     <property name="useActualColumnNames" value="true"/>

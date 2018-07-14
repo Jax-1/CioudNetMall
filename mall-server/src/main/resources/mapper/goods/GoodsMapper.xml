@@ -17,6 +17,11 @@
     <result column="create_time" jdbcType="TIMESTAMP" property="create_time" />
     <result column="update_time" jdbcType="TIMESTAMP" property="update_time" />
     <result column="admin_id" jdbcType="VARCHAR" property="admin_id" />
+    <!-- 排序 -->
+    <result   column="salesSort" jdbcType="VARCHAR" property="salesSort"/>
+  	<result   column="popularitySort" jdbcType="VARCHAR" property="popularitySort"/>
+  	<result   column="priceSort" jdbcType="VARCHAR" property="priceSort"/>
+    
   </resultMap>
   <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.mall.entity.goods.Goods">
     <result column="detail_describe" jdbcType="LONGVARCHAR" property="detail_describe" />
@@ -308,6 +313,11 @@
 	    <result column="createby" jdbcType="VARCHAR" property="createby" />
 	    <result column="createat" jdbcType="TIMESTAMP" property="createat" />
   	</association>
+  	<association property="auth" javaType="com.mall.entity.cms.AuthorWithBLOBs">
+  		<id column="id_auth" jdbcType="VARCHAR" property="id" />
+  		<result column="authorname" jdbcType="VARCHAR" property="authorname" />
+  		<result column="position" jdbcType="VARCHAR" property="position" />
+  	</association>
   </resultMap>
   <!-- 后台商品列表 -->
   <select id="getPageFront" parameterType="com.mall.entity.goods.Goods" resultMap="orderResultMap">
@@ -334,6 +344,15 @@ SELECT
 	t_goods_price.sale_price
 FROM
 	(
+	<!-- 排序 -->
+	<if test="salesSort!=null or popularitySort!=null">
+		SELECT * FROM (
+	
+	</if>
+	<!-- 排序 -->
+	SELECT D.*,t_cms_author.id id_auth,t_cms_author.authorname,t_cms_author.position
+	 FROM (
+	
 SELECT
 	t_goods.goods_id,
 	t_goods.goods_price_id,
@@ -354,7 +373,8 @@ FROM
 	LEFT JOIN t_goods_info t_goods_info ON t_goods.goods_info_id = t_goods_info.goods_info_id 
 WHERE
 	t_goods.del_state = 'N' 
-	<if test="goodsInfo!=null and goodsInfo.category_id!=null">
+			<!-- 分类 -->
+			<if test="goodsInfo!=null and goodsInfo.category_id!=null">
 				and t_goods_info.category_id=#{goodsInfo.category_id}
 			</if>
 			
@@ -373,6 +393,27 @@ WHERE
 			<if test="goods_name!=null">
 				AND t_goods.goods_name LIKE CONCAT('%',#{goods_name},'%')
 			</if>
+		)D left join t_cms_author on D.auth_id=t_cms_author.id
+			<where>
+			<if test="auth!=null and auth.position!=null">
+				t_cms_author.position=#{auth.position}
+			
+			</if>
+			</where>
+			<!-- 排序 -->
+			<!-- 人气 -->
+			<if test="popularitySort!=null">
+			) G LEFT JOIN 
+			(SELECT  count(*) as countnum ,good_id FROM t_history_goods H  group by good_id ) H ON H.good_id=G.goods_id
+			
+			</if>
+			<!-- 销量 -->
+			<if test="salesSort!=null">
+				) G LEFT JOIN 
+			(SELECT  count(*) as countnum ,goods_id FROM t_order_details H  group by goods_id ) H ON H.good_id=G.goods_id
+			
+			</if>
+			<!-- 排序 -->
 	) A
 	LEFT JOIN t_goods_price ON A.goods_price_id = t_goods_price.price_id 
 	<where>
@@ -387,6 +428,20 @@ WHERE
 	) C
 	LEFT JOIN t_file_path D ON C.image = D.fileid 
 ORDER BY
+	<!-- 排序 -->
+	<if test="popularitySort!=null">
+		C.countnum ${popularitySort},
+	</if>
+	<!-- 销量 -->
+	<if test="salesSort!=null">
+		C.countnum ${salesSort},
+	</if>
+	<!-- 价格 -->
+	<if test="priceSort!=null">
+		C.retail_price ${priceSort},
+	</if>
+	
+	<!-- 排序 -->
 	C.create_time DESC
   </select>
   <!-- 删除 -->

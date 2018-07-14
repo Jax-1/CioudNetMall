@@ -62,7 +62,43 @@ public class Goods {
 	 */
 	private AuthorWithBLOBs auth;
 	
+	/**
+	 * 销量排序
+	 */
+	private String salesSort;
+	/**
+	 * 人气排序
+	 */
+	private String popularitySort;
+	/**
+	 * 价格排序
+	 */
+	private String priceSort;
 	
+
+	public String getSalesSort() {
+		return salesSort;
+	}
+
+	public void setSalesSort(String salesSort) {
+		this.salesSort = salesSort;
+	}
+
+	public String getPopularitySort() {
+		return popularitySort;
+	}
+
+	public void setPopularitySort(String popularitySort) {
+		this.popularitySort = popularitySort;
+	}
+
+	public String getPriceSort() {
+		return priceSort;
+	}
+
+	public void setPriceSort(String priceSort) {
+		this.priceSort = priceSort;
+	}
 
 	public AuthorWithBLOBs getAuth() {
 		return auth;
