@@ -374,14 +374,14 @@
 			        <label class="submit-border">
 			          <input type="submit" class="submit" value="新增地址">
 			        </label>
-			        <a class="ncm-btn ml5" href="javascript:DialogManager.close('my_address_edit');">取消</a>
+			        <a class="ncm-btn ml5" id="quxiao" href="javascript:void(0);">取消</a>
 			    </div>
 			</div>
 		</div>
 	</div>
 	<script>
 		$(function(){
-			$(".modal_far_box,.dialog_close_button").click(function(){
+			$(".modal_far_box,.dialog_close_button,#quxiao").click(function(){
 				$(".modal_far_box,.add_modal_box").hide();
 			})
 			$(".btn_add_address").click(function(){
