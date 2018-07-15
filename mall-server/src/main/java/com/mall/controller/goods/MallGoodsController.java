@@ -67,29 +67,39 @@ public class MallGoodsController extends AbstractController{
 		
 		model.addAttribute("RecGoods", RecGoods.getDataList());
 		//热卖商品
-		goods.setRecommend("");
-		//新品
-		goods.setNew_product("Y");
+		Goods SEgoods=new Goods();
+		SEgoods.setSalesSort("DESC");
 		int pageSizeShuf  =  Integer.parseInt(cacheService.getCache(SystemCode.PAGE).get(SystemCode.MALL_GOODS_SHUF_PAGE));
 		list.setPageSize(pageSizeShuf);
-		PageResult<Goods> newGoods = goodsService.queryByPageFront(list, goods);
+		PageResult<Goods> SEGoods = goodsService.queryByPageFront(list, SEgoods);
+		
+		//新品
+		Goods newgoods=new Goods();
+		newgoods.setNew_product("Y");
+		PageResult<Goods> newGoods = goodsService.queryByPageFront(list, newgoods);
+		logger.info("11111111111111");
 		//人气
-		goods.setNew_product("");
+		Goods popgoods=new Goods();
+		popgoods.setPopularitySort("DESC");
+		PageResult<Goods> POPGoods=goodsService.queryByPageFront(list, popgoods);
 		
 		//精品
-		goods.setClassic("Y");
-		PageResult<Goods> classicGoods = goodsService.queryByPageFront(list, goods);
+		Goods clagoods=new Goods();
+		clagoods.setClassic("Y");
+		PageResult<Goods> classicGoods = goodsService.queryByPageFront(list, clagoods);
 		//特惠
 		GoodsPrice goodsPrice =new GoodsPrice();
 		goodsPrice.setSale("Y");
-		goods.setGoodsPrice(goodsPrice);
-		PageResult<Goods> saleGoods = goodsService.queryByPageFront(list, goods);
+		Goods goodsSale=new Goods();
+		goodsSale.setGoodsPrice(goodsPrice);
+		PageResult<Goods> saleGoods = goodsService.queryByPageFront(list, goodsSale);
 		
 		
-		
-		model.addAttribute("newGoods", newGoods);
-		model.addAttribute("classicGoods", classicGoods);
-		model.addAttribute("saleGoods", saleGoods);
+		model.addAttribute("SEGoods", SEGoods.getDataList());
+		model.addAttribute("newGoods", newGoods.getDataList());
+		model.addAttribute("classicGoods", classicGoods.getDataList());
+		model.addAttribute("saleGoods", saleGoods.getDataList());
+		model.addAttribute("POPGoods", POPGoods.getDataList());
 		
 		model.addAttribute("fileServicePath", fileUrlPrefix);
 		

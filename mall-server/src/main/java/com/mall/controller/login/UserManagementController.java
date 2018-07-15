@@ -1,5 +1,7 @@
 package com.mall.controller.login;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
@@ -11,10 +13,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.mall.controller.AbstractController;
 import com.mall.entity.login.User;
 import com.mall.entity.login.UserInfo;
+import com.mall.entity.order.OrderAddress;
 import com.mall.message.ProcessResult;
 import com.mall.message.SystemCode;
 import com.mall.service.login.UserInfoService;
 import com.mall.service.login.UserLoginService;
+import com.mall.service.order.OrderAddressService;
 import com.mall.util.DateFormatUtil;
 import com.mall.util.MD5Util;
 import com.mall.util.SessionUtil;
@@ -32,6 +36,8 @@ public class UserManagementController extends AbstractController{
 	private UserLoginService userLoginService;
 	@Resource
 	private UserInfoService userInfoService;
+	@Resource
+	private OrderAddressService orderAddressService;
 	/**
 	 * 跳转用户管理界面
 	 * @param model
@@ -56,8 +62,18 @@ public class UserManagementController extends AbstractController{
 		model.addAttribute("manager", "modify_pwd_verify");
 		return "mall/index";
 	}
+	/**
+	 * 用户收货地址管理
+	 * @param model
+	 * @param request
+	 * @return
+	 */
 	@RequestMapping("/address")
 	public String toUserModifyAddress(Model model,HttpServletRequest request) {
+		User user = SessionUtil.getUser(request);
+		//获取当前用户的收获地址
+		List<OrderAddress> address = orderAddressService.userTakeDeliveryAddress(user);
+		model.addAttribute("address", address);
 		model.addAttribute("page", "mall/login/my_center");
 		model.addAttribute("manager", "address");
 		return "mall/index";

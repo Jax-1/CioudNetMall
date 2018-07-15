@@ -287,35 +287,25 @@
 		        <th class="w110">操作</th>
 		      </tr>
 		    </thead>
-		        <tbody>
-		            <tr class="bd-line">
-				        <td>爱迪生</td>
-				        <td>天津	天津市	和平区</td>
-				        <td class="tl"><em class="delivery"></em>天津朋友家</td>
-				        <td><p><i class="icon-phone"></i>13221234221</p>
+		    	<script type="text/javascript" th:inline="javascript">
+		    	console.log([[${address}]]);
+		    	</script>
+		        <tbody id="tbody_add">
+		        	 <tr th:each="a,iterStat:${address}">
+				        <td th:text="${a.name}" th:id="'name'+${iterStat.index}">爱迪生</td>
+				        <td th:text="${a.province}+'  '+${a.city}+'  '+${a.area}" th:id="'address'+${iterStat.index}">天津	天津市	和平区</td>
+				        <td class="tl" th:text="${a.street}" th:id="'street'+${iterStat.index}"><em class="delivery" ></em>天津朋友家</td>
+				        <td><p><i class="icon-phone" th:text="${a.phone}" th:id="'phone'+${iterStat.index}"></i></p>
 				        <td></td>
 				        <td class="ncm-table-handle"><span>
-		                    <a href="javascript:void(0);" class="btn-blue"><i class="icon-pencil2"></i>
+		                    <a  class="btn-blue" th:href="@{'javascript:editAddress(this,'+${a.id}+','+${iterStat.index}+');'}"><i class="icon-pencil2" ></i>
 				          <p>编辑</p>
 				          </a>
-		                    </span> <span><a href="javascript:void(0)" class="btn-red"><i class="icon-trash"></i>
+		                    </span> <span><a  class="btn-red" th:href="@{'javascript:deleteAddress(this,'+${a.id}+');'}"><i class="icon-trash" ></i>
 				          <p>删除</p>
 				          </a></span></td>
 				      </tr>
-				      <tr class="bd-line default">
-				        <td>爱迪生</td>
-				        <td>天津	天津市	和平区</td>
-				        <td class="tl"><em class="delivery"></em>天津朋友家</td>
-				        <td><p><i class="icon-phone"></i>13221234221</p>
-				        <td></td>
-				        <td class="ncm-table-handle"><span>
-		                    <a href="javascript:void(0);" class="btn-blue"><i class="icon-pencil2"></i>
-				          <p>编辑</p>
-				          </a>
-		                    </span> <span><a href="javascript:void(0)" class="btn-red"><i class="icon-trash"></i>
-				          <p>删除</p>
-				          </a></span></td>
-				      </tr>
+				      
 				</tbody>
 		  </table>
 		</div>
@@ -325,62 +315,60 @@
 		<div class="add_modal_box">
 			<h3 class="dialog_head">
 				<span class="dialog_title">
-					<span class="dialog_title_icon">新增地址</span></span>
+					<span class="dialog_title_icon" id="title-add">新增地址</span></span>
 				<span class="dialog_close_button">X</span>
 			</h3>
 			<div class="eject_con">
+				<input style="display:none" id="id" value="">
 				<dl>
 					<dt><i class="required">*</i>收货人：</dt>
-					<dd><input type="text" class="text w100" name="true_name" value="">
-			          <p class="hint">请填写您的真实姓名</p>
+					<dd><input type="text" class="text w100" name="true_name" value="" id="true_name">
+			          <p class="hint" >请填写您的真实姓名</p>
 			        </dd>
 				</dl>
 				<dl>
 					<dt><i class="required">*</i>收货地址：</dt>
 					<dd>
-						<select name="" class="w100">
-							<option value="">请选择</option>
-						</select>
-						<select name="" class="w100">
-							<option value="">请选择</option>
-						</select>
-						<select name="" class="w100">
-							<option value="">请选择</option>
-						</select>
+						<select name="province" id="address_province" class="w100"></select>
+						<select name="city" id="address_city" class="w100">
+						</select><select name="area" id="address_area" class="w100"></select>
 			          <p class="hint">请选择收货地址</p>
 			        </dd>
 				</dl>
 				<dl>
 			        <dt><i class="required">*</i>街道地址：</dt>
 			        <dd>
-			          <input class="text w300" type="text" name="address" value="">
+			          <input class="text w300" type="text" name="street" value="" id="street">
 			          <p class="hint">不必重复填写地区</p>
 			        </dd>
 			    </dl>
 			    <dl>
 			        <dt><i class="required">*</i>手机号码：</dt>
 			        <dd>
-			          <input type="text" class="text w200" name="tel_phone" value="">
+			          <input type="text" class="text w200" name="tel_phone" value="" id="tel_phone">
 			        </dd>
 			    </dl>
 			    <dl>
 			        <dt><em class="pngFix"></em>设为默认地址：</dt>
 			        <dd>
-			          <input type="checkbox" name="is_default" id="is_default" value="1">
+			          <input type="checkbox" name="thedefault" id="thedefault" value="Y" >
 			          <label for="is_default">设置为默认收货地址</label>
 			        </dd>
 			    </dl>
 			    <div class="bottom">
 			        <label class="submit-border">
-			          <input type="submit" class="submit" value="新增地址">
+			          <input type="button" class="submit" value="新增地址" id="button-add" onclick="javascript:addUserAddress();">
 			        </label>
 			        <a class="ncm-btn ml5" href="javascript:DialogManager.close('my_address_edit');">取消</a>
 			    </div>
 			</div>
 		</div>
 	</div>
-	<script>
+	<script type="text/javascript" src="/mall/js/PCASClass.js"></script>
+	<script  type="text/javascript" th:inline="javascript">
 		$(function(){
+			//初始化地址下拉框
+			new PCAS("province","city","area");
 			$(".modal_far_box,.dialog_close_button").click(function(){
 				$(".modal_far_box,.add_modal_box").hide();
 			})
@@ -388,6 +376,95 @@
 				$(".modal_far_box,.add_modal_box").show();
 			})
 		})
+		var address=[[${address}]];
+		var i=0;
+		
+		function editAddress(obj,id,index){
+			
+			var ad=address[index];
+			i=index;
+			$("#id").val(ad.id);
+			$("#true_name").val(ad.name);
+			$("#street").val(ad.street);
+			$("#tel_phone").val(ad.phone);
+			if(ad.thedefault=="Y"){
+				$("#thedefault").attr("checked", true);
+			}
+			new PCAS("province","city","area",ad.province,ad.city,ad.area);
+			$("#button-add").val("修改地址")
+			$("#title-add").val("修改地址")
+			$(".modal_far_box,.add_modal_box").show();
+			
+			
+		}
+		function deleteAddress(obj,id){
+			$.post('/mall/order/address/delete',{id:id},function(data){
+	    		console.log(data);
+	    		if(data!=null&&data.res=='1'){
+	    			
+	    			//删除成功
+	    			$(obj).parent().parent().remove();
+	    		}
+	    	})
+			
+		}
+		$("#button-add").click(function(){
+			
+		})
+		function addUserAddress(){
+    	//验证表单数据
+    	//保存数据
+    	$.post("/mall/order/address/add",
+    			{
+    			id:$("#id").val(),
+    			name:$("#true_name").val(),
+    			phone:$("#tel_phone").val(),
+    			province:$("#address_province").val(),
+    			city:$("#address_city").val(),
+    			area:$("#address_area").val(),
+    			street:$("#street").val(),
+    			thedefault:$('input:checkbox[name="thedefault"]:checked').val()==""?'N':$("#thedefault").val()
+    			
+		    	},
+		    	function(data){
+		    		if(data!=null&&data.res=='1'){
+		    			console.log(data);
+		    			if($("#id").val()==""){
+		    				//添加成功
+			    			address.push(data.obj);
+			    			items='<tr >'+
+						       ' <td  id="name+'+address.length+'">'+data.obj.name+'</td>'+
+						        '<td id="address+'+address.length+'">'+data.obj.province+"&nbsp&nbsp"+data.obj.city+"&nbsp&nbsp"+data.obj.area+'</td>'+
+						        '<td class="tl" id="street+'+address.length+'">'+data.obj.street+'</td>'+
+						        '<td><p><i class="icon-phone" id="phone+'+address.length+'">'+data.obj.phone+'</i></p>'+
+						        '<td></td>'+
+						        '<td class="ncm-table-handle"><span>'+
+				                 '   <a  class="btn-blue" href="javascript:editAddress(this,'+data.obj.id+','+address.length+');"><i class="icon-pencil2" ></i>'+
+						          '<p>编辑</p>'+
+						          '</a>'+
+				                  '  </span> <span><a  class="btn-red" href="javascript:deleteAddress(this,'+data.obj.id+');"><i class="icon-trash" ></i>'+
+						          '<p>删除</p>'+
+						          '</a></span></td>'+
+						      '</tr>'
+			    			$("#tbody_add").append(items);
+		    			}else{
+		    				//修改成功
+		    				address[i]=data.obj;
+		    				$("#name"+i).text(data.obj.name);
+		    				$("#address"+i).text(data.obj.province+'&nbsp&nbsp'+data.obj.city+'&nbsp&nbsp'+data.obj.area);
+		    				$("#street"+i).text(data.obj.street);
+		    				$("#phone"+i).text(data.obj.phone);
+		    				
+		    				
+		    			}
+		    			$(".modal_far_box,.add_modal_box").hide();
+		    			}
+		    		$("#button-add").val("新增地址")
+					$("#title-add").val("新增地址")
+    		
+    	});
+    	
+    }
 	</script>
 	</div>
 	<!-- 收货地址 end -->
