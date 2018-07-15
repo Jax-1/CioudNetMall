@@ -18,7 +18,6 @@ import com.mall.service.BaseServiceImpl;
 import com.mall.service.cms.AtticleldService;
 import com.mall.service.sys.CacheService;
 
-import io.swagger.models.auth.In;
 
 @Service
 public class AtticleldServiceImpl extends BaseServiceImpl<Atticleld>implements AtticleldService {
