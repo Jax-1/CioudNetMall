@@ -370,7 +370,7 @@ SELECT
 	t_goods_info.auth_id 
 FROM
 	t_goods
-	LEFT JOIN t_goods_info t_goods_info ON t_goods.goods_info_id = t_goods_info.goods_info_id 
+	LEFT JOIN t_goods_info  ON t_goods.goods_info_id = t_goods_info.goods_info_id 
 WHERE
 	t_goods.del_state = 'N' 
 			<!-- 分类 -->
@@ -394,10 +394,10 @@ WHERE
 				AND t_goods.goods_name LIKE CONCAT('%',#{goods_name},'%')
 			</if>
 			<if test="goodsInfo!=null and goodsInfo.environment!=null">
-				AND t_goods_info=#{goodsInfo.environment}
+				AND t_goods_info.environment=#{goodsInfo.environment}
 			</if>
 			<if test="goodsInfo!=null and goodsInfo.standard!=null">
-				AND t_goods_info=#{goodsInfo.standard}
+				AND t_goods_info.standard=#{goodsInfo.standard}
 			</if>
 		)D left join t_cms_author on D.auth_id=t_cms_author.id
 			<where>
