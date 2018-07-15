@@ -2629,3 +2629,26 @@ ul li {
       .about-us-box .side-right .side-right-ulbox .map {
         width: 100%;
         height: 400px; }
+
+#classify {
+  height: 100px; }
+  #classify .classify_list .f_list {
+    line-height: 30px;
+    position: relative; }
+    #classify .classify_list .f_list > .c_list {
+      position: absolute;
+      display: none;
+      top: 30px;
+      left: 0;
+      width: 1140px;
+      line-height: 30px; }
+      #classify .classify_list .f_list > .c_list > li {
+        position: relative; }
+        #classify .classify_list .f_list > .c_list > li .cc_list,
+        #classify .classify_list .f_list > .c_list > li .c_list {
+          position: absolute;
+          top: 30px;
+          left: 0;
+          width: 1140px;
+          line-height: 30px;
+          display: none; }
