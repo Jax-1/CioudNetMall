@@ -15,7 +15,7 @@
             </div>
             <div class="ncc-receipt-info">
                 <div class="ncc-receipt-info-title">
-                    <h3>请您及时付款，以便订单尽快处理！ 需支付金额：<strong>￥199</strong></h3>
+                    <h3>请您及时付款，以便订单尽快处理！ 需支付金额：<strong th:text="'￥'+${order.total_amount}">￥199</strong></h3>
                 </div>
                 <table class="ncc-table-style m_t10">
                     <thead>
@@ -28,9 +28,9 @@
                     </thead>
                     <tbody>
                        <tr>
-                        <td class="tl">1000000034108001</td>
-                        <td class="tl">在线支付</td>
-                        <td class="tl">￥199.00</td>
+                        <td class="tl" th:text="${order.order_number}">1000000034108001</td>
+                        <td class="tl" ><span th:each="p:${payment}" th:text="${order.payment_id==p.payment_id}?${p.name}:''"></span></td>
+                        <td class="tl" th:text="'￥'+${order.total_amount}">￥199.00</td>
                         <td class="tl">快递</td>
                       </tr>
                   </tbody>
@@ -58,6 +58,9 @@
     <div class="footer_baozhen">
         <img src="/mall/images/baozhen.png" alt="">
     </div>
-
+	<script type="text/javascript"> 
+	console.log([[${order}]]);
+	
+	</script>
 </body>
 </html>

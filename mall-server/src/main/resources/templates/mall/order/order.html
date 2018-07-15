@@ -264,13 +264,14 @@
 				var postage_amount =$("#postage_amount").text();
 				var receive_id =$("#add_id").text();
 				var comment=$("#comment").text();
+				var payment_id=$("#payment_id").val();
 				//订单详情
 				var goods_id =goods.goods_id;
 				var num =amount;
 				var details_amount =$("#total_amount").text();
 				var image =goods.image;
 				
-				
+			
 				form = $("<form></form>")
 		        form.attr('action',"/mall/order/pay")
 		        form.attr('method','post')
@@ -281,7 +282,10 @@
 				input5 = $("<input type='text' name='goods_id' value='"+goods_id+"'/>");
 				input6 = $("<input type='text' name='num' value='"+num+"'/>");
 				input7 = $("<input type='text' name='details_amount' value='"+toLong(details_amount)+"'/>");
-				input8 = $("<input type='text' name='total_amount' value='"+image+"'/>");
+				input8 = $("<input type='text' name='image' value='"+image+"'/>");
+				input9 = $("<input type='text' name='payment_id' value='"+payment_id+"'/>");
+				input10 = $("<input type='text' name='price_id' value='"+goods.goods_price_id+"'/>");
+				input11 = $("<input type='text' name='goods_name' value='"+goods.goods_name+"'/>");
 		       
 		        form.append(input1);
 		        form.append(input2);
@@ -291,6 +295,9 @@
 		        form.append(input6);
 		         form.append(input7);
 		        form.append(input8);
+		        form.append(input9);
+		        form.append(input10);
+		        form.append(input11);
 		        form.appendTo("body")
 		         form.css('display','none')
         		form.submit()

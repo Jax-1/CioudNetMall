@@ -23,8 +23,11 @@ import com.mall.service.cms.AuthorWithBLOBsService;
 import com.mall.service.goods.GoodsService;
 import com.mall.service.order.OrderAddressService;
 import com.mall.service.order.OrderDetailsService;
+import com.mall.service.order.OrderService;
 import com.mall.service.payment.PaymentMethodService;
 import com.mall.service.sys.CacheService;
+import com.mall.util.DateFormatUtil;
+import com.mall.util.ProcessOrderUtil;
 import com.mall.util.SessionUtil;
 import com.mall.util.Validate;
 
@@ -48,6 +51,8 @@ public class OrderController extends AbstractController{
 	private AuthorWithBLOBsService authorWithBLOBsService;
 	@Resource
 	private OrderDetailsService orderDetailsService;
+	@Resource
+	private OrderService orderService;
 	/**
 	 * 订单界面
 	 * @param model
@@ -57,10 +62,17 @@ public class OrderController extends AbstractController{
 	 * @return
 	 */
 	@RequestMapping("")
-	public String toOrder(Model model,Goods goods,HttpServletRequest request ,Integer amount) {
+	public String toOrder(Model model,Goods goods,HttpServletRequest request ,Integer amount,Order order) {
 		User user = SessionUtil.getUser(request);
 		//获取当前用户的收获地址
 		List<OrderAddress> address = orderAddressService.userTakeDeliveryAddress(user);
+		if(Validate.notNull(order)&&Validate.notNull(order.getOrder_number())) {
+			//加载单据信息
+			order=orderService.selectInfo(order);
+			for(OrderDetails o:order.getOrderDetailsList()) {
+				goods.setGoods_id(o.getGoods_id());
+			}
+		}
 		//获取商品信息
 		logger.info("获取商品信息："+goods.getGoods_id());
 		goods = goodsService.selectInfo(goods);
@@ -71,6 +83,8 @@ public class OrderController extends AbstractController{
 			a = authorWithBLOBsService.selectInfo(a);
 			goods.setAuth(a);
 		}
+		
+		
 		//获取支付方式
 		List<PaymentMethod> payment = paymentMethodService.getPaymentMethod();
 		//文件服务器路径
@@ -80,6 +94,7 @@ public class OrderController extends AbstractController{
 		String filePath=cache.get(SystemCode.FILE_SERVICE_FILES_PATH);
 		String fileUrlPrefix=url+":"+port+"/"+filePath;
 		
+		model.addAttribute("order", order);
 		model.addAttribute("fileServicePath", fileUrlPrefix);
 		model.addAttribute("payment", payment);
 		model.addAttribute("amount", amount);
@@ -89,14 +104,56 @@ public class OrderController extends AbstractController{
 		return "mall/index";
 		
 	}
+	/**
+	 * 支付界面，选择支付方式，
+	 * 初次：生成订单
+	 * 已有订单进入：加载订单
+	 * @param model
+	 * @param order
+	 * @param orderDetails
+	 * @param request
+	 * @return
+	 */
 	@RequestMapping("/pay")
-	public String toOrderPay(Model model,Order order,OrderDetails orderDetails) {
+	public String toOrderPay(Model model,Order order,OrderDetails orderDetails,HttpServletRequest request) {
 		//
+		if(Validate.notNull(order.getOrder_number())) {
+			//历史订单支付
+			logger.info("历史订单支付！");
+		}else {
+			logger.info("生成订单支付！");
+			logger.info("支付方式："+order.getPayment_id());
+			//订单号为空，初次进入
+			order=Order.init(order, request);
+			order.setOrder_number(ProcessOrderUtil.processOrderNumber(SystemCode.DEV_PC, SystemCode.BUSINESS_MALL, SessionUtil.getUser(request)));
+			try {
+				orderService.insertSelective(order);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			logger.info("创建订单："+order.getOrder_number());
+			orderDetails.setCreate_time(DateFormatUtil.getDate());
+			orderDetails.setOrder_id(order.getOrder_id());
+			orderDetails.setOrder_number(order.getOrder_number());
+			try {
+				orderDetailsService.insertSelective(orderDetails);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			
+		}
 		
+		//获取支付方式
+		List<PaymentMethod> payment = paymentMethodService.getPaymentMethod();
+		
+		model.addAttribute("payment", payment);
+		model.addAttribute("order", order);
+		model.addAttribute("orderDetails", orderDetails);
 		model.addAttribute("page", "mall/order/order_pay");
 		return "mall/index";
 		
 	}
+	
 	@RequestMapping("/real")
 	public String toOrderReal(Model model) {
 		model.addAttribute("page", "mall/order/order_real");

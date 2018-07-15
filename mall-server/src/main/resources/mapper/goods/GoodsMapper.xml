@@ -393,6 +393,12 @@ WHERE
 			<if test="goods_name!=null">
 				AND t_goods.goods_name LIKE CONCAT('%',#{goods_name},'%')
 			</if>
+			<if test="goodsInfo!=null and goodsInfo.environment!=null">
+				AND t_goods_info=#{goodsInfo.environment}
+			</if>
+			<if test="goodsInfo!=null and goodsInfo.standard!=null">
+				AND t_goods_info=#{goodsInfo.standard}
+			</if>
 		)D left join t_cms_author on D.auth_id=t_cms_author.id
 			<where>
 			<if test="auth!=null and auth.position!=null">

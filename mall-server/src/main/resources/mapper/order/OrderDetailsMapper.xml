@@ -41,7 +41,7 @@
       #{details_amount,jdbcType=DECIMAL}, #{create_time,jdbcType=TIMESTAMP}, #{image,jdbcType=VARCHAR}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.mall.entity.order.OrderDetails">
+  <insert id="insertSelective" parameterType="com.mall.entity.order.OrderDetails" useGeneratedKeys="true" keyProperty="order_details_id">
     insert into t_order_details
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="order_details_id != null">
@@ -174,4 +174,5 @@
       image = #{image,jdbcType=VARCHAR}
     where order_details_id = #{order_details_id,jdbcType=INTEGER}
   </update>
+  
 </mapper>

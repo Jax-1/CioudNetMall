@@ -143,6 +143,14 @@ public class SystemCode {
 	//校验短信模板
 	public final static String VARLIDATE_TEMPLATECODE="VARLIDATE_TEMPLATECODE";
 	
+	/**
+	 * 订单相关
+	 */
+	public final static String DEV_PC="1";
+	public final static String DEV_MOBILE="2";
+	public final static String BUSINESS_MALL="0";
+	public final static String BUSINESS_AUCTION="1";
+	public final static String BUSINESS_SECKILL="2";
 	
 	
 

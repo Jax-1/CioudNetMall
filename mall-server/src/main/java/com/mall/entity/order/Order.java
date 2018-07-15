@@ -1,6 +1,7 @@
 package com.mall.entity.order;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -42,13 +43,25 @@ public class Order {
 	private String comment;
 
 	private Date create_time;
-
+	
 	private Date update_time;
+	
+	/**
+	 * 关联商品信息表
+	 */
+	private List<OrderDetails> orderDetailsList;
+	
+	
+	public List<OrderDetails> getOrderDetailsList() {
+		return orderDetailsList;
+	}
+	public void setOrderDetailsList(List<OrderDetails> orderDetailsList) {
+		this.orderDetailsList = orderDetailsList;
+	}
 	public static Order init(Order order,HttpServletRequest request) {
 		User user = SessionUtil.getUser(request);
 		order.setCreate_time(DateFormatUtil.getDate());
 		order.setUser_id(user.getUser_name());
-		
 		return order;
 		
 	} 

@@ -52,7 +52,7 @@
       #{comment,jdbcType=VARCHAR}, #{create_time,jdbcType=TIMESTAMP}, #{update_time,jdbcType=TIMESTAMP}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.mall.entity.order.Order">
+  <insert id="insertSelective" parameterType="com.mall.entity.order.Order" useGeneratedKeys="true" keyProperty="order_id">
     insert into t_order
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="order_id != null">
@@ -245,4 +245,32 @@
       update_time = #{update_time,jdbcType=TIMESTAMP}
     where order_id = #{order_id,jdbcType=INTEGER}
   </update>
+  <resultMap extends="BaseResultMap" type="com.mall.entity.order.Order" id="orderResultMap">
+  	<collection property="orderDetailsList" ofType="com.mall.entity.order.OrderDetails" column="order_number">
+	  	<id column="order_details_id" jdbcType="INTEGER" property="order_details_id" />
+	    <result column="order_id_d" jdbcType="INTEGER" property="order_id" />
+	    <result column="order_number_d" jdbcType="VARCHAR" property="order_number" />
+	    <result column="price_id" jdbcType="VARCHAR" property="price_id" />
+	    <result column="goods_id" jdbcType="VARCHAR" property="goods_id" />
+	    <result column="unit_name" jdbcType="VARCHAR" property="unit_name" />
+	    <result column="goods_name" jdbcType="VARCHAR" property="goods_name" />
+	    <result column="unit_price" jdbcType="INTEGER" property="unit_price" />
+	    <result column="num" jdbcType="INTEGER" property="num" />
+	    <result column="details_amount" jdbcType="DECIMAL" property="details_amount" />
+	    <result column="image" jdbcType="VARCHAR" property="image" />
+  	</collection>
+  </resultMap>
+  <select id="selectInfo"  parameterType="com.mall.entity.order.Order" resultMap="orderResultMap">
+  	SELECT
+	t1.order_id, t1.order_number, t1.user_id, t1.total_amount, t1.paid_amount, t1.postage_amount, t1.discount_amount, 
+    t1.receive_id, t1.send_time, t1.logistics_state, t1.invoice_tag, t1.del_state, t1.payment_id, t1.payment_seq, 
+    t1.pay_state, t1.comment, t1.create_time, t1.update_time,
+	 t2.order_details_id,  t2.price_id, t2.goods_id, 
+     t2.num, t2.details_amount
+	FROM
+	t_order t1
+	LEFT JOIN t_order_details t2 ON t1.order_number = t2.order_number
+	where t1.order_number=#{order_number}
+  
+  </select>
 </mapper>
