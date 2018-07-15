@@ -410,13 +410,13 @@ WHERE
 			<!-- 人气 -->
 			<if test="popularitySort!=null">
 			) G LEFT JOIN 
-			(SELECT  count(*) as countnum ,good_id FROM t_history_goods H  group by good_id ) H ON H.good_id=G.goods_id
+			(SELECT  count(*) as countnum ,good_id FROM t_history_goods   group by good_id ) H ON H.good_id=G.goods_id
 			
 			</if>
 			<!-- 销量 -->
 			<if test="salesSort!=null">
 				) G LEFT JOIN 
-			(SELECT  count(*) as countnum ,goods_id FROM t_order_details H  group by goods_id ) H ON H.good_id=G.goods_id
+			(SELECT  count(*) as countnum ,goods_id as goods_id_d FROM t_order_details   group by goods_id ) H ON H.goods_id_d=G.goods_id
 			
 			</if>
 			<!-- 排序 -->

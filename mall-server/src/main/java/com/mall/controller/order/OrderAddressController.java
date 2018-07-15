@@ -14,6 +14,7 @@ import com.mall.message.ProcessResult;
 import com.mall.service.order.OrderAddressService;
 import com.mall.util.DateFormatUtil;
 import com.mall.util.SessionUtil;
+import com.mall.util.Validate;
 
 @Controller
 @RequestMapping("/mall/order")
@@ -54,9 +55,13 @@ public class OrderAddressController  extends AbstractController{
 	public ProcessResult<OrderAddress> add(OrderAddress orderAddress,HttpServletRequest request){
 		ProcessResult<OrderAddress> res=new ProcessResult<OrderAddress>();
 		try {
-			orderAddress.setUser_id(SessionUtil.getUser(request).getUser_name());
-			orderAddress.setCreate_time(DateFormatUtil.getDate());
-			orderAddressService.insertSelective(orderAddress);
+			if(Validate.notNull(orderAddress.getId())) {
+				orderAddressService.updateByPrimaryKeySelective(orderAddress);
+			}else {
+				orderAddress.setUser_id(SessionUtil.getUser(request).getUser_name());
+				orderAddress.setCreate_time(DateFormatUtil.getDate());
+				orderAddressService.insertSelective(orderAddress);
+			}
 			res=ProcessResult.success(res);
 			res.setObj(orderAddress);
 			return res;

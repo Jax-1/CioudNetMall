@@ -81,7 +81,7 @@
 				<ul class="father_tab_box">
 					<li class="c_box">
 						<ul class="child_ul">
-							<li th:each="a:${RecGoods}">
+							<li th:each="a:${newGoods}">
 								<span class="sPic">
 									<a href=""th:href="@{/mall/goods/detail(goods_id=${a.goods_id})}">
 		                           		 <img alt=""  th:src="@{${fileServicePath}+'/'+${a.filePath.path}+'/'+${a.filePath.fileidname}+'.'+${a.filePath.filetype}}" th:alt="'《'+${a.goods_name}+'》'" th:title="'《'+${a.goods_name}+'》'">
@@ -99,7 +99,7 @@
 					<!-- 新品end -->
 					<li class="c_box">
 						<ul class="child_ul">
-							<li th:each="a:${RecGoods}">
+							<li th:each="a:${POPGoods}">
 								<span class="sPic">
 									<a href="" th:href="@{/mall/goods/detail(goods_id=${a.goods_id})}">
 		                           		 <img alt=""  th:src="@{${fileServicePath}+'/'+${a.filePath.path}+'/'+${a.filePath.fileidname}+'.'+${a.filePath.filetype}}" th:alt="'《'+${a.goods_name}+'》'" th:title="'《'+${a.goods_name}+'》'">
@@ -116,7 +116,7 @@
 					</li>
 					<li class="c_box">
 						<ul class="child_ul">
-							<li th:each="a:${RecGoods}">
+							<li th:each="a:${classicGoods}">
 								<span class="sPic">
 									<a href="" th:href="@{/mall/goods/detail(goods_id=${a.goods_id})}">
 		                           		 <img alt=""  th:src="@{${fileServicePath}+'/'+${a.filePath.path}+'/'+${a.filePath.fileidname}+'.'+${a.filePath.filetype}}" th:alt="'《'+${a.goods_name}+'》'" th:title="'《'+${a.goods_name}+'》'">
@@ -133,7 +133,7 @@
 					</li>
 					<li class="c_box">
 						<ul class="child_ul">
-							<li th:each="a:${RecGoods}">
+							<li th:each="a:${saleGoods}">
 								<span class="sPic">
 									<a href="" th:href="@{/mall/goods/detail(goods_id=${a.goods_id})}">
 		                            	<img alt=""  th:src="@{${fileServicePath}+'/'+${a.filePath.path}+'/'+${a.filePath.fileidname}+'.'+${a.filePath.filetype}}" th:alt="'《'+${a.goods_name}+'》'" th:title="'《'+${a.goods_name}+'》'">
@@ -183,7 +183,7 @@
 				</div>
 				<div class="shop_box">
 					<ul class="">
-							<li th:each="a:${RecGoods}">
+							<li th:each="a:${SEGoods}">
 								<span class="sPic">
 									<a href=""  th:href="@{/mall/goods/detail(goods_id=${a.goods_id})}">
 		                          	  	<img alt=""  th:src="@{${fileServicePath}+'/'+${a.filePath.path}+'/'+${a.filePath.fileidname}+'.'+${a.filePath.filetype}}" th:alt="'《'+${a.goods_name}+'》'" th:title="'《'+${a.goods_name}+'》'">
