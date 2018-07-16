@@ -236,6 +236,7 @@
 		</div>
 	</div>
 	<script type="text/javascript" th:inline="javascript">
+	//首页分类
 	var ca=[[${goodsCategoryList}]];
 	$(".left_menu_box").html(buildMenu(ca));
 
@@ -259,19 +260,19 @@
           	   
           	  if(obj[index].parent_id==''){
           	     str += '<dl class="menu_dl">';
-          		 str += '<dt>'+ obj[index].category_name+'';
-                 str += "</dt>";
+          		 str += '<dt><a href="/mall/goods/list?goodsInfo.category_id='+obj[index].category_id+'">'+ obj[index].category_name+'';
+                 str += "</a></dt>";
 
                  str += buildMenu(obj[index].goodsCategoryList); 
                  str += '</dl>';
 
               	}else{
                   	if(tier>=3){
-                  			str += '<a href="'+obj[index].category_id+'">'+ obj[index].category_name+'';	
+                  			str += '<a href="/mall/goods/list?goodsInfo.category_id='+obj[index].category_id+'">'+ obj[index].category_name+'';	
                   			str += '</a>';
                           	
                     }else if(tier=2){
-                    	str += '<dd><a href="'+obj[index].category_id+'">'+ obj[index].category_name+'';
+                    	str += '<dd><a href="/mall/goods/list?goodsInfo.category_id='+obj[index].category_id+'">'+ obj[index].category_name+'';
                   		str += '</a>';
                   		if(typeof(obj[index].goodsCategoryList) ==="object"){
                     		str += '<div class="menu_three">';

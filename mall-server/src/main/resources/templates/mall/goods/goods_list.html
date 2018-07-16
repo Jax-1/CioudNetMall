@@ -23,7 +23,7 @@
 						<div class="header_div">
 							<div class="left_lab">职位:</div>
 							<ul class="memu_ul position">
-							  <li class="active"><a href="javascript:">八大美院</a></li>
+							  <li><a href="javascript:">八大美院</a></li>
                               <li><a hhref="javascript:">国家画院</a></li>
                               <li><a href="javascript:">国家级工艺美术师</a></li>
                               <li><a href="javascript:">中国美协主席团</a></li>
@@ -84,22 +84,27 @@
 						<input type="hidden" id="enviroment" name="goodsInfo.enviroment" />
 						<input type="hidden" id="standard" name="goodsInfo.standard" />
 						<input type="hidden" id="category_id" name="goodsInfo.category_id" />
+						<input type="hidden" id="salesSort" name="salesSort"  />
+						<input type="hidden" id="popularitySort" name="popularitySort"  />
+						<input type="hidden" id="priceSort" name="priceSort" />		
 						</form>
 					</div>
 				</div>
 				<div class="shop_boxs">
 					<h3 class="tit_bar">
 						<b>默认排序</b>
-						<span>销量↓</span>
-						<span>价格↓</span>
-						<span>人气↓</span>
+						<span id="xiaoliang">销量<b>↓</b></span>
+						<span id="jiage">价格<b>↓</b></span>
+						<span id="renqi">人气<b>↓</b></span>
 						<span class="f_r">共<i>100</i>件作品</span>
 					</h3>
 					<ul class="list_item">
 							
 		                   <li th:each="a:${list.dataList}">
 								<span class="sPic">
-		                            <img alt=""  th:src="@{${fileServicePath}+'/'+${a.filePath.path}+'/'+${a.filePath.fileidname}+'.'+${a.filePath.filetype}}">
+									<a th:href="@{/mall/goods/detail(goods_id=${a.goods_id})}">
+		                            	<img alt=""  th:src="@{${fileServicePath}+'/'+${a.filePath.path}+'/'+${a.filePath.fileidname}+'.'+${a.filePath.filetype}}">
+		                        	</a>
 		                        </span>
 		                        <p><a  th:text="${a.auth.position}+'-'+${a.auth.authorname}">中国美术家协会会员 楚英</a></p>
 		                        <p><a href="" th:text="'《'+${a.goods_name}+'》'" th:href="@{/mall/goods/detail(goods_id=${a.goods_id})}">《新华一角》</a></p>
@@ -201,14 +206,14 @@
 
 	 //分类子分类显示
 	 $(".classify_list>.f_list>a").hover(function(){
-		 $(this).parent().addClass('active');
-		 $(this).parent().siblings().removeClass('active');
+		 //$(this).parent().addClass('active');
+		// $(this).parent().siblings().removeClass('active');
 		 $(this).parent().children('.c_list').show();
 		 $(this).parent().siblings().children('.c_list').hide()
 		})
 	 $(".f_list .c_list .left_textbody").hover(function(){
-		 $(this).parent().addClass('active');
-		 $(this).parent().siblings().removeClass('active');
+		 //$(this).parent().addClass('active');
+		 //$(this).parent().siblings().removeClass('active');
 		 $(this).parent().children('.cc_list').show();
 		 $(this).parent().siblings().children('.cc_list').hide()
 		})
@@ -245,7 +250,31 @@
 			$(input).val($(this).text())
 		})
 	}
-
+	
+	//销量、价格、人气排序
+	
+	sortName('#xiaoliang','#salesSort');
+	sortName('#jiage','#priceSort');
+	sortName('#renqi','#popularitySort');
+	
+	function sortName(dom,input){
+		$(dom).click(function(){
+			if($(input).val()==''){
+				$(input).val('DESC');
+				$(dom).find('b').text('↓');
+			}else{
+				if($(input).val()=='DESC'){
+					$(input).val('ASC');
+					$(dom).find('b').text('↑');
+				}else{
+					$(input).val('DESC');
+					$(dom).find('b').text('↓');
+				}
+			}
+			
+		})
+		
+	}
 
 
 	
