@@ -2,6 +2,8 @@ package com.mall.entity.order;
 
 import java.util.Date;
 
+import com.mall.entity.cms.FilePath;
+
 public class OrderDetails {
     private Integer order_details_id;
 
@@ -26,8 +28,22 @@ public class OrderDetails {
     private Date create_time;
 
     private String image;
+    
+    /**
+	 * 关联图片信息表
+	 */
+	private FilePath  filePath;
+	
 
-    public Integer getOrder_details_id() {
+    public FilePath getFilePath() {
+		return filePath;
+	}
+
+	public void setFilePath(FilePath filePath) {
+		this.filePath = filePath;
+	}
+
+	public Integer getOrder_details_id() {
         return order_details_id;
     }
 

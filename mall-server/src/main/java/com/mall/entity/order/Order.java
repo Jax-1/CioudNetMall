@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.mall.entity.cms.FilePath;
 import com.mall.entity.login.User;
 import com.mall.util.DateFormatUtil;
 import com.mall.util.SessionUtil;
@@ -50,6 +51,8 @@ public class Order {
 	 * 关联商品信息表
 	 */
 	private List<OrderDetails> orderDetailsList;
+	
+	
 	
 	
 	public List<OrderDetails> getOrderDetailsList() {

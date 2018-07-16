@@ -430,13 +430,14 @@
 		    		if(data!=null&&data.res=='1'){
 		    			console.log(data);
 		    			if($("#id").val()==""){
+		    				console.log(data.obj);
 		    				//添加成功
 			    			address.push(data.obj);
 			    			items='<tr >'+
-						       ' <td  id="name+'+address.length+'">'+data.obj.name+'</td>'+
-						        '<td id="address+'+address.length+'">'+data.obj.province+"&nbsp&nbsp"+data.obj.city+"&nbsp&nbsp"+data.obj.area+'</td>'+
-						        '<td class="tl" id="street+'+address.length+'">'+data.obj.street+'</td>'+
-						        '<td><p><i class="icon-phone" id="phone+'+address.length+'">'+data.obj.phone+'</i></p>'+
+						       ' <td  id="name'+address.length+'">'+data.obj.name+'</td>'+
+						        '<td id="address'+address.length+'">'+data.obj.province+"&nbsp&nbsp"+data.obj.city+"&nbsp&nbsp"+data.obj.area+'</td>'+
+						        '<td class="tl" id="street'+address.length+'">'+data.obj.street+'</td>'+
+						        '<td><p><i class="icon-phone" id="phone'+address.length+'">'+data.obj.phone+'</i></p>'+
 						        '<td></td>'+
 						        '<td class="ncm-table-handle"><span>'+
 				                 '   <a  class="btn-blue" href="javascript:editAddress(this,'+data.obj.id+','+address.length+');"><i class="icon-pencil2" ></i>'+
@@ -448,6 +449,7 @@
 						      '</tr>'
 			    			$("#tbody_add").append(items);
 		    			}else{
+		    				console.log(data.obj.name);
 		    				//修改成功
 		    				address[i]=data.obj;
 		    				$("#name"+i).text(data.obj.name);
@@ -513,36 +515,53 @@
 						<th>交易操作</th>
 					</tr>
 				</thead>
-				<tbody>
+				<tbody th:each="a:${order.dataList}">
 					<tr class="tb_tit">
 						<td colspan="6" >
-							订单号：<span class="order_num">1000000033710601</span>
-							下单时间：<span>2018-06-06 19:26:39</span>
+							订单号：<span class="order_num" th:text="${a.order_number}">1000000033710601</span>
+							下单时间：<span  th:text="${#dates.format(a.create_time,'yyyy-MM-dd HH:mm:ss')}">2018-06-06 19:26:39</span>
 						</td>
 					</tr>
 					<tr class="t_p"><td colspan="6"></td></tr>
-					<tr>
+					<div th:each="d:${a.orderDetailsList}">
+					<tr >
 						<td width="300px">
 							<div class="shop_img">
 								<div class="img_link">
 									<a href="">
-									<img src="images/u137.png" alt="">	
+									<img  alt="" th:src="@{${fileServicePath}+'/'+${d.filePath.path}+'/'+${d.filePath.fileidname}+'.'+${d.filePath.filetype}}" >	
 									</a>
 								</div>
 								<div class="shop_tit">
-									<a href="">职业画家 李忠明《水仙》</a>
+									<a th:href="@{/mall/goods/detail(goods_id=${d.goods_id})}" th:text="${d.goods_name}">职业画家 李忠明《水仙》</a>
 								</div>
 							</div>
 						</td>
-						<td>120</td>
-						<td>1</td>
+						<td th:text="${d.details_amount}">120</td>
+						<td th:text="${d.num}">1</td>
 						<td class="order_price">
-							<p class="price">140.00</p>
-							<p>(含运费20.00)</p>
-							<p>在线付款</p>
+						<p class="price" th:text="${d.details_amount}">140.00</p>
 						</td>
 						<td class="order_state">
-							<p>待付款</p>
+						</td>
+						<td>
+						</td>
+					</tr>
+					</div>
+					<tr>
+					<td width="300px">
+							
+						</td>
+						<td></td>
+						<td></td>
+						<td class="order_price">
+							<p class="price" th:text="${a.total_amount}">140.00</p>
+							<p th:text="'含运费:'+${a.postage_amount}">(含运费20.00)</p>
+							<p >在线付款</p>
+						</td>
+						<td class="order_state">
+							<p th:text="${a.pay_state=='2'}?'已付款':'待付款'">待付款</p>
+							
 							<p class="a_link"><a href="">查看详情</a></p>
 						</td>
 						<td>
@@ -556,51 +575,9 @@
 							</div>
 						</td>
 					</tr>
+					
 				</tbody>
-				<tbody>
-					<tr class="tb_tit">
-						<td colspan="6" >
-							订单号：<span class="order_num">1000000033710601</span>
-							下单时间：<span>2018-06-06 19:26:39</span>
-						</td>
-					</tr>
-					<tr class="t_p"><td colspan="6"></td></tr>
-					<tr>
-						<td width="300px">
-							<div class="shop_img">
-								<div class="img_link">
-									<a href="">
-									<img src="images/u137.png" alt="">	
-									</a>
-								</div>
-								<div class="shop_tit">
-									<a href="">职业画家 李忠明《水仙》</a>
-								</div>
-							</div>
-						</td>
-						<td>120</td>
-						<td>1</td>
-						<td class="order_price">
-							<p class="price">140.00</p>
-							<p>(含运费20.00)</p>
-							<p>在线付款</p>
-						</td>
-						<td class="order_state">
-							<p>待付款</p>
-							<p class="a_link"><a href="">查看详情</a></p>
-						</td>
-						<td>
-							<div class="order_btn">
-								<div class="btn order_pay">
-									订单支付
-								</div>
-								<div class="btn order_cancel">
-									取消支付
-								</div>
-							</div>
-						</td>
-					</tr>
-				</tbody>
+				
 			</table>
 			
 			<div class="pagination_Box">

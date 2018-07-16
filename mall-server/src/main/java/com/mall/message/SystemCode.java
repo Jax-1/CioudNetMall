@@ -131,6 +131,8 @@ public class SystemCode {
 	public final static String GOODS_PAGE="GOODS_PAGE";
 	public final static String MALL_GOODS_REC_PAGE="MALL_GOODS_REC_PAGE";
 	public final static String MALL_GOODS_SHUF_PAGE="MALL_GOODS_SHUF_PAGE";
+	public final static String ORDER_PAGE="ORDER_PAGE";
+	public final static String MALL_ORDER_PAGE="MALL_ORDER_PAGE";
 	
 	
 	//短信配置

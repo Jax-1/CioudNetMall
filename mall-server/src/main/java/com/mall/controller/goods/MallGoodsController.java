@@ -157,6 +157,7 @@ public class MallGoodsController extends AbstractController{
 	public String toGoodsList(Model model,Goods goods,PageResult<Goods> list) {
 		int pageSize  =  Integer.parseInt(cacheService.getCache(SystemCode.PAGE).get(SystemCode.GOODS_PAGE));
 		list.setPageSize(pageSize);
+		
 		list = goodsService.queryByPageFront(list, goods);
 		//查询所有分类
 		List<GoodsCategory> goodsCategoryList = goodsCategoryService.getGoodsCategoryList(null);

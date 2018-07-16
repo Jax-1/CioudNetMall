@@ -345,7 +345,11 @@ SELECT
 FROM
 	(
 	<!-- 排序 -->
-	<if test="salesSort!=null or popularitySort!=null">
+	<if test="salesSort!=null and popularitySort!='' ">
+		SELECT * FROM (
+	
+	</if>
+	<if test="salesSort!=null and popularitySort!='' ">
 		SELECT * FROM (
 	
 	</if>
@@ -374,47 +378,47 @@ FROM
 WHERE
 	t_goods.del_state = 'N' 
 			<!-- 分类 -->
-			<if test="goodsInfo!=null and goodsInfo.category_id!=null">
+			<if test="goodsInfo!=null and goodsInfo.category_id!=null and goodsInfo.category_id!=''">
 				and t_goods_info.category_id=#{goodsInfo.category_id}
 			</if>
 			
-			<if test="is_marketable!=null">
+			<if test="is_marketable!=null and  is_marketable!=''">
 				and t_goods.is_marketable=#{is_marketable}
 			</if>
-			<if test="recommend!=null">
+			<if test="recommend!=null and recommend!=''">
 				and t_goods.recommend=#{recommend}
 			</if>
-			<if test="classic!=null">
+			<if test="classic!=null and classic!=''">
 				and t_goods.classic=#{classic}
 			</if>
-			<if test="new_product!=null">
+			<if test="new_product!=null and new_product!=''">
 				and t_goods.new_product=#{new_product}
 			</if>
-			<if test="goods_name!=null">
+			<if test="goods_name!=null and goods_name!=''">
 				AND t_goods.goods_name LIKE CONCAT('%',#{goods_name},'%')
 			</if>
-			<if test="goodsInfo!=null and goodsInfo.environment!=null">
+			<if test="goodsInfo!=null and goodsInfo.environment!=null and goodsInfo.environment!=''">
 				AND t_goods_info.environment=#{goodsInfo.environment}
 			</if>
-			<if test="goodsInfo!=null and goodsInfo.standard!=null">
+			<if test="goodsInfo!=null and goodsInfo.standard!=null and goodsInfo.standard!=''">
 				AND t_goods_info.standard=#{goodsInfo.standard}
 			</if>
 		)D left join t_cms_author on D.auth_id=t_cms_author.id
 			<where>
-			<if test="auth!=null and auth.position!=null">
+			<if test="auth!=null and auth.position!=null and auth.position!=''">
 				t_cms_author.position=#{auth.position}
 			
 			</if>
 			</where>
 			<!-- 排序 -->
 			<!-- 人气 -->
-			<if test="popularitySort!=null">
+			<if test="popularitySort!=null and popularitySort!=''">
 			) G LEFT JOIN 
 			(SELECT  count(*) as countnum ,good_id FROM t_history_goods   group by good_id ) H ON H.good_id=G.goods_id
 			
 			</if>
 			<!-- 销量 -->
-			<if test="salesSort!=null">
+			<if test="salesSort!=null and salesSort!=''">
 				) G LEFT JOIN 
 			(SELECT  count(*) as countnum ,goods_id as goods_id_d FROM t_order_details   group by goods_id ) H ON H.goods_id_d=G.goods_id
 			
@@ -424,7 +428,7 @@ WHERE
 	LEFT JOIN t_goods_price ON A.goods_price_id = t_goods_price.price_id 
 	<where>
 			  
-			 <if test="goodsPrice!=null and goodsPrice.sale!=null">
+			 <if test="goodsPrice!=null and goodsPrice.sale!=null and goodsPrice.sale!=''">
 			 	t_goods_price.sale=#{goodsPrice.sale}
 			 </if>
 			 
@@ -435,15 +439,15 @@ WHERE
 	LEFT JOIN t_file_path D ON C.image = D.fileid 
 ORDER BY
 	<!-- 排序 -->
-	<if test="popularitySort!=null">
+	<if test="popularitySort!=null and popularitySort!=''">
 		C.countnum ${popularitySort},
 	</if>
 	<!-- 销量 -->
-	<if test="salesSort!=null">
+	<if test="salesSort!=null and salesSort!=''">
 		C.countnum ${salesSort},
 	</if>
 	<!-- 价格 -->
-	<if test="priceSort!=null">
+	<if test="priceSort!=null and priceSort!=''">
 		C.retail_price ${priceSort},
 	</if>
 	

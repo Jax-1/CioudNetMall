@@ -56,8 +56,10 @@ public class OrderAddressController  extends AbstractController{
 		ProcessResult<OrderAddress> res=new ProcessResult<OrderAddress>();
 		try {
 			if(Validate.notNull(orderAddress.getId())) {
+				logger.info("修改用户收货地址！");
 				orderAddressService.updateByPrimaryKeySelective(orderAddress);
 			}else {
+				logger.info("添加用户收货地址！");
 				orderAddress.setUser_id(SessionUtil.getUser(request).getUser_name());
 				orderAddress.setCreate_time(DateFormatUtil.getDate());
 				orderAddressService.insertSelective(orderAddress);

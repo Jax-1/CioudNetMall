@@ -1,6 +1,7 @@
 package com.mall.controller.login;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -13,14 +14,18 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.mall.controller.AbstractController;
 import com.mall.entity.login.User;
 import com.mall.entity.login.UserInfo;
+import com.mall.entity.order.Order;
 import com.mall.entity.order.OrderAddress;
 import com.mall.message.ProcessResult;
 import com.mall.message.SystemCode;
 import com.mall.service.login.UserInfoService;
 import com.mall.service.login.UserLoginService;
 import com.mall.service.order.OrderAddressService;
+import com.mall.service.order.OrderService;
+import com.mall.service.sys.CacheService;
 import com.mall.util.DateFormatUtil;
 import com.mall.util.MD5Util;
+import com.mall.util.PageResult;
 import com.mall.util.SessionUtil;
 import com.mall.util.Validate;
 
@@ -38,6 +43,10 @@ public class UserManagementController extends AbstractController{
 	private UserInfoService userInfoService;
 	@Resource
 	private OrderAddressService orderAddressService;
+	@Resource
+	private OrderService orderService;
+	@Resource
+	private CacheService cacheService;
 	/**
 	 * 跳转用户管理界面
 	 * @param model
@@ -78,8 +87,27 @@ public class UserManagementController extends AbstractController{
 		model.addAttribute("manager", "address");
 		return "mall/index";
 	}
+	/**
+	 * 用户订单管理
+	 * @param model
+	 * @param request
+	 * @return
+	 */
 	@RequestMapping("/order")
-	public String toUserOrder(Model model,HttpServletRequest request) {
+	public String toUserOrder(Model model,HttpServletRequest request,PageResult<Order> list,Order order) {
+		int pageSize  =  Integer.parseInt(cacheService.getCache(SystemCode.PAGE).get(SystemCode.GOODS_PAGE));
+		list.setPageSize(pageSize);
+		User user = SessionUtil.getUser(request);
+		order.setUser_id(user.getUser_name());
+		list =orderService.queryByPageFront(list,order);
+		//文件服务器路径
+		Map<String, String> cache = cacheService.getCache(SystemCode.FILE_SERVICE);
+		String url=cache.get(SystemCode.FILE_SERVICE_URL);
+		String port=cache.get(SystemCode.FILE_SERVICE_PORT);
+		String filePath=cache.get(SystemCode.FILE_SERVICE_FILES_PATH);
+		String fileUrlPrefix=url+":"+port+"/"+filePath;
+		model.addAttribute("fileServicePath", fileUrlPrefix);
+		model.addAttribute("order", list);
 		model.addAttribute("page", "mall/login/my_center");
 		model.addAttribute("manager", "order");
 		return "mall/index";
