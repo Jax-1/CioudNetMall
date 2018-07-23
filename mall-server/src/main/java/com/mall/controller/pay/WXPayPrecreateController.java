@@ -1,8 +1,10 @@
 package com.mall.controller.pay;
 import java.awt.image.BufferedImage;
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.annotation.Resource;
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -16,13 +18,14 @@ import com.github.wxpay.sdk.WXPay;
 import com.github.wxpay.sdk.WXPayConstants;
 import com.github.wxpay.sdk.WXPayUtil;
 import com.mall.controller.AbstractController;
+import com.mall.entity.order.Order;
+import com.mall.service.order.OrderService;
 
 /**
  * 微信支付-扫码支付.
  * <p>
  * detailed description
  *
- * @author Mengday Zhang
  * @version 1.0
  * @since 2018/6/18
  */
@@ -34,6 +37,8 @@ public class WXPayPrecreateController extends AbstractController{
 
     @Autowired
     private WXPayClient wxPayClient;
+    @Resource
+	private OrderService orderService;
 
     /**
      * 扫码支付 - 统一下单
@@ -41,15 +46,19 @@ public class WXPayPrecreateController extends AbstractController{
      *
      * <a href="https://pay.weixin.qq.com/wiki/doc/api/native.php?chapter=9_1">扫码支付API</a>
      */
-    @PostMapping("")
-    public void precreate(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        Map<String, String> reqData = new HashMap<>();
+    @RequestMapping("")
+    public void precreate(HttpServletRequest request, HttpServletResponse response,Order order) throws Exception {
+       //获取订单信息
+    	order=orderService.selectInfo(order);
+    	BigDecimal total_amount = order.getTotal_amount().multiply(new BigDecimal(100));
+    	logger.info("支付金额："+total_amount.setScale(0,BigDecimal.ROUND_DOWN).toString()+"分");
+    	Map<String, String> reqData = new HashMap<>();
         reqData.put("out_trade_no", String.valueOf(System.nanoTime()));
         reqData.put("trade_type", "NATIVE");
         reqData.put("product_id", "1");
         reqData.put("body", "商户下单");
         // 订单总金额，单位为分
-        reqData.put("total_fee", "2");
+        reqData.put("total_fee", total_amount.setScale(0,BigDecimal.ROUND_DOWN).toString());
         // APP和网页支付提交用户端ip，Native支付填调用微信支付API的机器IP。
         reqData.put("spbill_create_ip", "14.23.150.211");
         // 异步接收微信支付结果通知的回调地址，通知url必须为外网可访问的url，不能携带参数。
@@ -57,7 +66,7 @@ public class WXPayPrecreateController extends AbstractController{
         // 自定义参数, 可以为终端设备号(门店号或收银设备ID)，PC网页或公众号内支付可以传"WEB"
         reqData.put("device_info", "");
         // 附加数据，在查询API和支付通知中原样返回，可作为自定义参数使用。
-        reqData.put("attach", "");
+        reqData.put("attach", order.getOrder_number());
 
         /**
          * {

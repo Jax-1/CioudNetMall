@@ -1,5 +1,6 @@
 package com.mall.entity.order;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -17,13 +18,13 @@ public class Order {
 
 	private String user_id;
 
-	private Long total_amount;
+	private BigDecimal total_amount;
 
-	private Long paid_amount;
+	private BigDecimal paid_amount;
 
-	private Long postage_amount;
+	private BigDecimal postage_amount;
 
-	private Long discount_amount;
+	private BigDecimal discount_amount;
 
 	private Integer receive_id;
 
@@ -92,35 +93,35 @@ public class Order {
 		this.user_id = user_id;
 	}
 
-	public Long getTotal_amount() {
+	public BigDecimal getTotal_amount() {
 		return total_amount;
 	}
 
-	public void setTotal_amount(Long total_amount) {
+	public void setTotal_amount(BigDecimal total_amount) {
 		this.total_amount = total_amount;
 	}
 
-	public Long getPaid_amount() {
+	public BigDecimal getPaid_amount() {
 		return paid_amount;
 	}
 
-	public void setPaid_amount(Long paid_amount) {
+	public void setPaid_amount(BigDecimal paid_amount) {
 		this.paid_amount = paid_amount;
 	}
 
-	public Long getPostage_amount() {
+	public BigDecimal getPostage_amount() {
 		return postage_amount;
 	}
 
-	public void setPostage_amount(Long postage_amount) {
+	public void setPostage_amount(BigDecimal postage_amount) {
 		this.postage_amount = postage_amount;
 	}
 
-	public Long getDiscount_amount() {
+	public BigDecimal getDiscount_amount() {
 		return discount_amount;
 	}
 
-	public void setDiscount_amount(Long discount_amount) {
+	public void setDiscount_amount(BigDecimal discount_amount) {
 		this.discount_amount = discount_amount;
 	}
 

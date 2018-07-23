@@ -1,5 +1,6 @@
 package com.mall.entity.order;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 import com.mall.entity.cms.FilePath;
@@ -23,7 +24,7 @@ public class OrderDetails {
 
     private Integer num;
 
-    private Long details_amount;
+    private BigDecimal details_amount;
 
     private Date create_time;
 
@@ -115,11 +116,11 @@ public class OrderDetails {
         this.num = num;
     }
 
-    public Long getDetails_amount() {
+    public BigDecimal getDetails_amount() {
         return details_amount;
     }
 
-    public void setDetails_amount(Long details_amount) {
+    public void setDetails_amount(BigDecimal details_amount) {
         this.details_amount = details_amount;
     }
 

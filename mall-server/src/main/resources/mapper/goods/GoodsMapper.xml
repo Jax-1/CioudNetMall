@@ -345,7 +345,7 @@ SELECT
 FROM
 	(
 	<!-- 排序 -->
-	<if test="salesSort!=null and popularitySort!='' ">
+	<if test="popularitySort!=null and popularitySort!=''">
 		SELECT * FROM (
 	
 	</if>

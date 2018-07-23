@@ -275,13 +275,13 @@
 				form = $("<form></form>")
 		        form.attr('action',"/mall/order/pay")
 		        form.attr('method','post')
-		        input1 = $("<input type='text' name='total_amount' value='"+toLong(total_amount)+"'/>");
-				input2 = $("<input type='text' name='postage_amount' value='"+toLong(postage_amount)+"'/>");
+		        input1 = $("<input type='text' name='total_amount' value='"+total_amount+"'/>");
+				input2 = $("<input type='text' name='postage_amount' value='"+postage_amount+"'/>");
 				input3 = $("<input type='text' name='receive_id' value='"+receive_id+"'/>");
 				input4 = $("<input type='text' name='comment' value='"+comment+"'/>");
 				input5 = $("<input type='text' name='goods_id' value='"+goods_id+"'/>");
 				input6 = $("<input type='text' name='num' value='"+num+"'/>");
-				input7 = $("<input type='text' name='details_amount' value='"+toLong(details_amount)+"'/>");
+				input7 = $("<input type='text' name='details_amount' value='"+details_amount+"'/>");
 				input8 = $("<input type='text' name='image' value='"+image+"'/>");
 				input9 = $("<input type='text' name='payment_id' value='"+payment_id+"'/>");
 				input10 = $("<input type='text' name='price_id' value='"+goods.goods_price_id+"'/>");
@@ -323,11 +323,22 @@
     	//邮费
     	var postage_amount=$("#postage_amount").text();
     	//总计
-    	var total_amount=parseFloat(paid)+parseFloat(postage_amount);
+    	var total_amount=(toDecimal(paid)+toDecimal(postage_amount)).toFixed(2);
+    	console.log(total_amount);
     	$("#total_amount").text(total_amount);
     	$("#sum_amount").text(total_amount);
     	
     }
+  	//保留两位小数 
+    //功能：将浮点数四舍五入，取小数点后2位 
+    function toDecimal(x) { 
+     var f = parseFloat(x); 
+     if (isNaN(f)) { 
+      return; 
+     } 
+     f = Math.round(x*100)/100; 
+     return f; 
+    } 
     $(function(){
     	//初始化显示默认地址
     	var address=[[${address}]];

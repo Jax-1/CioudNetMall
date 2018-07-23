@@ -72,29 +72,77 @@ public class MyWXPayConfig implements WXPayConfig{
 	@Override
 	public String getAppID() {
 		// TODO Auto-generated method stub
-		return null;
+		return appID;
+	}
+
+	public String getSandboxKey() {
+		return sandboxKey;
+	}
+
+	public void setSandboxKey(String sandboxKey) {
+		this.sandboxKey = sandboxKey;
+	}
+
+	public String getCertPath() {
+		return certPath;
+	}
+
+	public void setCertPath(String certPath) {
+		this.certPath = certPath;
+	}
+
+	public String getNotifyUrl() {
+		return notifyUrl;
+	}
+
+	public void setNotifyUrl(String notifyUrl) {
+		this.notifyUrl = notifyUrl;
+	}
+
+	public void setAppID(String appID) {
+		this.appID = appID;
+	}
+
+	public void setMchID(String mchID) {
+		this.mchID = mchID;
+	}
+
+	public void setKey(String key) {
+		this.key = key;
+	}
+
+	public void setUseSandbox(Boolean useSandbox) {
+		this.useSandbox = useSandbox;
+	}
+
+	public void setHttpConnectTimeoutMs(int httpConnectTimeoutMs) {
+		this.httpConnectTimeoutMs = httpConnectTimeoutMs;
+	}
+
+	public void setHttpReadTimeoutMs(int httpReadTimeoutMs) {
+		this.httpReadTimeoutMs = httpReadTimeoutMs;
 	}
 
 	@Override
 	public int getHttpConnectTimeoutMs() {
 		// TODO Auto-generated method stub
-		return 0;
+		return httpConnectTimeoutMs;
 	}
 
 	@Override
 	public int getHttpReadTimeoutMs() {
 		// TODO Auto-generated method stub
-		return 0;
+		return httpReadTimeoutMs;
 	}
 
 	@Override
 	public String getMchID() {
 		// TODO Auto-generated method stub
-		return null;
+		return mchID;
 	}
 
 	public boolean getUseSandbox() {
 		// TODO Auto-generated method stub
-		return false;
+		return useSandbox;
 	}
 }

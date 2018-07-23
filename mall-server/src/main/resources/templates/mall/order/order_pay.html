@@ -49,7 +49,7 @@
             </div>
             <div class="ncc-bottom">
             <!-- javascript:void(0) -->
-                <a href="/mall/order/real"
+                <a href="javascript:submitOrder()"
                  class="ncc-btn-green" >确认提交支付</a> 
             </div>
         </div>
@@ -58,7 +58,24 @@
     <div class="footer_baozhen">
         <img src="/mall/images/baozhen.png" alt="">
     </div>
-	<script type="text/javascript"> 
+	<script type="text/javascript" th:inline="javascript"> 
+	var order=[[${order}]];
+	var orderDetails=[[${orderDetails}]];
+	function submitOrder(){
+		//验证商品库存信息
+		$.post("/mall/inventory/retrieve",{productNumber:orderDetails.goods_id,amount:orderDetails.num},function(data){
+			console.log(data);
+			if(data!=null&&data.res=="1"){
+				//有库存
+				//跳转到支付界面
+				window.location.href="/mall/order/real?order_number="+order.order_number;
+			}else{
+				//库存不足
+				
+			}
+			});
+	}
+	
 	console.log([[${order}]]);
 	
 	</script>

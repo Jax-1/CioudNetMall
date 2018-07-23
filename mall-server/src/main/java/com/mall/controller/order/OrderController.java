@@ -1,5 +1,6 @@
 package com.mall.controller.order;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.mall.controller.AbstractController;
 import com.mall.entity.cms.AuthorWithBLOBs;
 import com.mall.entity.goods.Goods;
+import com.mall.entity.goods.GoodsPrice;
 import com.mall.entity.login.User;
 import com.mall.entity.order.Order;
 import com.mall.entity.order.OrderAddress;
@@ -155,7 +157,42 @@ public class OrderController extends AbstractController{
 	}
 	
 	@RequestMapping("/real")
-	public String toOrderReal(Model model) {
+	public String toOrderReal(Model model,Order orderin) {
+		logger.info("订单支付！订单号："+orderin.getOrder_number());
+		Order order = orderService.selectInfo(orderin);
+		BigDecimal total_amount=BigDecimal.ZERO;
+		if(Validate.notNull(order)) {
+			List<OrderDetails> orderDetailsList = order.getOrderDetailsList();
+			for(OrderDetails orderDetails:orderDetailsList) {
+				Goods goods=new Goods();
+				goods.setGoods_id(orderDetails.getGoods_id());
+				goods=goodsService.selectInfo(goods);
+				//校验订单与商品价格
+				GoodsPrice goodsPrice = goods.getGoodsPrice();
+				logger.info("是否优惠订单："+goodsPrice.getSale());
+				if("Y".equals(goodsPrice.getSale())) {
+					//优惠价格
+					total_amount=total_amount.add(goodsPrice.getSale_price());
+				}else {
+					total_amount=total_amount.add(goodsPrice.getRetail_price());
+				}
+				
+			}
+			//订单总金额+邮费
+			total_amount=total_amount.add(order.getPostage_amount());
+			
+		}
+		logger.info("订单金额："+order.getTotal_amount()+"  校验金额："+total_amount);
+		if(total_amount.compareTo(order.getTotal_amount())==0) {
+			//金额正确
+			logger.info("订单金额校验完成！订单号："+order.getOrder_number());
+			model.addAttribute("order", order);
+			
+		}else {
+			//金额有误
+			logger.info("订单金额校验完成！金额有误！订单号："+order.getOrder_number());
+			model.addAttribute("order", order);
+		}
 		model.addAttribute("page", "mall/order/order_real");
 		return "mall/index";
 		

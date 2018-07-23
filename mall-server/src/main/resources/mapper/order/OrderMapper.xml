@@ -332,4 +332,6 @@ WHERE
 	) A
 	LEFT JOIN t_file_path B ON A.image = B.fileid
   </select>
+  <!-- 查询订单详细信息 -->
+  
 </mapper>
