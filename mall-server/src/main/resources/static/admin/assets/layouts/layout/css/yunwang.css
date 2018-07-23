@@ -104,3 +104,10 @@ li{
 .error{
 	color:red !important;
 }
+.wd-100{
+	width: 100px !important;
+}
+
+.order_list>tbody>tr>td{
+	vertical-align: middle !important;
+}

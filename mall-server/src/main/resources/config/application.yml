@@ -126,3 +126,11 @@ logging:
         org.apache.http.impl.conn: ERROR
         org.apache.http.wire: ERROR
 
+pay:
+  wxpay:
+    appID:  wx72158c5f2551e557
+    mchID: 1507332281
+    key:  wA1BZ3ptMYlHeMmpmidGtkqro8SVWEjW
+    sandboxKey: xxx
+    certPath: /pay/wx
+    useSandbox: false
