@@ -18,8 +18,11 @@ import com.github.wxpay.sdk.WXPay;
 import com.github.wxpay.sdk.WXPayConstants;
 import com.github.wxpay.sdk.WXPayUtil;
 import com.mall.controller.AbstractController;
+import com.mall.entity.login.User;
 import com.mall.entity.order.Order;
+import com.mall.entity.order.OrderDetails;
 import com.mall.service.order.OrderService;
+import com.mall.util.SessionUtil;
 
 /**
  * 微信支付-扫码支付.
@@ -51,22 +54,32 @@ public class WXPayPrecreateController extends AbstractController{
        //获取订单信息
     	order=orderService.selectInfo(order);
     	BigDecimal total_amount = order.getTotal_amount().multiply(new BigDecimal(100));
+    	//获取商品名称
+    	StringBuffer goodsNames=new StringBuffer();
+    	for(int i=0;i<order.getOrderDetailsList().size();i++) {
+    		goodsNames.append((order.getOrderDetailsList()).get(i).getGoods_name());
+    		if(order.getOrderDetailsList().size()>1&&order.getOrderDetailsList().size()!=i+1) {
+    			goodsNames.append("-");
+    		}
+    	}
+    	
     	logger.info("支付金额："+total_amount.setScale(0,BigDecimal.ROUND_DOWN).toString()+"分");
     	Map<String, String> reqData = new HashMap<>();
-        reqData.put("out_trade_no", String.valueOf(System.nanoTime()));
+        reqData.put("out_trade_no", order.getOrder_number());
         reqData.put("trade_type", "NATIVE");
         reqData.put("product_id", "1");
-        reqData.put("body", "商户下单");
+        reqData.put("body", goodsNames.toString());
         // 订单总金额，单位为分
         reqData.put("total_fee", total_amount.setScale(0,BigDecimal.ROUND_DOWN).toString());
+        reqData.put("total_fee", "2");
         // APP和网页支付提交用户端ip，Native支付填调用微信支付API的机器IP。
         reqData.put("spbill_create_ip", "14.23.150.211");
         // 异步接收微信支付结果通知的回调地址，通知url必须为外网可访问的url，不能携带参数。
-        reqData.put("notify_url", "http://3sbqi7.natappfree.cc/wxpay/precreate/notify");
+        reqData.put("notify_url", "/wxpay/precreate/notify");
         // 自定义参数, 可以为终端设备号(门店号或收银设备ID)，PC网页或公众号内支付可以传"WEB"
-        reqData.put("device_info", "");
+        reqData.put("device_info", "WEB");
         // 附加数据，在查询API和支付通知中原样返回，可作为自定义参数使用。
-        reqData.put("attach", order.getOrder_number());
+        reqData.put("attach", "");
 
         /**
          * {
@@ -128,7 +141,7 @@ public class WXPayPrecreateController extends AbstractController{
          * }
          */
         logger.info(reqData.toString());
-
+        logger.info("获取支付回调！支付订单号："+reqData.get("out_trade_no")+"支付结果："+reqData.get("return_code"));
         // 特别提醒：商户系统对于支付结果通知的内容一定要做签名验证,并校验返回的订单金额是否与商户侧的订单金额一致，防止数据泄漏导致出现“假通知”，造成资金损失。
         boolean signatureValid = wxPay.isPayResultNotifySignatureValid(reqData);
         if (signatureValid) {
@@ -138,7 +151,7 @@ public class WXPayPrecreateController extends AbstractController{
              * 判断该通知是否已经处理过，如果没有处理过再进行处理，如果处理过直接返回结果成功。
              * 在对业务数据进行状态检查和处理之前，要采用数据锁进行并发控制，以避免函数重入造成的数据混乱。
              */
-
+        	
             Map<String, String> responseMap = new HashMap<>(2);
             responseMap.put("return_code", "SUCCESS");
             responseMap.put("return_msg", "OK");
