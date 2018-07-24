@@ -490,7 +490,7 @@ ORDER BY
 	H.path, H.fileidname, H.filename, H.filetype, H.filesize, H.status status_f
 
 	FROM(
-	SELECT E.*,F.Amount
+	SELECT E.*,F.Amount,F.inventoryid inventoryid_in, F.StoreHouseNumber, F.ProductNumber
 		FROM
 			(
 				SELECT 

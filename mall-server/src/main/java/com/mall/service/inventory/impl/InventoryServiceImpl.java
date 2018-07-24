@@ -25,6 +25,10 @@ public class InventoryServiceImpl extends BaseServiceImpl<Inventory> implements 
 	public Inventory inventoryRetrieve(Inventory Inventory) {
 		return inventoryMapper.inventoryRetrieve(Inventory);
 	}
+	@Override
+	public int updateInventory(Inventory Inventory) {
+		return inventoryMapper.updateInventory(Inventory);
+	}
 
 	
 }

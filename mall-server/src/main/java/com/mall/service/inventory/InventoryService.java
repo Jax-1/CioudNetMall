@@ -10,5 +10,12 @@ public interface InventoryService extends IBaseService<Inventory>{
 	 * @return
 	 */
 	public  Inventory inventoryRetrieve(Inventory Inventory);
+	
+	/**
+	 * 更新库存信息
+	 * @param Inventory
+	 * @return
+	 */
+	public int updateInventory(Inventory Inventory);
 
 }

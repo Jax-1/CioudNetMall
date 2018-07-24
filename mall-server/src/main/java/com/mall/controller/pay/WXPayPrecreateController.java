@@ -18,10 +18,17 @@ import com.github.wxpay.sdk.WXPay;
 import com.github.wxpay.sdk.WXPayConstants;
 import com.github.wxpay.sdk.WXPayUtil;
 import com.mall.controller.AbstractController;
+import com.mall.entity.goods.Goods;
+import com.mall.entity.inventory.Inventory;
 import com.mall.entity.login.User;
 import com.mall.entity.order.Order;
 import com.mall.entity.order.OrderDetails;
+import com.mall.entity.payment.PaymentFlow;
+import com.mall.service.goods.GoodsService;
+import com.mall.service.inventory.InventoryService;
 import com.mall.service.order.OrderService;
+import com.mall.service.payment.PaymentFlowService;
+import com.mall.util.MapTrunPojoUtil;
 import com.mall.util.SessionUtil;
 
 /**
@@ -42,6 +49,12 @@ public class WXPayPrecreateController extends AbstractController{
     private WXPayClient wxPayClient;
     @Resource
 	private OrderService orderService;
+    @Resource
+    private PaymentFlowService paymentFlowService;
+    @Resource
+	private GoodsService goodsService;
+    @Resource
+    private InventoryService inventoryService;
 
     /**
      * 扫码支付 - 统一下单
@@ -62,6 +75,9 @@ public class WXPayPrecreateController extends AbstractController{
     			goodsNames.append("-");
     		}
     	}
+    	//锁库存信息行
+    	
+    	//锁库存信息行 END
     	
     	logger.info("支付金额："+total_amount.setScale(0,BigDecimal.ROUND_DOWN).toString()+"分");
     	Map<String, String> reqData = new HashMap<>();
@@ -151,7 +167,38 @@ public class WXPayPrecreateController extends AbstractController{
              * 判断该通知是否已经处理过，如果没有处理过再进行处理，如果处理过直接返回结果成功。
              * 在对业务数据进行状态检查和处理之前，要采用数据锁进行并发控制，以避免函数重入造成的数据混乱。
              */
-        	
+        	//判断支付状态
+        	if("SUCCESS".equals(reqData.get("result_code"))) {
+        		//支付成功
+        		//校验订单状态
+        		Order order =new Order();
+        		order.setOrder_number(reqData.get("out_trade_no"));
+        		order=orderService.selectInfo(order);
+        		
+        		//订单状态待支付
+        		if("1".equals(order.getPay_state())) {
+        			//修改库存信息
+        			for(OrderDetails orderDetails:order.getOrderDetailsList()) {
+        				Goods goods =new Goods();
+        				goods.setGoods_id(orderDetails.getGoods_id());
+        				goods=goodsService.selectInfo(goods);
+        				Inventory inventory=goods.getGoodsInfo().getInventory();
+        				inventory.setAmount(inventory.getAmount()-orderDetails.getNum());
+        				inventoryService.updateInventory(inventory);
+        			}
+        			
+        			//修改订单状态
+        			order.setPay_state("2".getBytes()[0]);
+        			order.setPayment_seq(reqData.get("transaction_id"));
+        			orderService.updateByPrimaryKeySelective(order);
+        			
+        			
+        		}
+        		
+        	}
+        	Object entity = MapTrunPojoUtil.map2Object(reqData, PaymentFlow.class);
+			//记录支付流水
+			paymentFlowService.insertSelective((PaymentFlow)entity );
             Map<String, String> responseMap = new HashMap<>(2);
             responseMap.put("return_code", "SUCCESS");
             responseMap.put("return_msg", "OK");

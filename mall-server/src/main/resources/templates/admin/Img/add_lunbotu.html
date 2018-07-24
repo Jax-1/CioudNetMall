@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>轮播图管理</title>
+    <link href="assets/global/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+    <link href="assets/global/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="assets/global/css/components.min.css" rel="stylesheet" id="style_components" type="text/css" />
+    <link href="assets/layouts/layout/css/layout.min.css" rel="stylesheet" type="text/css" />
+    <link href="assets/layouts/layout/css/themes/darkblue.min.css" rel="stylesheet" type="text/css" id="style_color" />
+    <link rel="stylesheet" href="assets/layouts/layout/css/yunwang.css">
+</head>
+
+<body>
+    <div class="page-content-wrapper">
+        <div class="page-content">
+            <div class="page-bar">
+                <ul class="page-breadcrumb">
+                    <li>
+                        <a href="index.html">首页</a>
+                        <i class="fa fa-circle"></i>
+                    </li>
+                    <li>
+                        <span>轮播图管理</span>
+                    </li>
+                </ul>
+            </div>
+            <h1 class="page-title"> 轮播图管理<small>轮播图和广告图管理</small></h1>
+            <!-- 内容展示 -->
+            <div class="row">
+                <div class="col-md-12">
+                    <form class="form-horizontal" role="form">
+                        <div class="form-body">
+                            <div class="form-group">
+                                <label class="col-md-2 control-label"><em>*</em>名称</label>
+                                <div class="col-md-3">
+                                    <input type="text" class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-2 control-label"><em>*</em>图片宽度（px）</label>
+                                <div class="col-md-3">
+                                    <input type="text" class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-2 control-label"><em>*</em>图片高度（px）</label>
+                                <div class="col-md-3">
+                                    <input type="text" class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-2 control-label"><em>*</em>图片位置</label>
+                                <div class="col-md-3">
+                                    <select class="form-control">
+                                        <option>商城首页顶部</option>
+                                        <option>广告位一</option>
+                                        <option>广告位二</option>
+                                        <option>广告位三</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-2 control-label"><em>*</em>图片上传</label>
+                                <div class="col-md-2">
+                                    <div class="file_img">
+                                        <input id="show_img_file" type="file" name="file" multiple="multiple" >
+                                         <label for="show_img_file">点击上传</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="shop_img" id="shop_img">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-2 control-label"></label>
+                                <div class="col-md-3">
+                                    <button type="submit" class="btn green">提交</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    <script src="assets/global/plugins/jquery.min.js" type="text/javascript"></script>
+    <script src="assets/global/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+    <script src="assets/global/scripts/app.min.js" type="text/javascript"></script>
+    <script src="assets/layouts/layout/scripts/layout.min.js" type="text/javascript"></script>
+</body>
+
+</html>

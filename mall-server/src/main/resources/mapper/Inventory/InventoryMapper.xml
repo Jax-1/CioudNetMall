@@ -102,4 +102,42 @@
   
   
   </select>
+  <update id="updateInventory" parameterType="com.mall.entity.inventory.Inventory">
+  insert into t_inventory
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="inventoryid != null">
+        inventoryid,
+      </if>
+      <if test="storeHouseNumber != null">
+        StoreHouseNumber,
+      </if>
+      <if test="productNumber != null">
+        ProductNumber,
+      </if>
+      <if test="amount != null">
+        Amount,
+      </if>
+      <if test="inStockTime != null">
+        InStockTime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="inventoryid != null">
+        #{inventoryid,jdbcType=VARCHAR},
+      </if>
+      <if test="storeHouseNumber != null">
+        #{storeHouseNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="productNumber != null">
+        #{productNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="amount != null">
+        #{amount,jdbcType=INTEGER},
+      </if>
+      <if test="inStockTime != null">
+        #{inStockTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  
+  </update>
 </mapper>
