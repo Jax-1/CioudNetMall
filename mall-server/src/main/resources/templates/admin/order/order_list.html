@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <title>订单列表</title>
-    <link rel="stylesheet" href="/mall/assets/layouts/layout/css/yunwang.css">
+    <link rel="stylesheet" href="/admin/assets/layouts/layout/css/yunwang.css">
 </head>
 
 <body>
@@ -27,30 +27,49 @@
             <!-- 内容展示 -->
             <div class="row">
                 <div class="col-md-12">
-                    <form class="form-inline">
+                    <form class="form-inline" action="/admin/order/list" id="selectform">
                         <div class="form-group">
                             <label for="">订单号</label>
-                            <input type="text" class="form-control" placeholder="订单号">
+                            <input type="text" class="form-control" placeholder="订单号" name="order_number" th:value="${orderentity!=null }?${orderentity.order_number}:''">
                         </div>
+                        <p>
                         <div class="form-group">
                             <label for="">收货人</label>
-                            <input type="text" class="form-control wd-100" placeholder="收货人">
+                            <input type="text" class="form-control wd-100" placeholder="收货人" name="orderAddress.name" th:value="${orderentity!=null and orderentity.orderAddress!=null}?${orderentity.orderAddress.name}:''">
                         </div>
+                        <p>
                         <div class="form-group">
-                            <label for="">订单状态 </label>
-                            <select class="form-control" name="status" id="status">
+                            <label for="">付款状态 </label>
+                            <select class="form-control" name="pay_state" >
                                 <option value="-1">请选择...</option>
-                                <option value="0" selected="">待确认</option>
-                                <option value="100">待付款</option>
-                                <option value="101">待发货</option>
-                                <option value="102">已完成</option>
-                                <option value="1">付款中</option>
-                                <option value="2">取消</option>
-                                <option value="3">无效</option>
-                                <option value="4">退货</option>
-                                <option value="6">部分发货</option>
+                                <option value="1" th:selected="${orderentity!=null and orderentity.pay_state=='1'}">待付款</option>
+                                <option value="2" th:selected="${orderentity!=null and orderentity.pay_state=='2'}">已付款</option>
                             </select>
                         </div>
+                        <div class="form-group">
+                        	<label for="">发货状态 </label>
+                            <select class="form-control" name="logistics_state" >
+                                <option value="-1">请选择...</option>
+                                <option value="1" th:selected="${orderentity!=null and orderentity.logistics_state=='1'}">待发货</option>
+                                <option value="4" th:selected="${orderentity!=null and orderentity.logistics_state=='4'}">部分发货</option>
+                                <option value="2" th:selected="${orderentity!=null and orderentity.logistics_state=='2'}">已发货</option>
+                                <option value="3" th:selected="${orderentity!=null and orderentity.logistics_state=='3'}">已确认收货</option>
+                                <option value="5" th:selected="${orderentity!=null and orderentity.logistics_state=='5'}">退货</option>
+                            </select>
+                            
+                        </div>
+                        <div class="form-group">
+                        	<label for="">订单状态 </label>
+                            <select class="form-control" name="del_state" >
+                                <option value="-1">请选择...</option>
+                                <option value="1" th:selected="${orderentity!=null and orderentity.del_state=='1'}">待确认</option>
+                                <option value="2" th:selected="${orderentity!=null and orderentity.del_state=='2'}">取消</option>
+                                <option value="3" th:selected="${orderentity!=null and orderentity.del_state=='3'}">无效</option>
+                                <option value="4" th:selected="${orderentity!=null and orderentity.del_state=='4'}">已完成</option>
+                            </select>
+                            
+                        </div>
+                        <p>
                         <button type="submit" class="btn btn-default green">搜索</button>
                     </form>
                 </div>
@@ -76,27 +95,29 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr class="odd gradeX">
+                                    <tr class="odd gradeX" th:each="a:${list.dataList}">
                                         <td>
                                             <label class="mt-checkbox mt-checkbox-single mt-checkbox-outline">
                                                 <input type="checkbox" class="checkboxes" value="1" />
                                                 <span></span>
                                             </label>
                                         </td>
-                                        <td> 19950</td>
+                                        <td th:text="${a.order_number}"> 19950</td>
                                         <td>
                                             <p>lj74txys</p>
-                                            <p>07-17 09:22</p>
+                                            <p th:text="${#dates.format(a.create_time,'yyyy-MM-dd HH:mm:ss')}">07-17 09:22</p>
                                         </td>
                                         <td>
-                                            <p>李杰 [TEL: 13823595211] </p>
-                                            <p>南山南山</p>
+                                            <p th:text="${a.orderAddress.name}+'[TEL: '+${a.orderAddress.phone}+']'">李杰 [TEL: 13823595211] </p>
+                                            <p th:text="${a.orderAddress.province}+'-'+${a.orderAddress.city}+'-'+${a.orderAddress.area}+'-'+${a.orderAddress.street}">南山南山</p>
                                         </td>
-                                        <td>1000</td>
-                                        <td>1000</td>
-                                        <td>已分单,已付款,发货中</td>
+                                        <td th:text="${a.total_amount}">1000</td>
+                                        <td th:text="${a.total_amount}">1000</td>
+                                        <td ><div th:text="${a.pay_state}=='2'?'已付款':'待付款'"></div>
+                                        	<div th:text="${a.logistics_state}=='3'?'已确认收货':(${a.logistics_state}=='2'?'已发货':(${a.logistics_state}=='4'?'部分发货':待发货))"></div>
+                                        	</td>
                                         <td>
-                                            <a href="/admin/order/detail" class="btn btn-xs green" >查看详细
+                                            <a  class="btn btn-xs green" th:href="@{/admin/order/detail(order_number=${a.order_number})}">查看详细
                                             </a>
                                         </td>
                                         
@@ -117,26 +138,27 @@
                         <div class="row center-text">
                             <div class="dataTables_paginate paging_bootstrap_full_number">
                                 <ul class="pagination" style="visibility: visible;">
-                                    <li class="prev disabled">
-                                        <a href="#">
+                                    <li class="prev ">
+                                        <a  th:href="'javascript:toPage(1)'">
                                             <i class="fa fa-angle-double-left"></i>
                                         </a>
                                     </li>
-                                    <li class="prev disabled">
-                                        <a href="#" title="Prev">
+                                    <li class="prev ">
+                                        <a  title="Prev" th:href="'javascript:toPage('+(${list.pageNo}-1>0?${list.pageNo}-1:1)+')'">
                                             <i class="fa fa-angle-left"></i>
                                         </a>
                                     </li>
-                                    <li class="active">
-                                        <a href="#">1</a>
+                                    <li class="active" id="activepage">
+                                        <a  th:text="${list.pageNo}">1</a>
                                     </li>
-                                    <li class="next disabled">
-                                        <a href="#" title="Next">
+                                    <li class="next ">
+                                        <a  title="Next" th:href="'javascript:toPage('+(${list.pageNo}==${list.pages}?${list.pages}:${list.pageNo}+1)+')'">
                                             <i class="fa fa-angle-right"></i>
                                         </a>
                                     </li>
-                                    <li class="next disabled">
-                                        <a href="#" title="Last"><i class="fa fa-angle-double-right"></i>
+                                    <li class="next ">
+                                        <a  title="Last" th:href="'javascript:toPage('+${list.pages}+')'">
+                                        <i class="fa fa-angle-double-right"></i>
                                                 </a>
                                     </li>
                                 </ul>
@@ -148,6 +170,37 @@
         </div>
     </div>
     </div>
+    <script type="text/javascript" th:inline="javascript">
+    var order=[[${order}]];
+    	$(function(){
+    		var pageNo=[[${list.pageNo}]];
+        	var pages=[[${list.pages}]];
+        	
+    		for(var i=2;i>0;i--){
+    			var pag=pageNo-i;
+    			if(pageNo-i>0){
+    				var dome="<li><a  href='javascript:toPage("+pag+")'>"+pag+"</a></li>";
+        			$("#activepage").before(dome);
+    			}
+    			
+    		}
+    		for(var i=2;i>0;i--){
+    			var pag=pageNo+i;
+    			if(pageNo+i<=pages){
+    				var dome="<li><a   href='javascript:toPage("+pag+")'>"+pag+"</a></li>";
+        			$("#activepage").after(dome);
+    			}
+    			
+    		}
+    	})
+    	function toPage(num){
+    		var item="<input type='hidden' name='pageNo' value='"+num+"'>"
+    		$('#selectform').append(item);
+    		$('#selectform').submit();
+    	}
+    
+    
+    </script>
 </body>
 
 </html>

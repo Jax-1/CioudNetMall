@@ -53,9 +53,20 @@ public class Order {
 	 */
 	private List<OrderDetails> orderDetailsList;
 	
+	/**
+	 * 关联收获地址表
+	 */
+	private OrderAddress orderAddress;
 	
 	
 	
+	
+	public OrderAddress getOrderAddress() {
+		return orderAddress;
+	}
+	public void setOrderAddress(OrderAddress orderAddress) {
+		this.orderAddress = orderAddress;
+	}
 	public List<OrderDetails> getOrderDetailsList() {
 		return orderDetailsList;
 	}
