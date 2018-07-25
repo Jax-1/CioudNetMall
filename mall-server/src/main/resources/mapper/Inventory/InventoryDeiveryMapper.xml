@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mall.dao.inventory.InventoryDeiveryMapper">
+  <resultMap id="BaseResultMap" type="com.mall.entity.inventory.InventoryDeivery">
+    <id column="delivery_id" jdbcType="INTEGER" property="delivery_id" />
+    <result column="delivery_number" jdbcType="VARCHAR" property="delivery_number" />
+    <result column="order_id" jdbcType="INTEGER" property="order_id" />
+    <result column="order_number" jdbcType="VARCHAR" property="order_number" />
+    <result column="user_id" jdbcType="INTEGER" property="user_id" />
+    <result column="receive_id" jdbcType="INTEGER" property="receive_id" />
+    <result column="shipping_id" jdbcType="INTEGER" property="shipping_id" />
+    <result column="shipping_name" jdbcType="VARCHAR" property="shipping_name" />
+    <result column="action_user" jdbcType="VARCHAR" property="action_user" />
+    <result column="postage_action_id" jdbcType="INTEGER" property="postage_action_id" />
+    <result column="invoice_no" jdbcType="VARCHAR" property="invoice_no" />
+    <result column="logistics_state" jdbcType="TINYINT" property="logistics_state" />
+    <result column="status" jdbcType="TINYINT" property="status" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="create_time" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    delivery_id, delivery_number, order_id, order_number, user_id, receive_id, shipping_id, 
+    shipping_name, action_user, postage_action_id, invoice_no, logistics_state, status, 
+    create_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_inventory_deivery
+    where delivery_id = #{delivery_id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from t_inventory_deivery
+    where delivery_id = #{delivery_id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.mall.entity.inventory.InventoryDeivery">
+    insert into t_inventory_deivery (delivery_id, delivery_number, order_id, 
+      order_number, user_id, receive_id, 
+      shipping_id, shipping_name, action_user, 
+      postage_action_id, invoice_no, logistics_state, 
+      status, create_time)
+    values (#{delivery_id,jdbcType=INTEGER}, #{delivery_number,jdbcType=VARCHAR}, #{order_id,jdbcType=INTEGER}, 
+      #{order_number,jdbcType=VARCHAR}, #{user_id,jdbcType=INTEGER}, #{receive_id,jdbcType=INTEGER}, 
+      #{shipping_id,jdbcType=INTEGER}, #{shipping_name,jdbcType=VARCHAR}, #{action_user,jdbcType=VARCHAR}, 
+      #{postage_action_id,jdbcType=INTEGER}, #{invoice_no,jdbcType=VARCHAR}, #{logistics_state,jdbcType=TINYINT}, 
+      #{status,jdbcType=TINYINT}, #{create_time,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.mall.entity.inventory.InventoryDeivery">
+    insert into t_inventory_deivery
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="delivery_id != null">
+        delivery_id,
+      </if>
+      <if test="delivery_number != null">
+        delivery_number,
+      </if>
+      <if test="order_id != null">
+        order_id,
+      </if>
+      <if test="order_number != null">
+        order_number,
+      </if>
+      <if test="user_id != null">
+        user_id,
+      </if>
+      <if test="receive_id != null">
+        receive_id,
+      </if>
+      <if test="shipping_id != null">
+        shipping_id,
+      </if>
+      <if test="shipping_name != null">
+        shipping_name,
+      </if>
+      <if test="action_user != null">
+        action_user,
+      </if>
+      <if test="postage_action_id != null">
+        postage_action_id,
+      </if>
+      <if test="invoice_no != null">
+        invoice_no,
+      </if>
+      <if test="logistics_state != null">
+        logistics_state,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="create_time != null">
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="delivery_id != null">
+        #{delivery_id,jdbcType=INTEGER},
+      </if>
+      <if test="delivery_number != null">
+        #{delivery_number,jdbcType=VARCHAR},
+      </if>
+      <if test="order_id != null">
+        #{order_id,jdbcType=INTEGER},
+      </if>
+      <if test="order_number != null">
+        #{order_number,jdbcType=VARCHAR},
+      </if>
+      <if test="user_id != null">
+        #{user_id,jdbcType=INTEGER},
+      </if>
+      <if test="receive_id != null">
+        #{receive_id,jdbcType=INTEGER},
+      </if>
+      <if test="shipping_id != null">
+        #{shipping_id,jdbcType=INTEGER},
+      </if>
+      <if test="shipping_name != null">
+        #{shipping_name,jdbcType=VARCHAR},
+      </if>
+      <if test="action_user != null">
+        #{action_user,jdbcType=VARCHAR},
+      </if>
+      <if test="postage_action_id != null">
+        #{postage_action_id,jdbcType=INTEGER},
+      </if>
+      <if test="invoice_no != null">
+        #{invoice_no,jdbcType=VARCHAR},
+      </if>
+      <if test="logistics_state != null">
+        #{logistics_state,jdbcType=TINYINT},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="create_time != null">
+        #{create_time,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.mall.entity.inventory.InventoryDeivery">
+    update t_inventory_deivery
+    <set>
+      <if test="delivery_number != null">
+        delivery_number = #{delivery_number,jdbcType=VARCHAR},
+      </if>
+      <if test="order_id != null">
+        order_id = #{order_id,jdbcType=INTEGER},
+      </if>
+      <if test="order_number != null">
+        order_number = #{order_number,jdbcType=VARCHAR},
+      </if>
+      <if test="user_id != null">
+        user_id = #{user_id,jdbcType=INTEGER},
+      </if>
+      <if test="receive_id != null">
+        receive_id = #{receive_id,jdbcType=INTEGER},
+      </if>
+      <if test="shipping_id != null">
+        shipping_id = #{shipping_id,jdbcType=INTEGER},
+      </if>
+      <if test="shipping_name != null">
+        shipping_name = #{shipping_name,jdbcType=VARCHAR},
+      </if>
+      <if test="action_user != null">
+        action_user = #{action_user,jdbcType=VARCHAR},
+      </if>
+      <if test="postage_action_id != null">
+        postage_action_id = #{postage_action_id,jdbcType=INTEGER},
+      </if>
+      <if test="invoice_no != null">
+        invoice_no = #{invoice_no,jdbcType=VARCHAR},
+      </if>
+      <if test="logistics_state != null">
+        logistics_state = #{logistics_state,jdbcType=TINYINT},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="create_time != null">
+        create_time = #{create_time,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where delivery_id = #{delivery_id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.mall.entity.inventory.InventoryDeivery">
+    update t_inventory_deivery
+    set delivery_number = #{delivery_number,jdbcType=VARCHAR},
+      order_id = #{order_id,jdbcType=INTEGER},
+      order_number = #{order_number,jdbcType=VARCHAR},
+      user_id = #{user_id,jdbcType=INTEGER},
+      receive_id = #{receive_id,jdbcType=INTEGER},
+      shipping_id = #{shipping_id,jdbcType=INTEGER},
+      shipping_name = #{shipping_name,jdbcType=VARCHAR},
+      action_user = #{action_user,jdbcType=VARCHAR},
+      postage_action_id = #{postage_action_id,jdbcType=INTEGER},
+      invoice_no = #{invoice_no,jdbcType=VARCHAR},
+      logistics_state = #{logistics_state,jdbcType=TINYINT},
+      status = #{status,jdbcType=TINYINT},
+      create_time = #{create_time,jdbcType=TIMESTAMP}
+    where delivery_id = #{delivery_id,jdbcType=INTEGER}
+  </update>
+</mapper>

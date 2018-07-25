@@ -273,6 +273,8 @@
 		    <result column="StoreHouseNumber" jdbcType="VARCHAR" property="storeHouseNumber" />
 		    <result column="ProductNumber" jdbcType="VARCHAR" property="productNumber" />
 		    <result column="Amount" jdbcType="INTEGER" property="amount" />
+		    <result column="stay_amount" jdbcType="INTEGER" property="stay_amount" />
+   			 <result column="has_amount" jdbcType="INTEGER" property="has_amount" />
 		    <result column="InStockTime" jdbcType="TIMESTAMP" property="inStockTime" />
 	    </association>
 	     <association property="goodsCategory" javaType="com.mall.entity.goods.GoodsCategory">

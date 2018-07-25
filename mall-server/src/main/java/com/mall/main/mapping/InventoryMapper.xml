@@ -114,40 +114,4 @@
       InStockTime = #{inStockTime,jdbcType=TIMESTAMP}
     where inventoryid = #{inventoryid,jdbcType=VARCHAR}
   </update>
-  <!-- 检索商品库存 -->
-  <select id="inventoryRetrieve" parameterType="com.mall.entity.inventory.Inventory" resultMap="BaseResultMap">
-  	SELECT
-	t_inventory.ProductNumber,
-	t_inventory.Amount 
-	FROM
-		t_inventory 
-	WHERE
-		t_inventory.ProductNumber = #{productNumber}
-  
-  
-  </select>
-  <update id="updateInventory" parameterType="com.mall.entity.inventory.Inventory">
-  update t_inventory
-    <set>
-      <if test="storeHouseNumber != null">
-        StoreHouseNumber = #{storeHouseNumber,jdbcType=VARCHAR},
-      </if>
-      <if test="productNumber != null">
-        ProductNumber = #{productNumber,jdbcType=VARCHAR},
-      </if>
-      <if test="amount != null">
-        Amount = #{amount,jdbcType=INTEGER},
-      </if>
-      <if test="stay_amount != null">
-        stay_amount = #{stay_amount,jdbcType=INTEGER},
-      </if>
-      <if test="has_amount != null">
-        has_amount = #{has_amount,jdbcType=INTEGER},
-      </if>
-      <if test="inStockTime != null">
-        InStockTime = #{inStockTime,jdbcType=TIMESTAMP},
-      </if>
-    </set>
-    where inventoryid = #{inventoryid,jdbcType=VARCHAR}
-  </update>
 </mapper>

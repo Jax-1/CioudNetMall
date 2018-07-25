@@ -24,7 +24,7 @@ public class InventoryController extends AbstractController{
 	public ProcessResult<Inventory> retrieve(Inventory inventory ,Integer amount){
 		ProcessResult<Inventory> res=new ProcessResult<Inventory>();
 		inventory =inventoryService.inventoryRetrieve(inventory);
-		if(Validate.notNull(inventory)&&inventory.getAmount()>0&&inventory.getAmount()>=amount) {
+		if(Validate.notNull(inventory)&&inventory.getAmount()>0&&inventory.getAmount()-inventory.getStay_amount()>=amount) {
 			
 			res=ProcessResult.success(res);
 			res.setObj(inventory);

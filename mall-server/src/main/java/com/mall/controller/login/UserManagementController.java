@@ -98,6 +98,10 @@ public class UserManagementController extends AbstractController{
 		int pageSize  =  Integer.parseInt(cacheService.getCache(SystemCode.PAGE).get(SystemCode.GOODS_PAGE));
 		list.setPageSize(pageSize);
 		User user = SessionUtil.getUser(request);
+		if(!Validate.notNull(order)) {
+			order=new Order();
+		}
+		logger.info("获取用户订单列表！Username="+user.getUser_name());
 		order.setUser_id(user.getUser_name());
 		list =orderService.queryByPageFront(list,order);
 		//文件服务器路径

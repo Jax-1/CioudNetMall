@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mall.dao.inventory.InventoryDeiveryActionMapper">
+  <resultMap id="BaseResultMap" type="com.mall.entity.inventory.InventoryDeiveryAction">
+    <id column="action_id" jdbcType="INTEGER" property="action_id" />
+    <result column="delivery_id" jdbcType="INTEGER" property="delivery_id" />
+    <result column="action_user" jdbcType="VARCHAR" property="action_user" />
+    <result column="action_status" jdbcType="TINYINT" property="action_status" />
+    <result column="delivery_status" jdbcType="TINYINT" property="delivery_status" />
+    <result column="action_note" jdbcType="VARCHAR" property="action_note" />
+    <result column="log_time" jdbcType="TIMESTAMP" property="log_time" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    action_id, delivery_id, action_user, action_status, delivery_status, action_note, 
+    log_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_inventory_deivery_action
+    where action_id = #{action_id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from t_inventory_deivery_action
+    where action_id = #{action_id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.mall.entity.inventory.InventoryDeiveryAction">
+    insert into t_inventory_deivery_action (action_id, delivery_id, action_user, 
+      action_status, delivery_status, action_note, 
+      log_time)
+    values (#{action_id,jdbcType=INTEGER}, #{delivery_id,jdbcType=INTEGER}, #{action_user,jdbcType=VARCHAR}, 
+      #{action_status,jdbcType=TINYINT}, #{delivery_status,jdbcType=TINYINT}, #{action_note,jdbcType=VARCHAR}, 
+      #{log_time,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.mall.entity.inventory.InventoryDeiveryAction">
+    insert into t_inventory_deivery_action
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="action_id != null">
+        action_id,
+      </if>
+      <if test="delivery_id != null">
+        delivery_id,
+      </if>
+      <if test="action_user != null">
+        action_user,
+      </if>
+      <if test="action_status != null">
+        action_status,
+      </if>
+      <if test="delivery_status != null">
+        delivery_status,
+      </if>
+      <if test="action_note != null">
+        action_note,
+      </if>
+      <if test="log_time != null">
+        log_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="action_id != null">
+        #{action_id,jdbcType=INTEGER},
+      </if>
+      <if test="delivery_id != null">
+        #{delivery_id,jdbcType=INTEGER},
+      </if>
+      <if test="action_user != null">
+        #{action_user,jdbcType=VARCHAR},
+      </if>
+      <if test="action_status != null">
+        #{action_status,jdbcType=TINYINT},
+      </if>
+      <if test="delivery_status != null">
+        #{delivery_status,jdbcType=TINYINT},
+      </if>
+      <if test="action_note != null">
+        #{action_note,jdbcType=VARCHAR},
+      </if>
+      <if test="log_time != null">
+        #{log_time,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.mall.entity.inventory.InventoryDeiveryAction">
+    update t_inventory_deivery_action
+    <set>
+      <if test="delivery_id != null">
+        delivery_id = #{delivery_id,jdbcType=INTEGER},
+      </if>
+      <if test="action_user != null">
+        action_user = #{action_user,jdbcType=VARCHAR},
+      </if>
+      <if test="action_status != null">
+        action_status = #{action_status,jdbcType=TINYINT},
+      </if>
+      <if test="delivery_status != null">
+        delivery_status = #{delivery_status,jdbcType=TINYINT},
+      </if>
+      <if test="action_note != null">
+        action_note = #{action_note,jdbcType=VARCHAR},
+      </if>
+      <if test="log_time != null">
+        log_time = #{log_time,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where action_id = #{action_id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.mall.entity.inventory.InventoryDeiveryAction">
+    update t_inventory_deivery_action
+    set delivery_id = #{delivery_id,jdbcType=INTEGER},
+      action_user = #{action_user,jdbcType=VARCHAR},
+      action_status = #{action_status,jdbcType=TINYINT},
+      delivery_status = #{delivery_status,jdbcType=TINYINT},
+      action_note = #{action_note,jdbcType=VARCHAR},
+      log_time = #{log_time,jdbcType=TIMESTAMP}
+    where action_id = #{action_id,jdbcType=INTEGER}
+  </update>
+</mapper>

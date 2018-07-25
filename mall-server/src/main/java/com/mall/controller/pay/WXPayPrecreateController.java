@@ -183,7 +183,9 @@ public class WXPayPrecreateController extends AbstractController{
         				goods.setGoods_id(orderDetails.getGoods_id());
         				goods=goodsService.selectInfo(goods);
         				Inventory inventory=goods.getGoodsInfo().getInventory();
-        				inventory.setAmount(inventory.getAmount()-orderDetails.getNum());
+        				//inventory.setAmount(inventory.getAmount()-orderDetails.getNum());
+        				//修改待出库数量为：待出库数量+订单数量
+        				inventory.setStay_amount(inventory.getStay_amount()+orderDetails.getNum());
         				inventoryService.updateInventory(inventory);
         			}
         			

@@ -7,8 +7,13 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.yaml.snakeyaml.constructor.BaseConstructor;
 
+import com.mall.entity.cms.AuthorWithBLOBs;
+import com.mall.entity.goods.Goods;
 import com.mall.entity.order.Order;
+import com.mall.entity.order.OrderDetails;
 import com.mall.message.SystemCode;
+import com.mall.service.cms.AuthorWithBLOBsService;
+import com.mall.service.goods.GoodsService;
 import com.mall.service.order.OrderService;
 import com.mall.service.sys.CacheService;
 import com.mall.util.PageResult;
@@ -21,6 +26,10 @@ public class AdminOrderController  extends BaseConstructor{
 	private CacheService cacheService;
 	@Resource
 	private OrderService orderService;
+	@Resource
+	private GoodsService goodsService;
+	@Resource
+	private AuthorWithBLOBsService authorWithBLOBsService;
 	
 	@RequestMapping("/list")
 	public String toOrderList(Model model ,Order order ,PageResult<Order> list) {
@@ -37,7 +46,19 @@ public class AdminOrderController  extends BaseConstructor{
 	@RequestMapping("/detail")
 	public String toOrderDetail(Model model,Order order) {
 		order=orderService.selectInfo(order);
-		model.addAttribute("order", order);
+		for(OrderDetails OrderDetails :order.getOrderDetailsList()) {
+			//获取商品信息
+			Goods goods=new Goods();
+			goods.setGoods_id(OrderDetails.getGoods_id());
+			goods=goodsService.selectInfo(goods);
+			//获取作家信息
+			AuthorWithBLOBs auth=new AuthorWithBLOBs();
+			auth.setId(goods.getGoodsInfo().getAuth_id());
+			auth=authorWithBLOBsService.selectInfo(auth);
+			goods.setAuth(auth);
+			OrderDetails.setGoods(goods);
+		}
+		model.addAttribute("entity", order);
 		model.addAttribute("page", "admin/order/order_detail");
 		model.addAttribute("order", "nav-item start active open");
 		return "admin/index";

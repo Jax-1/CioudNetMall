@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 import com.mall.entity.cms.FilePath;
+import com.mall.entity.goods.Goods;
 
 public class OrderDetails {
     private Integer order_details_id;
@@ -34,9 +35,23 @@ public class OrderDetails {
 	 * 关联图片信息表
 	 */
 	private FilePath  filePath;
+	/**
+	 * 关联商品信息表
+	 */
+	private Goods goods;
+	
+	
 	
 
-    public FilePath getFilePath() {
+    public Goods getGoods() {
+		return goods;
+	}
+
+	public void setGoods(Goods goods) {
+		this.goods = goods;
+	}
+
+	public FilePath getFilePath() {
 		return filePath;
 	}
 

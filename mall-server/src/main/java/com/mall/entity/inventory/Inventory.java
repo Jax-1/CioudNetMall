@@ -5,51 +5,73 @@ import java.util.Date;
 public class Inventory {
     private String inventoryid;
 
-    private String storeHouseNumber;
+	private String storeHouseNumber;
 
-    private String productNumber;
+	private String productNumber;
 
-    private Integer amount;
+	private Integer amount;
 
-    private Date inStockTime;
+	private Integer stay_amount;
 
-    public String getInventoryid() {
-        return inventoryid;
-    }
+	private Integer has_amount;
 
-    public void setInventoryid(String inventoryid) {
-        this.inventoryid = inventoryid;
-    }
+	private Date inStockTime;
 
-    public String getStoreHouseNumber() {
-        return storeHouseNumber;
-    }
+	public String getInventoryid() {
+		return inventoryid;
+	}
 
-    public void setStoreHouseNumber(String storeHouseNumber) {
-        this.storeHouseNumber = storeHouseNumber;
-    }
+	public void setInventoryid(String inventoryid) {
+		this.inventoryid = inventoryid;
+	}
 
-    public String getProductNumber() {
-        return productNumber;
-    }
+	public String getStoreHouseNumber() {
+		return storeHouseNumber;
+	}
 
-    public void setProductNumber(String productNumber) {
-        this.productNumber = productNumber;
-    }
+	public void setStoreHouseNumber(String storeHouseNumber) {
+		this.storeHouseNumber = storeHouseNumber;
+	}
 
-    public Integer getAmount() {
-        return amount;
-    }
+	public String getProductNumber() {
+		return productNumber;
+	}
 
-    public void setAmount(Integer amount) {
-        this.amount = amount;
-    }
+	public void setProductNumber(String productNumber) {
+		this.productNumber = productNumber;
+	}
 
-    public Date getInStockTime() {
-        return inStockTime;
-    }
+	public Integer getAmount() {
+		return amount;
+	}
 
-    public void setInStockTime(Date inStockTime) {
-        this.inStockTime = inStockTime;
-    }
+	public void setAmount(Integer amount) {
+		this.amount = amount;
+	}
+
+	public Integer getStay_amount() {
+		return stay_amount;
+	}
+
+	public void setStay_amount(Integer stay_amount) {
+		this.stay_amount = stay_amount;
+	}
+
+	public Integer getHas_amount() {
+		return has_amount;
+	}
+
+	public void setHas_amount(Integer has_amount) {
+		this.has_amount = has_amount;
+	}
+
+	public Date getInStockTime() {
+		return inStockTime;
+	}
+
+	public void setInStockTime(Date inStockTime) {
+		this.inStockTime = inStockTime;
+	}
+
+	
 }

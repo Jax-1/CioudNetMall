@@ -101,9 +101,9 @@
                             <td class="t-l"><a href="" th:text="${goods.auth.position}+'-'+${goods.auth.authorname}+'  '+'《'+${goods.goods_name}+'》'"> 
                                 中国国典书画院会员 石俊海《正气》</a>
                             </td>
-                            <td th:text="${goods.goodsPrice.sale=='Y'}?${goods.goodsPrice.sale_price}:${goods.goodsPrice.retail_price}">199.00</td>
+                            <td th:text="${goods.goodsPrice.sale=='Y'}?${goods.goodsPrice.sale_price}:${goods.goodsPrice.retail_price}" id="unit_price">199.00</td>
                             <td th:text="${amount}">1</td>
-                            <td class="b_r" th:text="${goods.goodsPrice.sale=='Y'}?${goods.goodsPrice.sale_price*amount}:${goods.goodsPrice.retail_price*amount}">199.00</td>
+                            <td class="b_r" th:text="${goods.goodsPrice.sale=='Y'}?${goods.goodsPrice.sale_price*amount}:${goods.goodsPrice.retail_price*amount}" id="details_amount">199.00</td>
                         </tr>
                         <tr>
                             <td class="tl" colspan="5">买家留言：
@@ -268,8 +268,9 @@
 				//订单详情
 				var goods_id =goods.goods_id;
 				var num =amount;
-				var details_amount =$("#total_amount").text();
+				var details_amount =$("#details_amount").text();
 				var image =goods.image;
+				var unit_price=$("#unit_price").text();
 				
 			
 				form = $("<form></form>")

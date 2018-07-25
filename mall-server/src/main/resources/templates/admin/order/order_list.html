@@ -104,7 +104,7 @@
                                         </td>
                                         <td th:text="${a.order_number}"> 19950</td>
                                         <td>
-                                            <p>lj74txys</p>
+                                            <p th:text="${a.userInfo.name}">lj74txys</p>
                                             <p th:text="${#dates.format(a.create_time,'yyyy-MM-dd HH:mm:ss')}">07-17 09:22</p>
                                         </td>
                                         <td>
@@ -114,6 +114,7 @@
                                         <td th:text="${a.total_amount}">1000</td>
                                         <td th:text="${a.total_amount}">1000</td>
                                         <td ><div th:text="${a.pay_state}=='2'?'已付款':'待付款'"></div>
+                                        	<div th:text="${a.del_state}=='4'?'已完成':(${a.del_state}=='3'?'取消':(${a.del_state}=='2'?'无效':'待确认'))"></div>
                                         	<div th:text="${a.logistics_state}=='3'?'已确认收货':(${a.logistics_state}=='2'?'已发货':(${a.logistics_state}=='4'?'部分发货':待发货))"></div>
                                         	</td>
                                         <td>

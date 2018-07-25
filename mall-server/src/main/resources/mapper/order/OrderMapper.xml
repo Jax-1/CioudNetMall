@@ -259,6 +259,52 @@
 	    <result column="thedefault" jdbcType="VARCHAR" property="thedefault" />
 	    <result column="create_time_a" jdbcType="TIMESTAMP" property="create_time" />
   	</association>
+  	<association property="userInfo" javaType="com.mall.entity.login.UserInfo">
+  		<id column="id_u" jdbcType="VARCHAR" property="id" />
+	    <result column="user_name_u" jdbcType="VARCHAR" property="user_name" />
+	    <result column="name_u" jdbcType="VARCHAR" property="name" />
+	    <result column="Sex" jdbcType="VARCHAR" property="sex" />
+	    <result column="Phone_u" jdbcType="VARCHAR" property="phone" />
+	    <result column="email_u" jdbcType="VARCHAR" property="email" />
+	    <result column="qq_u" jdbcType="VARCHAR" property="qq" />
+	    <result column="address_province" jdbcType="VARCHAR" property="address_province" />
+	    <result column="address_city" jdbcType="VARCHAR" property="address_city" />
+	    <result column="address_area" jdbcType="VARCHAR" property="address_area" />
+	    <result column="address_street" jdbcType="VARCHAR" property="address_street" />
+	    <result column="headimgurl" jdbcType="VARCHAR" property="headimgurl" />
+	    <result column="Create_at_u" jdbcType="TIMESTAMP" property="create_at" />
+	    <result column="Update_time_u" jdbcType="TIMESTAMP" property="update_time" />
+	    <result column="LastSign_time_u" jdbcType="TIMESTAMP" property="lastSign_time" />
+  	</association>
+  	<association property="paymentMethod" javaType="com.mall.entity.payment.PaymentMethod">
+  		<id column="payment_id_p" jdbcType="INTEGER" property="payment_id" />
+	    <id column="isGeneral_p" jdbcType="TINYINT" property="isGeneral" />
+	    <result column="name_p" jdbcType="VARCHAR" property="name" />
+	    <result column="description_p" jdbcType="VARCHAR" property="description" />
+	    <result column="create_time_p" jdbcType="TIMESTAMP" property="create_time" />
+	    <result column="update_time_p" jdbcType="TIMESTAMP" property="update_time" />
+	    <result column="state_p" jdbcType="TINYINT" property="state" />
+  	</association>
+  	<association property="PaymentFlow" javaType="com.mall.entity.payment.PaymentFlow">
+  		<id column="id_pf" jdbcType="INTEGER" property="id" />
+	    <result column="transaction_id" jdbcType="VARCHAR" property="transaction_id" />
+	    <result column="out_trade_no" jdbcType="VARCHAR" property="out_trade_no" />
+	    <result column="device_info" jdbcType="VARCHAR" property="device_info" />
+	    <result column="nonce_str" jdbcType="VARCHAR" property="nonce_str" />
+	    <result column="sign" jdbcType="VARCHAR" property="sign" />
+	    <result column="sign_type" jdbcType="VARCHAR" property="sign_type" />
+	    <result column="result_code" jdbcType="VARCHAR" property="result_code" />
+	    <result column="err_code" jdbcType="VARCHAR" property="err_code" />
+	    <result column="err_code_des" jdbcType="VARCHAR" property="err_code_des" />
+	    <result column="openid" jdbcType="VARCHAR" property="openid" />
+	    <result column="is_subscribe" jdbcType="VARCHAR" property="is_subscribe" />
+	    <result column="trade_type" jdbcType="VARCHAR" property="trade_type" />
+	    <result column="bank_type" jdbcType="VARCHAR" property="bank_type" />
+	    <result column="total_fee" jdbcType="INTEGER" property="total_fee" />
+	    <result column="fee_type" jdbcType="VARCHAR" property="fee_type" />
+	    <result column="time_end" jdbcType="TIMESTAMP" property="time_end" />
+  	
+  	</association>
   	<collection property="orderDetailsList" ofType="com.mall.entity.order.OrderDetails" column="order_number">
 	  	<id column="order_details_id" jdbcType="INTEGER" property="order_details_id" />
 	    <result column="order_id_d" jdbcType="INTEGER" property="order_id" />
@@ -287,6 +333,26 @@
   </resultMap>
    <!-- 查询订单详细信息 -->
   <select id="selectInfo"  parameterType="com.mall.entity.order.Order" resultMap="orderResultMap">
+  SELECT I.*,
+		J.user_id user_id_a, J.name, J.phone, J.province, J.city, J.area, J.street
+	FROM(
+  Select D.*,E.time_end from (
+  SELECT B.*,C.payment_id payment_id_p, C.isGeneral isGeneral_p, C.name name_p 
+  FROM (
+  SELECT A.*,  H.user_name user_name_u,
+		H.NAME name_u,
+		H.Sex,
+		H.Phone Phone_u,
+		H.email email_u,
+		H.qq qq_u,
+		H.address_province,
+		H.address_city,
+		H.address_area,
+		H.address_street,
+		H.headimgurl,
+		H.Create_at Create_at_u,
+		H.Update_time Update_time_u,
+		H.LastSign_time LastSign_time_u FROM (
   	SELECT
 	t1.order_id, t1.order_number, t1.user_id, t1.total_amount, t1.paid_amount, t1.postage_amount, t1.discount_amount, 
     t1.receive_id, t1.send_time, t1.logistics_state, t1.invoice_tag, t1.del_state, t1.payment_id, t1.payment_seq, 
@@ -297,7 +363,10 @@
 	t_order t1
 	LEFT JOIN t_order_details t2 ON t1.order_number = t2.order_number
 	where t1.order_number=#{order_number}
-  
+  ) A LEFT JOIN t_sys_user_info H ON A.user_id=H.user_name
+  ) B LEFT JOIN t_payment_method C ON B.payment_id=C.payment_id
+  ) D LEFT JOIN t_payment_flow E ON D.payment_seq=E.transaction_id
+  ) I LEFT JOIN t_order_address J ON I.receive_id=J.id
   </select>
   <!-- 订单列表 -->
   <select id="getPageFront" parameterType="com.mall.entity.order.Order" resultMap="orderResultMap">
@@ -308,6 +377,24 @@ SELECT
 	B.filetype
 FROM
 	(
+	<!-- 下单人信息 -->
+	select K.*,
+		H.user_name user_name_u,
+		H.NAME name_u,
+		H.Sex,
+		H.Phone Phone_u,
+		H.email email_u,
+		H.qq qq_u,
+		H.address_province,
+		H.address_city,
+		H.address_area,
+		H.address_street,
+		H.headimgurl,
+		H.Create_at Create_at_u,
+		H.Update_time Update_time_u,
+		H.LastSign_time LastSign_time_u
+	
+	 from (
 	SELECT I.*,
 		J.user_id user_id_a, J.name, J.phone, J.province, J.city, J.area, J.street
 	FROM(
@@ -344,21 +431,21 @@ FROM
 			t_order t1
 		LEFT JOIN t_order_details t2 ON t1.order_id = t2.order_id
 		<where>
-		1=1
+		
 		<if test="user_id!=null">
-			,t1.user_id = #{user_id}
+			 t1.user_id = #{user_id}
 		</if>
 		<if test="order_number!=null and order_number!=''">
-			,t1.order_number=#{order_number}
+			AND t1.order_number=#{order_number}
 		</if>
 		<if test="del_state!=null and del_state!='' and del_state!='-1'">
-		,t1.del_state=#{del_state}
+			AND t1.del_state=#{del_state}
 		</if>
 		<if test="pay_state!=null and pay_state!='' and pay_state!='-1'">
-		,t1.pay_state=#{pay_state}
+			AND t1.pay_state=#{pay_state}
 		</if>
 		<if test="logistics_state!=null and logistics_state!='' and logistics_state!='-1'">
-		,t1.logistics_state=#{logistics_state}
+			AND t1.logistics_state=#{logistics_state}
 		</if>
 		</where>
 	) I LEFT JOIN t_order_address J ON I.receive_id=J.id
@@ -367,6 +454,9 @@ FROM
 		J.name LIKE CONCAT('%',#{orderAddress.name},'%')
 	</if>
 	</where>
+	
+	<!-- 下单人信息 -->
+	)K LEFT JOIN  t_sys_user_info H  ON K.user_id=H.user_name
 	) A
 LEFT JOIN t_file_path B ON A.image = B.fileid
   </select>

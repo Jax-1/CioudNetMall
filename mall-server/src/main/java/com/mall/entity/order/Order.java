@@ -8,8 +8,11 @@ import javax.servlet.http.HttpServletRequest;
 
 import com.mall.entity.cms.FilePath;
 import com.mall.entity.login.User;
+import com.mall.entity.login.UserInfo;
+import com.mall.entity.payment.PaymentMethod;
 import com.mall.util.DateFormatUtil;
 import com.mall.util.SessionUtil;
+import com.mall.entity.payment.PaymentFlow;
 
 public class Order {
     private Integer order_id;
@@ -58,9 +61,40 @@ public class Order {
 	 */
 	private OrderAddress orderAddress;
 	
+	/**
+	 * 关联用户信息表
+	 */
+	private UserInfo userInfo;
+	
+	/**
+	 * 关联支付方式
+	 */
+	private PaymentMethod paymentMethod;
+	
+	/**
+	 * 关联支付流水
+	 */
+	private PaymentFlow PaymentFlow;
 	
 	
-	
+	public PaymentFlow getPaymentFlow() {
+		return PaymentFlow;
+	}
+	public void setPaymentFlow(PaymentFlow paymentFlow) {
+		PaymentFlow = paymentFlow;
+	}
+	public PaymentMethod getPaymentMethod() {
+		return paymentMethod;
+	}
+	public void setPaymentMethod(PaymentMethod paymentMethod) {
+		this.paymentMethod = paymentMethod;
+	}
+	public UserInfo getUserInfo() {
+		return userInfo;
+	}
+	public void setUserInfo(UserInfo userInfo) {
+		this.userInfo = userInfo;
+	}
 	public OrderAddress getOrderAddress() {
 		return orderAddress;
 	}
