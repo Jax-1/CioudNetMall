@@ -152,7 +152,7 @@
                                                 <div align="right"><strong>操作备注：</strong></div>
                                             </td>
                                             <td colspan="5">
-                                                <textarea name="action_note" cols="80" rows="3"></textarea>
+                                                <textarea name="action_note" cols="80" rows="3" id="action_note"></textarea>
                                             </td>
                                         </tr>
                                         <tr>
@@ -161,16 +161,15 @@
                                                 <div align="right"><strong>当前可执行操作：</strong> </div>
                                             </td>
                                             <td colspan="5">
-                                                <input name="pay" type="submit" value="确认" class="button">
-                                                <input name="cancel" type="submit" value="取消" class="button">
-                                                <input name="" type="submit" value="配货" class="button">
-                                                <input name="" type="submit" value="生成发货单" class="button">
-                                                <input name="invalid" type="submit" value="无效" class="button">
-                                                <input name="after_service" type="submit" value="售后" class="button">
-                                                <input name="order_id" type="hidden" value="9">
+                                                <input name="pay" type="submit" value="确认" class="button" onclick="buttonSubmit('confirm')">
+                                                <input name="cancel" type="submit" value="取消" class="button" onclick="buttonSubmit('cancel')">
+                                                <input name="" type="submit" value="生成发货单" class="button" onclick="buttonSubmit('Generate')">
+                                                <input name="invalid" type="submit" value="无效" class="button" onclick="buttonSubmit('invalid')">
+                                                <input name="after_service" type="submit" value="售后" class="button" onclick="buttonSubmit('after-sales')">
+                                                <input name="" type="submit" value="退货" class="button" >
                                             </td>
                                         </tr>
-                                        <tr>
+                                        <tr id='actiontable'>
                                             <th>操作者：</th>
                                             <th>操作时间</th>
                                             <th>订单状态</th>
@@ -178,23 +177,23 @@
                                             <th>发货状态</th>
                                             <th>备注</th>
                                         </tr>
-                                        <tr>
+                                        <tr th:each="a:${list}">
                                             <td>
-                                                <div align="center">admin</div>
+                                                <div align="center" th:text="${a.action_user}">admin</div>
                                             </td>
                                             <td>
-                                                <div align="center">2018-07-18 11:27:09</div>
+                                                <div align="center" th:text=" ${#dates.format(a.log_time,'yyyy-MM-dd HH:mm:ss')}">2018-07-18 11:27:09</div>
                                             </td>
                                             <td>
-                                                <div align="center">已确认</div>
+                                                <div align="center" th:text="${a.order_status}=='2'?'已确认':(${a.order_status}=='3'?'取消':(${a.order_status}=='4'?'无效':(${a.order_status}=='5'?'售后':'无')))">已确认</div>
                                             </td>
                                             <td>
-                                                <div align="center">未付款</div>
+                                                <div align="center" th:text="${entity.pay_state}=='2'?'已付款':'待付款'">未付款</div>
                                             </td>
                                             <td>
-                                                <div align="center">未发货</div>
+                                                <div align="center" th:text="${a.logistics_status}=='1'?'生成发货单':'待发货'">未发货</div>
                                             </td>
-                                            <td>22</td>
+                                            <td th:text="${a.action_note}">22</td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -207,7 +206,109 @@
             </div>
         </div>
     </div>
-    </div>
+    <script type="text/javascript" th:inline="javascript">
+    var order=[[${entity}]];
+    function buttonSubmit(action){
+    	switch(action)
+    	{
+    	case 'confirm':
+    		//确认
+    		var data1={order_number:order.order_number,del_state:'2'}
+    		var data2={order_id:order.order_id,order_number:order.order_number,order_status:'2',action_note:$("#action_note").val()};
+    		confirm(data1,data2);
+    	  break;
+    	case 'invalid':
+    		//无效
+    		var data1={order_number:order.order_number,del_state:'4'}
+    		var data2={order_id:order.order_id,order_number:order.order_number,order_status:'4',action_note:$("#action_note").val()};
+    		confirm(data1,data2);
+    	  break;
+    	case 'cancel':
+    		//取消
+    		var data1={order_number:order.order_number,del_state:'3'}
+    		var data2={order_id:order.order_id,order_number:order.order_number,order_status:'3',action_note:$("#action_note").val()};
+    		confirm(data1,data2);
+      	  break;
+    	case 'Generate':
+    		//生成发货单
+    		var data2={order_id:order.order_id,order_number:order.order_number,order_status:'2',logistics_status:'1',action_note:$("#action_note").val()};
+    		recordAction(data2);
+      	  break;
+    	case 'after-sales':
+    		//售后
+    		var data1={order_number:order.order_number,del_state:'5'}
+    		var data2={order_id:order.order_id,order_number:order.order_number,order_status:'5',action_note:$("#action_note").val()};
+    		confirm(data1,data2);
+      	  break;
+    	
+    	default:
+    		
+    	}
+    }
+    //修改订单状态，并记录操作记录
+    //data1:订单状态
+    //data2:操作信息
+    function confirm(data1,data2){
+    	//修改订单状态
+    	$.post('/admin/order/chengeStatus',data1,function(data){
+    		if(data!=null&&data.res=='1'){
+    			//修改成功
+    			recordAction(data2);
+    			
+    		}else{
+    			alert("操作失败，修改订单状态！");
+    		}
+    		
+    	})
+    	//记录修改流水
+    }
+    //记录操作记录
+    function recordAction(data){
+    	$.post("/admin/order/action/add",
+    			data,
+				function(data){
+					if(data!=null&&data.res=='1'){
+						//操作记录保存成功
+						showAction(data.obj);
+					}else{
+						alert("操作失败，创建操作记录！");
+					}
+				})
+    }
+    function showAction(obj){
+    	console.log(obj.order_status);
+    	var status='';
+    	switch(obj.order_status){
+    	case 2:
+    		status='已确认';
+    		break;
+    	case 3 :
+    		status='取消';
+			break;
+    	case 4 :
+    		status='无效';
+			break;
+    	case 5 :
+    		status='售后';
+			break;
+    	default:
+    		status='无';
+    		
+    	}
+    	
+    	var item="<tr>"+
+            "<td><div align='center'>"+obj.action_user+"</div></td>"+
+    "<td><div align='center'>"+obj.log_time+"</div></td>"+
+    "<td><div align='center'>"+status+"</div></td>"+
+    "<td><div align='center'>"+(order.pay_state=='2'?'已付款':'待付款')+"</div></td>"+
+    "<td><div align='center'>"+(obj.logistics_status=='1'?'生成发货单':'待发货')+"</div></td>"+
+    "<td>"+obj.action_note+"</td></tr>"
+	
+    	$("#actiontable").after(item);
+    }
+    
+    
+    </script>
 </body>
 
 </html>

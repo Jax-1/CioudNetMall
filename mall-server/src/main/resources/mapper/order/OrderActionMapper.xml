@@ -131,6 +131,6 @@
     <include refid="Base_Column_List" />
     from t_order_action
     where order_number = #{order_number,jdbcType=VARCHAR}
-  
+  	order by log_time desc
   </select>
 </mapper>

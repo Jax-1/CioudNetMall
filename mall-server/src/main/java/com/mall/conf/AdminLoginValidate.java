@@ -17,7 +17,7 @@ import com.mall.util.Validate;
  * @author Jang
  *
  */
-public class InterceptorConfig implements HandlerInterceptor {
+public class AdminLoginValidate implements HandlerInterceptor {
 	protected  Logger logger = Logger.getLogger(this.getClass());
 	
 	/** 
@@ -31,13 +31,11 @@ public class InterceptorConfig implements HandlerInterceptor {
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
-		//商城支付登陆验证
-		User user = SessionUtil.getUser(request);
-		
-		if(!Validate.notNull(user)) {
+		Admin admin = SessionUtil.getAdminUser(request);
+		if(!Validate.notNull(admin)) {
 			//未登录
-			logger.info("当前用户未登录，跳转到登录界面！");
-			response.sendRedirect(request.getContextPath()+"/user/login.do");
+			logger.info("当前管理员未登录，跳转到登录界面！");
+			response.sendRedirect(request.getContextPath()+"/admin/login.do");
 			return false;
 		}
 		return true;

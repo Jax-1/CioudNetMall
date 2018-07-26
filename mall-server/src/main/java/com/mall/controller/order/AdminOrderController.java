@@ -64,6 +64,7 @@ public class AdminOrderController  extends BaseConstructor{
 		}
 		//获取订单操作流水
 		PageResult<OrderAction> list =new PageResult<OrderAction>();
+		list.setPageSize(100);
 		OrderAction orderAction =new OrderAction();
 		orderAction.setOrder_number(order.getOrder_number());
 		list=orderActionService.queryByPageFront(list,orderAction);

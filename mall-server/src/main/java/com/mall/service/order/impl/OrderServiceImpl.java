@@ -20,6 +20,10 @@ public class OrderServiceImpl extends BaseServiceImpl<Order> implements OrderSer
 	protected IBaseDao<Order> getMapper() {
 		return orderMapper;
 	}
+	@Override
+	public int updateOrderStatus(Order order) {
+		return orderMapper.updateOrderStatus(order);
+	}
 
 	
 }
