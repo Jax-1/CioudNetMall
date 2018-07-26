@@ -25,12 +25,12 @@ public class WebConfigurer extends WebMvcConfigurerAdapter {
 
     private final Logger log = LoggerFactory.getLogger(WebConfigurer.class);
 
-    @Override  
-    public void addViewControllers(ViewControllerRegistry registry) {  
-        registry.addViewController("/").setViewName("redirect:/mall");  
-        registry.setOrder(Ordered.HIGHEST_PRECEDENCE);  
-        super.addViewControllers(registry);  
-    }  
+//    @Override  
+//    public void addViewControllers(ViewControllerRegistry registry) {  
+//        registry.addViewController("/").setViewName("redirect:/");  
+//        registry.setOrder(Ordered.HIGHEST_PRECEDENCE);  
+//        super.addViewControllers(registry);  
+//    }  
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
 //    	registry.addInterceptor(new InitializeConnection())

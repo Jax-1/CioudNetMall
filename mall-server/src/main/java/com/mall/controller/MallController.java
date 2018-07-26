@@ -5,17 +5,17 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/mall")
+@RequestMapping("/")
 public class MallController {
 	/**
 	 * 跳转到主页
 	 * @return
 	 */
-	@RequestMapping("")
+	@RequestMapping("/")
 	public String toIndex(Model model) {
 		return "index";
 	}
-	@RequestMapping("/about")
+	@RequestMapping("/mall/about")
 	public String toAbout(Model model) {
 		
 		model.addAttribute("page", "mall/about/about");

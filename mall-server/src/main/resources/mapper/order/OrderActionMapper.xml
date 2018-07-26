@@ -4,6 +4,7 @@
   <resultMap id="BaseResultMap" type="com.mall.entity.order.OrderAction">
     <id column="action_id" jdbcType="INTEGER" property="action_id" />
     <result column="order_id" jdbcType="INTEGER" property="order_id" />
+    <result column="order_number" jdbcType="VARCHAR" property="order_number" />
     <result column="action_user" jdbcType="VARCHAR" property="action_user" />
     <result column="order_status" jdbcType="TINYINT" property="order_status" />
     <result column="logistics_status" jdbcType="TINYINT" property="logistics_status" />
@@ -11,7 +12,8 @@
     <result column="log_time" jdbcType="TIMESTAMP" property="log_time" />
   </resultMap>
   <sql id="Base_Column_List">
-    action_id, order_id, action_user, order_status, logistics_status, action_note, log_time
+    action_id, order_id, order_number, action_user, order_status, logistics_status, action_note, 
+    log_time
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -24,12 +26,12 @@
     where action_id = #{action_id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.mall.entity.order.OrderAction">
-    insert into t_order_action (action_id, order_id, action_user, 
-      order_status, logistics_status, action_note, 
-      log_time)
-    values (#{action_id,jdbcType=INTEGER}, #{order_id,jdbcType=INTEGER}, #{action_user,jdbcType=VARCHAR}, 
-      #{order_status,jdbcType=TINYINT}, #{logistics_status,jdbcType=TINYINT}, #{action_note,jdbcType=VARCHAR}, 
-      #{log_time,jdbcType=TIMESTAMP})
+    insert into t_order_action (action_id, order_id, order_number, 
+      action_user, order_status, logistics_status, 
+      action_note, log_time)
+    values (#{action_id,jdbcType=INTEGER}, #{order_id,jdbcType=INTEGER}, #{order_number,jdbcType=VARCHAR}, 
+      #{action_user,jdbcType=VARCHAR}, #{order_status,jdbcType=TINYINT}, #{logistics_status,jdbcType=TINYINT}, 
+      #{action_note,jdbcType=VARCHAR}, #{log_time,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.mall.entity.order.OrderAction">
     insert into t_order_action
@@ -39,6 +41,9 @@
       </if>
       <if test="order_id != null">
         order_id,
+      </if>
+      <if test="order_number != null">
+        order_number,
       </if>
       <if test="action_user != null">
         action_user,
@@ -63,6 +68,9 @@
       <if test="order_id != null">
         #{order_id,jdbcType=INTEGER},
       </if>
+      <if test="order_number != null">
+        #{order_number,jdbcType=VARCHAR},
+      </if>
       <if test="action_user != null">
         #{action_user,jdbcType=VARCHAR},
       </if>
@@ -86,6 +94,9 @@
       <if test="order_id != null">
         order_id = #{order_id,jdbcType=INTEGER},
       </if>
+      <if test="order_number != null">
+        order_number = #{order_number,jdbcType=VARCHAR},
+      </if>
       <if test="action_user != null">
         action_user = #{action_user,jdbcType=VARCHAR},
       </if>
@@ -107,6 +118,7 @@
   <update id="updateByPrimaryKey" parameterType="com.mall.entity.order.OrderAction">
     update t_order_action
     set order_id = #{order_id,jdbcType=INTEGER},
+      order_number = #{order_number,jdbcType=VARCHAR},
       action_user = #{action_user,jdbcType=VARCHAR},
       order_status = #{order_status,jdbcType=TINYINT},
       logistics_status = #{logistics_status,jdbcType=TINYINT},
@@ -114,4 +126,11 @@
       log_time = #{log_time,jdbcType=TIMESTAMP}
     where action_id = #{action_id,jdbcType=INTEGER}
   </update>
+  <select id="getPageFront" parameterType="com.mall.entity.order.OrderAction" resultMap="BaseResultMap">
+  	select 
+    <include refid="Base_Column_List" />
+    from t_order_action
+    where order_number = #{order_number,jdbcType=VARCHAR}
+  
+  </select>
 </mapper>

@@ -10,10 +10,12 @@ import org.yaml.snakeyaml.constructor.BaseConstructor;
 import com.mall.entity.cms.AuthorWithBLOBs;
 import com.mall.entity.goods.Goods;
 import com.mall.entity.order.Order;
+import com.mall.entity.order.OrderAction;
 import com.mall.entity.order.OrderDetails;
 import com.mall.message.SystemCode;
 import com.mall.service.cms.AuthorWithBLOBsService;
 import com.mall.service.goods.GoodsService;
+import com.mall.service.order.OrderActionService;
 import com.mall.service.order.OrderService;
 import com.mall.service.sys.CacheService;
 import com.mall.util.PageResult;
@@ -30,6 +32,8 @@ public class AdminOrderController  extends BaseConstructor{
 	private GoodsService goodsService;
 	@Resource
 	private AuthorWithBLOBsService authorWithBLOBsService;
+	@Resource
+	private OrderActionService orderActionService;
 	
 	@RequestMapping("/list")
 	public String toOrderList(Model model ,Order order ,PageResult<Order> list) {
@@ -58,6 +62,13 @@ public class AdminOrderController  extends BaseConstructor{
 			goods.setAuth(auth);
 			OrderDetails.setGoods(goods);
 		}
+		//获取订单操作流水
+		PageResult<OrderAction> list =new PageResult<OrderAction>();
+		OrderAction orderAction =new OrderAction();
+		orderAction.setOrder_number(order.getOrder_number());
+		list=orderActionService.queryByPageFront(list,orderAction);
+		
+		model.addAttribute("list", list.getDataList());
 		model.addAttribute("entity", order);
 		model.addAttribute("page", "admin/order/order_detail");
 		model.addAttribute("order", "nav-item start active open");
