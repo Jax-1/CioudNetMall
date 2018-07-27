@@ -155,6 +155,11 @@ public class SystemCode {
 	public final static String BUSINESS_SECKILL="2";
 	
 	
+	/**
+	 * 发货单相关
+	 */
+	public final static String INVENTORYDEIVERY_SEQUEANCE="INVENTORYDEIVERY_SEQUEANCE";
+	
 	
 
 }

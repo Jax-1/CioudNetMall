@@ -9,12 +9,14 @@ import org.yaml.snakeyaml.constructor.BaseConstructor;
 
 import com.mall.entity.cms.AuthorWithBLOBs;
 import com.mall.entity.goods.Goods;
+import com.mall.entity.inventory.InventoryDeivery;
 import com.mall.entity.order.Order;
 import com.mall.entity.order.OrderAction;
 import com.mall.entity.order.OrderDetails;
 import com.mall.message.SystemCode;
 import com.mall.service.cms.AuthorWithBLOBsService;
 import com.mall.service.goods.GoodsService;
+import com.mall.service.inventory.InventoryDeiveryService;
 import com.mall.service.order.OrderActionService;
 import com.mall.service.order.OrderService;
 import com.mall.service.sys.CacheService;
@@ -34,6 +36,8 @@ public class AdminOrderController  extends BaseConstructor{
 	private AuthorWithBLOBsService authorWithBLOBsService;
 	@Resource
 	private OrderActionService orderActionService;
+	@Resource
+	private InventoryDeiveryService inventoryDeiveryService;
 	
 	@RequestMapping("/list")
 	public String toOrderList(Model model ,Order order ,PageResult<Order> list) {
@@ -76,5 +80,28 @@ public class AdminOrderController  extends BaseConstructor{
 		return "admin/index";
 	}
 	
+	@RequestMapping("/deivery/list")
+	public String toDeiveryList(InventoryDeivery inventoryDeivery,Model model,PageResult<InventoryDeivery> list) {
+		int pageSize  =  Integer.parseInt(cacheService.getCache(SystemCode.PAGE).get(SystemCode.GOODS_PAGE));
+		list.setPageSize(pageSize);
+		list=inventoryDeiveryService.queryByPageFront(list, inventoryDeivery);
+		for(InventoryDeivery InventoryDeivery:list.getDataList() ) {
+			Order order = orderService.selectByPrimaryKey(InventoryDeivery.getOrder_number());
+			InventoryDeivery.setOrder(order);
+		}
+		model.addAttribute("list", list);
+		model.addAttribute("page", "admin/order/deliver_list");
+		model.addAttribute("order", "nav-item start active open");
+		return "admin/index";
+		
+	}
+	
+	@RequestMapping("/deivery/detail")
+	public String toDeiveryDetail(InventoryDeivery inventoryDeivery,Model model) {
+		model.addAttribute("page", "admin/order/deliver_detail");
+		model.addAttribute("order", "nav-item start active open");
+		return "admin/index";
+		
+	}
 
 }

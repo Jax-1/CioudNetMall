@@ -26,11 +26,12 @@
     receive_id, send_time, logistics_state, invoice_tag, del_state, payment_id, payment_seq, 
     pay_state, comment, create_time, update_time
   </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+  <!-- 重写，通过订单号查询 -->
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from t_order
-    where order_id = #{order_id,jdbcType=INTEGER}
+    where order_number = #{order_number}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from t_order

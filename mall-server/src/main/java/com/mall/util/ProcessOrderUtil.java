@@ -5,6 +5,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import com.mall.dao.sequence.Sequence;
 import com.mall.entity.login.User;
 
 /**
@@ -14,6 +15,15 @@ import com.mall.entity.login.User;
  */
 public class ProcessOrderUtil {
 	
+	
+	/**
+	 * 生成订单编号
+	 * 规则：下单渠道+业务类型+月日+时间戳后5位+用户ID后四位
+	 * @param dev
+	 * @param business
+	 * @param user
+	 * @return
+	 */
 	public static String processOrderNumber(String dev,String business,User user) {
 		//订单编号=下单渠道+业务类型+月日+时间戳后5位+用户ID后四位
 		Date date = DateFormatUtil.getDate();
@@ -32,11 +42,37 @@ public class ProcessOrderUtil {
 		return orderNumber.toString();
 		
 	}
+	
+	
+	/**
+	 * 生成发货单号
+	 * 规则
+	 * 年月日+4位时间戳+两位循环码+4位序列
+	 * @param sequence
+	 * @param orderNumber
+	 * @return
+	 */
+	public static String processDeliveryNumber(Sequence sequence) {
+		//年月日+4位时间戳+两位循环码+4位序列
+		Date date = DateFormatUtil.getDate();
+		long time = date.getTime()/1000;
+		String unix = Long.toString(time).substring(4);
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+		String format = sdf.format(date);
+		String bout = String.format("%2d", sequence.getBout()).replace(" ", "0");  
+		String val = String.format("%4d", sequence.getCurrent_val()).replace(" ", "0");  
+		StringBuffer deliveryNumber = new StringBuffer();
+		deliveryNumber.append(format);
+		deliveryNumber.append(unix);
+		deliveryNumber.append(bout);
+		deliveryNumber.append(val);
+		
+		return deliveryNumber.toString();
+		
+	}
 //	public static void main(String[] args) {
-//		User u =new User();
-//		u.setUser_name("13260631321");
-//		String number = ProcessOrderUtil.processOrderNumber("1", "0", u);
-//		System.out.println(number);
+//		String str = String.format("%4d", 12).replace(" ", "0");  
+//		System.out.println(str);
 //		
 //
 //	}

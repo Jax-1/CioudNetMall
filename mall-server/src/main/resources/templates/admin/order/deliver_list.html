@@ -4,12 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <title>发货单列表</title>
-    <link href="assets/global/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
-    <link href="assets/global/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-    <link href="assets/global/css/components.min.css" rel="stylesheet" id="style_components" type="text/css" />
-    <link href="assets/layouts/layout/css/layout.min.css" rel="stylesheet" type="text/css" />
-    <link href="assets/layouts/layout/css/themes/darkblue.min.css" rel="stylesheet" type="text/css" id="style_color" />
-    <link rel="stylesheet" href="assets/layouts/layout/css/yunwang.css">
+    <link rel="stylesheet" href="/admin/assets/layouts/layout/css/yunwang.css">
 </head>
 
 <body>
@@ -32,32 +27,38 @@
             <!-- 内容展示 -->
             <div class="row">
                 <div class="col-md-12">
-                    <form class="form-inline">
+                    <form class="form-inline" id="selectform" action="/admin/order/deivery/list">
                         <div class="form-group">
-                            <label for="">发货单流水号</label>
-                            <input type="text" class="form-control" placeholder="发货单流水号">
+                            <label for="">发货单号</label>
+                            <input type="text" class="form-control" placeholder="发货单流水号" name="delivery_number">
                         </div>
+                        <p>
                         <div class="form-group">
                             <label for="">订单号</label>
-                            <input type="text" class="form-control" placeholder="订单号">
+                            <input type="text" class="form-control" placeholder="订单号" name="order_number">
                         </div>
+                        <p>
                         <div class="form-group">
                             <label for="">收货人</label>
-                            <input type="text" class="form-control wd-100" placeholder="收货人">
+                            <input type="text" class="form-control wd-100" placeholder="收货人" name="orderAddress.name">
+                        </div>
+                        <p>
+                        <div class="form-group">
+                            <label for="">发货状态 </label>
+                            <select class="form-control" name="logistics_state" id="status">
+                                <option value="-1">请选择...</option>
+                                <option value="1" >待发货</option>
+                                <option value="2">已发货</option>
+                                
+                            </select>
                         </div>
                         <div class="form-group">
-                            <label for="">订单状态 </label>
+                            <label for="">发货单状态 </label>
                             <select class="form-control" name="status" id="status">
                                 <option value="-1">请选择...</option>
-                                <option value="0" selected="">待确认</option>
-                                <option value="100">待付款</option>
-                                <option value="101">待发货</option>
-                                <option value="102">已完成</option>
-                                <option value="1">付款中</option>
-                                <option value="2">取消</option>
-                                <option value="3">无效</option>
-                                <option value="4">退货</option>
-                                <option value="6">部分发货</option>
+                                <option value="1" >有效</option>
+                                <option value="2">无效</option>
+                                
                             </select>
                         </div>
                         <button type="submit" class="btn btn-default green">搜索</button>
@@ -86,27 +87,27 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr class="odd gradeX">
+                                    <tr class="odd gradeX" th:each="a:${list.dataList}">
                                         <td>
                                             <label class="mt-checkbox mt-checkbox-single mt-checkbox-outline">
                                                 <input type="checkbox" class="checkboxes" value="1" />
                                                 <span></span>
                                             </label>
                                         </td>
-                                        <td>20180718035335453</td>
-                                        <td> 19950</td>
+                                        <td th:text="${a.delivery_number}">20180718035335453</td>
+                                        <td > <a th:text="${a.order_number}" th:href="@{/admin/order/detail(order_number=${a.order_number})}"></a></td>
                                         <td>
-                                            <p>lj74txys</p>
-                                            <p>07-17 09:22</p>
+                                            <p th:text="${a.userInfo.name}">lj74txys</p>
+                                            <p th:text="${#dates.format(a.order.create_time,'yyyy-MM-dd HH:mm:ss')}">07-17 09:22</p>
                                         </td>
                                         <td>
-                                            <a href="">李杰</a>
+                                            <a href="" th:text="${a.orderAddress.name}">李杰</a>
                                         </td>
-                                        <td>2018-07-18 11:53:28</td>
-                                        <td>已发货</td>
-                                        <td>admin</td>
+                                        <td th:text="${a.create_time==null}?'N/A':(${#dates.format(a.create_time,'yyyy-MM-dd HH:mm:ss')})">2018-07-18 11:53:28</td>
+                                        <td th:text="${a.logistics_state}=='2'?'已发货':'待发货'">已发货</td>
+                                        <td th:text="${a.action_user}">admin</td>
                                         <td>
-                                            <a href="deliver_detail.html" class="btn btn-xs green" >查看详细
+                                            <a  class="btn btn-xs green" th:href="@{/admin/order/deivery/detail(delivery_number=${a.delivery_number})}">查看详细
                                             </a>
                                         </td>
                                         
@@ -127,26 +128,27 @@
                         <div class="row center-text">
                             <div class="dataTables_paginate paging_bootstrap_full_number">
                                 <ul class="pagination" style="visibility: visible;">
-                                    <li class="prev disabled">
-                                        <a href="#">
+                                    <li class="prev ">
+                                        <a  th:href="'javascript:toPage(1)'">
                                             <i class="fa fa-angle-double-left"></i>
                                         </a>
                                     </li>
-                                    <li class="prev disabled">
-                                        <a href="#" title="Prev">
+                                    <li class="prev ">
+                                        <a  title="Prev" th:href="'javascript:toPage('+(${list.pageNo}-1>0?${list.pageNo}-1:1)+')'">
                                             <i class="fa fa-angle-left"></i>
                                         </a>
                                     </li>
-                                    <li class="active">
-                                        <a href="#">1</a>
+                                    <li class="active" id="activepage">
+                                        <a  th:text="${list.pageNo}">1</a>
                                     </li>
-                                    <li class="next disabled">
-                                        <a href="#" title="Next">
+                                    <li class="next ">
+                                        <a  title="Next" th:href="'javascript:toPage('+(${list.pageNo}==${list.pages}?${list.pages}:${list.pageNo}+1)+')'">
                                             <i class="fa fa-angle-right"></i>
                                         </a>
                                     </li>
-                                    <li class="next disabled">
-                                        <a href="#" title="Last"><i class="fa fa-angle-double-right"></i>
+                                    <li class="next ">
+                                        <a  title="Last" th:href="'javascript:toPage('+${list.pages}+')'">
+                                        <i class="fa fa-angle-double-right"></i>
                                                 </a>
                                     </li>
                                 </ul>
@@ -157,11 +159,37 @@
             </div>
         </div>
     </div>
-    </div>
-    <script src="assets/global/plugins/jquery.min.js" type="text/javascript"></script>
-    <script src="assets/global/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
-    <script src="assets/global/scripts/app.min.js" type="text/javascript"></script>
-    <script src="assets/layouts/layout/scripts/layout.min.js" type="text/javascript"></script>
+    <script type="text/javascript" th:inline="javascript">
+    var order=[[${order}]];
+    	$(function(){
+    		var pageNo=[[${list.pageNo}]];
+        	var pages=[[${list.pages}]];
+        	
+    		for(var i=2;i>0;i--){
+    			var pag=pageNo-i;
+    			if(pageNo-i>0){
+    				var dome="<li><a  href='javascript:toPage("+pag+")'>"+pag+"</a></li>";
+        			$("#activepage").before(dome);
+    			}
+    			
+    		}
+    		for(var i=2;i>0;i--){
+    			var pag=pageNo+i;
+    			if(pageNo+i<=pages){
+    				var dome="<li><a   href='javascript:toPage("+pag+")'>"+pag+"</a></li>";
+        			$("#activepage").after(dome);
+    			}
+    			
+    		}
+    	})
+    	function toPage(num){
+    		var item="<input type='hidden' name='pageNo' value='"+num+"'>"
+    		$('#selectform').append(item);
+    		$('#selectform').submit();
+    	}
+    
+    
+    </script>
 </body>
 
 </html>

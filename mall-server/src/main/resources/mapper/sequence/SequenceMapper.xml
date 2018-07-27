@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mall.dao.sequence.SequenceMapper">
+  <resultMap id="BaseResultMap" type="com.mall.dao.sequence.Sequence">
+    <id column="seq_name" jdbcType="VARCHAR" property="seq_name" />
+    <result column="current_val" jdbcType="INTEGER" property="current_val" />
+    <result column="increment_val" jdbcType="INTEGER" property="increment_val" />
+    <result column="bout" jdbcType="INTEGER" property="bout" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    seq_name, current_val, increment_val, bout
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_sequence
+    where seq_name = #{seq_name,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from t_sequence
+    where seq_name = #{seq_name,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.mall.dao.sequence.Sequence">
+    insert into t_sequence (seq_name, current_val, increment_val, 
+      bout)
+    values (#{seq_name,jdbcType=VARCHAR}, #{current_val,jdbcType=INTEGER}, #{increment_val,jdbcType=INTEGER}, 
+      #{bout,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.mall.dao.sequence.Sequence">
+    insert into t_sequence
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="seq_name != null">
+        seq_name,
+      </if>
+      <if test="current_val != null">
+        current_val,
+      </if>
+      <if test="increment_val != null">
+        increment_val,
+      </if>
+      <if test="bout != null">
+        bout,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="seq_name != null">
+        #{seq_name,jdbcType=VARCHAR},
+      </if>
+      <if test="current_val != null">
+        #{current_val,jdbcType=INTEGER},
+      </if>
+      <if test="increment_val != null">
+        #{increment_val,jdbcType=INTEGER},
+      </if>
+      <if test="bout != null">
+        #{bout,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.mall.dao.sequence.Sequence">
+    update t_sequence
+    <set>
+      <if test="current_val != null">
+        current_val = #{current_val,jdbcType=INTEGER},
+      </if>
+      <if test="increment_val != null">
+        increment_val = #{increment_val,jdbcType=INTEGER},
+      </if>
+      <if test="bout != null">
+        bout = #{bout,jdbcType=INTEGER},
+      </if>
+    </set>
+    where seq_name = #{seq_name,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.mall.dao.sequence.Sequence">
+    update t_sequence
+    set current_val = #{current_val,jdbcType=INTEGER},
+      increment_val = #{increment_val,jdbcType=INTEGER},
+      bout = #{bout,jdbcType=INTEGER}
+    where seq_name = #{seq_name,jdbcType=VARCHAR}
+  </update>
+  <!-- 获取当前值 -->
+  <select id="currval" parameterType="java.lang.String"  resultMap="BaseResultMap">
+  select <include refid="Base_Column_List" />  from t_sequence where seq_name = #{seq_name}
+  </select>
+  <!-- 获取下一个值 -->
+  <select id="nextval" parameterType="java.lang.String" resultType ="java.lang.Integer">
+  SELECT nextval(#{seq_name});
+  </select>
+</mapper>

@@ -4,5 +4,6 @@ import com.mall.dao.base.IBaseDao;
 import com.mall.entity.inventory.InventoryDeivery;
 
 public interface InventoryDeiveryService extends IBaseDao<InventoryDeivery> {
+	
 
 }

@@ -2,6 +2,11 @@ package com.mall.entity.inventory;
 
 import java.util.Date;
 
+import com.mall.entity.login.User;
+import com.mall.entity.login.UserInfo;
+import com.mall.entity.order.Order;
+import com.mall.entity.order.OrderAddress;
+
 public class InventoryDeivery {
     private Integer delivery_id;
 
@@ -11,7 +16,7 @@ public class InventoryDeivery {
 
     private String order_number;
 
-    private Integer user_id;
+    private String user_id;
 
     private Integer receive_id;
 
@@ -30,8 +35,50 @@ public class InventoryDeivery {
     private Byte status;
 
     private Date create_time;
+    
+    /**
+     * 关联收货地址表
+     */
+    private OrderAddress orderAddress;
+    
+    /**
+	 * 关联用户信息表
+	 */
+	private UserInfo userInfo;
+    
+	/**
+	 * 关联订单表
+	 */
+    private Order order;
+    
 
-    public Integer getDelivery_id() {
+    
+
+	public Order getOrder() {
+		return order;
+	}
+
+	public void setOrder(Order order) {
+		this.order = order;
+	}
+
+	public UserInfo getUserInfo() {
+		return userInfo;
+	}
+
+	public void setUserInfo(UserInfo userInfo) {
+		this.userInfo = userInfo;
+	}
+
+	public OrderAddress getOrderAddress() {
+		return orderAddress;
+	}
+
+	public void setOrderAddress(OrderAddress orderAddress) {
+		this.orderAddress = orderAddress;
+	}
+
+	public Integer getDelivery_id() {
         return delivery_id;
     }
 
@@ -63,11 +110,11 @@ public class InventoryDeivery {
         this.order_number = order_number;
     }
 
-    public Integer getUser_id() {
+    public String getUser_id() {
         return user_id;
     }
 
-    public void setUser_id(Integer user_id) {
+    public void setUser_id(String user_id) {
         this.user_id = user_id;
     }
 
