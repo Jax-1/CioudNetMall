@@ -217,6 +217,33 @@
                                 </div>
                             </div>
                             <div class="form-group">
+                                <label class="col-md-2 control-label"><em></em>是否收取邮费</label>
+                                <div class="col-md-3">
+                                    <label class="mt-checkbox mt-checkbox-outline">
+                                        <input type="checkbox" value="Y" name="info.goodsInfo.ext3" id="baoyou" >
+                                        <span></span>
+                                    </label>
+                                </div>
+                            </div>
+                             <div class="form-group" id="baoyou_box1">
+                                <label class="col-md-2 control-label">选择快递</label>
+                                <div class="col-md-3">
+                                    <select class="form-control" name="goodsInfo.ext1">
+                                        <option value="顺丰" >顺丰</option>
+                                        <option value="圆通" >圆通</option>
+                                        <option value="申通" >申通</option>
+                                        
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group" id="baoyou_box2">
+                                <label class="col-md-2 control-label"><em>*</em>快递价格（元）</label>
+                                <div class="col-md-3">
+                                    <input type="text" class="form-control" placeholder="" name="goodsInfo.ext2">
+                                    <span class="help-block"></span>
+                                </div>
+                            </div>
+                            <div class="form-group">
                                 <label class="col-md-2 control-label"></label>
                                 <div class="col-md-5 shop_check_box">
                                     <label class="mt-checkbox mt-checkbox-outline"> 设置推荐
@@ -250,7 +277,12 @@
         $(function(){
             if($("#tehui").is(':checked')){
                 $("#tehui_box").show();
-                console.log($("#tehui").val())
+            }
+            
+            if($("#baoyou").is(':checked')){
+                $("#baoyou_box1,#baoyou_box2").show();
+            }else{
+            	 $("#baoyou_box1,#baoyou_box2").hide();
             }
 
             $("#tehui").change(function(){
@@ -263,6 +295,14 @@
                 }
             })
 			
+             $("#baoyou").change(function(){
+                //如果选择了收取邮费显示 输入
+                if($("#baoyou").is(':checked')){
+                    $("#baoyou_box1,#baoyou_box2").show();
+                }else{
+                    $("#baoyou_box1,#baoyou_box2").hide();
+                }
+            })
 			//加载下拉框
 			var goods_cate=[[${goodsCategoryList}]]
 			 $("#goods_category").html( buildMenu( goods_cate))
@@ -328,7 +368,10 @@
                     	image:"required",
                     	"goodsPrice.sale_price":{
                     		 required: "#tehui:checked",
-                        }
+                        },
+                        "goodsInfo.ext2":{
+                    		 required: "#baoyou:checked",
+                        },
             	    },
             	    messages: {
             	    	goods_name: "请输入商品名称",
@@ -341,7 +384,8 @@
 	           	    		 min:"库存不能小于0"
 	                   	},
 	                   	image:"请上传商品缩略图片",
-	                   	"goodsPrice.sale_price":"请输入特惠价格"
+	                   	"goodsPrice.sale_price":"请输入特惠价格",
+	                   	"goodsInfo.ext2":"请输入快递价格"
             	    }
             	});
 		
