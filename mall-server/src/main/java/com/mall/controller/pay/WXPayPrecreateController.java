@@ -81,13 +81,13 @@ public class WXPayPrecreateController extends AbstractController{
     	
     	logger.info("支付金额："+total_amount.setScale(0,BigDecimal.ROUND_DOWN).toString()+"分");
     	Map<String, String> reqData = new HashMap<>();
-        reqData.put("out_trade_no", order.getOrder_number());
+        reqData.put("out_trade_no", String.valueOf(System.nanoTime()));
         reqData.put("trade_type", "NATIVE");
         reqData.put("product_id", "1");
         reqData.put("body", goodsNames.toString());
         // 订单总金额，单位为分
         reqData.put("total_fee", total_amount.setScale(0,BigDecimal.ROUND_DOWN).toString());
-        reqData.put("total_fee", "2");
+        //reqData.put("total_fee", "2");
         // APP和网页支付提交用户端ip，Native支付填调用微信支付API的机器IP。
         reqData.put("spbill_create_ip", "14.23.150.211");
         // 异步接收微信支付结果通知的回调地址，通知url必须为外网可访问的url，不能携带参数。
@@ -95,7 +95,7 @@ public class WXPayPrecreateController extends AbstractController{
         // 自定义参数, 可以为终端设备号(门店号或收银设备ID)，PC网页或公众号内支付可以传"WEB"
         reqData.put("device_info", "WEB");
         // 附加数据，在查询API和支付通知中原样返回，可作为自定义参数使用。
-        reqData.put("attach", "");
+        reqData.put("attach", order.getOrder_number());
 
         /**
          * {
@@ -172,7 +172,7 @@ public class WXPayPrecreateController extends AbstractController{
         		//支付成功
         		//校验订单状态
         		Order order =new Order();
-        		order.setOrder_number(reqData.get("out_trade_no"));
+        		order.setOrder_number(reqData.get("attach"));
         		order=orderService.selectInfo(order);
         		
         		//订单状态待支付

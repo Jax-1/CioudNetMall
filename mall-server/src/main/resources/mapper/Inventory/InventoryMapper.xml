@@ -118,7 +118,9 @@
   <select id="inventoryRetrieve" parameterType="com.mall.entity.inventory.Inventory" resultMap="BaseResultMap">
   	SELECT
 	t_inventory.ProductNumber,
-	t_inventory.Amount 
+	t_inventory.Amount ,
+	t_inventory.stay_amount ,
+	t_inventory.has_amount 
 	FROM
 		t_inventory 
 	WHERE

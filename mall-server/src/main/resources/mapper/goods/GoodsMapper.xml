@@ -507,7 +507,7 @@ ORDER BY
 				t1.is_marketable, t1.recommend, t1.classic, t1.new_product, t1.create_time, t1.update_time, 
 				t1.admin_id,t1.detail_describe,
 				t2.goods_info_id, t2.category_id, t2.inventoryid, t2.size, t2.flat_feet, t2.auth_id, t2.framed, t2.environment, 
-				t2.standard
+				t2.standard,t2.ext1, t2.ext2, t2.ext3
 			FROM 
 			t_goods t1, t_goods_info t2 
 			WHERE 

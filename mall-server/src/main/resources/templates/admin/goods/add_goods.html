@@ -220,7 +220,7 @@
                                 <label class="col-md-2 control-label"><em></em>是否收取邮费</label>
                                 <div class="col-md-3">
                                     <label class="mt-checkbox mt-checkbox-outline">
-                                        <input type="checkbox" value="Y" name="info.goodsInfo.ext3" id="baoyou" >
+                                        <input type="checkbox" value="N" name="goodsInfo.ext1" id="baoyou" th:checked="${info!=null and info.goodsInfo!=null and info.goodsInfo.ext1=='N'}?'true':'false'" >
                                         <span></span>
                                     </label>
                                 </div>
@@ -228,10 +228,10 @@
                              <div class="form-group" id="baoyou_box1">
                                 <label class="col-md-2 control-label">选择快递</label>
                                 <div class="col-md-3">
-                                    <select class="form-control" name="goodsInfo.ext1">
-                                        <option value="顺丰" >顺丰</option>
-                                        <option value="圆通" >圆通</option>
-                                        <option value="申通" >申通</option>
+                                    <select class="form-control" name="goodsInfo.ext2">
+                                        <option value="顺丰" th:selected="${info!=null and info.goodsInfo.ext2=='顺丰'}">顺丰</option>
+                                        <option value="圆通" th:selected="${info!=null and info.goodsInfo.ext2=='圆通'}">圆通</option>
+                                        <option value="申通" th:selected="${info!=null and info.goodsInfo.ext2=='申通'}">申通</option>
                                         
                                     </select>
                                 </div>
@@ -239,7 +239,7 @@
                             <div class="form-group" id="baoyou_box2">
                                 <label class="col-md-2 control-label"><em>*</em>快递价格（元）</label>
                                 <div class="col-md-3">
-                                    <input type="text" class="form-control" placeholder="" name="goodsInfo.ext2">
+                                    <input type="text" class="form-control" placeholder="" name="goodsInfo.ext3" th:value="${info!=null and info.goodsInfo!=null}?${info.goodsInfo.ext3}:''">
                                     <span class="help-block"></span>
                                 </div>
                             </div>

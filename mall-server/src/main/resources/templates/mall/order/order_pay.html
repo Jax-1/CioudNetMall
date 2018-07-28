@@ -59,21 +59,31 @@
         <img src="/mall/images/baozhen.png" alt="">
     </div>
 	<script type="text/javascript" th:inline="javascript"> 
+	//设置AJAX同步
+    $.ajaxSetup({
+    	  async: false
+    	  });
 	var order=[[${order}]];
-	var orderDetails=[[${orderDetails}]];
 	function submitOrder(){
 		//验证商品库存信息
-		$.post("/mall/inventory/retrieve",{productNumber:orderDetails.goods_id,amount:orderDetails.num},function(data){
-			console.log(data);
-			if(data!=null&&data.res=="1"){
-				//有库存
-				//跳转到支付界面
-				window.location.href="/mall/order/real?order_number="+order.order_number;
-			}else{
-				//库存不足
-				
-			}
-			});
+		var flg=true;
+		for(var i=0;i<order.orderDetailsList.length;i++){
+			$.post("/mall/inventory/retrieve",{productNumber:order.orderDetailsList[i].goods_id,amount:order.orderDetailsList[i].num},function(data){
+				console.log(data);
+				if(data!=null&&data.res=="1"){
+					
+				}else{
+					//库存不足
+					flg=false;
+				}
+				});
+		}
+		if(flg){
+			//有库存
+			//跳转到支付界面
+			window.location.href="/mall/order/real?order_number="+order.order_number;
+		}
+		
 	}
 	
 	console.log([[${order}]]);

@@ -1,6 +1,7 @@
 package com.mall.controller.order;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -55,6 +56,7 @@ public class MallOrderController extends AbstractController{
 	private OrderDetailsService orderDetailsService;
 	@Resource
 	private OrderService orderService;
+	private Order order2;
 	/**
 	 * 订单界面
 	 * @param model
@@ -66,25 +68,34 @@ public class MallOrderController extends AbstractController{
 	@RequestMapping("")
 	public String toOrder(Model model,Goods goods,HttpServletRequest request ,Integer amount,Order order) {
 		User user = SessionUtil.getUser(request);
+		List<Goods> list=new ArrayList<Goods>();
+		logger.info("购买商品："+goods.getGoods_id());
 		//获取当前用户的收获地址
 		List<OrderAddress> address = orderAddressService.userTakeDeliveryAddress(user);
-		if(Validate.notNull(order)&&Validate.notNull(order.getOrder_number())) {
-			//加载单据信息
-			order=orderService.selectInfo(order);
-			for(OrderDetails o:order.getOrderDetailsList()) {
-				goods.setGoods_id(o.getGoods_id());
+		//单商品购买
+		if(Validate.notNull(goods)) {
+			//获取商品信息
+			logger.info("获取商品信息："+goods.getGoods_id());
+			goods = goodsService.selectInfo(goods);
+			if(Validate.notNull(goods.getGoodsInfo().getAuth_id())) {
+				//查询商品作家信息
+				AuthorWithBLOBs a=new AuthorWithBLOBs();
+				a.setId(goods.getGoodsInfo().getAuth_id());
+				a = authorWithBLOBsService.selectInfo(a);
+				goods.setAuth(a);
 			}
+			list.add(goods);
 		}
-		//获取商品信息
-		logger.info("获取商品信息："+goods.getGoods_id());
-		goods = goodsService.selectInfo(goods);
-		if(Validate.notNull(goods.getGoodsInfo().getAuth_id())) {
-			//查询商品作家信息
-			AuthorWithBLOBs a=new AuthorWithBLOBs();
-			a.setId(goods.getGoodsInfo().getAuth_id());
-			a = authorWithBLOBsService.selectInfo(a);
-			goods.setAuth(a);
-		}
+		//多商品生成订单
+		
+//		if(Validate.notNull(order)&&Validate.notNull(order.getOrder_number())) {
+//			//加载单据信息
+//			order=orderService.selectInfo(order);
+//			for(OrderDetails o:order.getOrderDetailsList()) {
+//				goods.setGoods_id(o.getGoods_id());
+//			}
+//		}
+		
 		
 		
 		//获取支付方式
@@ -100,7 +111,7 @@ public class MallOrderController extends AbstractController{
 		model.addAttribute("fileServicePath", fileUrlPrefix);
 		model.addAttribute("payment", payment);
 		model.addAttribute("amount", amount);
-		model.addAttribute("goods", goods);
+		model.addAttribute("list", list);
 		model.addAttribute("address", address);
 		model.addAttribute("page", "mall/order/order");
 		return "mall/index";
@@ -117,7 +128,7 @@ public class MallOrderController extends AbstractController{
 	 * @return
 	 */
 	@RequestMapping("/pay")
-	public String toOrderPay(Model model,Order order,OrderDetails orderDetails,HttpServletRequest request) {
+	public String toOrderPay(Model model,Order order,HttpServletRequest request) {
 		//
 		if(Validate.notNull(order.getOrder_number())) {
 			//历史订单支付
@@ -127,22 +138,68 @@ public class MallOrderController extends AbstractController{
 			logger.info("支付方式："+order.getPayment_id());
 			//订单号为空，初次进入
 			order=Order.init(order, request);
-			order.setOrder_number(ProcessOrderUtil.processOrderNumber(SystemCode.DEV_PC, SystemCode.BUSINESS_MALL, SessionUtil.getUser(request)));
+			//创建订单号
+			while(true){
+				String order_number=ProcessOrderUtil.processOrderNumber(SystemCode.DEV_PC, SystemCode.BUSINESS_MALL, SessionUtil.getUser(request));
+				Order checkOrder = orderService.selectByPrimaryKey(order_number);
+				if(!Validate.notNull(checkOrder)) {
+					order.setOrder_number(order_number);
+					break;
+				}
+			}
+			BigDecimal total_amount=BigDecimal.ZERO;
+			BigDecimal postage_amount=BigDecimal.ZERO;
+			BigDecimal discount_amount=BigDecimal.ZERO;
+			
+			//创建订单商品信息
+			for(OrderDetails orderDetails:order.getOrderDetailsList()) {
+				BigDecimal details_amount=BigDecimal.ZERO;
+				BigDecimal num = new BigDecimal(orderDetails.getNum()); 
+				Goods goods=new Goods();
+				goods.setGoods_id(orderDetails.getGoods_id());
+				logger.info("获取商品信息："+goods.getGoods_id());
+				goods = goodsService.selectInfo(goods);
+				
+				orderDetails.setCreate_time(DateFormatUtil.getDate());
+				orderDetails.setOrder_id(order.getOrder_id());
+				orderDetails.setOrder_number(order.getOrder_number());
+				//快递名
+				orderDetails.setUnit_name(goods.getGoodsInfo().getExt2());
+				orderDetails.setPrice_id(goods.getGoods_price_id());
+				orderDetails.setGoods_id(goods.getGoods_id());
+				orderDetails.setGoods_name(goods.getGoods_name());
+				if(goods.getGoodsPrice().getSale()=="Y") {
+					//优惠价格
+					orderDetails.setUnit_price(goods.getGoodsPrice().getSale_price());
+					//计算优惠总价
+					BigDecimal subtract = goods.getGoodsPrice().getRetail_price().subtract(goods.getGoodsPrice().getSale_price());  //单件优惠
+					discount_amount=discount_amount.add(subtract.multiply(num));
+				}else {
+					orderDetails.setUnit_price(goods.getGoodsPrice().getRetail_price());
+				}
+				details_amount=orderDetails.getUnit_price().multiply(num);
+				orderDetails.setDetails_amount(details_amount);
+				//计算总邮费
+				postage_amount=postage_amount.add(new BigDecimal(goods.getGoodsInfo().getExt3()));
+				//计算商品总价,加单品总价
+				total_amount=total_amount.add(details_amount);
+				try {
+					orderDetailsService.insertSelective(orderDetails);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+			//计算商品总价,加邮费总额
+			total_amount=total_amount.add(postage_amount);
+			order.setDiscount_amount(discount_amount);
+			order.setTotal_amount(total_amount);
+			order.setPostage_amount(postage_amount);
 			try {
 				orderService.insertSelective(order);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 			logger.info("创建订单："+order.getOrder_number());
-			orderDetails.setCreate_time(DateFormatUtil.getDate());
-			orderDetails.setOrder_id(order.getOrder_id());
-			orderDetails.setOrder_number(order.getOrder_number());
-			try {
-				orderDetailsService.insertSelective(orderDetails);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			
 		}
 		
 		//获取支付方式
@@ -150,7 +207,6 @@ public class MallOrderController extends AbstractController{
 		
 		model.addAttribute("payment", payment);
 		model.addAttribute("order", order);
-		model.addAttribute("orderDetails", orderDetails);
 		model.addAttribute("page", "mall/order/order_pay");
 		return "mall/index";
 		

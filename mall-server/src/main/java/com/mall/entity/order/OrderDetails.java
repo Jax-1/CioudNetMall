@@ -21,7 +21,7 @@ public class OrderDetails {
 
     private String goods_name;
 
-    private Integer unit_price;
+    private BigDecimal unit_price;
 
     private Integer num;
 
@@ -115,11 +115,11 @@ public class OrderDetails {
         this.goods_name = goods_name;
     }
 
-    public Integer getUnit_price() {
+    public BigDecimal getUnit_price() {
         return unit_price;
     }
 
-    public void setUnit_price(Integer unit_price) {
+    public void setUnit_price(BigDecimal unit_price) {
         this.unit_price = unit_price;
     }
 
