@@ -27,7 +27,8 @@
     select 
     <include refid="Base_Column_List" />
     from t_inventory_deivery
-    where delivery_number = #{delivery_number}
+    where 
+    	 delivery_number = #{delivery_number}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from t_inventory_deivery
@@ -230,6 +231,7 @@
 	    <result column="LastSign_time_u" jdbcType="TIMESTAMP" property="lastSign_time" />
   	</association>
   </resultMap>
+  <!-- 订单列表 -->
   <select id="getPageFront" parameterType="com.mall.entity.inventory.InventoryDeivery" resultMap="orderResultMap">
   select A.*, H.user_name user_name_u,H.NAME name_u,
 		H.Sex,
@@ -283,11 +285,43 @@ LEFT JOIN t_order_address T2 ON T1.receive_id = T2.id
 	<if test="order_number!=null and order_number!=''">
 	T1.order_number=#{order_number}
 	</if>
-	<if test="status!=null and status!=''">
+	<if test="status!=null and status!='' and status!='-1'">
 		T1.status=#{status}
 	</if>
 </where>
 ) A LEFT JOIN t_sys_user_info H ON A.user_id=H.user_name
   ORDER BY A.create_time DESC
+  </select>
+  <!-- 修改发货单状态 -->
+  <update id="updateDeiveryStatus" parameterType="com.mall.entity.inventory.InventoryDeivery">
+  	 update t_inventory_deivery
+  	 <set>
+  	 	<if test="status!=null and status!=''">
+  	 		status=#{status},
+  	 	</if>
+  	 	<if test="logistics_state!=null and logistics_state!=''">
+  	 		logistics_state=#{logistics_state},
+  	 	</if>
+  	 	<if test="invoice_no!=null and invoice_no!=''">
+  	 		invoice_no=#{invoice_no}
+  	 	</if>
+  	 </set>
+  	where delivery_number=#{delivery_number}
+  </update>
+  <!-- 通过发货单号\订单号获取 -->
+  <select id="selectByNumber" parameterType="com.mall.entity.inventory.InventoryDeivery" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_inventory_deivery
+    where 
+    <if test="delivery_number!=null and delivery_number!=''">
+    	 delivery_number = #{delivery_number}
+    </if>
+    <if test="order_number!=null and order_number!=''">
+    	order_number=#{order_number}
+    	and status='1'
+    </if>
+    
+   
   </select>
 </mapper>

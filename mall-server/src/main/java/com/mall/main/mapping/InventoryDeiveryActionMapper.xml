@@ -126,11 +126,4 @@
       log_time = #{log_time,jdbcType=TIMESTAMP}
     where action_id = #{action_id,jdbcType=INTEGER}
   </update>
-  <select id="getPageFront" parameterType="com.mall.entity.inventory.InventoryDeiveryAction" resultMap="BaseResultMap">
-  	select 
-    <include refid="Base_Column_List" />
-    from t_inventory_deivery_action
-    where delivery_number = #{delivery_number,jdbcType=VARCHAR}
-  	order by log_time desc
-  </select>
 </mapper>

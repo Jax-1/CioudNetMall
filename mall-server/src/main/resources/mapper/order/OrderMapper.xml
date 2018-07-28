@@ -461,14 +461,15 @@ FROM
 	) A
 LEFT JOIN t_file_path B ON A.image = B.fileid
   </select>
+  <!-- 更新订单状态 -->
   <update id="updateOrderStatus" parameterType="com.mall.entity.order.Order">
    update t_order
     <set>
     <if test="pay_state!=null">
-    pay_state=#{pay_state}
+    pay_state=#{pay_state},
     </if>
     <if test="del_state!=null">
-    del_state=#{del_state}
+    del_state=#{del_state},
     </if>
     <if test="logistics_state!=null">
     logistics_state=#{logistics_state}

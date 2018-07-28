@@ -36,59 +36,61 @@
                                     </tr>
                                     <tr>
                                         <td width="18%">发货单流水号：</td>
-                                        <td colspan="3">
+                                        <td colspan="3" th:text="${deivery.delivery_number}">
                                             20180718035335453
                                         </td>
                                     </tr>
                                     <tr>
                                         <td width="18%"> 订单号：</td>
-                                        <td width="34%">
+                                        <td width="34%" th:text="${deivery.order_number}">
                                             2018071709842
                                         </td>
                                         <td width="15%">
                                             订单状态：
                                         </td>
-                                        <td>已分单,已付款,发货中</td>
+                                        <td><div th:text="${entity.pay_state}=='2'?'已付款':'待付款'"></div>
+                                        	<div th:text="${entity.del_state}=='4'?'已完成':(${entity.del_state}=='3'?'取消':(${entity.del_state}=='2'?'无效':'待确认'))"></div>
+                                        	<div th:text="${entity.logistics_state}=='3'?'已确认收货':(${entity.logistics_state}=='2'?'已发货':(${entity.logistics_state}=='4'?'部分发货':(${entity.logistics_state}=='5'?'退货':待发货)))"></div></td>
                                     </tr>
                                     <tr>
                                         <td>购货人：</td>
-                                        <td>
+                                        <td th:text="${entity.userInfo.name}">
                                             lj74txys
                                         </td>
                                         <td>
                                             下单时间：
                                         </td>
-                                        <td>2018-07-17 09:22:42</td>
+                                        <td th:text="${#dates.format(entity.create_time,'yyyy-MM-dd HH:mm:ss')}">2018-07-17 09:22:42</td>
                                     </tr>
                                     <tr>
                                         <td>支付方式：</td>
-                                        <td>余额支付
+                                        <td th:text="${entity.paymentMethod.name}">余额支付
                                         </td>
                                         <td>
                                             付款时间：
                                         </td>
-                                        <td>2018-07-17 09:22:42</td>
+                                        <td th:text="${entity!=null and entity.PaymentFlow!=null}?${#dates.format(entity.PaymentFlow.time_end,'yyyy-MM-dd HH:mm:ss')}:'N/A'">2018-07-17 09:22:42</td>
                                     </tr>
                                     <tr>
                                         <td>发货单号：</td>
-                                        <td><input type="text"></td>
+                                        <td><input type="text" id="awb"></td>
                                         <td>发货时间：</td>
-                                        <td>2018-07-17 09:22:42</td>
+                                        <td th:text="${deivery.create_time}==null?'N/A':(${#dates.format(deivery.create_time,'yyyy-MM-dd HH:mm:ss')})">2018-07-17 09:22:42</td>
                                     </tr>
                                     <tr>
                                         <th colspan="4">收货人信息</th>
                                     </tr>
                                     <tr>
                                         <td>收货人：</td>
-                                        <td>李杰</td>
+                                        <td th:text="${entity.orderAddress.name}">李杰</td>
                                         <td>电话：</td>
-                                        <td>13823595211</td>
+                                        <td th:text="${entity.orderAddress.phone}">13823595211</td>
                                     </tr>
                                     <tr>
                                         <td>收货地址：</td>
-                                        <td>[中国 北京 北京市 西城区] </td>
+                                        <td th:text="'['+${entity.orderAddress.province}+' '+${entity.orderAddress.city}+' '+${entity.orderAddress.area}+']'">[中国 北京 北京市 西城区] </td>
                                         <td>街道地址：</td>
-                                        <td>南山南山</td>
+                                        <td th:text="${entity.orderAddress.street}">南山南山</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -123,17 +125,17 @@
                                             <div align="center"><strong>小计</strong></div>
                                         </td>
                                     </tr>
-                                    <tr>
+                                    <tr th:each="d:${entity.orderDetailsList}">
                                         <td>
-                                            <a href="#" target="_blank">学院风简约双肩包         </a>
+                                            <a href="#" target="_blank" th:text="${d.goods.goods_name}" th:href="@{/mall/goods/detail(goods_id=${d.goods.goods_id})}">学院风简约双肩包         </a>
                                         </td>
-                                        <td>ECS000048</td>
-                                        <td></td>
-                                        <td>￥59.00元</td>
-                                        <td>1</td>
-                                        <td>推荐</td>
-                                        <td>0</td>
-                                        <td>￥59.00元</td>
+                                       <td th:text="${d.goods.nickname}">ECS000048</td>
+                                        <td th:text="${d.goods.auth.authorname}"></td>
+                                        <td th:text="${d.unit_price}">￥59.00元</td>
+                                        <td th:text="${d.num}">1</td>
+                                        <td th:text="(${d.goods.recommend=='Y'}?'推荐':'非推荐')+'-'+(${d.goods.classic=='Y'}?'精品':'非精品')+'-'+(${d.goods.new_product=='Y'}?'新品':'非新品')">推荐</td>
+                                        <td th:text="${d.goods.goodsInfo.inventory.amount}">0</td>
+                                        <td th:text="${d.details_amount}">￥59.00元</td>
                                     </tr>
                                     <tr>
                                         <td colspan="6"></td>
@@ -141,7 +143,7 @@
                                             <div align="right"><strong>合计：</strong></div>
                                         </td>
                                         <td>
-                                            <div align="right">￥59.00元</div>
+                                            <div align="right" th:text="${entity.total_amount}">￥59.00元</div>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -165,34 +167,33 @@
                                                 <div align="right"><strong>当前可执行操作：</strong> </div>
                                             </td>
                                             <td colspan="5">
-                                                <input name="" type="submit" value="发货" class="button">
+                                                <input name="" type="submit" value="发货" class="button" onclick="toDeivery()" id="delivery_goods">
                                             </td>
                                         </tr>
-                                        <tr>
+                                        <tr id='actiontable'>
                                             <th>操作者：</th>
                                             <th>操作时间</th>
-                                            <th>订单状态</th>
-                                            <th>付款状态</th>
+                                            <th>发货单状态</th>
                                             <th>发货状态</th>
                                             <th>备注</th>
                                         </tr>
                                         <tr>
+                                           <tr th:each="a:${list}">
                                             <td>
-                                                <div align="center">admin</div>
+                                                <div align="center" th:text="${a.action_user}">admin</div>
                                             </td>
                                             <td>
-                                                <div align="center">2018-07-18 11:27:09</div>
+                                                <div align="center" th:text=" ${#dates.format(a.log_time,'yyyy-MM-dd HH:mm:ss')}">2018-07-18 11:27:09</div>
                                             </td>
                                             <td>
-                                                <div align="center">已确认</div>
+                                                <div align="center" th:text="${a.action_status}=='1'?'有效':'无效'">已确认</div>
                                             </td>
+                                            
                                             <td>
-                                                <div align="center">未付款</div>
+                                                <div align="center" th:text="${a.delivery_status}=='2'?'已发货':'待发货'">未发货</div>
                                             </td>
-                                            <td>
-                                                <div align="center">未发货</div>
-                                            </td>
-                                            <td>22</td>
+                                            <td th:text="${a.action_note}">22</td>
+                                        </tr>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -205,7 +206,82 @@
             </div>
         </div>
     </div>
-    </div>
+    <script type="text/javascript" th:inline="javascript">
+    //设置AJAX同步
+    $.ajaxSetup({
+    	  async: false
+    	  });
+    var deivery=[[${deivery}]];
+    $(function(){
+    	if(deivery.logistics_state=='2'){
+    		//已发货
+    		$("#delivery_goods").hide();
+    		
+    	}
+    })
+    //发货
+    function toDeivery(){
+    	var awb=$("#awb").val();
+    	if(awb==null||awb==''){
+    		alert("请填写发货单号！");
+    		return;
+    	}
+    	var dataOrder={order_number:deivery.order_number,logistics_state:'2'};
+    	var dataDeivery={delivery_number:deivery.delivery_number,logistics_state:'2',invoice_no:awb};
+    	if(!chengeOrderStatus(dataOrder)){
+    		//更改订单状态失败
+    		alert("订单状态修改失败！");
+    		return;
+    	}
+    	if(!chengeDeiveryStatus(dataDeivery)){
+    		//更改发货单状态失败
+    		alert("发货单状态修改失败！");
+    		return;
+    	}
+    	createAction();
+    }
+  //更改订单状态
+    function chengeOrderStatus(data){
+	  	var flg=false;
+    	//已发货
+    	$.post("/admin/order/chengeStatus",data,function(data){
+    		if(data!=null&&data.res=='1'){
+    			//success
+    			flg=true;
+    		}
+    	});
+    	return flg;
+    }
+  //更改发货单状态
+  function chengeDeiveryStatus(data){
+	  var flg=false;
+	  $.post("/admin/InventoryDeivery/chengeStatus",data,function(data){
+		  if(data!=null&&data.res=='1'){
+  			//success
+  			flg=true;
+  		}
+  	});
+  	return flg;
+  }
+  function createAction(){
+	  $.post('/admin/InventoryDeivery/action/add',{delivery_number:deivery.delivery_number},function(data){
+  		if(data!=null&&data.res=='1'){
+  			obj=data.obj;
+  			//发货成功
+  			var item="<tr>"+
+              "<td><div align='center'>"+obj.action_user+"</div></td>"+
+		        "<td><div align='center'>"+obj.log_time+"</div></td>"+
+		        "<td><div align='center'>"+(obj.action_status=='1'?'有效':'无效')+"</div></td>"+
+		        "<td><div align='center'>"+(obj.delivery_status=='1'?'已发货':'待发货')+"</div></td>"+
+		        "<td>"+obj.action_note+"</td></tr>"
+		    	
+		        $("#actiontable").after(item);
+  		}else{
+  			alert("创建发货单操作记录失败！");
+  		}
+  	});
+  }
+    </script>
 </body>
 
 </html>

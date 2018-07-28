@@ -46,6 +46,7 @@ public class InventoryDeiveryController extends AbstractController{
 	@RequestMapping("/add")
 	@ResponseBody
 	public ProcessResult<InventoryDeivery> processInventoryDeivery(InventoryDeivery inventoryDeivery,HttpServletRequest request){
+		
 		ProcessResult<InventoryDeivery> res=new ProcessResult<InventoryDeivery>();
 		sequenceMapper.nextval(SystemCode.INVENTORYDEIVERY_SEQUEANCE);
 		Sequence sequence = sequenceMapper.currval(SystemCode.INVENTORYDEIVERY_SEQUEANCE);
@@ -59,6 +60,7 @@ public class InventoryDeiveryController extends AbstractController{
 				break;
 			}
 		}
+		logger.info("创建发货单，单号："+processDeliveryNumber);
 		inventoryDeivery.setDelivery_number(processDeliveryNumber);
 		try {
 			Order order=new Order();
@@ -72,6 +74,7 @@ public class InventoryDeiveryController extends AbstractController{
 			//快递名
 			inventoryDeivery.setShipping_name("");
 			
+			inventoryDeivery.setUser_id(order.getUser_id());
 			inventoryDeivery.setAction_user(adminUser.getAdmin_name());
 			inventoryDeiveryService.insertSelective(inventoryDeivery);
 			
@@ -84,5 +87,17 @@ public class InventoryDeiveryController extends AbstractController{
 		return res;
 		
 	}
-
+	@RequestMapping("/chengeStatus")
+	@ResponseBody
+	public ProcessResult<InventoryDeivery> chengeStatus(InventoryDeivery inventoryDeivery){
+		logger.info("修改发货单状态！发货单号："+inventoryDeivery.getDelivery_number());
+		ProcessResult<InventoryDeivery> res=new ProcessResult<InventoryDeivery>();
+		int updateDeiveryStatus = inventoryDeiveryService.updateDeiveryStatus(inventoryDeivery);
+		if(updateDeiveryStatus>0) {
+			res=ProcessResult.success(res);
+			return res;
+		}
+		return res;
+		
+	}
 }

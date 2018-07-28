@@ -10,12 +10,14 @@ import org.yaml.snakeyaml.constructor.BaseConstructor;
 import com.mall.entity.cms.AuthorWithBLOBs;
 import com.mall.entity.goods.Goods;
 import com.mall.entity.inventory.InventoryDeivery;
+import com.mall.entity.inventory.InventoryDeiveryAction;
 import com.mall.entity.order.Order;
 import com.mall.entity.order.OrderAction;
 import com.mall.entity.order.OrderDetails;
 import com.mall.message.SystemCode;
 import com.mall.service.cms.AuthorWithBLOBsService;
 import com.mall.service.goods.GoodsService;
+import com.mall.service.inventory.InventoryDeiveryActionService;
 import com.mall.service.inventory.InventoryDeiveryService;
 import com.mall.service.order.OrderActionService;
 import com.mall.service.order.OrderService;
@@ -38,6 +40,8 @@ public class AdminOrderController  extends BaseConstructor{
 	private OrderActionService orderActionService;
 	@Resource
 	private InventoryDeiveryService inventoryDeiveryService;
+	@Resource
+	private InventoryDeiveryActionService inventoryDeiveryActionService;
 	
 	@RequestMapping("/list")
 	public String toOrderList(Model model ,Order order ,PageResult<Order> list) {
@@ -72,7 +76,11 @@ public class AdminOrderController  extends BaseConstructor{
 		OrderAction orderAction =new OrderAction();
 		orderAction.setOrder_number(order.getOrder_number());
 		list=orderActionService.queryByPageFront(list,orderAction);
-		
+		//获取发货单信息
+		InventoryDeivery inventoryDeivery = new InventoryDeivery();
+		inventoryDeivery.setOrder_number(order.getOrder_number());
+		inventoryDeivery=inventoryDeiveryService.selectByNumber(inventoryDeivery);
+		model.addAttribute("deivery", inventoryDeivery);
 		model.addAttribute("list", list.getDataList());
 		model.addAttribute("entity", order);
 		model.addAttribute("page", "admin/order/order_detail");
@@ -98,6 +106,34 @@ public class AdminOrderController  extends BaseConstructor{
 	
 	@RequestMapping("/deivery/detail")
 	public String toDeiveryDetail(InventoryDeivery inventoryDeivery,Model model) {
+		//获取发货单信息
+		inventoryDeivery=inventoryDeiveryService.selectByPrimaryKey(inventoryDeivery.getDelivery_number());
+		//获取订单信息
+		Order order =new Order();
+		order.setOrder_number(inventoryDeivery.getOrder_number());
+		order=orderService.selectInfo(order);
+		for(OrderDetails OrderDetails :order.getOrderDetailsList()) {
+			//获取商品信息
+			Goods goods=new Goods();
+			goods.setGoods_id(OrderDetails.getGoods_id());
+			goods=goodsService.selectInfo(goods);
+			//获取作家信息
+			AuthorWithBLOBs auth=new AuthorWithBLOBs();
+			auth.setId(goods.getGoodsInfo().getAuth_id());
+			auth=authorWithBLOBsService.selectInfo(auth);
+			goods.setAuth(auth);
+			OrderDetails.setGoods(goods);
+		}
+		//获取发货单操作流水
+		PageResult<InventoryDeiveryAction> list =new PageResult<InventoryDeiveryAction>();
+		list.setPageSize(100);
+		InventoryDeiveryAction inventoryDeiveryAction =new InventoryDeiveryAction();
+		inventoryDeiveryAction.setDelivery_number(inventoryDeivery.getDelivery_number());
+		list=inventoryDeiveryActionService.queryByPageFront(list, inventoryDeiveryAction);
+		
+		model.addAttribute("list", list.getDataList());
+		model.addAttribute("deivery", inventoryDeivery);
+		model.addAttribute("entity", order);
 		model.addAttribute("page", "admin/order/deliver_detail");
 		model.addAttribute("order", "nav-item start active open");
 		return "admin/index";

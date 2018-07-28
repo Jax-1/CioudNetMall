@@ -44,7 +44,7 @@
                                         </td>
                                         <td><div th:text="${entity.pay_state}=='2'?'已付款':'待付款'"></div>
                                         	<div th:text="${entity.del_state}=='4'?'已完成':(${entity.del_state}=='3'?'取消':(${entity.del_state}=='2'?'无效':'待确认'))"></div>
-                                        	<div th:text="${entity.logistics_state}=='3'?'已确认收货':(${entity.logistics_state}=='2'?'已发货':(${entity.logistics_state}=='4'?'部分发货':待发货))"></div></td>
+                                        	<div th:text="${entity.logistics_state}=='3'?'已确认收货':(${entity.logistics_state}=='2'?'已发货':(${entity.logistics_state}=='4'?'部分发货':(${entity.logistics_state}=='5'?'退货':待发货)))"></div></td>
                                     </tr>
                                     <tr>
                                         <td>购货人：</td>
@@ -67,9 +67,9 @@
                                     </tr>
                                     <tr>
                                         <td>发货单号：</td>
-                                        <td>N/A</td>
-                                        <td>发货时间：</td>
-                                        <td>N/A</td>
+                                        <td th:text="${deivery!=null and deivery.delivery_number!=null}?${deivery.delivery_number}:'N/A'">N/A</td>
+                                        <td >发货时间：</td>
+                                        <td th:text="${deivery!=null and deivery.create_time!=null}?${#dates.format(deivery.create_time,'yyyy-MM-dd HH:mm:ss')}:'N/A'">N/A</td>
                                     </tr>
                                     <tr>
                                         <th colspan="4">收货人信息</th>
@@ -161,12 +161,13 @@
                                                 <div align="right"><strong>当前可执行操作：</strong> </div>
                                             </td>
                                             <td colspan="5">
-                                                <input name="pay" type="submit" value="确认" class="button" onclick="buttonSubmit('confirm')">
-                                                <input name="cancel" type="submit" value="取消" class="button" onclick="buttonSubmit('cancel')">
-                                                <input name="" type="submit" value="生成发货单" class="button" onclick="buttonSubmit('Generate')">
-                                                <input name="invalid" type="submit" value="无效" class="button" onclick="buttonSubmit('invalid')">
-                                                <input name="after_service" type="submit" value="售后" class="button" onclick="buttonSubmit('after-sales')">
-                                                <input name="" type="submit" value="退货" class="button" >
+                                                <input name="pay" type="submit" value="确认" class="button" onclick="buttonSubmit('confirm')" id="confirm">
+                                                <input name="" type="submit" value="生成发货单" class="button" onclick="buttonSubmit('Generate')" id="Generate">
+                                                <input name="invalid" type="submit" value="无效" class="button" onclick="buttonSubmit('invalid')" id="invalid">
+                                                <input name="after_service" type="submit" value="售后" class="button" onclick="buttonSubmit('after-sales')" id="after-sales">
+                                                <input name="" type="submit" value="退货" class="button"  id="sales">
+                                                <input name="" type="submit" value="退款" class="button"  id="refund">
+                                                <input name="cancel" type="submit" value="取消" class="button" onclick="buttonSubmit('cancel')" id="cancel">
                                             </td>
                                         </tr>
                                         <tr id='actiontable'>
@@ -191,7 +192,7 @@
                                                 <div align="center" th:text="${entity.pay_state}=='2'?'已付款':'待付款'">未付款</div>
                                             </td>
                                             <td>
-                                                <div align="center" th:text="${a.logistics_status}=='1'?'生成发货单':'待发货'">未发货</div>
+                                                <div align="center" th:text="${a.logistics_status}=='2'?'已发货':(${a.logistics_status}=='3'?'已确认收货':(${a.logistics_status}=='4'?'部分发货':(${a.logistics_status}=='5'?'售后':'待发货')))">未发货</div>
                                             </td>
                                             <td th:text="${a.action_note}">22</td>
                                         </tr>
@@ -207,40 +208,126 @@
         </div>
     </div>
     <script type="text/javascript" th:inline="javascript">
+    $(function(){
+    	//初始化界面
+    	 var order=[[${entity}]];
+    	var pay_state=order.pay_state;
+    	var logistics_state=order.logistics_state;
+    	var del_state =order.del_state;
+    	console.log(pay_state+'--'+logistics_state+'---'+del_state);
+    	//支付状态
+    	switch(pay_state){
+    	case 1:
+    		$("#confirm").hide();
+    		$("#Generate").hide();
+    		$("#invalid").hide();
+    		$("#after-sales").hide();
+    		$("#sales").hide();
+    		$("#refund").hide();
+    		
+    		break;
+    	case 3:
+    		$("#confirm").hide();
+    		$("#Generate").hide();
+    		$("#invalid").hide();
+    		$("#cancel").hide();
+    		$("#sales").hide();
+    		$("#refund").hide();
+    		break;
+    	default:
+    	}
+    	//订单状态
+    	switch(del_state){
+    	case 1:
+    		
+    		break;
+		case 2:
+			$("#confirm").hide();
+    		break;
+    	case 3:
+    		$("#confirm").hide();
+    		$("#Generate").hide();
+    		$("#invalid").hide();
+    		$("#cancel").hide();
+    		$("#sales").hide();
+    		$("#refund").hide();
+    		$("#after-sales").hide();
+    		break;
+    	case 4:
+    		$("#confirm").hide();
+    		$("#Generate").hide();
+    		$("#invalid").hide();
+    		$("#cancel").hide();
+    		$("#sales").hide();
+    		break;
+    	case 5:
+    		$("#confirm").hide();
+    		$("#Generate").hide();
+    		$("#invalid").hide();
+    		$("#cancel").hide();
+    		$("#sales").hide();
+    		$("#refund").hide();
+    		break;
+    	
+    	default:
+    	}
+    	//发货状态
+    	switch(logistics_state){
+    	case 1:
+    		
+    		break;
+    	default:
+    		$("#Generate").hide();
+    	}
+    	
+    })
     var order=[[${entity}]];
     function buttonSubmit(action){
+    	console.log(action);
     	switch(action)
     	{
     	case 'confirm':
     		//确认
     		var data1={order_number:order.order_number,del_state:'2'}
-    		var data2={order_id:order.order_id,order_number:order.order_number,order_status:'2',action_note:$("#action_note").val()};
-    		confirm(data1,data2);
+    		var data2={order_number:order.order_number,action_note:$("#action_note").val()};
+    		confirmAndChengeStatus(data1,data2);
     	  break;
     	case 'invalid':
+    		var r=confirm("是否将订单："+order.order_number+",设置为无效状态，该状态下，您无法继续操作该订单，并视为订单作废。请确认与买家沟通一致后操作，操作完成后需进行退款操作，适用于已付款订单。是否无效该订单？");
+			if (r==false)
+			  {
+				return;
+			  }
     		//无效
     		var data1={order_number:order.order_number,del_state:'4'}
-    		var data2={order_id:order.order_id,order_number:order.order_number,order_status:'4',action_note:$("#action_note").val()};
-    		confirm(data1,data2);
+    		var data2={order_number:order.order_number,action_note:$("#action_note").val()};
+    		confirmAndChengeStatus(data1,data2);
     	  break;
     	case 'cancel':
+    		var r=confirm("是否取消订单："+order.order_number+",请确认与买家沟通一致后操作，操作后视为订单作废,适用于未付款订单。是否取消？");
+			if (r==false)
+			  {
+				return;
+			  }
     		//取消
     		var data1={order_number:order.order_number,del_state:'3'}
-    		var data2={order_id:order.order_id,order_number:order.order_number,order_status:'3',action_note:$("#action_note").val()};
-    		confirm(data1,data2);
+    		var data2={order_number:order.order_number,action_note:$("#action_note").val()};
+    		confirmAndChengeStatus(data1,data2);
       	  break;
     	case 'Generate':
     		//生成发货单
-    		var data2={order_id:order.order_id,order_number:order.order_number,order_status:'2',logistics_status:'1',action_note:$("#action_note").val()};
+    		var data1={order_number:order.order_number,logistics_state:'6'}
+    		var data2={order_number:order.order_number,action_note:$("#action_note").val()};
     		createDeivery();
-    		recordAction(data2);
+    		confirmAndChengeStatus(data1,data2);
+    		
     		
       	  break;
     	case 'after-sales':
     		//售后
     		var data1={order_number:order.order_number,del_state:'5'}
-    		var data2={order_id:order.order_id,order_number:order.order_number,order_status:'5',action_note:$("#action_note").val()};
-    		confirm(data1,data2);
+    		var data2={order_number:order.order_number,action_note:$("#action_note").val()};
+    		confirmAndChengeStatus(data1,data2);
       	  break;
     	
     	default:
@@ -250,7 +337,7 @@
     //修改订单状态，并记录操作记录
     //data1:订单状态
     //data2:操作信息
-    function confirm(data1,data2){
+    function confirmAndChengeStatus(data1,data2){
     	//修改订单状态
     	$.post('/admin/order/chengeStatus',data1,function(data){
     		if(data!=null&&data.res=='1'){
@@ -303,7 +390,7 @@
     "<td><div align='center'>"+obj.log_time+"</div></td>"+
     "<td><div align='center'>"+status+"</div></td>"+
     "<td><div align='center'>"+(order.pay_state=='2'?'已付款':'待付款')+"</div></td>"+
-    "<td><div align='center'>"+(obj.logistics_status=='1'?'生成发货单':'待发货')+"</div></td>"+
+    "<td><div align='center'>"+(obj.logistics_status=='6'?'生成发货单':(obj.logistics_status=='5'?'退货':(obj.logistics_status=='4'?'部分发货':(obj.logistics_status=='3'?'已确认收货':(obj.logistics_status=='2'?'已发货':'待发货')))))+"</div></td>"+
     "<td>"+obj.action_note+"</td></tr>"
 	
     	$("#actiontable").after(item);
@@ -314,7 +401,15 @@
     			function(data){
     				if(data!=null&&data.res=='1'){
     					//成功
-    					
+    					//弹出窗口
+    					var r=confirm("创建发货单成功!发货单号："+data.obj.delivery_number+"，是否跳转至发货单界面？");
+						if (r==true)
+						  {
+							window.location.href="/admin/order/deivery/detail?delivery_number="+data.obj.delivery_number;
+						  }
+						else
+						  {
+						  }
     				}else{
     					alert("创建发货单失败！");
     				}

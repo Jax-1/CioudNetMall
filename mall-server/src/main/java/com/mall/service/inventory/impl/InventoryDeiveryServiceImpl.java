@@ -21,6 +21,15 @@ public class InventoryDeiveryServiceImpl extends BaseServiceImpl<InventoryDeiver
 	protected IBaseDao<InventoryDeivery> getMapper() {
 		return inventoryDeiveryMapper;
 	}
+	@Override
+	public int updateDeiveryStatus(InventoryDeivery inventoryDeivery) {
+		return inventoryDeiveryMapper.updateDeiveryStatus(inventoryDeivery);
+	}
+	@Override
+	public InventoryDeivery selectByNumber(InventoryDeivery inventoryDeivery) {
+		return inventoryDeiveryMapper.selectByNumber(inventoryDeivery);
+	}
+	
 
 
 }
