@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>轮播图管理</title>
+    <link rel="stylesheet" href="/admin/assets/layouts/layout/css/yunwang.css">
+</head>
+
+<body>
+    <div class="page-content-wrapper">
+        <div class="page-content">
+            <div class="page-bar">
+                <ul class="page-breadcrumb">
+                    <li>
+                        <a href="index.html">首页</a>
+                        <i class="fa fa-circle"></i>
+                    </li>
+                    <li>
+                        <span>轮播图管理</span>
+                    </li>
+                </ul>
+            </div>
+            <h1 class="page-title"> 轮播图管理<small>轮播图和广告图管理</small></h1>
+            <!-- 内容展示 -->
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="portlet light bordered">
+                    <div class="row">
+                        <div class="col-md-6">
+                                <div class="btn-group">
+                                    <button id="sample_editable_1_new" class="btn sbold green">
+                                        <a href="/admin/ad/add">添加新的</a>
+                                        <i class="fa fa-plus"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="portlet-body">
+                            <table class="table table-striped table-bordered table-hover table-checkable order-column order_list" id="sample_1">
+                                <thead>
+                                    <tr>
+                                        <th width="200">缩略图</th>
+                                        <th>标题</th>
+                                        <th>位置</th>
+                                        <th>图片尺寸</th>
+                                        <th> 状态</th>
+                                        
+                                        <th> 操作</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="odd gradeX" th:each="a:${list.dataList}">
+                                        <td >
+                                            <div class="lunbotu_img">
+                                            	<a th:href="${a.url==null}?'#':${a.url}">
+                                                <img src="assets/layouts/layout/img/logo.png" alt="" th:src="@{${fileServicePath}+'/'+${a.filePath.path}+'/'+${a.filePath.fileidname}+'.'+${a.filePath.filetype}}" style="width:100px;">
+                                                </a>
+                                            </div>
+                                        </td>
+                                        <td th:text="${a.description}">古董拍卖</td>
+                                        <td th:text="${a.adPosition.name}">商城首页轮播图</td>
+                                        <td> <a  th:text="${a.img_size}" th:href="@{${fileServicePath}+'/'+${a.filePath.path}+'/'+${a.filePath.fileidname}+'.'+${a.filePath.filetype}}">19950</a>  </td>
+                                        <td th:text="${a.state}=='1'?'开启':关闭">
+                                        </td>
+                                       
+                                        <td>
+                                        	<a href="#" class="btn btn-xs green" th:attr="style=${a.state}=='1'?'display:none':''" th:href="@{'javascript:openAd('+${a.ad_id}+',this);'}">开启
+                                            </a>
+                                            <a href="#" class="btn btn-xs green" th:attr="style=${a.state}=='1'?'':'display:none'" th:href="@{'javascript:closeAd('+${a.ad_id}+',this);'}">关闭
+                                            </a>
+                                            <a href="#" class="btn btn-xs green" th:href="@{/admin/ad/add(ad_id=${a.ad_id})}">编辑
+                                            </a>
+                                            <a href="#" class="btn btn-xs green" th:href="@{'javascript:delAd('+${a.ad_id}+',this);'}">删除
+                                            </a>
+                                        </td>
+                                        
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="row center-text">
+                            <div class="dataTables_paginate paging_bootstrap_full_number">
+                                <ul class="pagination" style="visibility: visible;">
+                                    <li class="prev ">  <a href="#" th:href="@{/admin/ad/list(pageNo=${1})}">
+		                                    <i class="fa fa-angle-double-left"></i>
+		                                    </a></li>
+		                                    <li class="prev ">
+		                                        <a href="#" title="Prev" th:href="@{/admin/ad/list(pageNo=${list.pageNo}-1>0?${list.pageNo}-1:1)}">
+		                                            <i class="fa fa-angle-left"></i>
+		                                        </a>
+		                                    </li>
+		                                    <li class="active" id="activepage">
+		                                        <a href="#" th:text="${list.pageNo}">1</a>
+		                                    </li>
+		                                    <li class="next ">
+		                                        <a href="#" title="Next" th:href="@{/admin/ad/list(pageNo=${list.pageNo}==${list.pages}?${list.pages}:${list.pageNo}+1)}">
+		                                            <i class="fa fa-angle-right"></i>
+		                                        </a>
+		                                    </li>
+		                                    <li class="next " >
+		                                        <a href="#" title="Last" th:href="@{/admin/ad/list(pageNo=${list.pages})}"><i class="fa fa-angle-double-right"></i>
+                                        		</a>
+		                                    </li>
+		                                    <li class="prev "> 
+		                            		 <span th:text="'共'+ ${list.pages}+'页'"></span>
+		                            		</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript" th:inline="javascript">
+    //设置AJAX同步
+    $.ajaxSetup({
+    	  async: false
+    	  });
+    $(function(){
+		var pageNo=[[${list.pageNo}]];
+    	var pages=[[${list.pages}]];
+    	
+		for(var i=2;i>0;i--){
+			var pag=pageNo-i;
+			if(pageNo-i>0){
+				var dome="<li><a  href='/admin/ad/list?pageNo="+pag+"'>"+pag+"</a></li>";
+    			$("#activepage").before(dome);
+			}
+			
+		}
+		for(var i=2;i>0;i--){
+			var pag=pageNo+i;
+			if(pageNo+i<=pages){
+				var dome="<li><a  href='/admin/ad/list?pageNo="+pag+"'>"+pag+"</a></li>";
+    			$("#activepage").after(dome);
+			}
+			
+		}
+    });
+    //开启
+    function openAd(id,obj){
+    	var data ={ad_id:id,state:'1'};
+    	var flg=chengeAdStatus(data);
+   		console.log(flg);
+    	if(flg){
+    		console.log($(obj));
+    		//sucess
+    		//$(obj).hide();
+    		//$(obj).next().show();
+    		//$(obj).parent().prev().text("开启");
+    		setTimeout(function(){
+         		   				window.location.reload();
+         		   				},1000)
+    	}
+    	
+    }
+    //关闭
+    function closeAd(id,obj){
+    	var data ={ad_id:id,state:'2'};
+    	var flg=chengeAdStatus(data);
+    	console.log(flg);
+    	if(flg){
+    		console.log($(obj));
+    		//sucess
+    		//$(obj).hide();
+    		//$(obj).prev().show();
+    		//$(obj).parent().prev().text("关闭");
+    		setTimeout(function(){
+         		   				window.location.reload();
+         		   				},1000)
+    	}
+    	
+    }
+    //删除
+    function delAd(id,obj){
+    	var data ={ad_id:id,del_state:'1'};
+    	var flg=chengeAdStatus(data);
+    	if(flg){
+    		//sucess
+    		
+    		//$(obj).parent().parent().hide();
+    		setTimeout(function(){
+         		   				window.location.reload();
+         		   				},1000)
+    	}
+    	
+    }
+    function chengeAdStatus(data)
+    {	var flg=false;
+    	$.post("/admin/ad/chengeStatus",data,function(resReturn){
+    		if(resReturn!=null && resReturn.res=='1'){
+    			//成功
+    			flg=true;
+    		}
+    		
+    	})
+    	return flg;
+    }
+    </script>
+    
+</body>
+
+</html>

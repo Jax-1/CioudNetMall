@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mall.dao.ad.AdMapper">
+  <resultMap id="BaseResultMap" type="com.mall.entity.ad.Ad">
+    <id column="ad_id" jdbcType="INTEGER" property="ad_id" />
+    <result column="ad_position_id" jdbcType="INTEGER" property="ad_position_id" />
+    <result column="image" jdbcType="VARCHAR" property="image" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
+    <result column="img_size" jdbcType="VARCHAR" property="img_size" />
+    <result column="url" jdbcType="VARCHAR" property="url" />
+    <result column="state" jdbcType="TINYINT" property="state" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="create_time" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="update_time" />
+    <result column="del_state" jdbcType="TINYINT" property="del_state" />
+    <result column="admin_name" jdbcType="VARCHAR" property="admin_name" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ad_id, ad_position_id, image, description, img_size, url, state, create_time, update_time, 
+    del_state, admin_name
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_ad
+    where ad_id = #{ad_id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from t_ad
+    where ad_id = #{ad_id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.mall.entity.ad.Ad">
+    insert into t_ad (ad_id, ad_position_id, image, 
+      description, img_size, url, 
+      state, create_time, update_time, 
+      del_state, admin_name)
+    values (#{ad_id,jdbcType=INTEGER}, #{ad_position_id,jdbcType=INTEGER}, #{image,jdbcType=VARCHAR}, 
+      #{description,jdbcType=VARCHAR}, #{img_size,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR}, 
+      #{state,jdbcType=TINYINT}, #{create_time,jdbcType=TIMESTAMP}, #{update_time,jdbcType=TIMESTAMP}, 
+      #{del_state,jdbcType=TINYINT}, #{admin_name,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.mall.entity.ad.Ad">
+    insert into t_ad
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="ad_id != null">
+        ad_id,
+      </if>
+      <if test="ad_position_id != null">
+        ad_position_id,
+      </if>
+      <if test="image != null">
+        image,
+      </if>
+      <if test="description != null">
+        description,
+      </if>
+      <if test="img_size != null">
+        img_size,
+      </if>
+      <if test="url != null">
+        url,
+      </if>
+      <if test="state != null">
+        state,
+      </if>
+      <if test="create_time != null">
+        create_time,
+      </if>
+      <if test="update_time != null">
+        update_time,
+      </if>
+      <if test="del_state != null">
+        del_state,
+      </if>
+      <if test="admin_name != null">
+        admin_name,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="ad_id != null">
+        #{ad_id,jdbcType=INTEGER},
+      </if>
+      <if test="ad_position_id != null">
+        #{ad_position_id,jdbcType=INTEGER},
+      </if>
+      <if test="image != null">
+        #{image,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null">
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="img_size != null">
+        #{img_size,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null">
+        #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null">
+        #{state,jdbcType=TINYINT},
+      </if>
+      <if test="create_time != null">
+        #{create_time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="update_time != null">
+        #{update_time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="del_state != null">
+        #{del_state,jdbcType=TINYINT},
+      </if>
+      <if test="admin_name != null">
+        #{admin_name,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.mall.entity.ad.Ad">
+    update t_ad
+    <set>
+      <if test="ad_position_id != null">
+        ad_position_id = #{ad_position_id,jdbcType=INTEGER},
+      </if>
+      <if test="image != null">
+        image = #{image,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null">
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="img_size != null">
+        img_size = #{img_size,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null">
+        url = #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null">
+        state = #{state,jdbcType=TINYINT},
+      </if>
+      <if test="create_time != null">
+        create_time = #{create_time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="update_time != null">
+        update_time = #{update_time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="del_state != null">
+        del_state = #{del_state,jdbcType=TINYINT},
+      </if>
+      <if test="admin_name != null">
+        admin_name = #{admin_name,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ad_id = #{ad_id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.mall.entity.ad.Ad">
+    update t_ad
+    set ad_position_id = #{ad_position_id,jdbcType=INTEGER},
+      image = #{image,jdbcType=VARCHAR},
+      description = #{description,jdbcType=VARCHAR},
+      img_size = #{img_size,jdbcType=VARCHAR},
+      url = #{url,jdbcType=VARCHAR},
+      state = #{state,jdbcType=TINYINT},
+      create_time = #{create_time,jdbcType=TIMESTAMP},
+      update_time = #{update_time,jdbcType=TIMESTAMP},
+      del_state = #{del_state,jdbcType=TINYINT},
+      admin_name = #{admin_name,jdbcType=VARCHAR}
+    where ad_id = #{ad_id,jdbcType=INTEGER}
+  </update>
+  <resultMap type="com.mall.entity.ad.Ad" id="orderResultMap" extends="BaseResultMap">
+  	<association property="adPosition" javaType="com.mall.entity.ad.AdPosition">
+	  	<id column="ad_position_id_a" jdbcType="INTEGER" property="ad_position_id" />
+	    <result column="name_a" jdbcType="VARCHAR" property="name" />
+	    <result column="position" jdbcType="VARCHAR" property="position" />
+	    <result column="measure" jdbcType="VARCHAR" property="measure" />
+	    <result column="state_a" jdbcType="TINYINT" property="state" />
+	  	</association>
+  	<association property="filePath" javaType="com.mall.entity.cms.FilePath">
+  		<id column="fileid" jdbcType="VARCHAR" property="fileid" />
+	    <result column="belongid" jdbcType="VARCHAR" property="belongid" />
+	    <result column="path" jdbcType="VARCHAR" property="path" />
+	    <result column="fileidname" jdbcType="VARCHAR" property="fileidname" />
+	    <result column="filename" jdbcType="VARCHAR" property="filename" />
+	    <result column="filetype" jdbcType="VARCHAR" property="filetype" />
+	    <result column="filesize" jdbcType="VARCHAR" property="filesize" />
+	    <result column="status_f" jdbcType="VARCHAR" property="status" />
+	    <result column="createby" jdbcType="VARCHAR" property="createby" />
+	    <result column="createat" jdbcType="TIMESTAMP" property="createat" />
+  	</association>
+  </resultMap>
+  <!-- 查询列表 -->
+  <select id="getPageFront" parameterType="com.mall.entity.ad.Ad" resultMap="orderResultMap">
+  Select A.*,D.path,
+	D.fileidname,
+	D.filename,
+	D.filetype,
+	D.filesize,
+	D.STATUS status_f 
+	FROM (
+	  SELECT
+		t1.ad_id,
+		t1.ad_position_id,
+		t1.image,
+		t1.description,
+		t1.img_size,
+		t1.url,
+		t1.state,
+		t1.create_time,
+		t1.update_time,
+		t1.del_state,
+		t1.admin_name,
+		t2.position ,
+		t2.name name_a
+	FROM
+		t_ad t1
+		LEFT JOIN t_ad_position t2 ON t1.ad_position_id = t2.ad_position_id
+		where t1.del_state='2'
+		<if test="adPosition!=null and adPosition.position!=null">
+			and t2.position=#{adPosition.position}
+		</if>
+		<if test="state!=null">
+			and t1.state=#{state}
+		</if>
+  )A LEFT JOIN t_file_path D ON A.image=D.fileid
+  ORDER BY A.create_time DESC
+  </select>
+  <update id="updateAdStatus" parameterType="com.mall.entity.ad.Ad">
+  	update t_ad
+    <set>
+    <if test="state!=null and state!=''">
+    	state=#{state},
+    </if>
+    <if test="del_state!=null and del_state!=''">
+    	del_state=#{del_state},
+    </if>
+    </set>
+  where ad_id = #{ad_id,jdbcType=INTEGER}
+  </update>
+  <select id="selectInfo" parameterType="com.mall.entity.ad.Ad" resultMap="orderResultMap">
+  	Select A.*,D.path,
+	D.fileidname,
+	D.filename,
+	D.filetype,
+	D.filesize,
+	D.STATUS status_f 
+	FROM (
+	  SELECT
+		t1.ad_id,
+		t1.ad_position_id,
+		t1.image,
+		t1.description,
+		t1.img_size,
+		t1.url,
+		t1.state,
+		t1.create_time,
+		t1.update_time,
+		t1.del_state,
+		t1.admin_name,
+		t2.position ,
+		t2.name name_a
+	FROM
+		t_ad t1
+		LEFT JOIN t_ad_position t2 ON t1.ad_position_id = t2.ad_position_id
+		where t1.del_state='2'
+		<if test="adPosition!=null and adPosition.position!=null">
+			and t2.position=#{adPosition.position}
+		</if>
+		<if test="state!=null">
+			and t1.state=#{state}
+		</if>
+		<if test="ad_id!=null and ad_id!=''">
+			and t1.ad_id=#{ad_id}
+		</if>
+  )A LEFT JOIN t_file_path D ON A.image=D.fileid
+  ORDER BY A.create_time DESC
+  </select>
+</mapper>

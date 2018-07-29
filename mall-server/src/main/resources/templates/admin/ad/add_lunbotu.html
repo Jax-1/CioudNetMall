@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>轮播图管理</title>
+    <link rel="stylesheet" href="/admin/assets/layouts/layout/css/yunwang.css">
+</head>
+
+<body>
+    <div class="page-content-wrapper">
+        <div class="page-content">
+            <div class="page-bar">
+                <ul class="page-breadcrumb">
+                    <li>
+                        <a href="index.html">首页</a>
+                        <i class="fa fa-circle"></i>
+                    </li>
+                    <li>
+                        <span>轮播图管理</span>
+                    </li>
+                </ul>
+            </div>
+            <h1 class="page-title"> 轮播图管理<small>轮播图和广告图管理</small></h1>
+            <!-- 内容展示 -->
+            <div class="row">
+                <div class="col-md-12">
+                    <form class="form-horizontal" role="form" action="/admin/ad/save">
+                    	<input type="hidden" class="form-control" name='actionsave' th:value="${ad!=null}?'UPDATE':'SAVE'">
+                    	<input type="hidden" class="form-control" name='ad_id' th:value="${ad!=null}?${ad.ad_id}:''">
+                        <div class="form-body">
+                            <div class="form-group">
+                                <label class="col-md-2 control-label"><em>*</em>名称</label>
+                                <div class="col-md-3">
+                                    <input type="text" class="form-control" name='description' th:value="${ad!=null}?${ad.description}:''">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-2 control-label"><em>*</em>图片尺寸</label>
+                                <div class="col-md-3">
+                                    <input type="text" class="form-control" placeholder="20*30" name="img_size" th:value="${ad!=null}?${ad.img_size}:''">
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="col-md-2 control-label"><em>*</em>图片位置</label>
+                                <div class="col-md-3">
+                                    <select class="form-control" name="ad_position_id">
+                                        <option th:each="a:${list}" th:text="${a.name}" th:value="${a.ad_position_id}">商城首页顶部</option>
+                                        
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-2 control-label"><em>*</em>图片上传</label>
+                                <div class="col-md-2">
+                                    <div class="file_img">
+                                        <input id="show_img_file" type="file" name="file" multiple="multiple" >
+                                         <input id="imageid" type="hidden" name="image" value="" th:value="${ad!=null}?${ad.image}:''">
+                                         <label for="show_img_file">点击上传</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="shop_img" id="shop_img">
+                                    </div>
+                                </div>
+                            </div>
+                             <div class="form-group">
+                                <label class="col-md-2 control-label">链接地址</label>
+                                <div class="col-md-3">
+                                    <input type="text" class="form-control" placeholder="/mall/goods/detail?goods_id=272d62be220248b3bde214c9f01caa38" name="url" th:value="${ad!=null}?${ad.url}:''">
+                                    <span>链接示例：</span>
+                                    <span>/mall/goods/detail?goods_id=商品ID </span>
+                                    
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-2 control-label"></label>
+                                <div class="col-md-3">
+                                    <button type="submit" class="btn green">提交</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+     <script src="/admin/assets/global/plugins/ajaxfileupload.js" type="text/javascript"></script>
+    <script type="text/javascript"  th:inline="javascript">
+    $(function(){
+    	var ad=[[${ad}]];
+    	var path=[[${fileServicePath}]];
+    	//图片回显
+    	if([[${ad!=null and ad.filePath!=null}]]){
+			//图片回显
+			 $("#shop_img").html('<img src="'+path +'/'+ad.filePath.path+'/'+ad.filePath.fileidname+'.'+ad.filePath.filetype+'" alt=""/>'); 
+
+		}
+    })
+    //商品图片上传预览
+    $("#show_img_file").change(function(){
+         
+        var file=this.files[0];
+         $.ajaxFileUpload({
+             url:"/ueditor/uploade",
+             fileElementId: "show_img_file", //文件上传域的ID，这里是input的ID，而不是img的
+             type:"POST",
+	             dataType:"json",
+             async : true,   //是否是异步
+             success: function (data) {
+                // console.log(data)
+           
+				 $("#shop_img").html('<img src="'+data[0].host +'/'+ data[0].path+'" alt=""/>'); 
+                 $("#imageid").val(data[0].id);
+                 if($("#imageid-error") ){
+                	 $("#imageid-error").remove()
+                }
+                 console.log(data[0].id)
+                 
+             }            
+
+         });
+           	      
+
+    })
+    </script>
+</body>
+
+</html>
