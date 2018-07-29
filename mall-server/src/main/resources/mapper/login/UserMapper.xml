@@ -191,5 +191,39 @@ WHERE
 	
 	)a left join t_file_path b on  a.headimgurl = b.fileid
   </select>
+  <!-- 获取列表 -->
+  <select id="getPageFront" parameterType="com.mall.entity.login.User" resultMap="orderResultMap">
+  	select a.*,b.fileid, b.belongid, b.path, b.fileidname, b.filename, b.filetype, b.filesize, b.status status_c, b.createby, 
+    b.createat
+from (
+SELECT
+	t1.*,
+	t2.id,
+	t2.user_name user_name_c,
+	t2.NAME,
+	t2.Sex,
+	t2.Phone,
+	t2.email,
+	t2.qq,
+	t2.address_province,
+	t2.address_city,
+	t2.address_area,
+	t2.address_street,
+	t2.headimgurl,
+	t2.Create_at Create_at_c,
+	t2.Update_time Update_time_c,
+	t2.LastSign_time LastSign_time_c
+	
+FROM
+	t_sys_user_localauth t1,
+	t_sys_user_info t2 
+	
+WHERE
+	t1.userinfo_id = t2.id 
+	
+	)a left join t_file_path b on  a.headimgurl = b.fileid
   
+  
+  
+  </select>
 </mapper>

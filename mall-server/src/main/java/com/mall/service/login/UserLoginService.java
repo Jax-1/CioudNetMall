@@ -1,5 +1,7 @@
 package com.mall.service.login;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
 import com.mall.entity.login.User;
@@ -33,4 +35,5 @@ public interface UserLoginService extends IBaseService<User>{
 	 * @return
 	 */
 	ProcessResult<User> registered(User user);
+	
 }

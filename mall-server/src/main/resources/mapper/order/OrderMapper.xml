@@ -303,7 +303,9 @@
 	    <result column="bank_type" jdbcType="VARCHAR" property="bank_type" />
 	    <result column="total_fee" jdbcType="INTEGER" property="total_fee" />
 	    <result column="fee_type" jdbcType="VARCHAR" property="fee_type" />
-	    <result column="time_end" jdbcType="TIMESTAMP" property="time_end" />
+	    <result column="time_end" jdbcType="VARCHAR" property="time_end" />
+	    <result column="attach" jdbcType="VARCHAR" property="attach" />
+	    <result column="create_time_pf" jdbcType="TIMESTAMP" property="create_time" />
   	
   	</association>
   	<collection property="orderDetailsList" ofType="com.mall.entity.order.OrderDetails" column="order_number">
@@ -337,7 +339,7 @@
   SELECT I.*,
 		J.user_id user_id_a, J.name, J.phone, J.province, J.city, J.area, J.street
 	FROM(
-  Select D.*,E.time_end from (
+  Select D.*,E.create_time  create_time_pf from (
   SELECT B.*,C.payment_id payment_id_p, C.isGeneral isGeneral_p, C.name name_p 
   FROM (
   SELECT A.*,  H.user_name user_name_u,

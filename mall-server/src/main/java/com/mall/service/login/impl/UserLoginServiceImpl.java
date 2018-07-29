@@ -1,5 +1,7 @@
 package com.mall.service.login.impl;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
@@ -42,6 +44,14 @@ public class UserLoginServiceImpl extends BaseServiceImpl<User> implements UserL
 			//密码验证
 			String password = MD5Util.encoder(user.getPassword(),model.getRand());
 			if(password.equals(model.getPassword())) {
+				//更新最后登录时间
+				model.getUserInfo().setLastSign_time(DateFormatUtil.getDate());
+				try {
+					userInfoMapper.updateByPrimaryKeySelective(model.getUserInfo());
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				
 				SessionUtil.setUser(request, model);
 				result.setRes(SystemCode.SUCCESS);
 				result.setMsg(MessageUtil.getMsgByLan(MsgPoolCode.LOGIN_SUCESS));
@@ -58,8 +68,18 @@ public class UserLoginServiceImpl extends BaseServiceImpl<User> implements UserL
 
 	@Override
 	public ProcessResult<User> forgotPassword(User user) {
-		// TODO Auto-generated method stub
-		return null;
+		ProcessResult<User> res=new ProcessResult<User>();
+		try {
+			int updateByPrimaryKeySelective = userMapper.updateByPrimaryKeySelective(user);
+			if(updateByPrimaryKeySelective>0) {
+				res=ProcessResult.success(res);
+				return res;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return res;
 	}
 
 	@Override
@@ -93,6 +113,8 @@ public class UserLoginServiceImpl extends BaseServiceImpl<User> implements UserL
 	protected IBaseDao<User> getMapper() {
 		return userMapper;
 	}
+
+
 
 	/**
 	 * 查询用户信息

@@ -28,6 +28,7 @@ import com.mall.service.goods.GoodsService;
 import com.mall.service.inventory.InventoryService;
 import com.mall.service.order.OrderService;
 import com.mall.service.payment.PaymentFlowService;
+import com.mall.util.DateFormatUtil;
 import com.mall.util.MapTrunPojoUtil;
 import com.mall.util.SessionUtil;
 
@@ -91,7 +92,7 @@ public class WXPayPrecreateController extends AbstractController{
         // APP和网页支付提交用户端ip，Native支付填调用微信支付API的机器IP。
         reqData.put("spbill_create_ip", "14.23.150.211");
         // 异步接收微信支付结果通知的回调地址，通知url必须为外网可访问的url，不能携带参数。
-        reqData.put("notify_url", "/wxpay/precreate/notify");
+        reqData.put("notify_url", "http://www.ywwhcm.com.cn/wxpay/precreate/notify");
         // 自定义参数, 可以为终端设备号(门店号或收银设备ID)，PC网页或公众号内支付可以传"WEB"
         reqData.put("device_info", "WEB");
         // 附加数据，在查询API和支付通知中原样返回，可作为自定义参数使用。
@@ -175,8 +176,9 @@ public class WXPayPrecreateController extends AbstractController{
         		order.setOrder_number(reqData.get("attach"));
         		order=orderService.selectInfo(order);
         		
+        		logger.info("order pay status:"+order.getPay_state().toString()+",chick:"+"1".equals(order.getPay_state().toString()));
         		//订单状态待支付
-        		if("1".equals(order.getPay_state())) {
+        		if("1".equals(order.getPay_state().toString())) {
         			//修改库存信息
         			for(OrderDetails orderDetails:order.getOrderDetailsList()) {
         				Goods goods =new Goods();
@@ -190,7 +192,8 @@ public class WXPayPrecreateController extends AbstractController{
         			}
         			
         			//修改订单状态
-        			order.setPay_state("2".getBytes()[0]);
+        			Byte state='2';
+        			order.setPay_state(state);
         			order.setPayment_seq(reqData.get("transaction_id"));
         			orderService.updateByPrimaryKeySelective(order);
         			
@@ -199,6 +202,17 @@ public class WXPayPrecreateController extends AbstractController{
         		
         	}
         	Object entity = MapTrunPojoUtil.map2Object(reqData, PaymentFlow.class);
+        	//支付时间
+        	try {
+        		((PaymentFlow)entity).setCreate_time(DateFormatUtil.getDate());
+            	((PaymentFlow)entity).setAttach(reqData.get("attach"));
+            	((PaymentFlow)entity).setTime_end(reqData.get("time_end"));
+            	((PaymentFlow)entity).setTotal_fee(Integer.valueOf(reqData.get("total_fee")));
+        	}catch (Exception e) {
+        		logger.error("类型转换异常！"+e.getMessage()+e.toString());
+        		e.printStackTrace();
+			}
+        	
 			//记录支付流水
 			paymentFlowService.insertSelective((PaymentFlow)entity );
             Map<String, String> responseMap = new HashMap<>(2);

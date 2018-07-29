@@ -18,12 +18,14 @@
     <result column="bank_type" jdbcType="VARCHAR" property="bank_type" />
     <result column="total_fee" jdbcType="INTEGER" property="total_fee" />
     <result column="fee_type" jdbcType="VARCHAR" property="fee_type" />
-    <result column="time_end" jdbcType="TIMESTAMP" property="time_end" />
+    <result column="time_end" jdbcType="VARCHAR" property="time_end" />
+    <result column="attach" jdbcType="VARCHAR" property="attach" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="create_time" />
   </resultMap>
   <sql id="Base_Column_List">
     id, transaction_id, out_trade_no, device_info, nonce_str, sign, sign_type, result_code, 
     err_code, err_code_des, openid, is_subscribe, trade_type, bank_type, total_fee, fee_type, 
-    time_end
+    time_end, attach, create_time
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -41,13 +43,15 @@
       sign_type, result_code, err_code, 
       err_code_des, openid, is_subscribe, 
       trade_type, bank_type, total_fee, 
-      fee_type, time_end)
+      fee_type, time_end, attach, 
+      create_time)
     values (#{id,jdbcType=INTEGER}, #{transaction_id,jdbcType=VARCHAR}, #{out_trade_no,jdbcType=VARCHAR}, 
       #{device_info,jdbcType=VARCHAR}, #{nonce_str,jdbcType=VARCHAR}, #{sign,jdbcType=VARCHAR}, 
       #{sign_type,jdbcType=VARCHAR}, #{result_code,jdbcType=VARCHAR}, #{err_code,jdbcType=VARCHAR}, 
       #{err_code_des,jdbcType=VARCHAR}, #{openid,jdbcType=VARCHAR}, #{is_subscribe,jdbcType=VARCHAR}, 
       #{trade_type,jdbcType=VARCHAR}, #{bank_type,jdbcType=VARCHAR}, #{total_fee,jdbcType=INTEGER}, 
-      #{fee_type,jdbcType=VARCHAR}, #{time_end,jdbcType=TIMESTAMP})
+      #{fee_type,jdbcType=VARCHAR}, #{time_end,jdbcType=VARCHAR}, #{attach,jdbcType=VARCHAR}, 
+      #{create_time,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.mall.entity.payment.PaymentFlow">
     insert into t_payment_flow
@@ -103,6 +107,12 @@
       <if test="time_end != null">
         time_end,
       </if>
+      <if test="attach != null">
+        attach,
+      </if>
+      <if test="create_time != null">
+        create_time,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -154,7 +164,13 @@
         #{fee_type,jdbcType=VARCHAR},
       </if>
       <if test="time_end != null">
-        #{time_end,jdbcType=TIMESTAMP},
+        #{time_end,jdbcType=VARCHAR},
+      </if>
+      <if test="attach != null">
+        #{attach,jdbcType=VARCHAR},
+      </if>
+      <if test="create_time != null">
+        #{create_time,jdbcType=TIMESTAMP},
       </if>
     </trim>
   </insert>
@@ -207,7 +223,13 @@
         fee_type = #{fee_type,jdbcType=VARCHAR},
       </if>
       <if test="time_end != null">
-        time_end = #{time_end,jdbcType=TIMESTAMP},
+        time_end = #{time_end,jdbcType=VARCHAR},
+      </if>
+      <if test="attach != null">
+        attach = #{attach,jdbcType=VARCHAR},
+      </if>
+      <if test="create_time != null">
+        create_time = #{create_time,jdbcType=TIMESTAMP},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
@@ -229,7 +251,9 @@
       bank_type = #{bank_type,jdbcType=VARCHAR},
       total_fee = #{total_fee,jdbcType=INTEGER},
       fee_type = #{fee_type,jdbcType=VARCHAR},
-      time_end = #{time_end,jdbcType=TIMESTAMP}
+      time_end = #{time_end,jdbcType=VARCHAR},
+      attach = #{attach,jdbcType=VARCHAR},
+      create_time = #{create_time,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

@@ -3,13 +3,17 @@ package com.mall.util;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.util.*;
+
+import org.apache.log4j.Logger;
 /**
  * 实体对象转成Map
  * @author Jang
  *
  */
 public class MapTrunPojoUtil {
-/**
+	protected  static Logger logger = Logger.getLogger(MapTrunPojoUtil.class);
+	
+	/**
      * 实体对象转成Map
      * @param obj 实体对象
      * @return
@@ -56,7 +60,8 @@ public class MapTrunPojoUtil {
                 field.set(obj, map.get(field.getName()));
             }
         } catch (Exception e) {
-            e.printStackTrace();
+        	logger.error("类型转换异常！"+e.getMessage());
+        	
         } 
         return obj;
     }

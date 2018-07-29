@@ -4,10 +4,10 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.bigdatan.apps</groupId>
-    <artifactId>bdshop-server</artifactId>
+    <artifactId>shop-server</artifactId>
     <version>1.0.0.RELEASE</version>
     <packaging>war</packaging>
-    <name>b2c bdshop api server</name>
+    <name>shop api server</name>
 
     <parent>
         <groupId>com.bigdatan.parent</groupId>
@@ -33,9 +33,7 @@
                 <!--</exclusion>-->
             <!--</exclusions>-->
             
-        </dependency>
-
-       
+        </dependency>  
         <dependency>
             <groupId>com.bigdatan.framework</groupId>
             <artifactId>spring-boot-starter-swagger</artifactId>
@@ -228,8 +226,17 @@
                         </goals>
                     </execution>
                 </executions>
+                
             </plugin>
-
+			
         </plugins>
+        <resources>
+	        <resource>
+		        <directory>src/main/resources</directory>
+		        <excludes>
+		            <exclude>/config/application.yml</exclude>
+		        </excludes>
+		    </resource>
+        </resources>
     </build>
 </project>

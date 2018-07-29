@@ -4,12 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <title>轮播图管理</title>
-    <link href="assets/global/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
-    <link href="assets/global/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-    <link href="assets/global/css/components.min.css" rel="stylesheet" id="style_components" type="text/css" />
-    <link href="assets/layouts/layout/css/layout.min.css" rel="stylesheet" type="text/css" />
-    <link href="assets/layouts/layout/css/themes/darkblue.min.css" rel="stylesheet" type="text/css" id="style_color" />
-    <link rel="stylesheet" href="assets/layouts/layout/css/yunwang.css">
+    <link rel="stylesheet" href="/admin/assets/layouts/layout/css/yunwang.css">
 </head>
 
 <body>
@@ -35,7 +30,7 @@
                         <div class="col-md-6">
                                 <div class="btn-group">
                                     <button id="sample_editable_1_new" class="btn sbold green">
-                                        <a href="add_user.html">添加新的</a>
+                                        <a href="">添加新的</a>
                                         <i class="fa fa-plus"></i>
                                     </button>
                                 </div>
@@ -52,23 +47,31 @@
                                         <th>邮箱</th>
                                         <th>性别</th>
                                         <th>注册日期</th>
+                                        <th>最后登录时间</th>
+                                        <th>状态</th>
                                         <th>操作</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr class="odd gradeX">
-                                        <td >
+                                    <tr class="odd gradeX" th:each="a:${list.dataList}">
+                                        <td  th:text="${a.userInfo.phone}">
                                             13823595211
                                         </td>
-                                        <td>李杰</td>
-                                        <td>广东省深圳市宝安区</td>
-                                        <td>770637705</td>
-                                        <td>
+                                        <td th:text="${a.userInfo.name}">李杰</td>
+                                        <td th:text="${a.userInfo.address_province}+'-'+${a.userInfo.address_city}+'-'+${a.userInfo.address_area}">广东省深圳市宝安区</td>
+                                        <td th:text="${a.userInfo.qq}">770637705</td>
+                                        <td th:text="${a.userInfo.email}">
                                            770637705@qq.com  
                                         </td>
-                                        <td>男</td>
-                                        <td>
+                                        <td th:text="${a.userInfo.sex}=='1'?'男':'女'">男</td>
+                                        <td th:text="${a.create_at==null}?'': ${#dates.format(a.create_at,'yyyy-MM-dd HH:mm:ss')}">
                                            2018-07-17
+                                        </td>
+                                        <td th:text="${a.userInfo.lastSign_time==null}?'':${#dates.format(a.userInfo.lastSign_time,'yyyy-MM-dd HH:mm:ss')}">
+                                           2018-07-17
+                                        </td>
+                                        <td th:text="${a.status}=='Y'?'启用':'禁用'">
+                                           
                                         </td>
                                         <td>
                                             <a href="#" class="btn btn-xs green" >编辑
@@ -86,28 +89,29 @@
                         <div class="row center-text">
                             <div class="dataTables_paginate paging_bootstrap_full_number">
                                 <ul class="pagination" style="visibility: visible;">
-                                    <li class="prev disabled">
-                                        <a href="#">
-                                            <i class="fa fa-angle-double-left"></i>
-                                        </a>
-                                    </li>
-                                    <li class="prev disabled">
-                                        <a href="#" title="Prev">
-                                            <i class="fa fa-angle-left"></i>
-                                        </a>
-                                    </li>
-                                    <li class="active">
-                                        <a href="#">1</a>
-                                    </li>
-                                    <li class="next disabled">
-                                        <a href="#" title="Next">
-                                            <i class="fa fa-angle-right"></i>
-                                        </a>
-                                    </li>
-                                    <li class="next disabled">
-                                        <a href="#" title="Last"><i class="fa fa-angle-double-right"></i>
-                                                </a>
-                                    </li>
+                                     <li class="prev ">  <a href="#" th:href="@{/admin/user/list(pageNo=${1})}">
+		                                    <i class="fa fa-angle-double-left"></i>
+		                                    </a></li>
+		                                    <li class="prev ">
+		                                        <a href="#" title="Prev" th:href="@{/admin/user/list(pageNo=${list.pageNo}-1>0?${list.pageNo}-1:1)}">
+		                                            <i class="fa fa-angle-left"></i>
+		                                        </a>
+		                                    </li>
+		                                    <li class="active" id="activepage">
+		                                        <a href="#" th:text="${list.pageNo}">1</a>
+		                                    </li>
+		                                    <li class="next ">
+		                                        <a href="#" title="Next" th:href="@{/admin/user/list(pageNo=${list.pageNo}==${list.pages}?${list.pages}:${list.pageNo}+1)}">
+		                                            <i class="fa fa-angle-right"></i>
+		                                        </a>
+		                                    </li>
+		                                    <li class="next " >
+		                                        <a href="#" title="Last" th:href="@{/admin/user/list(pageNo=${list.pages})}"><i class="fa fa-angle-double-right"></i>
+                                        		</a>
+		                                    </li>
+		                                    <li class="prev "> 
+		                            		 <span th:text="'共'+ ${list.pages}+'页'"></span>
+		                            		</li>
                                 </ul>
                             </div>
                         </div>
@@ -116,11 +120,31 @@
             </div>
         </div>
     </div>
-    </div>
-    <script src="assets/global/plugins/jquery.min.js" type="text/javascript"></script>
-    <script src="assets/global/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
-    <script src="assets/global/scripts/app.min.js" type="text/javascript"></script>
-    <script src="assets/layouts/layout/scripts/layout.min.js" type="text/javascript"></script>
+    <script type="text/javascript" th:inline="javascript">
+    $(function(){
+		var pageNo=[[${list.pageNo}]];
+    	var pages=[[${list.pages}]];
+    	
+		for(var i=2;i>0;i--){
+			var pag=pageNo-i;
+			if(pageNo-i>0){
+				var dome="<li><a  href='/admin/user/list?pageNo="+pag+"'>"+pag+"</a></li>";
+    			$("#activepage").before(dome);
+			}
+			
+		}
+		for(var i=2;i>0;i--){
+			var pag=pageNo+i;
+			if(pageNo+i<=pages){
+				var dome="<li><a  href='/admin/user/list?pageNo="+pag+"'>"+pag+"</a></li>";
+    			$("#activepage").after(dome);
+			}
+			
+		}
+    });
+    
+    
+    </script>
 </body>
 
 </html>

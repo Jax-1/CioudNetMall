@@ -69,7 +69,7 @@
                                         <td>
                                             付款时间：
                                         </td>
-                                        <td th:text="${entity!=null and entity.PaymentFlow!=null}?${#dates.format(entity.PaymentFlow.time_end,'yyyy-MM-dd HH:mm:ss')}:'N/A'">2018-07-17 09:22:42</td>
+                                        <td th:text="${entity!=null and entity.PaymentFlow!=null}?${#dates.format(entity.PaymentFlow.create_time,'yyyy-MM-dd HH:mm:ss')}:'N/A'">2018-07-17 09:22:42</td>
                                     </tr>
                                     <tr>
                                         <td>发货单号：</td>

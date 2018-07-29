@@ -5,8 +5,8 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.yaml.snakeyaml.constructor.BaseConstructor;
 
+import com.mall.controller.AbstractController;
 import com.mall.entity.cms.AuthorWithBLOBs;
 import com.mall.entity.goods.Goods;
 import com.mall.entity.inventory.InventoryDeivery;
@@ -27,7 +27,7 @@ import com.mall.util.PageResult;
 
 @Controller 
 @RequestMapping("/admin/order")
-public class AdminOrderController  extends BaseConstructor{
+public class AdminOrderController  extends AbstractController{
 	@Resource
 	private CacheService cacheService;
 	@Resource

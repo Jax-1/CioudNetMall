@@ -35,7 +35,11 @@ public class PaymentFlow {
 
     private String fee_type;
 
-    private Date time_end;
+    private String time_end;
+
+    private String attach;
+
+    private Date create_time;
 
     public Integer getId() {
         return id;
@@ -165,11 +169,27 @@ public class PaymentFlow {
         this.fee_type = fee_type;
     }
 
-    public Date getTime_end() {
+    public String getTime_end() {
         return time_end;
     }
 
-    public void setTime_end(Date time_end) {
+    public void setTime_end(String time_end) {
         this.time_end = time_end;
+    }
+
+    public String getAttach() {
+        return attach;
+    }
+
+    public void setAttach(String attach) {
+        this.attach = attach;
+    }
+
+    public Date getCreate_time() {
+        return create_time;
+    }
+
+    public void setCreate_time(Date create_time) {
+        this.create_time = create_time;
     }
 }
