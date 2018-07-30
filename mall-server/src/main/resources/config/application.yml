@@ -1,7 +1,5 @@
 mybatis:
     mapper-locations: classpath:mapper/**/*.xml
-  #  configuration:
-   #   log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
     
 thymeleaf:
     prefix: classpath:/templates/    #指定资源位置
@@ -20,10 +18,12 @@ pagehelper:
 
 
 druid:
-    url: jdbc:mysql://47.106.171.99:3306/DBPMALL?useUnicode=true&characterEncoding=utf8&autoReconnect=true&failOverReadOnly=false&allowMultiQueries=true
+    url: jdbc:mysql://47.93.16.119:3306/dbmall?useUnicode=true&characterEncoding=utf8&autoReconnect=true&failOverReadOnly=false&allowMultiQueries=true
+   # url: jdbc:mysql://47.106.171.99:3306/DBPMALL?useUnicode=true&characterEncoding=utf8&autoReconnect=true&failOverReadOnly=false&allowMultiQueries=true
     driver-class: com.mysql.jdbc.Driver
     username: root
-    password: Ywcmyxgs2018
+    password: zhang032111
+   # password: Ywcmyxgs2018
     initial-size: 1
     min-idle: 1
     max-active: 20
@@ -86,7 +86,7 @@ server:
 
 
 logging:
-    path: /usr/yunwang/log
+   # path: /usr/yunwang/log
     
     pattern:
 #        console: "%clr(%d{yyyy-MM-dd HH:mm:ss.SSS}){faint} [%thread] %-5level %class - %msg%n"
