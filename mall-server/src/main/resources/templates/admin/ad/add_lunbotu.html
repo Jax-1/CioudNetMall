@@ -26,7 +26,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <form class="form-horizontal" role="form" action="/admin/ad/save">
-                    	<input type="hidden" class="form-control" name='actionsave' th:value="${ad!=null}?'UPDATE':'SAVE'">
+                    	<input type="hidden" class="form-control" name='actionsave' th:value="${ad!=null and ad.ad_id!=null}?'UPDATE':'SAVE'">
                     	<input type="hidden" class="form-control" name='ad_id' th:value="${ad!=null}?${ad.ad_id}:''">
                         <div class="form-body">
                             <div class="form-group">

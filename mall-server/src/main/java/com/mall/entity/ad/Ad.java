@@ -37,6 +37,7 @@ public class Ad {
 	private FilePath filePath;
 	
 	
+	
 
 
 	public FilePath getFilePath() {
@@ -142,6 +143,7 @@ public class Ad {
 	public void setAdmin_name(String admin_name) {
 		this.admin_name = admin_name;
 	}
-
+	
+	
 	
 }

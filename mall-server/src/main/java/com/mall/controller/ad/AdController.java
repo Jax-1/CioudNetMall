@@ -23,6 +23,7 @@ import com.mall.service.sys.CacheService;
 import com.mall.util.DateFormatUtil;
 import com.mall.util.PageResult;
 import com.mall.util.SessionUtil;
+import com.mall.util.Validate;
 
 import org.springframework.ui.Model;
 
@@ -55,15 +56,20 @@ public class AdController extends AbstractController{
 	public String toAdAdd(Model model,Ad ad) {
 		//获取广告位
 		List<AdPosition> list = adPositionMapper.getAdPositionList(new AdPosition());
-		ad=adService.selectInfo(ad);
-		//文件服务器路径
-		Map<String, String> cache = cacheService.getCache(SystemCode.FILE_SERVICE);
-		String url=cache.get(SystemCode.FILE_SERVICE_URL);
-		String port=cache.get(SystemCode.FILE_SERVICE_PORT);
-		String filePath=cache.get(SystemCode.FILE_SERVICE_FILES_PATH);
-		String fileUrlPrefix=url+":"+port+"/"+filePath;
-		model.addAttribute("fileServicePath", fileUrlPrefix);
-		model.addAttribute("ad", ad);
+		logger.info("MSG:"+ad==null?false:true);
+		if(Validate.notNull(ad)&&ad.getAd_id()!=null) {
+			ad=adService.selectInfo(ad);
+			model.addAttribute("ad", ad);
+			//文件服务器路径
+			Map<String, String> cache = cacheService.getCache(SystemCode.FILE_SERVICE);
+			String url=cache.get(SystemCode.FILE_SERVICE_URL);
+			String port=cache.get(SystemCode.FILE_SERVICE_PORT);
+			String filePath=cache.get(SystemCode.FILE_SERVICE_FILES_PATH);
+			String fileUrlPrefix=url+":"+port+"/"+filePath;
+			model.addAttribute("fileServicePath", fileUrlPrefix);
+		}
+		
+		
 		model.addAttribute("list", list);
 		model.addAttribute("page", "admin/ad/add_lunbotu");
 		return "admin/index";
@@ -72,6 +78,7 @@ public class AdController extends AbstractController{
 	@RequestMapping("/save")
 	public String toAdsave(Model model,Ad ad,HttpServletRequest request,String actionsave) {
 		if(SystemCode.TYPE_SAVE.equals(actionsave)) {
+			logger.info("保存广告信息！+"+ad.getDescription());
 			Admin adminUser = SessionUtil.getAdminUser(request);
 			ad.setAdmin_name(adminUser.getAdmin_name());
 			ad.setCreate_time(DateFormatUtil.getDate());
@@ -82,16 +89,16 @@ public class AdController extends AbstractController{
 			}
 			
 		}else if(SystemCode.TYPE_UPDATE.equals(actionsave)) {
+			logger.info("更新广告信息！+"+ad.getDescription());
 			try {
-				adService.updateByPrimaryKey(ad);
+				adService.updateByPrimaryKeySelective(ad);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
 			
 		
-		model.addAttribute("page", "admin/ad/lunbotu");
-		return "admin/index";
+		return "redirect:/admin/ad/list";
 		
 	}
 	/**
