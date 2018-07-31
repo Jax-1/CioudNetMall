@@ -272,10 +272,11 @@
 		//多商品未定义
 		var num =amount;
 		
-	
+		//alert($("#payment_id").val());
 		form = $("<form></form>")
         form.attr('action',"/mall/order/pay")
         form.attr('method','post')
+        input5 = $("<input type='text' name='payment_id' value='"+$("#payment_id").val()+"'/>");
 		input1 = $("<input type='text' name='receive_id' value='"+receive_id+"'/>");
 		input2 = $("<input type='text' name='comment' value='"+comment+"'/>");
 		var  flg=true;
@@ -300,6 +301,7 @@
 		if(flg){
 			form.append(input1);
 	        form.append(input2);
+	        form.append(input5);
 	        form.appendTo("body")
 	        form.css('display','none')
 			form.submit()

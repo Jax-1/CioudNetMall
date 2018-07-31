@@ -207,7 +207,7 @@
 			
 		}
 		$("#submit").click(function(){
-			$.post("/user/checkCode",
+			$.post("/mall/user/checkCode",
 					{imgcode:$("#imgcode").val(),
 					phonecode:$("#phonecode").val()
 					
@@ -215,7 +215,7 @@
 					function(data){
 				if(data!=null&&data.res=="1"){
 					//成功
-					window.location.href="/user/modify_pwd"
+					window.location.href="/mall/user/modify_pwd"
 				}else{
 					//失败
 					$("#msg").text(data.msg);
@@ -479,29 +479,48 @@
 		</div>
 		<div class="my_rt_b bg_w">
 			<div class="my_header_bar">
-				<div class="ground_bar">
-					<label for="">订单状态</label>
-					<select name="" id="">
-						<option value="">所有订单</option>
-				        <option value="">待付款</option>
-				        <option value="">待发货</option>
-				        <option value="">待收货</option>
-				        <option value="">已完成</option>
-				        <option value="">待评价</option>
-				        <option value="">已取消</option>
-					</select>
-				</div>
-				<div class="ground_time">
-					<label for="">订单时间</label>
-					<input type="text" id="star_time">~
-					<input type="text" id="end_time">
-				</div>
-				<div class="ground_searche">
-					<label for="">订单号</label>
-					<input type="text">
-					<button class="butn">搜索</button>
-				</div>
-
+			 <form class="form-inline" action="/mall/user/order" id="selectform">
+						<div class="form-group">
+                            <label for="">订单号</label>
+                            <input type="text" class="form-control" placeholder="订单号" name="order_number" th:value="${orderentity!=null }?${orderentity.order_number}:''">
+                        </div>
+                      	
+                        <div class="form-group">
+                            <label for="">付款状态 </label>
+                            <select class="form-control" name="pay_state" >
+                                <option value="-1">请选择...</option>
+                                <option value="1" th:selected="${orderentity!=null and orderentity.pay_state=='1'}">待付款</option>
+                                <option value="2" th:selected="${orderentity!=null and orderentity.pay_state=='2'}">已付款</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                        	<label for="">发货状态 </label>
+                            <select class="form-control" name="logistics_state" >
+                                <option value="-1">请选择...</option>
+                                <option value="1" th:selected="${orderentity!=null and orderentity.logistics_state=='1'}">待发货</option>
+                                <option value="4" th:selected="${orderentity!=null and orderentity.logistics_state=='4'}">部分发货</option>
+                                <option value="2" th:selected="${orderentity!=null and orderentity.logistics_state=='2'}">已发货</option>
+                                <option value="3" th:selected="${orderentity!=null and orderentity.logistics_state=='3'}">已确认收货</option>
+                                <option value="5" th:selected="${orderentity!=null and orderentity.logistics_state=='5'}">退货</option>
+                            </select>
+                            
+                        </div>
+                        <div class="form-group">
+                        	<label for="">订单状态 </label>
+                            <select class="form-control" name="del_state" >
+                                <option value="-1">请选择...</option>
+                                <option value="1" th:selected="${orderentity!=null and orderentity.del_state=='1'}">待确认</option>
+                                <option value="2" th:selected="${orderentity!=null and orderentity.del_state=='2'}">取消</option>
+                                <option value="3" th:selected="${orderentity!=null and orderentity.del_state=='3'}">无效</option>
+                                <option value="4" th:selected="${orderentity!=null and orderentity.del_state=='4'}">已完成</option>
+                            </select>
+                            
+                        </div>
+                        <div class="header_search">
+                         <button type="submit" class="search_btn">搜索</button>
+                        </div>
+                      
+					</form>
 			</div>
 			<!-- 表格 -->
 			<table class="order_table">
@@ -515,21 +534,20 @@
 						<th>交易操作</th>
 					</tr>
 				</thead>
-				<tbody th:each="a:${order.dataList}">
+				<tbody th:each="a:${list.dataList}">
 					<tr class="tb_tit">
 						<td colspan="6" >
 							订单号：<span class="order_num" th:text="${a.order_number}">1000000033710601</span>
 							下单时间：<span  th:text="${#dates.format(a.create_time,'yyyy-MM-dd HH:mm:ss')}">2018-06-06 19:26:39</span>
 						</td>
 					</tr>
-					<tr class="t_p"><td colspan="6"></td></tr>
-					<div th:each="d:${a.orderDetailsList}">
-					<tr >
+					<tr class="t_p"><td colspan="6" ></td></tr>
+					<tr th:each="d:${a.orderDetailsList}">
 						<td width="300px">
 							<div class="shop_img">
 								<div class="img_link">
 									<a href="">
-									<img  alt="" th:src="@{${fileServicePath}+'/'+${d.filePath.path}+'/'+${d.filePath.fileidname}+'.'+${d.filePath.filetype}}" >	
+									<img  alt="" height="120"  th:src="@{${fileServicePath}+'/'+${d.filePath.path}+'/'+${d.filePath.fileidname}+'.'+${d.filePath.filetype}}" >	
 									</a>
 								</div>
 								<div class="shop_tit">
@@ -547,7 +565,6 @@
 						<td>
 						</td>
 					</tr>
-					</div>
 					<tr>
 					<td width="300px">
 							
@@ -562,14 +579,16 @@
 						<td class="order_state">
 							<p th:text="${a.pay_state=='2'}?'已付款':'待付款'">待付款</p>
 							
-							<p class="a_link"><a href="">查看详情</a></p>
+							<p class="a_link"><a href="" th:tref="@{/mall/order(order_number=${a.order_number})}">查看详情</a></p>
 						</td>
 						<td>
 							<div class="order_btn">
 								<div class="btn order_pay">
+									<a th:href="@{/mall/order/pay(order_number=${a.order_number})}"></a>
 									订单支付
 								</div>
 								<div class="btn order_cancel">
+									<a th:href="'javascript:quxiao('+${a.order_number}+')'"></a>
 									取消支付
 								</div>
 							</div>
@@ -582,37 +601,58 @@
 			
 			<div class="pagination_Box">
 				<ul>
-					<li><a href="" class="demo">首页</a></li>
-					<li><a href=""  class="demo">上一页</a></li>
-					<li class="active">
+					<li><a href="" class="demo" th:href="'javascript:toPage(1)'">首页</a></li>
+					<li><a href=""  class="demo" title="Prev" th:href="'javascript:toPage('+(${list.pageNo}-1>0?${list.pageNo}-1:1)+')'">上一页</a></li>
+					<li class="active" id="activepage">
 						<a  href="">1</a>
 					</li>
+					
 					<li>
-						<a  href="">2</a>
+						<a href="" th:href="'javascript:toPage('+(${list.pageNo}==${list.pages}?${list.pages}:${list.pageNo}+1)+')'">下一页</a>
 					</li>
 					<li>
-						<a  href="">3</a>
-					</li>
-					<li>
-						<a  href="">4</a>
-					</li>
-					<li>
-						<a href="">下一页</a>
-					</li>
-					<li>
-						<a  href="">末页</a>
+						<a  href="" th:href="'javascript:toPage('+${list.pages}+')'">末页</a>
 					</li>
 				</ul>
 			</div>
 		</div>
-	</div>
-
-	<script>
+		<script th:inline="javascript">
 		$(function(){
 			$("#star_time").flatpickr();
 			$("#end_time").flatpickr();
+			var pageNo=[[${list.pageNo}]];
+        	var pages=[[${list.pages}]];
+        	var list=[[${list.dataList}]];
+        	console.log(list);
+        	
+    		for(var i=2;i>0;i--){
+    			var pag=pageNo-i;
+    			if(pageNo-i>0){
+    				var dome="<li><a  href='javascript:toPage("+pag+")'>"+pag+"</a></li>";
+        			$("#activepage").before(dome);
+    			}
+    			
+    		}
+    		for(var i=2;i>0;i--){
+    			var pag=pageNo+i;
+    			if(pageNo+i<=pages){
+    				var dome="<li><a   href='javascript:toPage("+pag+")'>"+pag+"</a></li>";
+        			$("#activepage").after(dome);
+    			}
+    			
+    		}
+    		
 		})
+		function toPage(num){
+        		var item="<input type='hidden' name='pageNo' value='"+num+"'>"
+        		$('#selectform').append(item);
+        		$('#selectform').submit();
+        	}
+		
 	</script>
+	
+	</div>
+
 	
 	</div>
 	<!-- 我的订单 end -->

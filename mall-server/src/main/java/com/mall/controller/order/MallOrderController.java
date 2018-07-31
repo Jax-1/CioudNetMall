@@ -150,7 +150,7 @@ public class MallOrderController extends AbstractController{
 			BigDecimal total_amount=BigDecimal.ZERO;
 			BigDecimal postage_amount=BigDecimal.ZERO;
 			BigDecimal discount_amount=BigDecimal.ZERO;
-			
+			logger.info("payment_id:"+order.getPayment_id());
 			//创建订单商品信息
 			for(OrderDetails orderDetails:order.getOrderDetailsList()) {
 				BigDecimal details_amount=BigDecimal.ZERO;
@@ -168,6 +168,7 @@ public class MallOrderController extends AbstractController{
 				orderDetails.setPrice_id(goods.getGoods_price_id());
 				orderDetails.setGoods_id(goods.getGoods_id());
 				orderDetails.setGoods_name(goods.getGoods_name());
+				orderDetails.setImage(goods.getImage());
 				if(goods.getGoodsPrice().getSale()=="Y") {
 					//优惠价格
 					orderDetails.setUnit_price(goods.getGoodsPrice().getSale_price());

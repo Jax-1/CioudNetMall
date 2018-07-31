@@ -432,7 +432,7 @@ FROM
 			t2.image
 		FROM
 			t_order t1
-		LEFT JOIN t_order_details t2 ON t1.order_id = t2.order_id
+		LEFT JOIN t_order_details t2 ON t1.order_number = t2.order_number
 		<where>
 		
 		<if test="user_id!=null">
@@ -462,6 +462,7 @@ FROM
 	)K LEFT JOIN  t_sys_user_info H  ON K.user_id=H.user_name
 	) A
 LEFT JOIN t_file_path B ON A.image = B.fileid
+	ORDER BY A.create_time DESC
   </select>
   <!-- 更新订单状态 -->
   <update id="updateOrderStatus" parameterType="com.mall.entity.order.Order">

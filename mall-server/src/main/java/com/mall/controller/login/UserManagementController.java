@@ -35,7 +35,7 @@ import com.mall.util.Validate;
  *
  */
 @Controller
-@RequestMapping("/user")
+@RequestMapping("/mall/user")
 public class UserManagementController extends AbstractController{
 	@Resource
 	private UserLoginService userLoginService;
@@ -95,8 +95,7 @@ public class UserManagementController extends AbstractController{
 	 */
 	@RequestMapping("/order")
 	public String toUserOrder(Model model,HttpServletRequest request,PageResult<Order> list,Order order) {
-		int pageSize  =  Integer.parseInt(cacheService.getCache(SystemCode.PAGE).get(SystemCode.GOODS_PAGE));
-		list.setPageSize(pageSize);
+		
 		User user = SessionUtil.getUser(request);
 		if(!Validate.notNull(order)) {
 			order=new Order();
@@ -111,7 +110,8 @@ public class UserManagementController extends AbstractController{
 		String filePath=cache.get(SystemCode.FILE_SERVICE_FILES_PATH);
 		String fileUrlPrefix=url+":"+port+"/"+filePath;
 		model.addAttribute("fileServicePath", fileUrlPrefix);
-		model.addAttribute("order", list);
+		model.addAttribute("orderentity", order);
+		model.addAttribute("list", list);
 		model.addAttribute("page", "mall/login/my_center");
 		model.addAttribute("manager", "order");
 		return "mall/index";
