@@ -583,14 +583,32 @@
 						</td>
 						<td>
 							<div class="order_btn">
-								<div class="btn order_pay">
-									<a th:href="@{/mall/order/pay(order_number=${a.order_number})}"></a>
-									订单支付
+								<div class="btn order_pay"  th:attr="style=${a.pay_state}=='1'?'':'display:none'">
+									<a th:href="@{/mall/order/pay(order_number=${a.order_number})}">订单支付</a>
+									
 								</div>
-								<div class="btn order_cancel">
-									<a th:href="'javascript:quxiao('+${a.order_number}+')'"></a>
-									取消支付
+								<div class="btn order_pay"   th:attr="style=(${a.pay_state}=='2' and ${a.logistics_state}=='2' and ${a.del_state}=='2')?'':'display:none'">
+									<a  >查看物流</a>
+									
 								</div>
+								
+								<div class="btn order_pay"   th:attr="style=(${a.pay_state}=='2' and ${a.logistics_state}=='2' and ${a.del_state}=='2')?'':'display:none'">
+									<a  th:href="@{'javascript:confirmTake('+${a.order_number}+')'}">确认收货</a>
+									
+								</div>
+								<div class="btn order_pay"   th:attr="style=(${a.pay_state}=='2' and ${a.logistics_state}=='3' and ${a.del_state}=='5')?'':'display:none'">
+									<a  >评价</a>
+									
+								</div>
+								<div class="btn order_pay"   th:attr="style=(${a.pay_state}=='2' and ${a.logistics_state}=='3' and ${a.del_state}=='5')?'':'display:none'">
+									<a  >退货</a>
+									
+								</div>
+								<div class="btn order_cancel"   th:attr="style=${a.pay_state}=='1'?'':'display:none'">
+									<a th:href="@{'javascript:quxiao('+${a.order_number}+')'}">取消订单</a>
+									
+								</div>
+								
 							</div>
 						</td>
 					</tr>
@@ -617,6 +635,10 @@
 			</div>
 		</div>
 		<script th:inline="javascript">
+		//设置AJAX同步
+	    $.ajaxSetup({
+	    	  async: false
+	    	  });
 		$(function(){
 			$("#star_time").flatpickr();
 			$("#end_time").flatpickr();
@@ -648,6 +670,37 @@
         		$('#selectform').append(item);
         		$('#selectform').submit();
         	}
+		//取消订单
+		function quxiao(num){
+			var r=confirm("是否取消订单："+num+'?');
+			if (r==false)
+			  {
+				return;
+			  }
+			var data={order_number:num,del_state:'3'}
+			//修改订单状态
+			if(chengeStatus(data)){
+				//成功
+			}
+	    	
+		}
+		//确认收货
+		function confirmTake(num){
+			var data={order_number:num,del_state:'5',logistics_state:'3'}
+			if(chengeStatus(data)){
+				//成功
+			}
+		}
+		
+		function chengeStatus(data){
+			var flg=false;
+			$.post('/order/chengeStatus',data,function(data){
+	    		if(data!=null&&data.res=='1'){
+	    			flg=true;
+	    		}
+	    	})
+	    	return flg;
+		}
 		
 	</script>
 	

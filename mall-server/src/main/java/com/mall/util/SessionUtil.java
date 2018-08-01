@@ -61,4 +61,14 @@ public class SessionUtil {
 			return request.getRemoteAddr();
 		}
     }
+	//用户注销
+	public static void rmUser(HttpServletRequest request) {
+		request.removeAttribute("user");
+		
+	}
+	//管理员注销
+	public static void rmAdmin(HttpServletRequest request) {
+		request.removeAttribute("adminUser");
+		
+	}
 }

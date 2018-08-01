@@ -19,7 +19,7 @@
 			<img class="user_img_min" th:attr="src=${session.user!=null&&session.user.filePath!=null}?'':'/mall/images/u106.png'" alt="">
 			<span>&nbsp;&nbsp;<a href="" th:text="${session.user!=null}?${session.user.userInfo.name}:''">sdfsadf</a> / </span>
 			<span>&nbsp;&nbsp;<a href="/mall/user/manager">个人中心</a> / </span>
-			<span>&nbsp;&nbsp;<a href="javascript:location.reload();">注销</a>  </span>
+			<span>&nbsp;&nbsp;<a href="javascript:loginOut();">注销</a>  </span>
 			</div >
 			<div  th:style="${session.user==null}?'':'display: none'">
 			<span>&nbsp;&nbsp;<a href="/user/login.do">请登录</a> / </span>  
@@ -88,6 +88,14 @@
 			 
 			}
 		})
+		function loginOut(){
+		$.post("/user/loginout",{},function(data){
+			if(data!=null && data.res=='1')
+			{
+				location.reload();
+			}
+		})
+	}
 	
 	</script>
 	        

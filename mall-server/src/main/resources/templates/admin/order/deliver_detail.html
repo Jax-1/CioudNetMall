@@ -244,7 +244,7 @@
     function chengeOrderStatus(data){
 	  	var flg=false;
     	//已发货
-    	$.post("/admin/order/chengeStatus",data,function(data){
+    	$.post("/order/chengeStatus",data,function(data){
     		if(data!=null&&data.res=='1'){
     			//success
     			flg=true;

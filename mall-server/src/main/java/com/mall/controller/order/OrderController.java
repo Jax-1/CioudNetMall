@@ -12,7 +12,7 @@ import com.mall.message.ProcessResult;
 import com.mall.service.order.OrderService;
 
 @Controller
-@RequestMapping("/admin/order")
+@RequestMapping("/order")
 public class OrderController extends AbstractController{
 	@Resource
 	private OrderService orderService;

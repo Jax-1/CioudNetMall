@@ -52,10 +52,10 @@
 				<div class="pre">&lt;</div>
       			<div class="next">&gt;</div>
 				<ul class="slide_cont">
-					<li><a href=""><img src="/mall/images/lunbotu.png" alt=""></a></li>
-					<li><a href=""><img src="/mall/images/lunbotu.png" alt=""></a></li>
-					<li><a href=""><img src="/mall/images/lunbotu.png" alt=""></a></li>
-					<li><a href=""><img src="/mall/images/lunbotu.png" alt=""></a></li>
+					<li th:each="ad:${adList}"><a href="" th:href="@{${ad.url}}">
+						<img th:src="@{${fileServicePath}+'/'+${ad.filePath.path}+'/'+${ad.filePath.fileidname}+'.'+${ad.filePath.filetype}}"></a>
+					</li>
+					
 				</ul>
 				<div class="smalltitle">
 					<ul class="tab_bar"> 

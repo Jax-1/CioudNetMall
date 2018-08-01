@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.mall.controller.AbstractController;
+import com.mall.entity.ad.Ad;
 import com.mall.entity.cms.AuthorWithBLOBs;
 import com.mall.entity.goods.Goods;
 import com.mall.entity.goods.GoodsCategory;
@@ -18,6 +19,7 @@ import com.mall.entity.goods.GoodsHistory;
 import com.mall.entity.goods.GoodsPrice;
 import com.mall.entity.login.User;
 import com.mall.message.SystemCode;
+import com.mall.service.ad.AdService;
 import com.mall.service.cms.AuthorWithBLOBsService;
 import com.mall.service.goods.GoodsCategoryService;
 import com.mall.service.goods.GoodsService;
@@ -41,8 +43,19 @@ public class MallGoodsController extends AbstractController{
 	private AuthorWithBLOBsService authorWithBLOBsService;
 	@Resource
 	private GoodsHistoryService GoodsHistoryService;
+	@Resource
+	private AdService adService;
+	
 	@RequestMapping("")
 	public String toGoodsList(Model model) {
+		//获取广告信息
+		PageResult<Ad> adList=new PageResult<Ad>();
+		//固定4个
+		adList.setPageSize(4);
+		Ad ad =new Ad();
+		Byte state=1;
+		ad.setState(state);
+		adList=adService.queryByPageFront(adList,ad);
 		//查询所有分类
 		List<GoodsCategory> goodsCategoryList = goodsCategoryService.getGoodsCategoryList(null);
 		logger.info("获取商品分类列表："+goodsCategoryList.size());
@@ -94,6 +107,8 @@ public class MallGoodsController extends AbstractController{
 		goodsSale.setGoodsPrice(goodsPrice);
 		PageResult<Goods> saleGoods = goodsService.queryByPageFront(list, goodsSale);
 		
+		
+		model.addAttribute("adList", adList.getDataList());
 		
 		model.addAttribute("SEGoods", SEGoods.getDataList());
 		model.addAttribute("newGoods", newGoods.getDataList());

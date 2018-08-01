@@ -85,7 +85,7 @@ public class UserLoginServiceImpl extends BaseServiceImpl<User> implements UserL
 	@Override
 	public ProcessResult<User> loginOut(HttpServletRequest request) {
 		logger.info("注销");
-		SessionUtil.setUser(request, null);
+		SessionUtil.rmUser(request);
 		request.getSession().invalidate();
 		return new ProcessResult<User>(SystemCode.SUCCESS,MessageUtil.getMsgByLan(MsgPoolCode.LOGIN_OUT_SUCESS));
 	}

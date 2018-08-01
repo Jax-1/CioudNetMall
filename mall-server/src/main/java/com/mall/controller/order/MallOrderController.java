@@ -133,6 +133,7 @@ public class MallOrderController extends AbstractController{
 		if(Validate.notNull(order.getOrder_number())) {
 			//历史订单支付
 			logger.info("历史订单支付！");
+			order=orderService.selectInfo(order);
 		}else {
 			logger.info("生成订单支付！");
 			logger.info("支付方式："+order.getPayment_id());

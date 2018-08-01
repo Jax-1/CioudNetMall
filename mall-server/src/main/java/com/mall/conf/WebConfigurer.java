@@ -36,7 +36,7 @@ public class WebConfigurer extends WebMvcConfigurerAdapter {
 //    	registry.addInterceptor(new InitializeConnection())
 //        .addPathPatterns("/**");
         registry.addInterceptor(new InterceptorConfig())
-                .addPathPatterns("/mall/order/**");
+                .addPathPatterns("/mall/order/**").addPathPatterns("/mall/user/**");
         registry.addInterceptor(new AdminLoginValidate())
         .addPathPatterns("/admin/**").excludePathPatterns("/admin/login.do").excludePathPatterns("/admin/login");
         

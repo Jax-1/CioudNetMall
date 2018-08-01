@@ -339,7 +339,7 @@
     //data2:操作信息
     function confirmAndChengeStatus(data1,data2){
     	//修改订单状态
-    	$.post('/admin/order/chengeStatus',data1,function(data){
+    	$.post('/order/chengeStatus',data1,function(data){
     		if(data!=null&&data.res=='1'){
     			//修改成功
     			recordAction(data2);
