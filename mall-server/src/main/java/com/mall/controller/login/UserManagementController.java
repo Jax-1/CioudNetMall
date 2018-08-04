@@ -117,6 +117,29 @@ public class UserManagementController extends AbstractController{
 		return "mall/index";
 	}
 	/**
+	 * 用户订单详情
+	 * @param order
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping("/order/details")
+	public String toUserOrderDetails(Order order,Model model) {
+		logger.info("获取用户订单详情！order="+order.getOrder_number());
+		order=orderService.selectInfo(order);
+		//文件服务器路径
+		Map<String, String> cache = cacheService.getCache(SystemCode.FILE_SERVICE);
+		String url=cache.get(SystemCode.FILE_SERVICE_URL);
+		String port=cache.get(SystemCode.FILE_SERVICE_PORT);
+		String filePath=cache.get(SystemCode.FILE_SERVICE_FILES_PATH);
+		String fileUrlPrefix=url+":"+port+"/"+filePath;
+		model.addAttribute("fileServicePath", fileUrlPrefix);
+		model.addAttribute("entity", order);
+		model.addAttribute("page", "mall/login/my_center");
+		model.addAttribute("manager", "orderdetails");
+		return "mall/index";
+		
+	}
+	/**
 	 * 校验验证信息
 	 * @param model
 	 * @param request

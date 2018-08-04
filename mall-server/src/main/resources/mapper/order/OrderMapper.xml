@@ -336,10 +336,14 @@
   </resultMap>
    <!-- 查询订单详细信息 -->
   <select id="selectInfo"  parameterType="com.mall.entity.order.Order" resultMap="orderResultMap">
-  SELECT I.*,
+  SELECT I.*,J.id id_a,
 		J.user_id user_id_a, J.name, J.phone, J.province, J.city, J.area, J.street
 	FROM(
   Select D.*,E.create_time  create_time_pf from (
+  SELECT F.*, G.path,
+	G.fileidname,
+	G.filename,
+	G.filetype FROM(
   SELECT B.*,C.payment_id payment_id_p, C.isGeneral isGeneral_p, C.name name_p 
   FROM (
   SELECT A.*,  H.user_name user_name_u,
@@ -361,13 +365,14 @@
     t1.receive_id, t1.send_time, t1.logistics_state, t1.invoice_tag, t1.del_state, t1.payment_id, t1.payment_seq, 
     t1.pay_state, t1.comment, t1.create_time, t1.update_time,
 	 t2.order_details_id,  t2.price_id, t2.goods_id, t2.goods_name,
-     t2.num, t2.details_amount
+     t2.num, t2.details_amount,t2.image
 	FROM
 	t_order t1
 	LEFT JOIN t_order_details t2 ON t1.order_number = t2.order_number
 	where t1.order_number=#{order_number}
   ) A LEFT JOIN t_sys_user_info H ON A.user_id=H.user_name
   ) B LEFT JOIN t_payment_method C ON B.payment_id=C.payment_id
+  ) F LEFT JOIN t_file_path G ON F.image = G.fileid
   ) D LEFT JOIN t_payment_flow E ON D.payment_seq=E.transaction_id
   ) I LEFT JOIN t_order_address J ON I.receive_id=J.id
   </select>
