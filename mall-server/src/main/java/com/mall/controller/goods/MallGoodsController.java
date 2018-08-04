@@ -50,8 +50,6 @@ public class MallGoodsController extends AbstractController{
 	public String toGoodsList(Model model) {
 		//获取广告信息
 		PageResult<Ad> adList=new PageResult<Ad>();
-		//固定4个
-		adList.setPageSize(4);
 		Ad ad =new Ad();
 		Byte state=1;
 		ad.setState(state);

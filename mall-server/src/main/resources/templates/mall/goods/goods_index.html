@@ -59,10 +59,8 @@
 				</ul>
 				<div class="smalltitle">
 					<ul class="tab_bar"> 
-						<li class="active">1</li>
-						<li>2</li>
-						<li>3</li>
-						<li>4</li>
+						<li th:each="ad,item:${adList}" th:text="${item.index+1}">1</li>
+						
 					</ul>
 				</div>
 			</div>
