@@ -558,27 +558,12 @@
 						<td th:text="${d.details_amount}">120</td>
 						<td th:text="${d.num}">1</td>
 						<td class="order_price">
-						<p class="price" th:text="${d.details_amount}">140.00</p>
-						</td>
-						<td class="order_state">
-						</td>
-						<td>
-						</td>
-					</tr>
-					<tr>
-					<td width="300px">
-							
-						</td>
-						<td></td>
-						<td></td>
-						<td class="order_price">
-							<p class="price" th:text="${a.total_amount}">140.00</p>
-							<p th:text="'含运费:'+${a.postage_amount}">(含运费20.00)</p>
+						   <p class="price" th:text="${a.total_amount}">140.00</p>
+						   <p th:text="'含运费:'+${a.postage_amount}">(含运费20.00)</p>
 							<p >在线付款</p>
 						</td>
 						<td class="order_state">
 							<p th:text="${a.pay_state=='2'}?'已付款':'待付款'">待付款</p>
-							
 							<p class="a_link"><a href="" th:tref="@{/mall/order(order_number=${a.order_number})}">查看详情</a></p>
 						</td>
 						<td>
