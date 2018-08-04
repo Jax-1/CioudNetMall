@@ -35,9 +35,27 @@
 				<input type="text" class="input_width_min" id='phonecode' name="phonecode">
 				<button type ="button" class="vali _img valid_btn" onclick="getphonecode()">获取短信验证</button>
 			</div>
-			<div class="form_ground_box center">
+			<div class="form_ground_box center iagree">
 				<input type="checkbox" class="agreeMent" id="agreeMent">
-				<label for="agreeMent">我已阅读并同意</label> <span><a href="#">云网传媒协议规则</a></span>
+				<label for="agreeMent">我已阅读并同意</label> <span><a id="show_xieyi" href="javascript:void(0)">云网传媒协议规则</a></span>
+				<div class="show_panner_xieyi">
+                    <div class="tit_box"><span id="close">X</span></div>
+                    <div class="agree_text">
+                        <p class="tit_t">云网产业协议规则</p>
+                        <p>第一条 竞投人是指在本网站进行注册并办理了必要手续、在销售活动中具有竞投权的个人及机构，否则不被视为正式竞投人。 必要的手续包含以下环节：</p>
+                        <p>填写了系统要求的相关信息，并通过注册；</p>
+                        <p>>通过实名认证，并被审核成功；</p>
+                        <p> 充值保证金成功，具有相应的竞买额度，以资金到达保证金账户的时间为准。</p>
+                        
+                        <p>第二条 云网文化产业实行会员制度。</p>
+                        <p>第三条 依照适用法律能够合法签署具有法律约束力合同的个人和机构可以注册成为云网文化产业的会员。未满十八岁或不具有完全行为能力的个人不可注册为本网站的正式会员。个人申请注册，必须提供申请人的真实姓名、手机号码、身份证信息和电子邮件地址等真实材料，机构申请必须提供合法的企业(事业)注册文件。只有在云网文化产业注册的会员和具有相应数额的保证金才有权利在本网站购买物品。未经注册，任何人只可在云网文化产业上一定范围内浏览销售品或享受本网站的其它服务，但无资格在云网文化产业上参与抢购。</p>
+                        <p>第四条 云网文化产业注册的会员采用保证金制。本保证金的意义在于维护卖家的权利及利益。 会员需先将资金存入其相应的资金账户，然后在个人账户中自行操作将资金转入保证金账户里，资金账户及保证金账户余额不计利息。会员拥有的购买额度是保证金数额的十倍数。对特别商品，须进行专门登记注册才具竞投权利。</p>
+                        <p>保证金冻结规则：</p>
+                        <p>1）每一件商品都有对应的保证金额度，这个额度会在每件商品的详情信息中明确标注。
+                            <br> 2）买家对一件商品首次申请出价时，需要先支付对应的保证金。
+                        </p>
+                    </div>
+                </div>
 			</div>
 			<div class="form_ground_box center">
 				<div class="submitBtn" id="submit">
@@ -78,6 +96,14 @@
 			
 		}
 		$().ready(function(){
+			// 协议
+			$("#show_xieyi").click(function(){
+				$(".show_panner_xieyi").show();
+			})
+			$("#close").click(function(){
+				$(".show_panner_xieyi").hide();
+			})
+			//验证
 			$("#registerform").validate({
 				
 				rules:{

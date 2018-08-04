@@ -1269,22 +1269,7 @@ ul li {
   display: box; }
   .mingjiatuijian .mingjia_box .tuijian {
     width: 365px;
-    height: 462px;
-    position: relative; }
-    .mingjiatuijian .mingjia_box .tuijian img {
-      width: 100%;
-      height: 462px; }
-    .mingjiatuijian .mingjia_box .tuijian a {
-      position: absolute;
-      bottom: 0px;
-      left: 0px;
-      width: 100%;
-      height: 30px;
-      background: rgba(0, 0, 0, 0.5);
-      color: #fff;
-      font-size: 16px;
-      text-align: center;
-      line-height: 30px; }
+    height: 462px; }
   .mingjiatuijian .mingjia_box .mingjia_list {
     width: 900px;
     margin-left: 15px;
@@ -2144,6 +2129,8 @@ ul li {
       margin: 10px auto;
       color: #fff;
       cursor: pointer; }
+      .order_table tbody .order_btn .btn a {
+        color: #fff; }
     .order_table tbody .order_btn .order_pay {
       background-color: #faa732; }
     .order_table tbody .order_btn .order_cancel {
@@ -2219,6 +2206,8 @@ ul li {
       margin: 10px auto;
       color: #fff;
       cursor: pointer; }
+      .order_detail_table tbody .order_btn .btn a {
+        color: #fff; }
     .order_detail_table tbody .order_btn .order_pay {
       background-color: #faa732; }
     .order_detail_table tbody .order_btn .order_cancel {
@@ -2656,3 +2645,38 @@ ul li {
           width: 1140px;
           line-height: 30px;
           display: none; }
+
+.iagree {
+  position: relative; }
+
+.show_panner_xieyi {
+  position: absolute;
+  display: none;
+  right: 0;
+  bottom: 0;
+  background: white; }
+  .show_panner_xieyi .agree_text {
+    width: 400px;
+    height: 400px;
+    overflow-y: scroll;
+    padding: 20px; }
+  .show_panner_xieyi .tit_box {
+    height: 30px;
+    width: 100%;
+    text-align: right; }
+    .show_panner_xieyi .tit_box span {
+      display: inline-block;
+      width: 60px;
+      line-height: 30px;
+      font-size: 22px;
+      text-align: center;
+      border: 1px solid #e9e9e9;
+      color: #666;
+      cursor: pointer; }
+  .show_panner_xieyi p {
+    text-align: left;
+    line-height: 30px;
+    color: #555;
+    text-align: 40px; }
+  .show_panner_xieyi p.tit_t {
+    text-align: center; }
