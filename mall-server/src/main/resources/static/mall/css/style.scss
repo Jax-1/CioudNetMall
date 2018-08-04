@@ -3426,3 +3426,17 @@ ul li{
 		text-align: center;
 	}
 }
+
+#container {
+    margin: 0 auto;
+    padding-top: 50px;
+    text-align: center;
+    width: 560px;
+    img {
+	    border: medium none;
+	    margin-bottom: 50px;
+	}
+	.msg {
+	    margin-bottom: 65px;
+	}
+}

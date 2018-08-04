@@ -2696,3 +2696,14 @@ ul li {
     text-indent: 40px; }
   .show_panner_xieyi p.tit_t {
     text-align: center; }
+
+#container {
+  margin: 0 auto;
+  padding-top: 50px;
+  text-align: center;
+  width: 560px; }
+  #container img {
+    border: medium none;
+    margin-bottom: 50px; }
+  #container .msg {
+    margin-bottom: 65px; }
