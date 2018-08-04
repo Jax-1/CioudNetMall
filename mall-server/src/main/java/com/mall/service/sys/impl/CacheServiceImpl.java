@@ -40,6 +40,14 @@ public class CacheServiceImpl implements CacheService {
 		logger.info(map);
 		return map;
 	}
+	@Override
+	@Cacheable(value = "goodsNum#1800", key = "#goodsId")
+	public Map<String, Integer> toBePaidGoods(String goodsId, Integer num) {
+		logger.info("初始化商品支付缓存！"+goodsId);
+		Map<String,Integer > map=new HashMap<String,Integer>();
+		map.put(goodsId, num);
+		return map;
+	}
 
 	
 

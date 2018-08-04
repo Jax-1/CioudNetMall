@@ -16,5 +16,17 @@ public interface CacheService {
 	 * @return
 	 */
 	public Map<String,String> getCache(String codeType);
+	
+	
+	/**
+	 * 将订单商品数目写入缓存，用于商品支付时校验库存
+	 * 支付有效时间为30分钟
+	 * 30分钟内支付完成，手动清除该缓存
+	 * 30分钟未支付，自动清除该缓存
+	 * @param goodsId
+	 * @param num
+	 * @return
+	 */
+	public Map<String,Integer> toBePaidGoods(String goodsId ,Integer num);
 
 }
