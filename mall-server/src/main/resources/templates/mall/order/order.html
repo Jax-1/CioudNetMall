@@ -263,10 +263,15 @@
     function submitForm(){
     	var list=[[${list}]];
     	var amount=[[${amount}]]
-
+		
 		//有库存,提交订单
 		//订单信息
 		var receive_id =$("#add_id").text();
+    	if(receive_id==null||receive_id==''){
+    		alert("请选择收货地址！");
+    		return;
+    		
+    	}
 		var comment=$("#comment").text();
 		//订单详情
 		//多商品未定义
@@ -283,7 +288,6 @@
 		for(var i=0;i<list.length;i++){
 			//验证商品库存信息
 			$.post("/mall/inventory/retrieve",{productNumber:list[i].goods_id,amount:amount},function(data){
-				console.log(data);
 				if(data!=null&&data.res=="1"){
 					
 				}else{
@@ -357,8 +361,11 @@
     $(function(){
     	//初始化显示默认地址
     	var address=[[${address}]];
-		if(address==null){
+		if(address==null||address.length==0){
 			Modifyaddress();
+			$("#new_add").attr("checked","checked");
+			$("#add_addr_box").show();
+			
 		}else{
 			var flg=true;
 			for(var i=0;i<address.length;i++){
