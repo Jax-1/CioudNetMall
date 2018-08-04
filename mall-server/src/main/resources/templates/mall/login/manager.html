@@ -564,12 +564,12 @@
 						</td>
 						<td class="order_state">
 							<p th:text="${a.pay_state=='2'}?'已付款':'待付款'">待付款</p>
-							<p class="a_link"><a href="" th:tref="@{/mall/order(order_number=${a.order_number})}">查看详情</a></p>
+							<p class="a_link"><a href="" th:href="@{/mall/user/order/details(order_number=${a.order_number})}">查看详情</a></p>
 						</td>
 						<td>
 							<div class="order_btn">
 								<div class="btn order_pay"  th:attr="style=${a.pay_state}=='1'?'':'display:none'">
-									<a th:href="@{/mall/order/pay(order_number=${a.order_number})}">订单支付</a>
+									<a th:href="@{/mall/order(order_number=${a.order_number})}">订单支付</a>
 									
 								</div>
 								<div class="btn order_pay"   th:attr="style=(${a.pay_state}=='2' and ${a.logistics_state}=='2' and ${a.del_state}=='2')?'':'display:none'">
@@ -694,6 +694,122 @@
 	
 	</div>
 	<!-- 我的订单 end -->
+	<!-- 订单详情 -->
+	<div class="my_right_box" th:fragment="orderdetails">
+		<div class="my_right_tit">
+			订单详情
+		</div>
+		<div class="my_rt_b bg_w">
+			<div class="order_state_tit">
+				<span>订单状态：</span>
+				<span th:text="${entity.pay_state}=='2'?'已付款':'待付款'"></span>-
+                 <span th:text="${entity.del_state}=='4'?'已完成':(${entity.del_state}=='3'?'取消':(${entity.del_state}=='2'?'无效':'待确认'))"></span>-
+                 <span th:text="${entity.logistics_state}=='3'?'已确认收货':(${entity.logistics_state}=='2'?'已发货':(${entity.logistics_state}=='4'?'部分发货':(${entity.logistics_state}=='5'?'退货':待发货)))"></span>
+			</div>
+			<div class="order_detail_tit">
+				订单信息
+			</div>
+			<div class="order_detail_box">
+				<div class="order_detail_addss">
+					<p>收货地址：<span th:text="${entity.orderAddress.name}"></span>
+						<span th:text="${entity.orderAddress.phone}"></span>
+						<span th:text="'['+${entity.orderAddress.province}+' '+${entity.orderAddress.city}+' '+${entity.orderAddress.area}+']'"></span>
+						<span th:text="${entity.orderAddress.street}"></span></p>
+					<p>订单编号：<span th:text="${entity.order_number}"></span></p>
+					<p>支付方式：<span th:text="${entity.paymentMethod.name}"></span>-<span >微信支付</span></p>
+					<p>下单时间: <span th:text="${#dates.format(entity.create_time,'yyyy-MM-dd HH:mm:ss')}"></span></p>
+					<p>商      家：<span>云网文化传媒</span></p>
+				</div>
+			</div>
+			<table class="order_detail_table">
+				<thead>
+					<tr>
+						<th>商品名称</th>
+						<th>单价（元）</th>
+						<th>数量</th>
+						<th>订单金额</th>
+						<th>交易状态</th>
+						<th>订单操作</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr class="tb_tit">
+						<td colspan="6" >
+							订单号：<span class="order_num" th:text="${entity.order_number}"></span>
+							下单时间：<span th:text="${#dates.format(entity.create_time,'yyyy-MM-dd HH:mm:ss')}"></span>
+						</td>
+					</tr>
+					<tr class="t_p"><td colspan="6"></td></tr>
+					<tr th:each="d:${entity.orderDetailsList}">
+						<td width="300px">
+							<div class="shop_img">
+								<div class="img_link">
+									<a href="">
+									<img  alt="" height="120"  th:src="@{${fileServicePath}+'/'+${d.filePath.path}+'/'+${d.filePath.fileidname}+'.'+${d.filePath.filetype}}" >	
+									</a>
+								</div>
+								<div class="shop_tit">
+									<a th:href="@{/mall/goods/detail(goods_id=${d.goods_id})}" th:text="${d.goods_name}">职业画家 李忠明《水仙》</a>
+								</div>
+							</div>
+						</td>
+						<td th:text="${d.details_amount}">120</td>
+						<td th:text="${d.num}">1</td>
+						<td class="order_price">
+						   <p class="price" th:text="${entity.total_amount}">140.00</p>
+						   <p th:text="'含运费:'+${entity.postage_amount}">(含运费20.00)</p>
+							<p >在线付款</p>
+						</td>
+						<td class="order_state">
+							<p th:text="${entity.pay_state=='2'}?'已付款':'待付款'">待付款</p>
+							<p class="a_link"><a href="" th:href="@{/mall/user/order/details(order_number=${entity.order_number})}">查看详情</a></p>
+						</td>
+						<td>
+							<div class="order_btn">
+								<div class="btn order_pay"  th:attr="style=${entity.pay_state}=='1'?'':'display:none'">
+									<a th:href="@{/mall/order(order_number=${entity.order_number})}">订单支付</a>
+									
+								</div>
+								<div class="btn order_pay"   th:attr="style=(${entity.pay_state}=='2' and ${entity.logistics_state}=='2' and ${entity.del_state}=='2')?'':'display:none'">
+									<a  >查看物流</a>
+									
+								</div>
+								
+								<div class="btn order_pay"   th:attr="style=(${entity.pay_state}=='2' and ${entity.logistics_state}=='2' and ${entity.del_state}=='2')?'':'display:none'">
+									<a  th:href="@{'javascript:confirmTake('+${entity.order_number}+')'}">确认收货</a>
+									
+								</div>
+								<div class="btn order_pay"   th:attr="style=(${entity.pay_state}=='2' and ${entity.logistics_state}=='3' and ${entity.del_state}=='5')?'':'display:none'">
+									<a  >评价</a>
+									
+								</div>
+								<div class="btn order_pay"   th:attr="style=(${entity.pay_state}=='2' and ${entity.logistics_state}=='3' and ${entity.del_state}=='5')?'':'display:none'">
+									<a  >退货</a>
+									
+								</div>
+								<div class="btn order_cancel"   th:attr="style=${entity.pay_state}=='1'?'':'display:none'">
+									<a th:href="@{'javascript:quxiao('+${entity.order_number}+')'}">取消订单</a>
+									
+								</div>
+								
+							</div>
+						</td>
+					</tr>
+				</tbody>
+				<tfoot>
+					<tr>
+						<td colspan="6">
+							<div class="table_footer">
+								<p class="gray_text">运费：<span th:text="${entity.postage_amount}"></span>元</p>
+								<p class="red_big_text">订单应付金额：<span th:text="${entity.total_amount}">140.00</span>元</p>
+							</div>
+						</td>
+					</tr>
+				</tfoot>
+			</table>
+		</div>
+	</div>
+	
 	
 </body>
 </html>

@@ -103,8 +103,8 @@
                                 中国国典书画院会员 石俊海《正气》</a>
                             </td>
                             <td th:text="${goods.goodsPrice.sale=='Y'}?${goods.goodsPrice.sale_price}:${goods.goodsPrice.retail_price}" >199.00</td>
-                            <td th:text="${amount}">1</td>
-                            <td class="b_r" th:text="${goods.goodsPrice.sale=='Y'}?${goods.goodsPrice.sale_price*amount}:${goods.goodsPrice.retail_price*amount}" >199.00</td>
+                            <td th:text="${goods.amount}">1</td>
+                            <td class="b_r" th:text="${goods.goodsPrice.sale=='Y' }?${goods.goodsPrice.sale_price*goods.amount}:${goods.goodsPrice.retail_price*goods.amount}" >199.00</td>
                         </tr>
                         <tr>
                             <td class="tl" colspan="5">是否包邮？<span th:text="${goods.goodsInfo.ext1=='Y'}?'是':'否'"></span>&nbsp&nbsp&nbsp&nbsp支持快递：<span th:text="${goods.goodsInfo.ext2}"></span>
@@ -262,20 +262,19 @@
     }
     function submitForm(){
     	var list=[[${list}]];
-    	var amount=[[${amount}]]
-		
+    	var order=[[${order}]]
+		console.log(order);
 		//有库存,提交订单
 		//订单信息
 		var receive_id =$("#add_id").text();
-    	if(receive_id==null||receive_id==''){
+    	if(order.order_number==null&&(receive_id==null||receive_id=='')){
     		alert("请选择收货地址！");
     		return;
     		
     	}
 		var comment=$("#comment").text();
 		//订单详情
-		//多商品未定义
-		var num =amount;
+		
 		
 		//alert($("#payment_id").val());
 		form = $("<form></form>")
@@ -284,10 +283,15 @@
         input5 = $("<input type='text' name='payment_id' value='"+$("#payment_id").val()+"'/>");
 		input1 = $("<input type='text' name='receive_id' value='"+receive_id+"'/>");
 		input2 = $("<input type='text' name='comment' value='"+comment+"'/>");
+		if(order!=null&&order.order_number!=null){
+			orderNumber = $("<input type='text' name='order_number' value='"+order.order_number+"'/>");
+			form.append(orderNumber);
+		}
+		
 		var  flg=true;
 		for(var i=0;i<list.length;i++){
 			//验证商品库存信息
-			$.post("/mall/inventory/retrieve",{productNumber:list[i].goods_id,amount:amount},function(data){
+			$.post("/mall/inventory/retrieve",{productNumber:list[i].goods_id,amount:list[i].amount},function(data){
 				if(data!=null&&data.res=="1"){
 					
 				}else{
@@ -298,7 +302,7 @@
 				}
 			})
 			input3 = $("<input type='text' name='orderDetailsList["+i+"].goods_id' value='"+list[i].goods_id+"'/>");
-			input4 = $("<input type='text' name='orderDetailsList["+i+"].num' value='"+num+"'/>");
+			input4 = $("<input type='text' name='orderDetailsList["+i+"].num' value='"+list[i].amount+"'/>");
 			form.append(input3);
 	        form.append(input4);
 		}
@@ -306,6 +310,7 @@
 			form.append(input1);
 	        form.append(input2);
 	        form.append(input5);
+	        
 	        form.appendTo("body")
 	        form.css('display','none')
 			form.submit()
@@ -359,45 +364,58 @@
      return f; 
     } 
     $(function(){
-    	//初始化显示默认地址
-    	var address=[[${address}]];
-		if(address==null||address.length==0){
-			Modifyaddress();
-			$("#new_add").attr("checked","checked");
-			$("#add_addr_box").show();
-			
-		}else{
-			var flg=true;
-			for(var i=0;i<address.length;i++){
-	    		if(address[i].thedefault=='Y'){
-	    			flg=false;
-	    			$("#add_name").text(address[i].name);
-	    			$("#add_address").text(address[i].province+address[i].city+address[i].area+address[i].street);
-	    			$("#add_phone").text(address[i].phone);
-	    			$("#add_id").text(address[i].id);
-	    		}
-	    	}
-			if(flg){
-				$("#add_name").text(address[0].name);
-				$("#add_address").text(address[0].province+address[0].city+address[0].area+address[0].street);
-				$("#add_phone").text(address[0].phone);
-				$("#add_id").text(address[0].id);
-			}
-		}
+    	sumTotalAmount();
+    	
+    	var order=[[${order}]];
+    	if(order!=null&&order.order_number!=null){
+    		//初始化收货地址
+    		$("#add_name").text(order.orderAddress.name);
+			$("#add_address").text(order.orderAddress.province+order.orderAddress.city+order.orderAddress.area+order.orderAddress.street);
+			$("#add_phone").text(order.orderAddress.phone);
+			$("#add_id").text(order.orderAddress.id);
+    	}else{
+    		//初始化显示默认地址
+        	var address=[[${address}]];
+    		if(address==null||address.length==0){
+    			Modifyaddress();
+    			$("#new_add").attr("checked","checked");
+    			$("#add_addr_box").show();
+    			
+    		}else{
+    			var flg=true;
+    			for(var i=0;i<address.length;i++){
+    	    		if(address[i].thedefault=='Y'){
+    	    			flg=false;
+    	    			$("#add_name").text(address[i].name);
+    	    			$("#add_address").text(address[i].province+address[i].city+address[i].area+address[i].street);
+    	    			$("#add_phone").text(address[i].phone);
+    	    			$("#add_id").text(address[i].id);
+    	    		}
+    	    	}
+    			if(flg){
+    				$("#add_name").text(address[0].name);
+    				$("#add_address").text(address[0].province+address[0].city+address[0].area+address[0].street);
+    				$("#add_phone").text(address[0].phone);
+    				$("#add_id").text(address[0].id);
+    			}
+    		}
+    		
+    		//初始化地址下拉框
+    		new PCAS("province","city","area");
+    		//初始化支付方式
+    		var payment=[[${payment}]];
+    		console.log(payment);
+    		for(var i=0;i<payment.length;i++){
+    			if(payment[i].isGeneral){
+    				
+    				$("#payment").text(payment[i].name);
+    				$("#payment_id").attr("value",payment[i].payment_id);
+    			}
+    		}
+    		
+    	}
+    	
 		
-		//初始化地址下拉框
-		new PCAS("province","city","area");
-		//初始化支付方式
-		var payment=[[${payment}]];
-		console.log(payment);
-		for(var i=0;i<payment.length;i++){
-			if(payment[i].isGeneral){
-				
-				$("#payment").text(payment[i].name);
-				$("#payment_id").attr("value",payment[i].payment_id);
-			}
-		}
-		sumTotalAmount();
     	
     });
     

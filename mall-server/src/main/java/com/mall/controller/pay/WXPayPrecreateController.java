@@ -192,7 +192,7 @@ public class WXPayPrecreateController extends AbstractController{
         			}
         			
         			//修改订单状态
-        			Byte state='2';
+        			 byte state = Byte.parseByte("2");
         			order.setPay_state(state);
         			order.setPayment_seq(reqData.get("transaction_id"));
         			orderService.updateByPrimaryKeySelective(order);

@@ -73,7 +73,7 @@ public class MallOrderController extends AbstractController{
 		//获取当前用户的收获地址
 		List<OrderAddress> address = orderAddressService.userTakeDeliveryAddress(user);
 		//单商品购买
-		if(Validate.notNull(goods)) {
+		if(Validate.notNull(goods)&& goods.getGoods_id()!=null) {
 			//获取商品信息
 			logger.info("获取商品信息："+goods.getGoods_id());
 			goods = goodsService.selectInfo(goods);
@@ -84,6 +84,7 @@ public class MallOrderController extends AbstractController{
 				a = authorWithBLOBsService.selectInfo(a);
 				goods.setAuth(a);
 			}
+			goods.setAmount(amount);
 			list.add(goods);
 		}
 		//多商品生成订单
@@ -95,7 +96,24 @@ public class MallOrderController extends AbstractController{
 //				goods.setGoods_id(o.getGoods_id());
 //			}
 //		}
-		
+		//已有订单支付
+		if(Validate.notNull(order)&&order.getOrder_number()!=null) {
+			order=orderService.selectInfo(order);
+			for(OrderDetails g:order.getOrderDetailsList()) {
+				Goods goodsSelect =new Goods();
+				goodsSelect.setGoods_id(g.getGoods_id());
+				goodsSelect = goodsService.selectInfo(goodsSelect);
+				if(Validate.notNull(goodsSelect.getGoodsInfo().getAuth_id())) {
+					//查询商品作家信息
+					AuthorWithBLOBs a=new AuthorWithBLOBs();
+					a.setId(goodsSelect.getGoodsInfo().getAuth_id());
+					a = authorWithBLOBsService.selectInfo(a);
+					goodsSelect.setAuth(a);
+				}
+				goodsSelect.setAmount(g.getNum());
+				list.add(goodsSelect);
+			}
+		}
 		
 		
 		//获取支付方式
@@ -131,9 +149,73 @@ public class MallOrderController extends AbstractController{
 	public String toOrderPay(Model model,Order order,HttpServletRequest request) {
 		//
 		if(Validate.notNull(order.getOrder_number())) {
-			//历史订单支付
-			logger.info("历史订单支付！");
+			Order orderUpdate=order;
 			order=orderService.selectInfo(order);
+			//历史订单支付
+			logger.info("历史订单支付！"+order.getOrder_number());
+			BigDecimal total_amount=BigDecimal.ZERO;
+			BigDecimal postage_amount=BigDecimal.ZERO;
+			BigDecimal discount_amount=BigDecimal.ZERO;
+			logger.info("payment_id:"+order.getPayment_id());
+			//更新订单单品商品信息
+			for(OrderDetails orderDetails:order.getOrderDetailsList()) {
+				BigDecimal details_amount=BigDecimal.ZERO;
+				BigDecimal num = new BigDecimal(orderDetails.getNum()); 
+				Goods goods=new Goods();
+				goods.setGoods_id(orderDetails.getGoods_id());
+				logger.info("获取商品信息："+goods.getGoods_id());
+				goods = goodsService.selectInfo(goods);
+				
+				for(OrderDetails newOrderDetails:orderUpdate.getOrderDetailsList()) {
+					if(orderDetails.getGoods_id().equals(newOrderDetails.getGoods_id())) {
+						orderDetails.setNum(newOrderDetails.getNum());
+					}
+				}
+				
+				orderDetails.setOrder_id(order.getOrder_id());
+				orderDetails.setOrder_number(order.getOrder_number());
+				//快递名
+				orderDetails.setUnit_name(goods.getGoodsInfo().getExt2());
+				orderDetails.setPrice_id(goods.getGoods_price_id());
+				orderDetails.setGoods_id(goods.getGoods_id());
+				orderDetails.setGoods_name(goods.getGoods_name());
+				orderDetails.setImage(goods.getImage());
+				if(goods.getGoodsPrice().getSale()=="Y") {
+					//优惠价格
+					orderDetails.setUnit_price(goods.getGoodsPrice().getSale_price());
+					//计算优惠总价
+					BigDecimal subtract = goods.getGoodsPrice().getRetail_price().subtract(goods.getGoodsPrice().getSale_price());  //单件优惠
+					discount_amount=discount_amount.add(subtract.multiply(num));
+				}else {
+					orderDetails.setUnit_price(goods.getGoodsPrice().getRetail_price());
+				}
+				details_amount=orderDetails.getUnit_price().multiply(num);
+				orderDetails.setDetails_amount(details_amount);
+				//计算总邮费
+				postage_amount=postage_amount.add(new BigDecimal(goods.getGoodsInfo().getExt3()));
+				//计算商品总价,加单品总价
+				total_amount=total_amount.add(details_amount);
+				try {
+					orderDetailsService.updateByPrimaryKeySelective(orderDetails);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+			//计算商品总价,加邮费总额
+			total_amount=total_amount.add(postage_amount);
+			order.setDiscount_amount(discount_amount);
+			order.setTotal_amount(total_amount);
+			order.setPostage_amount(postage_amount);
+			//更改支付方式、收货Id、备注
+			order.setReceive_id(orderUpdate.getReceive_id());
+			order.setPayment_id(orderUpdate.getPayment_id());
+			order.setComment(orderUpdate.getComment());
+			try {
+				orderService.updateByPrimaryKeySelective(order);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			logger.info("更新订单信息："+order.getOrder_number());
 		}else {
 			logger.info("生成订单支付！");
 			logger.info("支付方式："+order.getPayment_id());

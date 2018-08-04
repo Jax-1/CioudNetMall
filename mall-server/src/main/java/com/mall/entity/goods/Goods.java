@@ -44,6 +44,21 @@ public class Goods {
 	private String admin_id;
 
 	private String detail_describe;
+	
+	/**
+	 * 购买商品时使用
+	 */
+	private Integer amount;
+	
+	
+	public Integer getAmount() {
+		return amount;
+	}
+
+	public void setAmount(Integer amount) {
+		this.amount = amount;
+	}
+
 	/**
 	 * 关联商品信息表
 	 */
