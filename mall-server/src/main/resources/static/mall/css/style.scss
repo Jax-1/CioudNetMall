@@ -1610,6 +1610,23 @@ ul li{
 		.tuijian{
 			width: 365px;
 			height: 462px;
+			position: relative;
+			img{
+				width: 100%;
+				height: 462px;
+			}
+			a{
+				position: absolute;
+				bottom: 0px;
+				left: 0px;
+				width: 100%;
+				height: 30px;
+				background: rgba(0,0,0,0.5);
+				color: #fff;
+				font-size: 16px;
+				text-align: center;
+				line-height: 30px;
+			}
 		}
 		.mingjia_list{
 			width: 900px;
@@ -1794,6 +1811,7 @@ ul li{
 					font-weight: 400;
 					margin-left: 20px;
 					font-size: 20px;
+					cursor:pointer;
 				}
 			}
 		}
@@ -3402,7 +3420,7 @@ ul li{
 		text-align: left;
 		line-height: 30px;
     	color: #555;
-    	text-align: 40px;
+    	text-indent: 40px;
 	}
 	p.tit_t{
 		text-align: center;
