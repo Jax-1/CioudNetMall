@@ -60,6 +60,22 @@
     </div>
 	<script type="text/javascript" th:inline="javascript">
 		var order=[[${order}]]
+		function queryOrderPaymentStatus(){
+			//查询订单支付状态
+			$.get('/wxpay/precreate/orderQuery',{},function(data){
+				console.log(data);
+				if(data!=null&&data.return_code=='SUCCESS'&&data.result_code=='SUCCESS'&&data.trade_state=='SUCCESS'){
+					window.location.href='/mall/user/order/details?order_number='+order.order_number;
+				}
+				 
+			});
+				
+		}
+		$(function(){
+			var i= setInterval('queryOrderPaymentStatus();',3000);
+		})
+		
+		
 	</script>
 </body>
 </html>

@@ -563,7 +563,7 @@
 							<p >在线付款</p>
 						</td>
 						<td class="order_state">
-							<p th:text="${a.pay_state=='2'}?'已付款':'待付款'">待付款</p>
+							<p th:text="${a.pay_state}=='2'?'已付款':(${a.pay_state}=='3'?'退款':'未付款')">待付款</p>
 							<p class="a_link"><a href="" th:href="@{/mall/user/order/details(order_number=${a.order_number})}">查看详情</a></p>
 						</td>
 						<td>

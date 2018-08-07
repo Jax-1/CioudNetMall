@@ -11,8 +11,10 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.github.wxpay.sdk.WXPay;
 import com.github.wxpay.sdk.WXPayConstants;
@@ -24,6 +26,7 @@ import com.mall.entity.login.User;
 import com.mall.entity.order.Order;
 import com.mall.entity.order.OrderDetails;
 import com.mall.entity.payment.PaymentFlow;
+import com.mall.message.ProcessResult;
 import com.mall.service.goods.GoodsService;
 import com.mall.service.inventory.InventoryService;
 import com.mall.service.order.OrderService;
@@ -31,6 +34,7 @@ import com.mall.service.payment.PaymentFlowService;
 import com.mall.util.DateFormatUtil;
 import com.mall.util.MapTrunPojoUtil;
 import com.mall.util.SessionUtil;
+import com.mall.util.Validate;
 
 /**
  * 微信支付-扫码支付.
@@ -82,7 +86,9 @@ public class WXPayPrecreateController extends AbstractController{
     	
     	logger.info("支付金额："+total_amount.setScale(0,BigDecimal.ROUND_DOWN).toString()+"分");
     	Map<String, String> reqData = new HashMap<>();
-        reqData.put("out_trade_no", String.valueOf(System.nanoTime()));
+    	//支付流水号，用于微信支付端记录用户订单号。
+    	String out_trade_no=String.valueOf(System.nanoTime());
+        reqData.put("out_trade_no", out_trade_no);
         reqData.put("trade_type", "NATIVE");
         reqData.put("product_id", "1");
         reqData.put("body", goodsNames.toString());
@@ -96,8 +102,10 @@ public class WXPayPrecreateController extends AbstractController{
         // 自定义参数, 可以为终端设备号(门店号或收银设备ID)，PC网页或公众号内支付可以传"WEB"
         reqData.put("device_info", "WEB");
         // 附加数据，在查询API和支付通知中原样返回，可作为自定义参数使用。
-        reqData.put("attach", order.getOrder_number());
-
+        reqData.put("attach", order.getOrder_number());   //订单号
+        
+        //将商户订单号存入SESSION中，用于前端异步查询订单状态
+        request.getSession().setAttribute("out_trade_no", out_trade_no);  
         /**
          * {
          * code_url=weixin://wxpay/bizpayurl?pr=vvz4xwC,
@@ -168,13 +176,15 @@ public class WXPayPrecreateController extends AbstractController{
              * 判断该通知是否已经处理过，如果没有处理过再进行处理，如果处理过直接返回结果成功。
              * 在对业务数据进行状态检查和处理之前，要采用数据锁进行并发控制，以避免函数重入造成的数据混乱。
              */
+        	//支付成功
+    		//校验订单状态
+    		Order order =new Order();
+    		order.setOrder_number(reqData.get("attach"));
+    		logger.info("微信支付回调！，商户订单号："+reqData.get("attach"));
+    		order=orderService.selectInfo(order);
         	//判断支付状态
-        	if("SUCCESS".equals(reqData.get("result_code"))) {
-        		//支付成功
-        		//校验订单状态
-        		Order order =new Order();
-        		order.setOrder_number(reqData.get("attach"));
-        		order=orderService.selectInfo(order);
+        	if("SUCCESS".equals(reqData.get("result_code"))&&Validate.notNull(order)) {
+        		
         		
         		logger.info("order pay status:"+order.getPay_state().toString()+",chick:"+"1".equals(order.getPay_state().toString()));
         		//订单状态待支付
@@ -225,4 +235,37 @@ public class WXPayPrecreateController extends AbstractController{
             response.flushBuffer();
         }
     }
+    /**
+     * 查询订单支付情况
+     * @param request
+     * @param response
+     * @param transaction_id 
+     * @param out_trade_no
+     * @return
+     * @throws Exception
+     */
+    @ResponseBody
+	@RequestMapping("/orderQuery")
+	public Map<String, String> orderQuery(HttpServletRequest request, HttpServletResponse response,String transaction_id,String out_trade_no) throws Exception {
+    	Map<String, String> reqData = new HashMap<>();
+    	if(Validate.notNull(transaction_id)) {
+    		logger.info("查询微信支付状态！transaction_id="+transaction_id);
+    		reqData.put("transaction_id", transaction_id);
+    	}else if(Validate.notNull(out_trade_no)){
+    		logger.info("查询微信支付状态！out_trade_no="+out_trade_no);
+    		reqData.put("out_trade_no", out_trade_no);
+    	}else {
+    		out_trade_no =(String) request.getSession().getAttribute("out_trade_no");
+    		if(!Validate.notNull(out_trade_no)) {
+    			return null;
+    		}
+    		logger.info("查询微信支付状态！out_trade_no="+out_trade_no);
+    		reqData.put("out_trade_no", out_trade_no);
+    	}
+    	
+    	Map<String, String> orderQuery = wxPay.orderQuery(reqData);
+    	return orderQuery;
+		
+	}
+
 }

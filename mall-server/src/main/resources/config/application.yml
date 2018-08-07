@@ -1,5 +1,7 @@
 mybatis:
     mapper-locations: classpath:mapper/**/*.xml
+    configuration:
+      log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
     
 thymeleaf:
     prefix: classpath:/templates/    #指定资源位置
@@ -86,7 +88,7 @@ server:
 
 
 logging:
-   # path: /usr/yunwang/log
+    path: /usr/yunwang/log
     
     pattern:
 #        console: "%clr(%d{yyyy-MM-dd HH:mm:ss.SSS}){faint} [%thread] %-5level %class - %msg%n"
