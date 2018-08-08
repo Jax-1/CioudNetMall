@@ -95,14 +95,38 @@
 	        return url;
 	    }
 		
+		
 		function getphonecode(){
+			if($("#user_name").val()==''){
+				return false;
+			}
+			
 			$.post('/sms/getcode',{phone:$("#user_name").val()},function(data){
 				console.log(data);
-				if(data==null||data.code!='ok'){
+				if(data==null||data.code=='ok'){
 					//短信发送失败
-					
+					$(".valid_btn").after("<span style='margin-left:10px;color:#cc0101'>发送失败</span>");
 				}else{
 					//短信发送成功、发送短信按钮60S不可点击
+					$(".valid_btn").after("<span style='margin-left:10px;color:#01cc1c'>发送成功</span>");
+					
+					var maxtime = 9 ;   
+			        function CountDown() {
+			            if (maxtime >= 1) {
+			               seconds = Math.floor(maxtime % 60);
+			               msg = seconds + "秒重新发送";
+			               $(".valid_btn").text(msg);
+			               $(".valid_btn").removeAttr("onclick");
+			               $(".valid_btn").css("background","#9e9b9b");
+			               maxtime--;
+			           } else{
+			               clearInterval(timer);
+			               $(".valid_btn").attr("onclick","getphonecode()");
+			               $(".valid_btn").css("background","#FF6633");
+			               $(".valid_btn").text("重新发送");
+			           }
+			       }
+			       timer = setInterval(CountDown, 1000); 
 				}
 			});
 			
