@@ -113,6 +113,12 @@ public class UserLoginController  extends AbstractController{
         	process.setMsg("验证失败！");
         	return process;
         } 
+        Object obj =req.getSession().getAttribute("phonecode");
+        if(!Validate.notNull(obj)) {
+        	 logger.info("用户注册，验证码获取失败！");
+        	 process.setMsg("用户注册，验证码获取失败！");
+        	 return process;
+        }
         //验证手机验证码
         String sessionPhoneCode = req.getSession().getAttribute("phonecode").toString();
         if (Validate.notNull(phonecode)&&Validate.notNull(sessionPhoneCode)) {
