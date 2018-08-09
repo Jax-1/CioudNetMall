@@ -140,7 +140,7 @@
 					<dt><i class="required">*</i>选择身份认证方式：</dt>
 					<dd>
 						<p><select name="auth_type" id="auth_type" class="valid">
-								<option value="mobile">手机 [138****5211]</option>
+								<option value="mobile" th:text="'手机 ['+${#strings.substring(session.user.user_name,0,3)}+'****'+${#strings.substring(session.user.user_name,7,11)}+']'">手机 [138****5211]</option>
                          </select><a href="javascript:getphonecode();" id="send_auth_code" class="ncm-btn"><span id="sending" style="display:none">正在</span><span class="send_success_tips" style="display: none;"><strong id="show_times" class="red mr5"></strong>秒后再次</span>获取安全验证码</a></p>
                          <p id="send_success_tips" class="send_success_tips" style="display: none;">“安全验证码”已发出，请注意查收，请在<strong>“30分种”</strong>内完成验证。</p>
 					</dd>
@@ -229,7 +229,7 @@
 			密码修改
 		</div>
 		<div class="my_rt_b">
-			<form action="/user/modify">
+			<form action="/mall/user/modify" method="post">
 			<div class="ncm-default-form">
 				<dl>
 			        <dt><i class="required">*</i>设置新密码：</dt>

@@ -73,7 +73,7 @@
 		});
 		//跳转到上一页
 		function goback(){
-			if(document.referrer==window.location.href||document.referrer==""||document.referrer.indexOf("register.do")!=-1){
+			if(document.referrer==window.location.href||document.referrer==""||document.referrer.indexOf("register.do")!=-1||document.referrer.indexOf("/mall/user")!=-1){
 				window.location.href="/";
 			}else{
 				

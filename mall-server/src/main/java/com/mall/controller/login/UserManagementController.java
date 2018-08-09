@@ -227,6 +227,7 @@ public class UserManagementController extends AbstractController{
 		//更改密码
 		User user = SessionUtil.getUser(request);
 		String rand = MD5Util.getRand();
+		user.setRand(rand);
 		user.setPassword(MD5Util.encoder(password,rand));
 		try {
 			userLoginService.updateByPrimaryKeySelective(user);
