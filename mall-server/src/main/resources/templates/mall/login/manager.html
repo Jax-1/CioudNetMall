@@ -89,7 +89,7 @@
 				new PCAS("province","city","area",userinfo.address_province,userinfo.address_city,userinfo.address_area);
 			  	$("#submit").click(function(){
 			  		console.log($("#address_street").val());
-				  		$.post('/user/chengeuserinfo',
+				  		$.post('/mall/user/chengeuserinfo',
 					  			{
 					  			 name:$("#name").val(),
 					  			 sex:$("#sex").val(),
