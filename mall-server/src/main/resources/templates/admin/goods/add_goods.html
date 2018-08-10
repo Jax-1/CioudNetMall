@@ -70,7 +70,7 @@
                             <div class="form-group">
                                 <label class="col-md-2 control-label"><em>*</em>商品分类</label>
                                 <div class="col-md-3">
-                                    <select class="form-control" id="goods_category" name="goodsInfo.goodsCategory.category_id">
+                                    <select class="form-control" id="goods_category" name="goodsInfo.category_id">
                                         <option value="" class ="ca"> 请选择</option>
                                     </select>
                                     <span class="help-block">若没有显示的分类，请到商品分类添加</span>
@@ -263,7 +263,7 @@
                             <div class="form-group">
                                 <label class="col-md-2 control-label"></label>
                                 <div class="col-md-3">
-                                    <button type="submit" class="btn green" name="submit">发布商品</button>
+                                    <button type="submit" class="btn green" name="submits">发布商品</button>
                                 </div>
                             </div>
                     	</div>
@@ -307,14 +307,14 @@
 			 $("#goods_category").html( buildMenu( goods_cate))
 			
 			//递归分类
-			function buildMenu(obj) {
+		 	function buildMenu(obj) {
             	var str='';
             	for(index in obj){
             		str += "<option value='"+obj[index].category_id+"'>"+ obj[index].category_name+"</option>";
             		str += buildMenu(obj[index].goodsCategoryList);
                 }
             	return str;
-    		}
+    		} 
 			
             //商品图片上传预览
             $("#show_img_file").change(function(){
@@ -344,9 +344,9 @@
             })
 
             //表单验证
-            $.validator.setDefaults({
-                submitHandler: function() {
-                	$("#addform").submit();
+             $.validator.setDefaults({
+                submitHandler: function(form) {
+                	document.getElementById('addform').submit();
                 }
             });
 
@@ -364,11 +364,12 @@
             	    		 required: true,
             	    		 min:0
                     	},
+                    	
                     	image:"required",
                     	"goodsPrice.sale_price":{
                     		 required: "#tehui:checked",
                         },
-                        "goodsInfo.ext2":{
+                        "goodsInfo.ext3":{
                     		 required: "#baoyou:checked",
                         },
             	    },
@@ -384,11 +385,11 @@
 	                   	},
 	                   	image:"请上传商品缩略图片",
 	                   	"goodsPrice.sale_price":"请输入特惠价格",
-	                   	"goodsInfo.ext2":"请输入快递价格"
+	                   	"goodsInfo.ext3":"请输入快递价格"
             	    }
             	});
 		
-            })
+            }) 
 
             
         })
