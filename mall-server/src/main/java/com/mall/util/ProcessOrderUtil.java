@@ -70,6 +70,21 @@ public class ProcessOrderUtil {
 		return deliveryNumber.toString();
 		
 	}
+	
+	/**
+	 * 生成售后服务申请单单号
+	 * @param sequence
+	 * @param order_number
+	 * @return
+	 */
+	public static String processOrderServiceNumber(int sequence,String order_number) {
+		StringBuffer sb =new StringBuffer();
+		sb.append(order_number);
+		String val = String.format("%2d", sequence).replace(" ", "0");  
+		sb.append(val);
+		return sb.toString();
+		
+	}
 //	public static void main(String[] args) {
 //		String str = String.format("%4d", 12).replace(" ", "0");  
 //		System.out.println(str);

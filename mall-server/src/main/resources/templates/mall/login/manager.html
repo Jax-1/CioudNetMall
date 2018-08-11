@@ -589,6 +589,11 @@
 									<a  >退货</a>
 									
 								</div>
+								<div class="btn order_pay"   th:attr="style=${a.pay_state}=='2'?'':'display:none'">
+									<a  th:href="@{/mall/user/service/edit(order_number=${a.order_number})}">售后服务</a>
+									
+								</div>
+								
 								<div class="btn order_cancel"   th:attr="style=${a.pay_state}=='1'?'':'display:none'">
 									<a th:href="@{'javascript:quxiao('+${a.order_number}+')'}">取消订单</a>
 									
@@ -809,7 +814,348 @@
 			</table>
 		</div>
 	</div>
-	
+	<!-- 售后编辑 -->
+	<div class="my_right_box" th:fragment="serviceEdit">
+        <div class="my_right_tit">
+            售后申请
+        </div>
+        <div class="my_rt_b bg_w">
+            <div class="mod-main mod-comm">
+                <div class="mc">
+                    <table class="tb-void mb10">
+                        <thead>
+                            <tr>
+                                <th>商品</th>
+                                <th>购买价格</th>
+                                <th>购买数量</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="d:${entity.orderDetailsList}">
+                                <td>
+                                    <ul class="list-proinfo">
+                                        <li class="fore1">
+                                            <a  target="_blank" th:href="@{/mall/goods/detail(goods_id=${d.goods_id})}" >
+                                                <img height="100" width="100" title="" th:src="@{${fileServicePath}+'/'+${d.filePath.path}+'/'+${d.filePath.fileidname}+'.'+${d.filePath.filetype}}"  alt=""> 
+											<span th:text="${d.goods_name}"></span>
+											</a>
+                                        </li>
+                                    </ul>
+                                </td>
+                                <td>
+                                    <p class="price" th:text="${entity.total_amount}">140.00</p>
+								   <p th:text="'含运费:'+${entity.postage_amount}">(含运费20.00)</p>
+									<p >在线付款</p>
+                                </td>
+                                <td th:text="${d.num}">1</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <form class="form" action="/mall/order/serve/save" method="post" id="serviceForm">
+                	 <input type="hidden"  name="order_number"  hidden="" th:value="${entity.order_number}">
+                    <div class="item kfarea" id="sellerPrompt">
+                        <div class="ml20"> <span><em>*</em><span style="color: red; "> 温馨提示：</span></span>
+                            <label><span style="color: red; ">仅退款： </span>未收到货/未签收，或与卖家协商同意前提下</label>
+                            <label><span style="color: red; ">退货退款： </span>已收到货，需要退换已收到的货物</label>
+                        </div>
+                        <div class="clr"></div>
+                    </div>
+                    <div class="repair-steps">
+                        <div class="repair-step repair-step-curr pt10 mb10">
+                            <div class="item"> <span class="label"> <em> * </em> 服务类型： </span>
+                                <div class="clr">
+                                    <ul class="list-type list-type-new">
+                                        <li tvalue="0" class="selected">
+                                            <a href="javascript:void(0);">仅退款<b></b> </a>
+                                        </li>
+                                        <li tvalue="1" class="">
+                                            <a href="javascript:void(0);">退货退款<b></b> </a>
+                                        </li>
+                                        <input type="hidden" id="type_reido" name="type" value="0" hidden="">
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="item"> <span class="label"> <em> * </em> 货物状态： </span>
+                                <div class="clr">
+                                <label for="" class="clr_unfinished" id="shouhuotext">未收到货</label>
+                                <input type="hidden" name="receive" id="receive">
+                                </div>
+                                <div class="clr"></div>
+                            </div>
+                            <div class="item" id="yundanbox"> 
+                            	<span class="label"> <em> * </em> 运单号： </span>
+                            	<input type="text" id="yundanhao" class="yundan" name="awb">
+                            </div>
+                            <div class="item"> <span class="label"> <em> * </em> 提交原因： </span>
+                                <div class="fl">
+                                    <select class="select" id="reason" name="cause" style="padding-right: 0px">
+                                        <option value="">请选择</option>
+                                        <option value="不想买了">不想买了</option>
+                                        <option value="快递物流一直未送到">快递物流一直未送到</option>
+                                        <option value="质量问题">质量问题</option>
+                                        <option value="商品与描述不符">商品与描述不符</option>
+                                        <option value="误购（不喜欢/大小不合适）">误购（不喜欢/大小不合适）</option>
+                                        <option value="卖家发错货">卖家发错货</option>
+                                        <option value="发票问题">发票问题</option>
+                                        <option value="其他">其他</option>
+                                    </select>
+                                </div>
+                                <div class="clr">请注意保持商品的完好，建议您先与卖家沟通</div>
+                            </div>
+                            <div id="miaoShuDiv" style="">
+                                <div class="item"> <span class="label"> <em> * </em> 问题描述： </span>
+                                    <div class="fl">
+                                        <textarea name="cause_instructions" id="describe" cols="" rows="" class="area" maxlength="500"></textarea>
+                                        <div class="msg-text-01"> 请您如实填写申请原因及商品情况，字数在10-500字内。 </div>
+                                    </div>
+                                    <div class="clr"> </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="defaultQueRenDiv" style="" class="repair-step">
+                            <div class="mt-10"> <strong>确认信息</strong></div>
+                            <div class="item" style="display: block;"> <span class="label"><em>*</em>客服电话：</span>
+                                <div class="fl">400-900-9680</div>
+                                <div class="clr"></div>
+                            </div>
+                            <div class="item" style="display: block;"> <span class="label"><em>*</em>收货地址：</span>
+                                <div class="fl">
+                                <span th:text="'['+${entity.orderAddress.province}+' '+${entity.orderAddress.city}+' '+${entity.orderAddress.area}+']'"></span>
+								<span th:text="${entity.orderAddress.street}"></span>
+								</div>
+                                <div class="clr"></div>
+                            </div>
+                            <div class="item" style="display: block;"> <span class="label"><em>*</em>顾客姓名：</span>
+                                <div class="fl">
+                               
+                                    <input type="text" name="contact"  th:value="${entity.orderAddress.name}">
+                                </div>
+                                <div class="clr"></div>
+                            </div>
+                            <div class="item" style="display: block;"> <span class="label"><em>*</em>联系号码：</span>
+                                <div class="fl">
+                                    <input type="text" name="phone" maxlength="15"  th:value="${entity.orderAddress.phone}">
+                                </div>
+                                <div class="clr">提交服务单后，售后专员可能与您电话沟通，请保持手机畅通</div>
+                            </div>
+                        </div>
+                        <div class="item" id="submitDiv" style=""><span class="label">&nbsp;</span>
+                            <div class="fl" name="divSubmit">
+                                <div name="submitTips" style="display:none"></div>
+                                <a href="javascript:submit_form();" class="btn btn-7" name="btnSubmit">
+                                    <s></s>确认提交</a>
+                            </div>
+                            <div class="clr"></div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <script type="text/javascript">
+			$(function(){
+				$(".list-type-new >li").click(function(){
+					var index=$(this).attr("tvalue");
+					$(this).addClass('selected').siblings().removeClass('selected');
+					if(index==0){
+						$("#shouhuotext").text('未收到货');
+						$("#receive").val('未收到货');
+						$("#yundanbox").hide();
+						$("#type_reido").attr("value","0");
+					}else if(index==1){
+						$("#yundanbox").show();
+						$("#receive").val('已收到货');
+						$("#shouhuotext").text('已收到货');
+						$("#type_reido").attr("value","1");
+					}
+				})
+		
+			})
+		
+			function submit_form(){
+					if($("#receive").val()=='已收到货'){
+						if($("#yundanhao").val()==''){
+							$("#yundanhao").after('<span class="err">请输入运输单号</span>');
+							return false;
+						}
+					}
+					if($("#reason").val()=='请选择'||$("#reason").val()==''){
+						$("#reason").after('<span class="err">请选择原因</span>');
+						return false;
+					}
+					if($("#describe").val()==''){
+						$("#describe").after('<span class="err">请填写问题描述</span>');
+						return false;
+					}
+					//提交表单代码 在此输入。。。。
+					$("#serviceForm").submit();
+					
+				}
+		</script>
+        </div>
+        
+	<!-- 售后编辑END -->
+	<!-- 售后列表 -->
+	<div class="my_right_box" th:fragment="serviceList">
+        <div class="my_right_tit">
+            退换货记录
+        </div>
+        <div class="my_rt_b bg_w">
+            <div class="returngoods">
+                <div class="book-tit">
+                    <ul>
+                        <li class="sx2">退换货单号</li>
+                        <li class="sx3">订单号</li>
+                        <li class="sx1">商品信息</li>
+                        <li class="sx4 s5clic">申请时间</li>
+                        <li class="sx5">原因</li>
+                        <li class="sx6 s5clic">状态</li>
+                        <li class="sx7">操作</li>
+                    </ul>
+                </div>
+                <div class="book-tit book_content p" th:each="a:${list.dataList}">
+                    <ul>
+                        <li class="sx2" th:text="${a.service_number}">68</li>
+                        <li class="sx3" th:text="${a.order_number}">201808091637013267</li>
+                        <li class="sx1">
+                            <p class="shop_name" th:each="d:${a.order.orderDetailsList}">
+                            	<a th:href="@{/mall/goods/detail(goods_id=${d.goods_id})}" th:text="${d.goods_name}"></a>
+                            </p>
+                        </li>
+                        <li class="sx4" th:text=" ${#dates.format(a.create_time,'yyyy-MM-dd HH:mm:ss')}">2018-08-09</li>
+                        <li class="sx5" th:text="${a.cause}">不想买了</li>
+                        <li class="sx6" th:text="${a.state}=='0'?'新建':(${a.state}=='1'?'已取消':'已处理')">
+                            待审核 </li>
+                        <li class="sx7"><a class="co_blue" th:href="@{/mall/user/service/details(service_number=${a.service_number})}">查看</a></li>
+                    </ul>
+                </div>
+                <div class="operating fixed">
+                    <div class="fn_page clearfix" style="margin-top:10px">
+                        <div class="dataTables_paginate paging_simple_numbers">
+                            <ul class="pagination"> </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+        <!-- 售后列表END -->
+        
+        <!-- 售后详情 -->
+        
+        <div class="my_right_box" th:fragment="serviceDetails">
+        <div class="my_right_tit">
+            退换货记录
+        </div>
+        <div class="my_rt_b bg_w">
+            <div class="goodpiece p">
+                <h1>售后服务详情</h1>
+            </div>
+            <div class="fu_serdetail ma-to-20">
+                <div class="serft_fl">
+                    <span>本次售后服务由<a class="red">云网书画院商城</a>为您提供</span>
+                </div>
+                <div class="serft_fr">
+                    <div class="shop-if-dif" th:each="d:${entity.orderDetailsList}">
+                        <div class="shop-difimg" >
+                            <a th:href="@{/mall/goods/detail(goods_id=${d.goods_id})}">
+                                <img width="50" height="50" th:src="@{${fileServicePath}+'/'+${d.filePath.path}+'/'+${d.filePath.fileidname}+'.'+${d.filePath.filetype}}">
+                            </a>
+                        </div>
+                        <div class="cebigeze">
+                            <p class="may_zco"><span>订单编号：</span><span><a th:text="${entity.order_number}" th:href="@{/mall/user/order/details(order_number=${entity.order_number})}">201808091637013267</a></span></p>
+                            <p class="may_zco"><a th:href="@{/mall/goods/detail(goods_id=${d.goods_id})}" th:text="${d.goods_name}"></a></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="menumain p ma-to-20 ">
+                <div class="goodpiece">
+                    <h1>售后信息</h1>
+                </div>
+                <div class="show_stas" id="msg" th:style="${orderServe.state}=='0'?'':'display:none'">
+                    您的服务单已申请成功，等待售后审核中
+                </div>
+                <div class="show_stas" id="msg" th:style="${orderServe.state}=='1'?'':'display:none'">
+                    您的服务单已取消
+                </div>
+                <div class="show_stas" id="msg" th:style="${orderServe.state}=='2'?'':'display:none'">
+                    您的服务单已审核完成
+                </div>
+                <div class="sheefshjk">
+                    <div class="jindudoc">
+                    <h2>进度说明：</h2>
+                    <p>亲爱的客户，您的服务单已经提交成功，请您耐心等待客服审核</p>
+                    <p th:style="${orderServe.state}=='1'?'':'display:none'">亲爱的客户，您的服务单已取消</p>
+                    <p th:style="${orderServe.state}=='2'?'':'display:none'">亲爱的客户，您的服务单已经审核完成，请您耐心等待客服处理</p>
+                    </div>
+                    <a class="cancellserv" href="javascript:chengeStatus();" th:style="${orderServe.state}=='0'?'':'display:none'">取消服务单</a>
+                </div>
+            </div>
+            <div class="menumain p ma-to-20 serverschdule" style="">
+                <div class="goodpiece">
+                    <h1>服务单信息</h1>
+                </div>
+                <div class="ma-to-20"></div>
+                <div class="sheet manone">
+                    <table border="1" width="100%" cellspacing="" cellpadding="">
+                        <tbody>
+                            <tr>
+                                <td><span>商品返回方式</span></td>
+                                <td class="lastd"><span>若客户已收货，则由客户自行寄回给卖家</span></td>
+                            </tr>
+                             <tr>
+                                <td><span>状态</span></td>
+                                <td class="lastd"><span th:text="${orderServe.state}=='0'?'新建':(${orderServe.state}=='1'?'已取消':'已处理')">不想买了</span></td>
+                            </tr>
+                            <tr>
+                                <td><span>商品处理方式</span></td>
+                                <td class="lastd"><span th:text="'客户期望处理方式:'+(${orderServe.type}=='0'?'仅退款':'退货退款')">客户期望处理方式“仅退款”</span></td>
+                            </tr>
+                            <tr>
+                                <td><span>问题描述</span></td>
+                                <td class="lastd"><span th:text="${orderServe.cause}">不想买了</span></td>
+                            </tr>
+                            <tr>
+                                <td><span>服务备注</span></td>
+                                <td class="lastd"><span th:text="${orderServe.cause_instructions}"></span></td>
+                            </tr>
+                            <tr>
+                                <td><span>卖家收货信息</span></td>
+                                <td class="lastd">
+                                    <strong>
+									收货地址：深圳市龙华区龙观东路1号望城大厦5楼5818室<br>
+									收件人：云网书画院<br>
+									电话：400-900-9680 </strong>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <script type="text/javascript" th:inline="javascript">
+        var orderServe=[[${orderServe}]];
+        function chengeStatus(){
+        	console.log("111111111");
+        	//取消退款/退货申请单
+        	$.post('/mall/order/serve/chengestate',{service_number:orderServe.service_number,state:1},function(data){
+        		console.log(data);
+        		if(data!=null&&data.res=='1'){
+        			//成功
+        			$("#msg").text(" 您的服务单已取消，3S后跳转到订单界面！");
+        			
+        				setTimeout('window.location.href="/mall/user/order/details?order_number='+orderServe.order_number+'"',3000);
+        			
+        		}
+        	});
+        	
+        }
+        
+        
+        
+        </script>
+        </div>
+       <!-- 售后详情end -->
 	
 </body>
 </html>

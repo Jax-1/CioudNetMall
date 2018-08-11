@@ -44,88 +44,21 @@
                		 <ul class="ulSmallPic" style="left:0px" rel="stop">
 
                		 <!-- li是循环出来的只需要一个就行 -->
-                    <li>
-                        <span class="sPic">
-                            <img alt="" src="/mall/images/mingjia_art.jpg">
-                        </span>
-                        <p><a href="#">中国美术家协会会员 楚英</a></p>
-                        <p><a href="">《新华一角》</a></p>
-                        <div class="price">
-                            ￥<span>2000.00</span>
-                        </div>
-                    </li>
-                    <!-- li是循环出来的只需要一个就行 -->
-                    <li>
-                        <span class="sPic">
-                            <img alt="" src="/mall/images/mingjia_art.jpg">
-                        </span>
-                        <p><a href="#">中国美术家协会会员 楚英</a></p>
-                        <p><a href="">《新华一角》</a></p>
-                        <div class="price">
-                            ￥<span>2000.00</span>
-                        </div>
-                    </li>
-                    <li>
-                        <span class="sPic">
-                            <img alt="" src="/mall/images/mingjia_art.jpg">
-                        </span>
-                        <p><a href="#">中国美术家协会会员 楚英</a></p>
-                        <p><a href="">《新华一角》</a></p>
-                        <div class="price">
-                            ￥<span>2000.00</span>
-                        </div>
-                    </li>
-                    <li>
-                        <span class="sPic">
-                            <img alt="" src="/mall/images/mingjia_art.jpg">
-                        </span>
-                        <p><a href="#">中国美术家协会会员 楚英</a></p>
-                        <p><a href="">《新华一角》</a></p>
-                        <div class="price">
-                            ￥<span>2000.00</span>
-                        </div>
-                    </li>
-                    <li>
-                        <span class="sPic">
-                            <img alt="" src="/mall/images/mingjia_art.jpg">
-                        </span>
-                        <p><a href="#">中国美术家协会会员 楚英</a></p>
-                        <p><a href="">《新华一角》</a></p>
-                        <div class="price">
-                            ￥<span>2000.00</span>
-                        </div>
-                    </li>
-                    <li>
-                        <span class="sPic">
-                            <img alt="" src="/mall/images/mingjia_art.jpg">
-                        </span>
-                        <p><a href="#">中国美术家协会会员 楚英</a></p>
-                        <p><a href="">《新华一角》</a></p>
-                        <div class="price">
-                            ￥<span>2000.00</span>
-                        </div>
-                    </li>
-                    <li>
-                        <span class="sPic">
-                            <img alt="" src="/mall/images/mingjia_art.jpg">
-                        </span>
-                        <p><a href="#">中国美术家协会会员 楚英</a></p>
-                        <p><a href="">《新华一角》</a></p>
-                        <div class="price">
-                            ￥<span>2000.00</span>
-                        </div>
-                    </li>
-                    <li>
-                        <span class="sPic">
-                            <img alt="" src="/mall/images/mingjia_art.jpg">
-                        </span>
-                        <p><a href="#">中国美术家协会会员 楚英</a></p>
-                        <p><a href="">《新华一角》</a></p>
-                        <div class="price">
-                            ￥<span>2000.00</span>
-                        </div>
-                    </li>
-                
+                   <li th:each="a:${list}">
+								<span class="sPic">
+									<a th:href="@{/mall/goods/detail(goods_id=${a.goods_id})}">
+		                            	<img alt=""  th:src="@{${fileServicePath}+'/'+${a.filePath.path}+'/'+${a.filePath.fileidname}+'.'+${a.filePath.filetype}}">
+		                        	</a>
+		                        </span>
+		                        <p><a  th:text="${a.auth.position}+'-'+${a.auth.authorname}">中国美术家协会会员 楚英</a></p>
+		                        <p><a href="" th:text="'《'+${a.goods_name}+'》'" th:href="@{/mall/goods/detail(goods_id=${a.goods_id})}">《新华一角》</a></p>
+		                        <p class="ku_c" th:text="'库存：'+${a.goodsInfo.inventory.amount}">库存：99</p>
+		                        <p class="ku_c">已出售：0</p>
+		                        <div class="price">
+		                            ￥<span th:text="${a.goodsPrice.retail_price}">2000.00</span>
+		                        </div>
+		                    </li>
+                   
                 </ul>
             </div>
             <span id="sLeftBtnB" class="sLeftBtnBBan"></span>

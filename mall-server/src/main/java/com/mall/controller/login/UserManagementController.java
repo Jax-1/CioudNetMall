@@ -16,11 +16,13 @@ import com.mall.entity.login.User;
 import com.mall.entity.login.UserInfo;
 import com.mall.entity.order.Order;
 import com.mall.entity.order.OrderAddress;
+import com.mall.entity.order.OrderServe;
 import com.mall.message.ProcessResult;
 import com.mall.message.SystemCode;
 import com.mall.service.login.UserInfoService;
 import com.mall.service.login.UserLoginService;
 import com.mall.service.order.OrderAddressService;
+import com.mall.service.order.OrderServeService;
 import com.mall.service.order.OrderService;
 import com.mall.service.sys.CacheService;
 import com.mall.util.DateFormatUtil;
@@ -47,6 +49,8 @@ public class UserManagementController extends AbstractController{
 	private OrderService orderService;
 	@Resource
 	private CacheService cacheService;
+	@Resource
+	private OrderServeService orderServeService;
 	/**
 	 * 跳转用户管理界面
 	 * @param model
@@ -275,5 +279,71 @@ public class UserManagementController extends AbstractController{
 		return res;
 	}
 	
+	
+	@RequestMapping("/service/details")
+	public String toServiceDetails(Model model,OrderServe orderServe) {
+		logger.info("获取用户服务单详情！orderServe="+orderServe.getService_number());
+		//获取售后单信息
+		orderServe=orderServeService.selectInfo(orderServe);
+		Order order=new Order();
+		order.setOrder_number(orderServe.getOrder_number());
+		order=orderService.selectInfo(order);
+		//获取售后单信息
+		orderServe=orderServeService.selectInfo(orderServe);
+		//文件服务器路径
+		Map<String, String> cache = cacheService.getCache(SystemCode.FILE_SERVICE);
+		String url=cache.get(SystemCode.FILE_SERVICE_URL);
+		String port=cache.get(SystemCode.FILE_SERVICE_PORT);
+		String filePath=cache.get(SystemCode.FILE_SERVICE_FILES_PATH);
+		String fileUrlPrefix=url+":"+port+"/"+filePath;
+		model.addAttribute("fileServicePath", fileUrlPrefix);
+		model.addAttribute("entity", order);
+		model.addAttribute("orderServe", orderServe);
+		model.addAttribute("page", "mall/login/my_center");
+		model.addAttribute("manager", "serviceDetails");
+		return "mall/index";
+		
+	}
+	@RequestMapping("/service/list")
+	public String toServiceList(Model model,OrderServe orderServe,PageResult<OrderServe> list) {
+		logger.info("获取用户服务单列表！");
+		list=orderServeService.queryByPageFront(list, orderServe);
+		for(OrderServe os:list.getDataList()) {
+			Order order=new Order();
+			order.setOrder_number(os.getOrder_number());
+			order=orderService.selectInfo(order);
+			os.setOrder(order);
+		}
+		
+		//文件服务器路径
+		Map<String, String> cache = cacheService.getCache(SystemCode.FILE_SERVICE);
+		String url=cache.get(SystemCode.FILE_SERVICE_URL);
+		String port=cache.get(SystemCode.FILE_SERVICE_PORT);
+		String filePath=cache.get(SystemCode.FILE_SERVICE_FILES_PATH);
+		String fileUrlPrefix=url+":"+port+"/"+filePath;
+		model.addAttribute("fileServicePath", fileUrlPrefix);
+		model.addAttribute("list", list);
+		model.addAttribute("page", "mall/login/my_center");
+		model.addAttribute("manager", "serviceList");
+		return "mall/index";
+		
+	}
+	@RequestMapping("/service/edit")
+	public String toServiceEdit(Order order,Model model) {
+		logger.info("获取用户服务单编辑视图！order="+order.getOrder_number());
+		order=orderService.selectInfo(order);
+		//文件服务器路径
+		Map<String, String> cache = cacheService.getCache(SystemCode.FILE_SERVICE);
+		String url=cache.get(SystemCode.FILE_SERVICE_URL);
+		String port=cache.get(SystemCode.FILE_SERVICE_PORT);
+		String filePath=cache.get(SystemCode.FILE_SERVICE_FILES_PATH);
+		String fileUrlPrefix=url+":"+port+"/"+filePath;
+		model.addAttribute("fileServicePath", fileUrlPrefix);
+		model.addAttribute("entity", order);
+		model.addAttribute("page", "mall/login/my_center");
+		model.addAttribute("manager", "serviceEdit");
+		return "mall/index";
+		
+	}
 
 }

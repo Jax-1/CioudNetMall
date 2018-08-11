@@ -15,11 +15,14 @@ import com.mall.controller.AbstractController;
 import com.mall.entity.cms.Atticleld;
 import com.mall.entity.cms.AtticleldCategory;
 import com.mall.entity.cms.AuthorWithBLOBs;
+import com.mall.entity.goods.Goods;
+import com.mall.entity.goods.GoodsInfo;
 import com.mall.message.SystemCode;
 import com.mall.service.cms.AtticleldCategoryService;
 import com.mall.service.cms.AtticleldService;
 import com.mall.service.cms.AuthorWithBLOBsService;
 import com.mall.service.cms.FilePathService;
+import com.mall.service.goods.GoodsService;
 import com.mall.service.sys.CacheService;
 import com.mall.util.PageResult;
 
@@ -41,6 +44,8 @@ public class UserCMSController extends AbstractController{
 	private FilePathService filePathService;
 	@Resource
 	private AuthorWithBLOBsService authorWithBLOBsService;
+	@Resource
+	private GoodsService goodsService;
 	/**
 	 * 作品、资讯、传统文化列表
 	 * @param Pid id
@@ -158,6 +163,16 @@ public class UserCMSController extends AbstractController{
 		//增加查看次数
 		auth.setViewCount(auth.getViewCount()+1);
 		authorWithBLOBsService.updateLikeAndViewCount(auth);
+		//获取作家作品列表
+		Goods goods=new Goods();
+		GoodsInfo goodsInfo=new GoodsInfo();
+		goodsInfo.setAuth_id(auth.getId());
+		goods.setGoodsInfo(goodsInfo);
+		PageResult<Goods> list =new PageResult<Goods>();
+		list = goodsService.queryByPageFront(list, goods);
+		for(Goods g:list.getDataList()) {
+			g.setAuth(auth);
+		}
 		
 		Map<String, String> cache = cacheService.getCache(SystemCode.FILE_SERVICE);
 		String url=cache.get(SystemCode.FILE_SERVICE_URL);
@@ -167,6 +182,7 @@ public class UserCMSController extends AbstractController{
 		//文件服务器路径
 		model.addAttribute("fileServicePath", fileUrlPrefix);
 		model.addAttribute("auth", auth);
+		model.addAttribute("list", list.getDataList());
 		model.addAttribute("Pid", Pid);
 		model.addAttribute("page", "mall/cms/mingjia_show");
 		return "mall/index";

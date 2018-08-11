@@ -88,7 +88,6 @@ public class MallGoodsController extends AbstractController{
 		Goods newgoods=new Goods();
 		newgoods.setNew_product("Y");
 		PageResult<Goods> newGoods = goodsService.queryByPageFront(list, newgoods);
-		logger.info("11111111111111");
 		//人气
 		Goods popgoods=new Goods();
 		popgoods.setPopularitySort("DESC");

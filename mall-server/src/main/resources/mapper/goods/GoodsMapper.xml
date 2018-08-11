@@ -405,6 +405,9 @@ WHERE
 			<if test="goodsInfo!=null and goodsInfo.standard!=null and goodsInfo.standard!=''">
 				AND t_goods_info.standard=#{goodsInfo.standard}
 			</if>
+			<if test="goodsInfo!=null and goodsInfo.auth_id!=null and goodsInfo.auth_id!=''">
+				AND t_goods_info.auth_id=#{goodsInfo.auth_id}
+			</if>
 		)D left join t_cms_author on D.auth_id=t_cms_author.id
 			<where>
 			<if test="auth!=null and auth.position!=null and auth.position!=''">
