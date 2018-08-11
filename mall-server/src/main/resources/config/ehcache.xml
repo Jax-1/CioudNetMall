@@ -2,6 +2,6 @@
          xsi:noNamespaceSchemaLocation="ehcache.xsd">  
     <cache name="codeItem" maxEntriesLocalHeap="200" timeToLiveSeconds="600">  
     </cache> 
-    <cache name="goodsNum" maxEntriesLocalHeap="200" timeToLiveSeconds="600">  
+    <cache name="goodsNum" maxEntriesLocalHeap="200" timeToLiveSeconds="600" timeToIdleSeconds="120">  
     </cache> 
 </ehcache>  

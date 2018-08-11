@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -31,6 +32,7 @@ import com.mall.service.goods.GoodsService;
 import com.mall.service.inventory.InventoryService;
 import com.mall.service.order.OrderService;
 import com.mall.service.payment.PaymentFlowService;
+import com.mall.service.sys.CacheService;
 import com.mall.util.DateFormatUtil;
 import com.mall.util.MapTrunPojoUtil;
 import com.mall.util.SessionUtil;
@@ -60,6 +62,8 @@ public class WXPayPrecreateController extends AbstractController{
 	private GoodsService goodsService;
     @Resource
     private InventoryService inventoryService;
+    @Resource
+	private CacheService cacheService;
 
     /**
      * 扫码支付 - 统一下单
@@ -79,8 +83,14 @@ public class WXPayPrecreateController extends AbstractController{
     		if(order.getOrderDetailsList().size()>1&&order.getOrderDetailsList().size()!=i+1) {
     			goodsNames.append("-");
     		}
+    		Map<String, Integer> map = cacheService.toBePaidGoods(order.getOrderDetailsList().get(i).getGoods_id(),0);
+    		logger.info("生成支付二维码，获取正在支付缓存信息，商品ID："+order.getOrderDetailsList().get(i).getGoods_id()+"正支付商品数量："+map);
+    		Integer num=map!=null?map.get(order.getOrderDetailsList().get(i).getGoods_id())+order.getOrderDetailsList().get(i).getNum():order.getOrderDetailsList().get(i).getNum();
+    		//将待支付商品数量写入缓存
+        	Map<String, Integer> bePaidGoods = cacheService.writePaidGoods(order.getOrderDetailsList().get(i).getGoods_id(), num);
+        	
+        	
     	}
-    	//锁库存信息行
     	
     	//锁库存信息行 END
     	
@@ -199,6 +209,8 @@ public class WXPayPrecreateController extends AbstractController{
         				//修改待出库数量为：待出库数量+订单数量
         				inventory.setStay_amount(inventory.getStay_amount()+orderDetails.getNum());
         				inventoryService.updateInventory(inventory);
+        				//清除待支付商品信息缓存
+        				cacheService.clearPaidGoods(goods.getGoods_id());
         			}
         			
         			//修改订单状态
@@ -267,5 +279,29 @@ public class WXPayPrecreateController extends AbstractController{
     	return orderQuery;
 		
 	}
+    /**
+     * 延续待支付商品数量缓存信息
+     * 如超过10分钟，取消支付
+     * @return
+     */
+    @SuppressWarnings("rawtypes")
+	@ResponseBody
+	@GetMapping("/cachelive")
+    public ProcessResult cacheLive(Order order){
+    	ProcessResult res=new ProcessResult();
+    	//获取订单信息
+    	order=orderService.selectInfo(order);
+    	for(OrderDetails orderDetails:order.getOrderDetailsList()) {
+    		Map<String, Integer> map = cacheService.toBePaidGoods(orderDetails.getGoods_id(),0);
+    		//缓存已失效
+    		if(map.get(orderDetails.getGoods_id())==0) {
+    			return res;
+    		}
+    	}
+    	
+		return ProcessResult.success(res);
+    	
+    }
+    
 
 }

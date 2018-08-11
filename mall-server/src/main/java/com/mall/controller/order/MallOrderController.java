@@ -192,7 +192,10 @@ public class MallOrderController extends AbstractController{
 				details_amount=orderDetails.getUnit_price().multiply(num);
 				orderDetails.setDetails_amount(details_amount);
 				//计算总邮费
-				postage_amount=postage_amount.add(new BigDecimal(goods.getGoodsInfo().getExt3()));
+				//不包邮状态
+				if(goods.getGoodsInfo().getExt1()=="N") {
+					postage_amount=postage_amount.add(new BigDecimal(goods.getGoodsInfo().getExt3()));
+				}
 				//计算商品总价,加单品总价
 				total_amount=total_amount.add(details_amount);
 				try {
@@ -264,7 +267,11 @@ public class MallOrderController extends AbstractController{
 				details_amount=orderDetails.getUnit_price().multiply(num);
 				orderDetails.setDetails_amount(details_amount);
 				//计算总邮费
-				postage_amount=postage_amount.add(new BigDecimal(goods.getGoodsInfo().getExt3()));
+				//不包邮状态
+				if(goods.getGoodsInfo().getExt1()=="N") {
+					postage_amount=postage_amount.add(new BigDecimal(goods.getGoodsInfo().getExt3()));
+				}
+				
 				//计算商品总价,加单品总价
 				total_amount=total_amount.add(details_amount);
 				try {

@@ -12,6 +12,7 @@
             <div class="ncc-title">
                 <h3>支付提交</h3>
                 <h5>订单详情内容可通过查看<a href="">我的订单</a>进行核对处理。</h5>
+                <h5><strong>请在10分钟内完成支付！</strong></h5>
             </div>
             <div class="ncc-receipt-info">
                 <div class="ncc-receipt-info-title">
@@ -71,8 +72,18 @@
 			});
 				
 		}
+		//100S获取支付缓存，缓存失效跳转到订单详情界面
+		function queryOrderCache(){
+			$.get("/wxpay/precreate/cachelive",{order_number:order.order_number},function(data){
+				if(data!=null&&data=='0'){
+					//支付超时
+					window.location.href='/mall/user/order/details?order_number='+order.order_number;
+				}
+			})
+		}
 		$(function(){
 			var i= setInterval('queryOrderPaymentStatus();',3000);
+			var j= setInterval('queryOrderCache();',100000);
 		})
 		
 		
