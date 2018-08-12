@@ -5,10 +5,10 @@ mybatis:
     
 thymeleaf:
     prefix: classpath:/templates/    #指定资源位置
-    mode: LEGACYHTML5  
-
+    mode: LEGACYHTML5
+    cache: true  
+    
 mapper:
-
     not-empty: false
     identity: MYSQL
 

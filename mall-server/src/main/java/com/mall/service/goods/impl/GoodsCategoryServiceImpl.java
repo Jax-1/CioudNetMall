@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import com.mall.dao.base.IBaseDao;
@@ -23,6 +24,7 @@ public class GoodsCategoryServiceImpl extends BaseServiceImpl<GoodsCategory> imp
 	}
 
 	@Override
+	@Cacheable(value = "goodsinfo#1800#600")
 	public List<GoodsCategory> getGoodsCategoryList(GoodsCategory goodsCategory) {
 		List<GoodsCategory> goodsCategoryList = goodsCategoryMapper.getGoodsCategoryList(goodsCategory);
 		for(GoodsCategory g:goodsCategoryList) {

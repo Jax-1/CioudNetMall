@@ -4,4 +4,6 @@
     </cache> 
     <cache name="goodsNum" maxEntriesLocalHeap="200" timeToLiveSeconds="600" timeToIdleSeconds="120">  
     </cache> 
+    <cache name="goodsinfo" maxEntriesLocalHeap="200" timeToLiveSeconds="1800" >  
+    </cache>
 </ehcache>  
