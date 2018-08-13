@@ -222,7 +222,7 @@
     <script type="text/javascript" th:inline="javascript">
 	$(function(){
 		
-		 $("#show_img_file").change(function(){
+		 $(document).off('change','#show_img_file').on('change','#show_img_file',function(){
              
              var file=this.files[0];
               $.ajaxFileUpload({

@@ -317,8 +317,7 @@
     		} 
 			
             //商品图片上传预览
-            $("#show_img_file").change(function(){
-                 
+            $(document).off('change','#show_img_file').on('change','#show_img_file',function(){
                 var file=this.files[0];
                  $.ajaxFileUpload({
                      url:"/ueditor/uploade",
