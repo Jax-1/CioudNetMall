@@ -3,6 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<style>
+
+
+
+</style>
 </head>
 <body>
 <!-- 内容部分 -->
@@ -24,7 +29,11 @@
                 <div class="header_right_detail">
                     <h3 th:text="${goods.auth.position}+'-'+${goods.auth.authorname}+'  '+'《'+${goods.goods_name}+'》'">河北省美术家协会会员 康计永《山乡自有春意在》</h3>
                     <div class="shop_d_box">
-                        <p> 价格: <span class="price" th:text="${goods.goodsPrice.retail_price}">2000元</span></p>
+                          
+                        		<p>价格:<span class="price" th:text="'¥ '+(${goods.goodsPrice.sale}=='Y'?${goods.goodsPrice.sale_price}:${goods.goodsPrice.retail_price})">2000元</span>
+                        			<span th:style="${goods.goodsPrice.sale}=='Y'?'':'display:none'" class='yuanjia'>¥<del th:text="${goods.goodsPrice.retail_price}"> </del> </span>
+                        		</p>
+                        		
                         <p> 作者：<span th:text="${goods.auth.authorname}">张孝勇</span></p>
                         <p>尺寸：<span th:text="${goods.goodsInfo.size}">34x136cmx4</span></p>
                     </div>

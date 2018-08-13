@@ -111,7 +111,10 @@
 		                        <p class="ku_c" th:text="'库存：'+${a.goodsInfo.inventory.amount}">库存：99</p>
 		                        <p class="ku_c">已出售：0</p>
 		                        <div class="price">
-		                            ￥<span th:text="${a.goodsPrice.retail_price}">2000.00</span>
+		                        ¥
+		                        	&nbsp
+		                            <span th:text="${a.goodsPrice.sale}=='Y'?${a.goodsPrice.sale_price}:${a.goodsPrice.retail_price}">2000.00</span>
+		                            <del class="yuanjia" th:text="'¥ '+(${a.goodsPrice.sale}=='Y'?${a.goodsPrice.retail_price})" th:style="${a.goodsPrice.sale}=='Y'?'':'display:none'"></del>
 		                        </div>
 		                    </li>
 					</ul>
