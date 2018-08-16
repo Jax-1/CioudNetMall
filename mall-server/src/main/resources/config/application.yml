@@ -21,7 +21,7 @@ pagehelper:
 
 druid:
     url: jdbc:mysql://47.93.16.119:3306/dbmall?useUnicode=true&characterEncoding=utf8&autoReconnect=true&failOverReadOnly=false&allowMultiQueries=true
-   # url: jdbc:mysql://47.106.171.99:3306/DBPMALL?useUnicode=true&characterEncoding=utf8&autoReconnect=true&failOverReadOnly=false&allowMultiQueries=true
+   # url: jdbc:mysql://localhost:3306/DBPMALL?useUnicode=true&characterEncoding=utf8&autoReconnect=true&failOverReadOnly=false&allowMultiQueries=true
     driver-class: com.mysql.jdbc.Driver
     username: root
     password: zhang032111

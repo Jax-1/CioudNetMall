@@ -178,12 +178,13 @@
 		t_order_address t 
 	WHERE
 		user_id = #{user_name}
+		and  STATUS='Y'
 		order by create_time desc
 	  
   </select>
   <!-- 删除 -->
   <delete id="chengeStatus" parameterType="com.mall.entity.order.OrderAddress">
-     update t_order_address set STATUS='Y' 
+     update t_order_address set STATUS='N' 
      where id = #{id,jdbcType=INTEGER}
   
   

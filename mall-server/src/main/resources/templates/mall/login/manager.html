@@ -229,14 +229,14 @@
 			密码修改
 		</div>
 		<div class="my_rt_b">
-			<form action="/mall/user/modify" method="post">
+			<form action="/mall/user/modify" method="post" id="chengePassword">
 			<div class="ncm-default-form">
 				<dl>
 			        <dt><i class="required">*</i>设置新密码：</dt>
 			        <dd>
 			          <input type="password" maxlength="40" class="text" name="password" id="password">
 			          <label for="password" generated="true" class="error"></label>
-			          <p class="hint">6-20位字符，可由英文、数字及标点符号组成。</p>
+			          <p class="hint">8-16位字符，可由英文、数字及标点符号组成。</p>
 			         </dd>
 		      </dl>
 		      <dl>
@@ -249,7 +249,7 @@
 		      <dl class="bottom">
 		        <dt>&nbsp;</dt>
 		        <dd><label class="submit-border">
-		          <input type="submit" class="submit" value="确认提交" id="submit"></label>
+		          <input type="submit" class="submit" value="确认提交" id="submit" style="pointer-events:none;"></label>
 		        </dd>
 		      </dl>
 			</div>
@@ -257,6 +257,47 @@
 		</div>
 		<script type="text/javascript">
 		//密码一致性校验
+		$("#chengePassword").validate({
+				rules:{
+					password:{
+						required:true,
+						rangelength:[8,16] 
+					},
+					Inputagain:{
+						required:true,
+						equalTo:"#password" 
+					}
+					
+					
+				},
+				messages:{
+					password:{
+						required:"密码不得为空！",
+						rangelength:"密码长度为8~16个字符！"
+					},
+					Inputagain:{
+						required:"请再次输入密码！",
+						equalTo:"两次密码输入不一致！" 
+					}
+					
+					
+				}
+				
+				
+			});
+		function chickForm(){
+			
+			
+			var cb = $("#chengePassword").validate().form();
+			return cb;
+		}
+		$("input").blur(function(){
+				if(chickForm()){
+					$("input").css("pointer-events","auto");
+				}
+			  
+		});
+		
 		
 		
 		</script>
@@ -319,6 +360,7 @@
 				<span class="dialog_close_button">X</span>
 			</h3>
 			<div class="eject_con">
+				<form id="address_form">
 				<input style="display:none" id="id" value="">
 				<dl>
 					<dt><i class="required">*</i>收货人：</dt>
@@ -359,13 +401,19 @@
 			        <label class="submit-border">
 			          <input type="button" class="submit" value="新增地址" id="button-add" onclick="javascript:addUserAddress();">
 			        </label>
-			        <a class="ncm-btn ml5" href="javascript:DialogManager.close('my_address_edit');">取消</a>
+			        <a class="ncm-btn ml5" href="javascript:$('.modal_far_box,.add_modal_box').hide();">取消</a>
 			    </div>
+			    </form>
 			</div>
 		</div>
 	</div>
+	<script src="/admin/assets/global/plugins/jquery-validation/js/jquery.validate.min.js" type="text/javascript"></script>
 	<script type="text/javascript" src="/mall/js/PCASClass.js"></script>
 	<script  type="text/javascript" th:inline="javascript">
+	//设置AJAX同步
+	    $.ajaxSetup({
+	    	  async: false
+	    	  });
 		$(function(){
 			//初始化地址下拉框
 			new PCAS("province","city","area");
@@ -397,13 +445,53 @@
 			
 			
 		}
+		 function chickAddAddressFrom(){
+		    	//验证
+				$("#address_form").validate({
+					rules:{
+						true_name:{
+							required:true
+						},
+						street:{
+							required:true
+						},
+						tel_phone:{
+							required:true,
+							userTel:true
+						}
+						
+						
+					},
+					messages:{
+						true_name:{
+							required:"收货人姓名不能为空！"
+						},
+						street:{
+							required:"收货人地址不能为空！"
+						},
+						tel_phone:{
+							required:"收货人联系方式不能为空！"
+							
+						}
+						
+						
+					}
+					
+					
+				});
+				$.validator.addMethod("userTel",function(value,element,params){
+					 var pattern = /^1[34578]\d{9}$/;
+		           return this.optional(element)||pattern.test(value)
+		       },"请输入正确的手机号！");
+				var cb = $("#address_form").validate().form();
+				return cb;
+		    }
 		function deleteAddress(obj,id){
 			$.post('/mall/order/address/delete',{id:id},function(data){
 	    		console.log(data);
 	    		if(data!=null&&data.res=='1'){
-	    			
 	    			//删除成功
-	    			$(obj).parent().parent().remove();
+	    			location.reload();
 	    		}
 	    	})
 			
@@ -413,8 +501,11 @@
 		})
 		function addUserAddress(){
     	//验证表单数据
-    	//保存数据
-    	$.post("/mall/order/address/add",
+			if(!chickAddAddressFrom()){
+	    		return;
+	    	}
+	    	//保存数据
+	    	$.post("/mall/order/address/add",
     			{
     			id:$("#id").val(),
     			name:$("#true_name").val(),
@@ -449,7 +540,7 @@
 						      '</tr>'
 			    			$("#tbody_add").append(items);
 		    			}else{
-		    				console.log(data.obj.name);
+		    				console.log(i);
 		    				//修改成功
 		    				address[i]=data.obj;
 		    				$("#name"+i).text(data.obj.name);
@@ -673,6 +764,7 @@
 			//修改订单状态
 			if(chengeStatus(data)){
 				//成功
+				location.reload();
 			}
 	    	
 		}
@@ -681,6 +773,7 @@
 			var data={order_number:num,del_state:'5',logistics_state:'3'}
 			if(chengeStatus(data)){
 				//成功
+				location.reload();
 			}
 		}
 		

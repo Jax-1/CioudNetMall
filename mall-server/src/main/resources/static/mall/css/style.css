@@ -3033,8 +3033,35 @@ ul li {
     .manone table .lastd {
       padding-right: 150px;
       position: relative; }
-      
-      .yuanjia{ 
+    
+    /*  ÃÌº”œ‘ æ*/  
+.yuanjia{ 
 	font-size:10px;
 	color:	#B8B8B8;
 }
+.msg{
+	color:red;
+	font-size:18px;
+}
+label.error{
+   
+    height: 30px;
+    line-height: 30px;
+    font-size: 14px;
+    text-align: left;
+    margin-left: 5px;
+    padding-left: 35px;
+    color: red;
+}
+ .register_box .form_ground_box .submitBtnError {
+      margin: 0 auto;
+      background: #FF0040;
+      color: #C0C0C0;
+      font-size: 18px;
+      width: 260px;
+      height: 40px;
+      line-height: 40px;
+      text-align: center;
+      cursor: pointer;
+       pointer-events: none;
+       }

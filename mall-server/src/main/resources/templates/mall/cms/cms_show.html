@@ -17,7 +17,7 @@
 					<div class="cont_text_bar">
 						作者：<span th:text="${att.createby}">云网传媒</span>
 						发布时间: <span  th:text="${#dates.format(att.createat,'yyyy-MM-dd HH:mm:ss')}">2018-05-09</span>
-						浏览: <span th:text="${att.viewCount+1}">500</span>
+						浏览: <span th:text="${att.viewCount}">500</span>
 						点赞: <span th:text="${att.likeCount}" id="value_zan">20</span>
 					</div>
 					<div class="cont_text_main" th:utext="${att.content}">

@@ -180,7 +180,9 @@ public class MallOrderController extends AbstractController{
 				orderDetails.setGoods_id(goods.getGoods_id());
 				orderDetails.setGoods_name(goods.getGoods_name());
 				orderDetails.setImage(goods.getImage());
-				if(goods.getGoodsPrice().getSale()=="Y") {
+				logger.info("是否优惠商品："+goods.getGoodsPrice().getSale());
+				if("Y".equals(goods.getGoodsPrice().getSale())) {
+					logger.info("优惠商品价格：" +goods.getGoodsPrice().getSale_price());
 					//优惠价格
 					orderDetails.setUnit_price(goods.getGoodsPrice().getSale_price());
 					//计算优惠总价
@@ -193,7 +195,7 @@ public class MallOrderController extends AbstractController{
 				orderDetails.setDetails_amount(details_amount);
 				//计算总邮费
 				//不包邮状态
-				if(goods.getGoodsInfo().getExt1()=="N") {
+				if("N".equals(goods.getGoodsInfo().getExt1())) {
 					postage_amount=postage_amount.add(new BigDecimal(goods.getGoodsInfo().getExt3()));
 				}
 				//计算商品总价,加单品总价
@@ -255,7 +257,9 @@ public class MallOrderController extends AbstractController{
 				orderDetails.setGoods_id(goods.getGoods_id());
 				orderDetails.setGoods_name(goods.getGoods_name());
 				orderDetails.setImage(goods.getImage());
-				if(goods.getGoodsPrice().getSale()=="Y") {
+				logger.info("是否优惠商品："+goods.getGoodsPrice().getSale());
+				if("Y".equals(goods.getGoodsPrice().getSale())) {
+					logger.info("优惠商品价格：" +goods.getGoodsPrice().getSale_price());
 					//优惠价格
 					orderDetails.setUnit_price(goods.getGoodsPrice().getSale_price());
 					//计算优惠总价
@@ -268,7 +272,7 @@ public class MallOrderController extends AbstractController{
 				orderDetails.setDetails_amount(details_amount);
 				//计算总邮费
 				//不包邮状态
-				if(goods.getGoodsInfo().getExt1()=="N") {
+				if("N".equals(goods.getGoodsInfo().getExt1())) {
 					postage_amount=postage_amount.add(new BigDecimal(goods.getGoodsInfo().getExt3()));
 				}
 				
