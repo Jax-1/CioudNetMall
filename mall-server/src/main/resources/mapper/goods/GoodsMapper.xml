@@ -351,7 +351,7 @@ FROM
 		SELECT * FROM (
 	
 	</if>
-	<if test="salesSort!=null and popularitySort!='' ">
+	<if test="salesSort!=null and salesSort!=''">
 		SELECT * FROM (
 	
 	</if>
@@ -419,13 +419,13 @@ WHERE
 			<!-- 人气 -->
 			<if test="popularitySort!=null and popularitySort!=''">
 			) G LEFT JOIN 
-			(SELECT  count(*) as countnum ,good_id FROM t_history_goods   group by good_id ) H ON H.good_id=G.goods_id
+			(SELECT  count(*) as countnump ,good_id FROM t_history_goods   group by good_id ) H ON H.good_id=G.goods_id
 			
 			</if>
 			<!-- 销量 -->
 			<if test="salesSort!=null and salesSort!=''">
 				) G LEFT JOIN 
-			(SELECT  count(*) as countnum ,goods_id as goods_id_d FROM t_order_details   group by goods_id ) H ON H.goods_id_d=G.goods_id
+			(SELECT  count(*) as countnums ,goods_id as goods_id_d FROM t_order_details   group by goods_id ) H ON H.goods_id_d=G.goods_id
 			
 			</if>
 			<!-- 排序 -->
@@ -445,11 +445,11 @@ WHERE
 ORDER BY
 	<!-- 排序 -->
 	<if test="popularitySort!=null and popularitySort!=''">
-		C.countnum ${popularitySort},
+		C.countnump ${popularitySort},
 	</if>
 	<!-- 销量 -->
 	<if test="salesSort!=null and salesSort!=''">
-		C.countnum ${salesSort},
+		C.countnums ${salesSort},
 	</if>
 	<!-- 价格 -->
 	<if test="priceSort!=null and priceSort!=''">

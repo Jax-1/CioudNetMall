@@ -80,38 +80,46 @@ public class MallGoodsController extends AbstractController{
 		//热卖商品
 		Goods SEgoods=new Goods();
 		SEgoods.setSalesSort("DESC");
+		SEgoods.setIs_marketable("Y");
 		int pageSizeShuf  =  Integer.parseInt(cacheService.getCache(SystemCode.PAGE).get(SystemCode.MALL_GOODS_SHUF_PAGE));
 		list.setPageSize(pageSizeShuf);
 		PageResult<Goods> SEGoods = goodsService.queryByPageFront(list, SEgoods);
-		
+		model.addAttribute("SEGoods", SEGoods.getDataList());
 		//新品
 		Goods newgoods=new Goods();
 		newgoods.setNew_product("Y");
+		newgoods.setIs_marketable("Y");
 		PageResult<Goods> newGoods = goodsService.queryByPageFront(list, newgoods);
+		model.addAttribute("newGoods", newGoods.getDataList());
 		//人气
 		Goods popgoods=new Goods();
 		popgoods.setPopularitySort("DESC");
+		popgoods.setIs_marketable("Y");
 		PageResult<Goods> POPGoods=goodsService.queryByPageFront(list, popgoods);
-		
+		model.addAttribute("POPGoods", POPGoods.getDataList());
 		//精品
 		Goods clagoods=new Goods();
 		clagoods.setClassic("Y");
+		clagoods.setIs_marketable("Y");
 		PageResult<Goods> classicGoods = goodsService.queryByPageFront(list, clagoods);
+		model.addAttribute("classicGoods", classicGoods.getDataList());
+		
 		//特惠
 		GoodsPrice goodsPrice =new GoodsPrice();
 		goodsPrice.setSale("Y");
 		Goods goodsSale=new Goods();
 		goodsSale.setGoodsPrice(goodsPrice);
+		goodsSale.setIs_marketable("Y");
 		PageResult<Goods> saleGoods = goodsService.queryByPageFront(list, goodsSale);
-		
+		model.addAttribute("saleGoods", saleGoods.getDataList());
 		
 		model.addAttribute("adList", adList.getDataList());
 		
-		model.addAttribute("SEGoods", SEGoods.getDataList());
-		model.addAttribute("newGoods", newGoods.getDataList());
-		model.addAttribute("classicGoods", classicGoods.getDataList());
-		model.addAttribute("saleGoods", saleGoods.getDataList());
-		model.addAttribute("POPGoods", POPGoods.getDataList());
+		
+//		model.addAttribute("newGoods", newGoods.getDataList());
+//		model.addAttribute("classicGoods", classicGoods.getDataList());
+//		model.addAttribute("saleGoods", saleGoods.getDataList());
+//		model.addAttribute("POPGoods", POPGoods.getDataList());
 		
 		model.addAttribute("fileServicePath", fileUrlPrefix);
 		
@@ -167,9 +175,13 @@ public class MallGoodsController extends AbstractController{
 	 */
 	@RequestMapping("/list")
 	public String toGoodsList(Model model,Goods goods,PageResult<Goods> list) {
+		/**
+		 * 上架商品过滤
+		 */
+		goods.setIs_marketable("Y");
 		int pageSize  =  Integer.parseInt(cacheService.getCache(SystemCode.PAGE).get(SystemCode.GOODS_PAGE));
 		list.setPageSize(pageSize);
-		
+		logger.info("log:"+goods.getPopularitySort()+"--"+goods.getSalesSort());
 		list = goodsService.queryByPageFront(list, goods);
 		//查询所有分类
 		List<GoodsCategory> goodsCategoryList = goodsCategoryService.getGoodsCategoryList(null);
@@ -182,6 +194,7 @@ public class MallGoodsController extends AbstractController{
 		String fileUrlPrefix=url+":"+port+"/"+filePath;
 		model.addAttribute("fileServicePath", fileUrlPrefix);
 		model.addAttribute("goodsCategoryList", goodsCategoryList);
+		model.addAttribute("goods", goods);
 		model.addAttribute("list", list);
 		model.addAttribute("page", "mall/goods/goods_list");
 		return "mall/index";

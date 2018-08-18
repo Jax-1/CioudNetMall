@@ -87,11 +87,7 @@
                     <h3 class="show_detail_tit" th:text="${goods.auth.position}+'-'+${goods.auth.authorname}+'  '+'《'+${goods.goods_name}+'》'">
 						河北省美术家协会会员 康计永《山乡自有春意在》
 					</h3>
-                    <p class="gaikuang">作品概况</p>
-                    <!-- 主图部分 -->
-                    <div class="main_img">
-                        <img  alt="" th:src="@{${fileServicePath}+'/'+${goods.filePath.path}+'/'+${goods.filePath.fileidname}+'.'+${goods.filePath.filetype}}">
-                    </div>
+                    
                     <p class="gaikuang">细节展示</p>
                     <!-- 细节展示图部分 -->
                     <div class="main_img" th:utext="${goods.detail_describe}">

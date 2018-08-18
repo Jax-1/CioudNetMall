@@ -95,7 +95,7 @@
 		                        </div>
 		                    </li>
 						</ul>
-						<div class="more_btn"><a href="/mall/goods/list">查看更多</a></div>
+						<div class="more_btn"><a href="/mall/goods/list?new_product=Y">查看更多</a></div>
 					</li>
 					<!-- 新品end -->
 					<li class="c_box">
@@ -116,7 +116,7 @@
 		                        </div>
 		                    </li>
 						</ul>
-						<div class="more_btn"><a href="/mall/goods/list">查看更多</a></div>
+						<div class="more_btn"><a href="/mall/goods/list?popularitySort=DESC">查看更多</a></div>
 					</li>
 					<li class="c_box">
 						<ul class="child_ul">
@@ -136,7 +136,7 @@
 		                        </div>
 		                    </li>
 						</ul>
-						<div class="more_btn"><a href="/mall/goods/list">查看更多</a></div>
+						<div class="more_btn"><a href="/mall/goods/list?classic=Y">查看更多</a></div>
 					</li>
 					<li class="c_box">
 						<ul class="child_ul">
@@ -156,7 +156,7 @@
 		                        </div>
 		                    </li>
 						</ul>
-						<div class="more_btn"><a href="/mall/goods/list">查看更多</a></div>
+						<div class="more_btn"><a href="/mall/goods/list?goodsPrice.sale=Y">查看更多</a></div>
 					</li>
 					
 				</ul>
@@ -186,7 +186,7 @@
 		                    </li>
 		                   
 					</ul>
-					<div class="more_btn"><a href="/mall/goods/list">查看更多</a></div>
+					<div class="more_btn"><a href="/mall/goods/list?recommend=Y">查看更多</a></div>
 				</div>
 			</div>
 			<!-- 热卖商品 -->
@@ -213,7 +213,7 @@
 		                    </li>
 		                   
 					</ul>
-					<div class="more_btn"><a href="/mall/goods/list">查看更多</a></div>
+					<div class="more_btn"><a href="/mall/goods/list?salesSort=DESC">查看更多</a></div>
 				</div>
 			</div>
 			<!-- 艺术家推荐 -->
@@ -252,6 +252,12 @@
 		</div>
 	</div>
 	<script type="text/javascript" th:inline="javascript">
+	console.log([[${SEGoods}]]);
+	console.log([[${newGoods}]])
+	console.log([[${classicGoods}]])
+	console.log([[${saleGoods}]])
+	console.log([[${POPGoods}]])
+	
 	//首页分类
 	var ca=[[${goodsCategoryList}]];
 	$(".left_menu_box").html(buildMenu(ca));
