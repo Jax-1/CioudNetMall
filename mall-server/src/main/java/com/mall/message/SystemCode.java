@@ -145,6 +145,11 @@ public class SystemCode {
 	//校验短信模板
 	public final static String VARLIDATE_TEMPLATECODE="VARLIDATE_TEMPLATECODE";
 	
+	//文件路径
+	public final static String PATH="PATH";
+	//微信证书
+	public final static String WXSSL="WXSSL";
+	
 	/**
 	 * 订单相关
 	 */

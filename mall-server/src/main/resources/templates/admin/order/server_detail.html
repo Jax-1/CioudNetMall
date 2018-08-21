@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+	<link rel="stylesheet" href="/mall/css/font.css">
+    <link rel="stylesheet" href="/mall/css/style.css">
+</head>
+<body>
+<div class="page-content-wrapper">
+        <div class="page-content">
+            <div class="page-bar">
+                <ul class="page-breadcrumb">
+                    <li>
+                        <a href="/admin">首页</a>
+                        <i class="fa fa-circle"></i>
+                    </li>
+                    <li>
+                        <span>退换货申请单详情</span>
+                    </li>
+                </ul>
+            </div>
+            <h1 class="page-title"> 退换货申请单
+                    <small>退换货申请单管理</small>
+            </h1>
+             <!-- 内容展示 -->
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="portlet light bordered">
+             <div class="menumain p ma-to-20 serverschdule" style="">
+                <div class="goodpiece">
+                    <h1>服务单信息</h1>
+                </div>
+                <div class="ma-to-20"></div>
+                <div class="sheet manone">
+                    <table border="1" width="100%" cellspacing="" cellpadding="">
+                        <tbody>
+                        	<tr>
+                                <td><span>退货申请单单号</span></td>
+                                <td class="lastd"><span th:text="${orderServe.service_number}">111111</span></td>
+                            </tr>
+                            <tr>
+                               <td><span>服务类型</span></td>
+                                <td class="lastd"><span th:text="${orderServe.type}=='0'?'仅退款':(${orderServe.type}=='1'?'退货及退款')">仅退款</span></td>
+                            </tr>
+                             <tr>
+                                <td><span>退货单号</span></td>
+                                <td class="lastd"><span th:text="${orderServe.awb}">111</span></td>
+                            </tr>
+                            <tr>
+                                <td><span>联系方式</span></td>
+                                <td class="lastd"> <p th:text="${orderServe.contact}"></p>
+                                            <p th:text="${orderServe.phone}"></p>
+                                            </td>
+                            </tr>
+                            <tr>
+                                <td><span>商品处理方式</span></td>
+                                <td class="lastd"><span>客户期望处理方式“仅退款”</span></td>
+                            </tr>
+                            <tr>
+                                <td><span>问题描述</span></td>
+                                <td class="lastd"><span th:text="${orderServe.cause}"></span></td>
+                            </tr>
+                            <tr>
+                                <td><span>服务备注</span></td>
+                                <td class="lastd"><span th:text="${orderServe.cause_instructions}"></span></td>
+                            </tr>
+                            <tr>
+                                <td><span>卖家收货信息</span></td>
+                                <td class="lastd">
+                                    <strong>
+								收货地址：深圳市龙华区龙观东路1号望城大厦5楼5818室<br>
+								收件人：云网书画院<br>
+								电话：400-900-9680 </strong>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            </div>
+            <h1 class="page-title"> 订单详情</h1>
+                   
+            <!-- ifram -->
+             <iframe  name="bodymain"  th:replace="admin/order/order_detail::order" class="page-content-wrapper" style="width:100%;background:#fff" frameborder="0">
+                
+            </iframe>
+            
+            </div>
+            </div>
+            <!-- end ifram -->
+        </div>
+        
+</div>
+	
+
+</body>
+</html>

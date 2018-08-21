@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <title>订单详情</title>
     <link rel="stylesheet" href="/admin/assets/layouts/layout/css/yunwang.css">
+     <link rel="stylesheet" href="/mall/css/style.css">
 </head>
 
 <body>
@@ -25,7 +26,7 @@
                     <small>订单详情管理</small>
             </h1>
             <!-- 内容展示 -->
-            <div class="row">
+            <div class="row" th:fragment="order">
                 <div class="col-md-12">
                     <div class="portlet light bordered">
                         <div class="portlet-body">
@@ -166,7 +167,7 @@
                                                 <input name="invalid" type="submit" value="无效" class="button" onclick="buttonSubmit('invalid')" id="invalid">
                                                 <input name="after_service" type="submit" value="售后" class="button" onclick="buttonSubmit('after-sales')" id="after-sales">
                                                 <input name="" type="submit" value="退货" class="button"  id="sales">
-                                                <input name="" type="submit" value="退款" class="button"  id="refund">
+                                                <input name="" type="submit" value="退款" class="button"  id="refund" onclick="buttonSubmit('refund')">
                                                 <input name="cancel" type="submit" value="取消" class="button" onclick="buttonSubmit('cancel')" id="cancel">
                                             </td>
                                         </tr>
@@ -204,10 +205,62 @@
                         
                     </div>
                 </div>
-            </div>
-        </div>
-    </div>
-    <script type="text/javascript" th:inline="javascript">
+                <!-- 弹出框 -->
+		<div class="modal_far_box"></div>
+		<div class="add_modal_box">
+			<h3 class="dialog_head">
+				<span class="dialog_title">
+					<span class="dialog_title_icon" id="title-add">退款信息</span></span>
+				<span class="dialog_close_button">X</span>
+			</h3>
+			<div class="eject_con">
+				<form id="refund_form">
+				<dl>
+					<dt><i class="required">*</i>订单号：</dt>
+					<dd><input type="text" class="text w100" name="order_number"  id="refund_order_number" disabled>
+			         
+			        </dd>
+				</dl>
+				<dl>
+					<dt><i class="required">*</i>退款单号：</dt>
+					<dd>
+						<input type="text" class="text w100" name="refund_number" value="" id="refund_number" >
+			          
+			        </dd>
+				</dl>
+				<dl>
+			        <dt><i class="required">*</i>订单总金额（元）：</dt>
+			        <dd>
+			          <input class="text w300" type="text" name="total_amount" value="" id="refund_total_amount">
+			          <p class="hint">（注意）单位为元</p>
+			        </dd>
+			    </dl>
+			    <dl>
+			        <dt><i class="required">*</i>退款金额（元）：</dt>
+			        <dd>
+			          <input class="text w300" type="text" name="refund_fee" value="" id="refund_fee">
+			          <p class="hint">（注意）单位为元</p>
+			        </dd>
+			    </dl>
+			    <dl>
+			        <dt><i class="required">*</i>退款原因：</dt>
+			        <dd>
+			          <textarea class="text w200" name="refund_desc" value="" id="refund_desc"></textarea>
+			        </dd>
+			    </dl>
+			   <input type="hidden" id="transaction_id">
+			    <div class="bottom">
+			        <label class="submit-border">
+			          <input type="button" class="submit" value="退款" id="button-add" onclick="refund()">
+			        </label>
+			        <a class="ncm-btn ml5" href="javascript:$('.modal_far_box,.add_modal_box').hide();">取消</a>
+			    </div>
+			    </form>
+			</div>
+		</div>
+	
+
+   <script type="text/javascript" th:inline="javascript">
     $(function(){
     	//初始化界面
     	 var order=[[${entity}]];
@@ -279,6 +332,7 @@
     	default:
     		$("#Generate").hide();
     	}
+    	//影藏退货弹出框
     	
     })
     var order=[[${entity}]];
@@ -325,14 +379,58 @@
       	  break;
     	case 'after-sales':
     		//售后
-    		var data1={order_number:order.order_number,del_state:'5'}
-    		var data2={order_number:order.order_number,action_note:$("#action_note").val()};
-    		confirmAndChengeStatus(data1,data2);
+    		//var data1={order_number:order.order_number,del_state:'5'}
+    		//var data2={order_number:order.order_number,action_note:$("#action_note").val()};
+    		//confirmAndChengeStatus(data1,data2);
       	  break;
-    	
+    	case 'refund':
+    		//退款
+    		
+    		
+    			$("#refund_order_number").attr("value",order.order_number);
+    			$("#refund_number").attr("value",order.order_number+"-01");
+    			$("#refund_total_amount").attr("value",order.total_amount);
+    			$("#transaction_id").attr("value",order.payment_seq);
+    			$(".modal_far_box,.add_modal_box").show();
+    			
+    		
+    		//var data1={order_number:order.order_number,del_state:'5'}
+    		//var data2={order_number:order.order_number,action_note:$("#action_note").val()};
+    		//confirmAndChengeStatus(data1,data2);
+      	  break;
+      	
     	default:
     		
     	}
+    }
+    //退款
+    function refund(){
+    	//表单校验
+    	//提交退款申请
+    	$.post("/wxpay/precreate/refund",
+    			{order_number:order.order_number,
+    			refund_number:$("#refund_number").val(),
+    			transaction_id:order.payment_seq,
+    			total_amount:order.total_amount,
+    			refund_fee:$("#refund_fee").val(),
+    			refund_desc:$("#refund_desc").val()
+    		},function(data){
+    			$('.modal_far_box,.add_modal_box').hide();
+    			if(data!=null&&data.return_code=='SUCCESS'){
+    				if(data.result_code=='SUCCESS'){
+    					//退款成功
+    					alert("退款成功");
+    					
+    				}
+    				
+    				alert(data.err_code_des)
+    				
+    			}else{
+    				//请求失败
+    				alert("退款请求失败！");
+    			}
+    			console.log(data);
+    		})
     }
     //修改订单状态，并记录操作记录
     //data1:订单状态
@@ -417,6 +515,13 @@
     }
     
     </script>
+                
+            </div>
+        </div>
+    </div>
+    
+    
+    
 </body>
 
 </html>

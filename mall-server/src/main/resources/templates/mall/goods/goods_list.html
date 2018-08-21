@@ -90,7 +90,7 @@
 						<!-- 推荐 -->
 						<input type="hidden" id="recommend" name="recommend" th:value="${goods}!=null?${goods.recommend}"/>	
 						<input type="hidden" id="classic" name="classic" th:value="${goods}!=null?${goods.classic}"/>	
-						<input type="hidden" id="new_product" name="new_product" th:value="${goods}!=null?${new_product}"/>	
+						<input type="hidden" id="new_product" name="new_product" th:value="${goods}!=null?${goods.new_product}"/>	
 						<input type="hidden" id="sale" name="goodsPrice.sale" th:value="(${goods}!=null and ${goods.goodsPrice}!=null)?${goods.goodsPrice.sale}"/>	
 							
 						</form>

@@ -1,5 +1,7 @@
 package com.mall.controller.order;
 
+import java.util.Map;
+
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Controller;
@@ -14,12 +16,14 @@ import com.mall.entity.inventory.InventoryDeiveryAction;
 import com.mall.entity.order.Order;
 import com.mall.entity.order.OrderAction;
 import com.mall.entity.order.OrderDetails;
+import com.mall.entity.order.OrderServe;
 import com.mall.message.SystemCode;
 import com.mall.service.cms.AuthorWithBLOBsService;
 import com.mall.service.goods.GoodsService;
 import com.mall.service.inventory.InventoryDeiveryActionService;
 import com.mall.service.inventory.InventoryDeiveryService;
 import com.mall.service.order.OrderActionService;
+import com.mall.service.order.OrderServeService;
 import com.mall.service.order.OrderService;
 import com.mall.service.sys.CacheService;
 import com.mall.util.PageResult;
@@ -42,6 +46,8 @@ public class AdminOrderController  extends AbstractController{
 	private InventoryDeiveryService inventoryDeiveryService;
 	@Resource
 	private InventoryDeiveryActionService inventoryDeiveryActionService;
+	@Resource
+	private OrderServeService orderServeService;
 	
 	@RequestMapping("/list")
 	public String toOrderList(Model model ,Order order ,PageResult<Order> list) {
@@ -139,5 +145,64 @@ public class AdminOrderController  extends AbstractController{
 		return "admin/index";
 		
 	}
+	
+	@RequestMapping("/service/list")
+	public String toServerList(Model model,OrderServe orderServe,PageResult<OrderServe> list) {
+		logger.info("获取用户服务单列表！");
+		list=orderServeService.queryByPageFront(list, orderServe);
+		model.addAttribute("list", list);
+		model.addAttribute("orderServe", orderServe);
+		model.addAttribute("page", "admin/order/sever_list");
+		model.addAttribute("order", "nav-item start active open");
+		return "admin/index";
+	}
+	@RequestMapping("/service/detail")
+	public String toServerDetail(Model model,OrderServe orderServe) {
+		logger.info("获取用户服务单详情！orderServe="+orderServe.getService_number());
+		//获取售后单信息
+		orderServe=orderServeService.selectInfo(orderServe);
+		
+		Order order =new Order();
+		order.setOrder_number(orderServe.getOrder_number());
+		order=orderService.selectInfo(order);
+		for(OrderDetails OrderDetails :order.getOrderDetailsList()) {
+			//获取商品信息
+			Goods goods=new Goods();
+			goods.setGoods_id(OrderDetails.getGoods_id());
+			goods=goodsService.selectInfo(goods);
+			//获取作家信息
+			AuthorWithBLOBs auth=new AuthorWithBLOBs();
+			auth.setId(goods.getGoodsInfo().getAuth_id());
+			auth=authorWithBLOBsService.selectInfo(auth);
+			goods.setAuth(auth);
+			OrderDetails.setGoods(goods);
+		}
+		//获取订单操作流水
+		PageResult<OrderAction> list =new PageResult<OrderAction>();
+		list.setPageSize(100);
+		OrderAction orderAction =new OrderAction();
+		orderAction.setOrder_number(order.getOrder_number());
+		list=orderActionService.queryByPageFront(list,orderAction);
+		//获取发货单信息
+		InventoryDeivery inventoryDeivery = new InventoryDeivery();
+		inventoryDeivery.setOrder_number(order.getOrder_number());
+		inventoryDeivery=inventoryDeiveryService.selectByNumber(inventoryDeivery);
+		
+		//文件服务器路径
+		Map<String, String> cache = cacheService.getCache(SystemCode.FILE_SERVICE);
+		String url=cache.get(SystemCode.FILE_SERVICE_URL);
+		String port=cache.get(SystemCode.FILE_SERVICE_PORT);
+		String filePath=cache.get(SystemCode.FILE_SERVICE_FILES_PATH);
+		String fileUrlPrefix=url+":"+port+"/"+filePath;
+		model.addAttribute("fileServicePath", fileUrlPrefix);
+		model.addAttribute("deivery", inventoryDeivery);
+		model.addAttribute("list", list.getDataList());
+		model.addAttribute("entity", order);
+		model.addAttribute("orderServe", orderServe);
+		model.addAttribute("page", "admin/order/server_detail");
+		model.addAttribute("order", "nav-item start active open");
+		return "admin/index";
+	}
+	
 
 }

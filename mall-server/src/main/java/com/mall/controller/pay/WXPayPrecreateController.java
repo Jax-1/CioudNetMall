@@ -1,5 +1,6 @@
 package com.mall.controller.pay;
 import java.awt.image.BufferedImage;
+import java.io.ObjectOutputStream.PutField;
 import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
@@ -27,11 +28,14 @@ import com.mall.entity.login.User;
 import com.mall.entity.order.Order;
 import com.mall.entity.order.OrderDetails;
 import com.mall.entity.payment.PaymentFlow;
+import com.mall.entity.payment.PaymentRefund;
 import com.mall.message.ProcessResult;
+import com.mall.message.SystemCode;
 import com.mall.service.goods.GoodsService;
 import com.mall.service.inventory.InventoryService;
 import com.mall.service.order.OrderService;
 import com.mall.service.payment.PaymentFlowService;
+import com.mall.service.payment.PaymentRefundService;
 import com.mall.service.sys.CacheService;
 import com.mall.util.DateFormatUtil;
 import com.mall.util.MapTrunPojoUtil;
@@ -64,6 +68,8 @@ public class WXPayPrecreateController extends AbstractController{
     private InventoryService inventoryService;
     @Resource
 	private CacheService cacheService;
+    @Resource
+    private PaymentRefundService paymentRefundService;
 
     /**
      * 扫码支付 - 统一下单
@@ -301,6 +307,76 @@ public class WXPayPrecreateController extends AbstractController{
     	
 		return ProcessResult.success(res);
     	
+    }
+	@RequestMapping("/refund")
+    @ResponseBody
+    public Map<String, String> toRefund(HttpServletRequest request, HttpServletResponse response,PaymentRefund paymentRefund) {
+    	Map<String, String> reqData = new HashMap<>();
+    	reqData.put("transaction_id", paymentRefund.getTransaction_id());
+    	reqData.put("out_refund_no", paymentRefund.getRefund_number());
+    	logger.info("订单付款金额："+paymentRefund.getTotal_amount());
+    	BigDecimal decimal = paymentRefund.getTotal_amount().multiply(new BigDecimal(100));
+    	reqData.put("total_fee", decimal.setScale(0,BigDecimal.ROUND_DOWN).toString());  //订单金额
+    	logger.info("订单退款金额："+paymentRefund.getRefund_fee());
+    	BigDecimal refund_fee = paymentRefund.getRefund_fee().multiply(new BigDecimal(100));
+    	reqData.put("refund_fee", refund_fee.setScale(0,BigDecimal.ROUND_DOWN).toString());
+    	logger.info("退款订单号："+paymentRefund.getOrder_number()+",退款金额："+refund_fee.setScale(0,BigDecimal.ROUND_DOWN).toString()+"分");
+    	
+//    	reqData.put("notify_url", "http://www.ywwhcm.com.cn/wxpay/precreate/notify");//回调URL
+//    	Map<String, String> refund =new HashMap<>();
+//    	try {
+//			refund = wxPay.refund(reqData);
+//			//保存退款信息
+//			paymentRefund.setCreate_time(DateFormatUtil.getDate());
+//			paymentRefund.setAction_admin(SessionUtil.getAdminUser(request).getAdmin_name());
+//			paymentRefundService.insertSelective(paymentRefund);
+//			
+//			
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//    	logger.info("退款请求结果："+refund.toString());
+    	
+    	Map<String, String> fillRequestData=new HashMap<>();
+    	Map<String, String> processResponseXml=new HashMap<>();
+    	try {
+			fillRequestData = wxPay.fillRequestData(reqData);
+			String mch=fillRequestData.get("mch_id");
+			logger.info("商户号："+mch);
+			Map<String, String> cache = cacheService.getCache(SystemCode.PATH);
+			String path = cache.get(SystemCode.WXSSL);
+			String doRefund = ClientCustomSSL.doRefund(WXPayConstants.REFUND_URL,  WXPayUtil.mapToXml(fillRequestData),mch,path);
+			
+			processResponseXml = wxPay.processResponseXml(doRefund);
+			logger.info("退款返回结果："+processResponseXml);
+			if("SUCCESS".equals(processResponseXml.get("return_code"))) {
+				paymentRefund.setReturn_code(processResponseXml.get("return_code"));
+				paymentRefund.setReturn_msg(processResponseXml.get("return_msg"));
+				paymentRefund.setResult_code(processResponseXml.get("result_code"));
+				paymentRefund.setErr_code(processResponseXml.get("err_code"));
+				paymentRefund.setErr_code_des(processResponseXml.get("err_code_des"));
+				//请求成功
+				if("SUCCESS".equals(processResponseXml.get("result_code"))) {
+					//退款成功
+					//修改订单状态
+					Order order =new Order();
+					order.setOrder_number(paymentRefund.getOrder_number());
+					byte state = Byte.parseByte("3");
+					order.setPay_state(state);
+					orderService.updateOrderStatus(order);
+					paymentRefund.setState(Byte.parseByte("1"));
+					
+				}
+				paymentRefund.setCreate_time(DateFormatUtil.getDate());
+				paymentRefund.setAction_admin(SessionUtil.getAdminUser(request).getAdmin_name());
+				//保存退款信息
+				paymentRefundService.insertSelective(paymentRefund);
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+    	return processResponseXml;
     }
     
 

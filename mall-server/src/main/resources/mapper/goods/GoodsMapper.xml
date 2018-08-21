@@ -384,11 +384,14 @@ WHERE
 				and t_goods_info.category_id=#{goodsInfo.category_id}
 			</if>
 			
-			<if test="is_marketable!=null and  is_marketable!=''">
+			<if test="is_marketable!=null and  is_marketable!='' and is_marketable!='-1'">
 				and t_goods.is_marketable=#{is_marketable}
 			</if>
-			<if test="recommend!=null and recommend!=''">
+			<if test="recommend!=null and recommend!='' and recommend!='-1'">
 				and t_goods.recommend=#{recommend}
+			</if>
+			<if test="nickname!=null and nickname!='' and nickname!='-1'">
+				and t_goods.nickname LIKE CONCAT('%',#{nickname},'%')
 			</if>
 			<if test="classic!=null and classic!=''">
 				and t_goods.classic=#{classic}

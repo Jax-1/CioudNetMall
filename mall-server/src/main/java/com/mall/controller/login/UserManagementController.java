@@ -305,7 +305,10 @@ public class UserManagementController extends AbstractController{
 		
 	}
 	@RequestMapping("/service/list")
-	public String toServiceList(Model model,OrderServe orderServe,PageResult<OrderServe> list) {
+	public String toServiceList(Model model,OrderServe orderServe,PageResult<OrderServe> list,HttpServletRequest request) {
+		
+		User user = SessionUtil.getUser(request);
+		orderServe.setCreate_at(user.getUser_name());
 		logger.info("获取用户服务单列表！");
 		list=orderServeService.queryByPageFront(list, orderServe);
 		for(OrderServe os:list.getDataList()) {

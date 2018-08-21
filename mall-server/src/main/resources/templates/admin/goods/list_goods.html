@@ -25,35 +25,41 @@
             <!-- 内容展示 -->
             <div class="row">
                 <div class="col-md-12">
-                    <form class="form-horizontal">
+                    <form class="form-horizontal" id="selectForm" action="/admin/goods/list" method="post">
                         <div class="form-group">
                             <div class="col-sm-1">
-                                <select class="form-control">
-                                    <option>商品分类</option>
-                                    <option>油画</option>
+                                <select class="form-control"  id="goods_category">
+                                	<option value="all" >全部</option>
+                                   
+                                   
+                                </select>
+                                <input type="hidden"  id="categorySelectInput" name="goodsInfo.category_id"/>
+                            </div>
+                            <div class="col-sm-1">
+                                <select class="form-control"  id="statusSelect">
+                                    <option value="all">全部</option>
+                                    <option value="classic">精品</option>
+                                    <option value="recommend">推荐</option>
+                                    <option value="new_product">新品</option>
+                                    <option value="goodsPrice.sale">特惠</option>
+                                </select>
+                                <input type="hidden"  id="statusSelectInput" />
+                            </div>
+                            <div class="col-sm-1">
+                                <select class="form-control" name="is_marketable" id="is_marketableSelect">
+                                    <option value="-1">全部</option>
+                                    <option value="Y">上架</option>
+                                    <option value="N">下架</option>
                                 </select>
                             </div>
                             <div class="col-sm-1">
-                                <select class="form-control" name='变化的'>
-                                    <option >全部</option>
-                                    <option value="Y">精品</option>
-                                    <option value="Y">推荐</option>
-                                    <option value="Y">新品</option>
-                                    <option value="Y">特惠</option>
-                                </select>
+                                <input class="form-control" type="text" placeholder="商品名称" name="goods_name" th:value="${goods?.goods_name}">
                             </div>
                             <div class="col-sm-1">
-                                <select class="form-control">
-                                    <option>全部</option>
-                                    <option>上架</option>
-                                    <option>下架</option>
-                                </select>
+                                <input class="form-control" type="text" placeholder="商品编号" name="nickname" th:value="${goods?.nickname}">
                             </div>
                             <div class="col-sm-1">
-                                <input class="form-control" type="text" placeholder="商品名称">
-                            </div>
-                            <div class="col-sm-1">
-                                <button class="btn btn-success">搜索</button>
+                                <button class="btn btn-success" type="submit">搜索</button>
                             </div>
                         </div>
                     </form>
@@ -145,11 +151,11 @@
                                 <div class="dataTables_paginate paging_bootstrap_full_number">
                                      <ul class="pagination" style="visibility: visible;">
 		                            	
-		                                <li class="prev ">  <a href="#" th:href="@{/admin/goods/list(pageNo=${1})}">
+		                                <li class="prev ">  <a href="#" th:href="@{'javascript:topage(1)'}">
 		                                    <i class="fa fa-angle-double-left"></i>
 		                                    </a></li>
 		                                    <li class="prev ">
-		                                        <a href="#" title="Prev" th:href="@{/admin/goods/list(pageNo=${list.pageNo}-1>0?${list.pageNo}-1:1)}">
+		                                        <a href="#" title="Prev" th:href="@{  'javascript:topage('+(${list.pageNo}-1>0?${list.pageNo}-1:1)+')'}">
 		                                            <i class="fa fa-angle-left"></i>
 		                                        </a>
 		                                    </li>
@@ -157,12 +163,12 @@
 		                                        <a href="#" th:text="${list.pageNo}">1</a>
 		                                    </li>
 		                                    <li class="next ">
-		                                        <a href="#" title="Next" th:href="@{/admin/goods/list(pageNo=${list.pageNo}==${list.pages}?${list.pages}:${list.pageNo}+1)}">
+		                                        <a href="#" title="Next" th:href="@{'javascript:topage('+(${list.pageNo}==${list.pages}?${list.pages}:${list.pageNo}+1)+')'}">
 		                                            <i class="fa fa-angle-right"></i>
 		                                        </a>
 		                                    </li>
 		                                    <li class="next " >
-		                                        <a href="#" title="Last" th:href="@{/admin/goods/list(pageNo=${list.pages})}"><i class="fa fa-angle-double-right"></i>
+		                                        <a href="#" title="Last"  th:href="@{'javascript:topage('+(${list.pages})+')'}"><i class="fa fa-angle-double-right"></i>
                                         		</a>
 		                                    </li>
 		                                    <li class="prev "> 
@@ -184,7 +190,7 @@
     		for(var i=2;i>0;i--){
     			var pag=pageNo-i;
     			if(pageNo-i>0){
-    				var dome="<li><a  href='/admin/goods/list?pageNo="+pag+"'>"+pag+"</a></li>";
+    				var dome="<li><a  href='javascript:topage("+pag+");'>"+pag+"</a></li>";
         			$("#activepage").before(dome);
     			}
     			
@@ -192,7 +198,7 @@
     		for(var i=2;i>0;i--){
     			var pag=pageNo+i;
     			if(pageNo+i<=pages){
-    				var dome="<li><a  href='/admin/goods/list?pageNo="+pag+"'>"+pag+"</a></li>";
+    				var dome="<li><a  href='javascript:topage("+pag+");'>"+pag+"</a></li>";
         			$("#activepage").after(dome);
     			}
     			
@@ -209,7 +215,83 @@
 			
         	
         })
+        //状态下拉框选中事件
+        $("select#statusSelect").change(function(){
+        	if($(this).val()=='all'){
+        		$("#statusSelectInput").attr("name","");
+        		$("#statusSelectInput").attr("value","");
+        	}else{
+        		$("#statusSelectInput").attr("name",$(this).val());
+        		$("#statusSelectInput").attr("value","Y");
+        	}
+        	
+        })
+        $("select#goods_category").change(function(){
+        	if($(this).val()=='all'){
+        		$("#categorySelectInput").attr("value","");
+        	}else{
+        		$("#categorySelectInput").attr("value",$(this).val());
+        	}
+        	
+        })
+        var goods=[[${goods}]];
         
+        //加载下拉框
+		var goods_cate=[[${goodsCategoryList}]]
+		$("#goods_category").append( buildMenu( goods_cate))
+		//分类默认选中
+		if(goods!=null && goods.goodsInfo!=null &&goods.goodsInfo.category_id!=''){
+			console.log(11111111);
+			$("#goods_category").val(goods.goodsInfo.category_id);
+			$("#categorySelectInput").attr("value",goods.goodsInfo.category_id)
+		}else{
+			$("#goods_category").val('all');
+		}
+        if(goods!=null ){
+        	 if(goods.classic=='Y'){
+ 	        	$("#statusSelect").val("classic");
+ 	        	$("#statusSelectInput").attr("name","classic");
+        		$("#statusSelectInput").attr("value","Y");
+ 	        }else if(goods.recommend=='Y'){
+ 	        	$("#statusSelect").val("recommend");
+ 	        	$("#statusSelectInput").attr("name","recommend");
+        		$("#statusSelectInput").attr("value","Y");
+ 	        }else if(goods.new_product=='Y'){
+ 	        	$("#statusSelect").val("new_product");
+ 	        	$("#statusSelectInput").attr("name","new_product");
+        		$("#statusSelectInput").attr("value","Y");
+ 	        }else if(goods.goodsPrice!=null && goods.goodsPrice.sale=='Y'){
+ 	        	$("#statusSelect").val("goodsPrice.sale");
+ 	        	$("#statusSelectInput").attr("name","goodsPrice.sale");
+        		$("#statusSelectInput").attr("value","Y");
+ 	        }else{
+ 	        	$("#statusSelect").val("all");
+ 	        }
+        	if(goods.is_marketable!=null && goods.is_marketable!=''){
+        		$("#is_marketableSelect").val(goods.is_marketable)
+        	}else{
+        		$("#is_marketableSelect").val('-1');
+        	}
+        }
+	       
+		
+		
+        
+		//递归分类
+		function buildMenu(obj) {
+            var str='';
+            for(index in obj){
+            	str += "<option value='"+obj[index].category_id+"'>"+ obj[index].category_name+"</option>";
+            	str += buildMenu(obj[index].goodsCategoryList);
+               }
+            return str;
+    	} 
+        //分页跳转
+        function topage(num){
+        	var item=" <input type='hidden'  name='pageNo'  value='"+num+"'/>"
+        	$("#selectForm").append(item);
+        	$("#selectForm").submit();
+        }
 		//批量操作
 			function batch(type){
         		console.log(type);

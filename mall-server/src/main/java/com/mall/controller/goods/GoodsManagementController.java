@@ -59,7 +59,12 @@ public class GoodsManagementController extends AbstractController{
 		int pageSize  =  Integer.parseInt(cacheService.getCache(SystemCode.PAGE).get(SystemCode.MALL_ATT_PAGE));
 		list.setPageSize(pageSize);
 		list=goodsService.queryByPageFront(list, goods);
+		//查询所有分类
+		List<GoodsCategory> goodsCategoryList = goodsCategoryService.getGoodsCategoryList(null);
+		logger.info("获取商品分类列表："+goodsCategoryList.size());				
+		model.addAttribute("goodsCategoryList", goodsCategoryList);
 		model.addAttribute("list",list);
+		model.addAttribute("goods", goods);
 		model.addAttribute("page", "admin/goods/list_goods");
 		model.addAttribute("mall", "nav-item start active open");
 		return "admin/index";
@@ -102,6 +107,9 @@ public class GoodsManagementController extends AbstractController{
 	
 	@RequestMapping("/save")
 	public String toGoodsSave(Model model,Goods goods,HttpServletRequest request,String editorValue,String type) {
+		logger.info("是否包邮？"+goods.getGoodsInfo().getExt1());
+		logger.info("商品详情："+editorValue);
+		logger.info("商品详情："+goods.getDetail_describe());
 		if(SystemCode.TYPE_SAVE.equals(type)) {
 			//保存操作
 			goods.init(goods, request, editorValue);
@@ -124,6 +132,7 @@ public class GoodsManagementController extends AbstractController{
 				goods.setClassic(goods.getClassic()==null?"N":"Y");
 				goods.setNew_product(goods.getNew_product()==null?"N":"Y");
 				goods.getGoodsPrice().setSale(goods.getGoodsPrice().getSale()==null?"N":"Y");
+				goods.getGoodsInfo().setExt1(goods.getGoodsInfo().getExt1()==null?"Y":"N");
 				
 				goodsService.updateByPrimaryKeySelective(goods);
 				GoodsInfoService.updateByPrimaryKeySelective(goods.getGoodsInfo());

@@ -123,6 +123,7 @@ public class AdminCMSController extends AbstractController{
 				//更新操作
 				logger.info("更新文章信息：文章名："+att.getTitle()+", ID="+att.getId());
 				try {
+					att.setContent(editorValue);
 					atticleldService.updateByPrimaryKeySelective(att);
 					List<FilePath> fileList=new ArrayList<FilePath>();
 					FilePath file=new FilePath();
@@ -181,6 +182,7 @@ public class AdminCMSController extends AbstractController{
 				//更新操作
 				logger.info("更新作家信息：姓名："+auth.getAuthorname()+", ID="+auth.getId());
 				try {
+					auth.setContent(editorValue);
 					authorWithBLOBsService.updateByPrimaryKeySelective(auth);
 					FilePath file=new FilePath();
 					file.setBelongid(auth.getId());

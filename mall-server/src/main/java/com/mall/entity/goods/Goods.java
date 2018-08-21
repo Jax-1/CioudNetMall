@@ -132,7 +132,7 @@ public class Goods {
 		goods.setGoods_id(goods_id);
 		goods.setGoods_info_id(goods_info_id);
 		goods.setGoods_price_id(goods_price_id);
-		goods.setDetail_describe(editorValue);
+		//goods.setDetail_describe(editorValue);
 		goods.setCreate_time(DateFormatUtil.getDate());
 		//初始化商品信息
 		goods.getGoodsInfo().setGoods_info_id(goods_info_id);

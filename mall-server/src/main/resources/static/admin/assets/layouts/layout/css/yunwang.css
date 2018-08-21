@@ -111,3 +111,7 @@ li{
 .order_list>tbody>tr>td{
 	vertical-align: middle !important;
 }
+/*商品列表筛选*/
+.col-sm-1{
+	width: 120px;
+}

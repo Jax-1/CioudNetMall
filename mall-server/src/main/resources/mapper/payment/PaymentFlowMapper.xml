@@ -27,11 +27,12 @@
     err_code, err_code_des, openid, is_subscribe, trade_type, bank_type, total_fee, fee_type, 
     time_end, attach, create_time
   </sql>
+  <!-- 重写，根据订单号查询 -->
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from t_payment_flow
-    where id = #{id,jdbcType=INTEGER}
+    where attach = #{attach}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from t_payment_flow

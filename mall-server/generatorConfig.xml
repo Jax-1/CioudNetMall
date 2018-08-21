@@ -10,18 +10,19 @@
     <jdbcConnection connectionURL="jdbc:mysql://47.93.16.119:3306/dbmall"
     	 driverClass="com.mysql.jdbc.Driver"
     	  password="zhang032111" userId="root" />
-    <javaModelGenerator targetPackage="com.mall.entity.order" targetProject="shop-server\src\main\java" />
+    <javaModelGenerator targetPackage="com.mall.entity.payment" targetProject="shop-server\src\main\java" />
     <sqlMapGenerator targetPackage="com.mall.main.mapping" targetProject="shop-server\src\main\java" />
-    <javaClientGenerator targetPackage="com.mall.dao.order" targetProject="shop-server\src\main\java" type="XMLMAPPER" />
+    <javaClientGenerator targetPackage="com.mall.dao.payment" targetProject="shop-server\src\main\java" type="XMLMAPPER" />
 
 
-		<table schema="" tableName="t_order_serve" domainObjectName="OrderServe"
+		<table schema="" tableName="t_payment_refund" domainObjectName="PaymentRefund"
     enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"
     enableSelectByExample="false" selectByExampleQueryId="false" >
     <property name="useActualColumnNames" value="true"/>
 		</table>
 		
-
+		
+		
 		
 		
 		

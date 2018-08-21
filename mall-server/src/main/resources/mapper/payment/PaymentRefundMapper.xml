@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mall.dao.payment.PaymentRefundMapper">
+  <resultMap id="BaseResultMap" type="com.mall.entity.payment.PaymentRefund">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="order_number" jdbcType="VARCHAR" property="order_number" />
+    <result column="refund_number" jdbcType="VARCHAR" property="refund_number" />
+    <result column="transaction_id" jdbcType="VARCHAR" property="transaction_id" />
+    <result column="total_amount" jdbcType="DECIMAL" property="total_amount" />
+    <result column="refund_fee" jdbcType="DECIMAL" property="refund_fee" />
+    <result column="refund_desc" jdbcType="VARCHAR" property="refund_desc" />
+    <result column="state" jdbcType="TINYINT" property="state" />
+    <result column="return_code" jdbcType="VARCHAR" property="return_code" />
+    <result column="return_msg" jdbcType="VARCHAR" property="return_msg" />
+    <result column="result_code" jdbcType="VARCHAR" property="result_code" />
+    <result column="err_code" jdbcType="VARCHAR" property="err_code" />
+    <result column="err_code_des" jdbcType="VARCHAR" property="err_code_des" />
+    <result column="action_admin" jdbcType="VARCHAR" property="action_admin" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="create_time" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="update_time" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, order_number, refund_number, transaction_id, total_amount, refund_fee, refund_desc, 
+    state, return_code, return_msg, result_code, err_code, err_code_des, action_admin, 
+    create_time, update_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_payment_refund
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from t_payment_refund
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.mall.entity.payment.PaymentRefund">
+    insert into t_payment_refund (id, order_number, refund_number, 
+      transaction_id, total_amount, refund_fee, 
+      refund_desc, state, return_code, 
+      return_msg, result_code, err_code, 
+      err_code_des, action_admin, create_time, 
+      update_time)
+    values (#{id,jdbcType=INTEGER}, #{order_number,jdbcType=VARCHAR}, #{refund_number,jdbcType=VARCHAR}, 
+      #{transaction_id,jdbcType=VARCHAR}, #{total_amount,jdbcType=DECIMAL}, #{refund_fee,jdbcType=DECIMAL}, 
+      #{refund_desc,jdbcType=VARCHAR}, #{state,jdbcType=TINYINT}, #{return_code,jdbcType=VARCHAR}, 
+      #{return_msg,jdbcType=VARCHAR}, #{result_code,jdbcType=VARCHAR}, #{err_code,jdbcType=VARCHAR}, 
+      #{err_code_des,jdbcType=VARCHAR}, #{action_admin,jdbcType=VARCHAR}, #{create_time,jdbcType=TIMESTAMP}, 
+      #{update_time,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.mall.entity.payment.PaymentRefund">
+    insert into t_payment_refund
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="order_number != null">
+        order_number,
+      </if>
+      <if test="refund_number != null">
+        refund_number,
+      </if>
+      <if test="transaction_id != null">
+        transaction_id,
+      </if>
+      <if test="total_amount != null">
+        total_amount,
+      </if>
+      <if test="refund_fee != null">
+        refund_fee,
+      </if>
+      <if test="refund_desc != null">
+        refund_desc,
+      </if>
+      <if test="state != null">
+        state,
+      </if>
+      <if test="return_code != null">
+        return_code,
+      </if>
+      <if test="return_msg != null">
+        return_msg,
+      </if>
+      <if test="result_code != null">
+        result_code,
+      </if>
+      <if test="err_code != null">
+        err_code,
+      </if>
+      <if test="err_code_des != null">
+        err_code_des,
+      </if>
+      <if test="action_admin != null">
+        action_admin,
+      </if>
+      <if test="create_time != null">
+        create_time,
+      </if>
+      <if test="update_time != null">
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="order_number != null">
+        #{order_number,jdbcType=VARCHAR},
+      </if>
+      <if test="refund_number != null">
+        #{refund_number,jdbcType=VARCHAR},
+      </if>
+      <if test="transaction_id != null">
+        #{transaction_id,jdbcType=VARCHAR},
+      </if>
+      <if test="total_amount != null">
+        #{total_amount,jdbcType=DECIMAL},
+      </if>
+      <if test="refund_fee != null">
+        #{refund_fee,jdbcType=DECIMAL},
+      </if>
+      <if test="refund_desc != null">
+        #{refund_desc,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null">
+        #{state,jdbcType=TINYINT},
+      </if>
+      <if test="return_code != null">
+        #{return_code,jdbcType=VARCHAR},
+      </if>
+      <if test="return_msg != null">
+        #{return_msg,jdbcType=VARCHAR},
+      </if>
+      <if test="result_code != null">
+        #{result_code,jdbcType=VARCHAR},
+      </if>
+      <if test="err_code != null">
+        #{err_code,jdbcType=VARCHAR},
+      </if>
+      <if test="err_code_des != null">
+        #{err_code_des,jdbcType=VARCHAR},
+      </if>
+      <if test="action_admin != null">
+        #{action_admin,jdbcType=VARCHAR},
+      </if>
+      <if test="create_time != null">
+        #{create_time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="update_time != null">
+        #{update_time,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.mall.entity.payment.PaymentRefund">
+    update t_payment_refund
+    <set>
+      <if test="order_number != null">
+        order_number = #{order_number,jdbcType=VARCHAR},
+      </if>
+      <if test="refund_number != null">
+        refund_number = #{refund_number,jdbcType=VARCHAR},
+      </if>
+      <if test="transaction_id != null">
+        transaction_id = #{transaction_id,jdbcType=VARCHAR},
+      </if>
+      <if test="total_amount != null">
+        total_amount = #{total_amount,jdbcType=DECIMAL},
+      </if>
+      <if test="refund_fee != null">
+        refund_fee = #{refund_fee,jdbcType=DECIMAL},
+      </if>
+      <if test="refund_desc != null">
+        refund_desc = #{refund_desc,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null">
+        state = #{state,jdbcType=TINYINT},
+      </if>
+      <if test="return_code != null">
+        return_code = #{return_code,jdbcType=VARCHAR},
+      </if>
+      <if test="return_msg != null">
+        return_msg = #{return_msg,jdbcType=VARCHAR},
+      </if>
+      <if test="result_code != null">
+        result_code = #{result_code,jdbcType=VARCHAR},
+      </if>
+      <if test="err_code != null">
+        err_code = #{err_code,jdbcType=VARCHAR},
+      </if>
+      <if test="err_code_des != null">
+        err_code_des = #{err_code_des,jdbcType=VARCHAR},
+      </if>
+      <if test="action_admin != null">
+        action_admin = #{action_admin,jdbcType=VARCHAR},
+      </if>
+      <if test="create_time != null">
+        create_time = #{create_time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="update_time != null">
+        update_time = #{update_time,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.mall.entity.payment.PaymentRefund">
+    update t_payment_refund
+    set order_number = #{order_number,jdbcType=VARCHAR},
+      refund_number = #{refund_number,jdbcType=VARCHAR},
+      transaction_id = #{transaction_id,jdbcType=VARCHAR},
+      total_amount = #{total_amount,jdbcType=DECIMAL},
+      refund_fee = #{refund_fee,jdbcType=DECIMAL},
+      refund_desc = #{refund_desc,jdbcType=VARCHAR},
+      state = #{state,jdbcType=TINYINT},
+      return_code = #{return_code,jdbcType=VARCHAR},
+      return_msg = #{return_msg,jdbcType=VARCHAR},
+      result_code = #{result_code,jdbcType=VARCHAR},
+      err_code = #{err_code,jdbcType=VARCHAR},
+      err_code_des = #{err_code_des,jdbcType=VARCHAR},
+      action_admin = #{action_admin,jdbcType=VARCHAR},
+      create_time = #{create_time,jdbcType=TIMESTAMP},
+      update_time = #{update_time,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
