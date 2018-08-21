@@ -68,15 +68,36 @@
 		<div class="shop_classify_min">
 			<div class="shop_tab_box">
 				<ul>
-					<li class="active">新品字画</li>
+					<li class="active">特惠字画</li>
+					<li>新品字画</li>
 					<li>人气字画</li>
 					<li>精品字画</li>
-					<li>特惠字画</li>
 					
 				</ul>
 			</div>
 			<div class="show_cont_box">
 				<ul class="father_tab_box">
+					<li class="c_box">
+						<ul class="child_ul">
+							<li th:each="a:${saleGoods}">
+								<span class="sPic">
+									<a href="" th:href="@{/mall/goods/detail(goods_id=${a.goods_id})}">
+		                            	<img alt=""  th:src="@{${fileServicePath}+'/'+${a.filePath.path}+'/'+${a.filePath.fileidname}+'.'+${a.filePath.filetype}}" th:alt="'《'+${a.goods_name}+'》'" th:title="'《'+${a.goods_name}+'》'">
+		                            </a>
+		                        </span>
+		                        <p><a  th:text="${a.auth.position}+'-'+${a.auth.authorname}">中国美术家协会会员 楚英</a></p>
+		                        <p><a href="" th:text="'《'+${a.goods_name}+'》'" th:href="@{/mall/goods/detail(goods_id=${a.goods_id})}">《新华一角》</a></p>
+		                        <div class="price">
+		                        ¥
+		                        	&nbsp
+		                            <span th:text="${a.goodsPrice.sale}=='Y'?${a.goodsPrice.sale_price}:${a.goodsPrice.retail_price}">2000.00</span>
+		                            <del class="yuanjia" th:text="'¥ '+(${a.goodsPrice.sale}=='Y'?${a.goodsPrice.retail_price})" th:style="${a.goodsPrice.sale}=='Y'?'':'display:none'"></del>
+		                        </div>
+		                    </li>
+						</ul>
+						<div class="more_btn"><a href="/mall/goods/list?goodsPrice.sale=Y">查看更多</a></div>
+					</li>
+					<!--特惠end  -->
 					<li class="c_box">
 						<ul class="child_ul">
 							<li th:each="a:${newGoods}">
@@ -137,26 +158,6 @@
 		                    </li>
 						</ul>
 						<div class="more_btn"><a href="/mall/goods/list?classic=Y">查看更多</a></div>
-					</li>
-					<li class="c_box">
-						<ul class="child_ul">
-							<li th:each="a:${saleGoods}">
-								<span class="sPic">
-									<a href="" th:href="@{/mall/goods/detail(goods_id=${a.goods_id})}">
-		                            	<img alt=""  th:src="@{${fileServicePath}+'/'+${a.filePath.path}+'/'+${a.filePath.fileidname}+'.'+${a.filePath.filetype}}" th:alt="'《'+${a.goods_name}+'》'" th:title="'《'+${a.goods_name}+'》'">
-		                            </a>
-		                        </span>
-		                        <p><a  th:text="${a.auth.position}+'-'+${a.auth.authorname}">中国美术家协会会员 楚英</a></p>
-		                        <p><a href="" th:text="'《'+${a.goods_name}+'》'" th:href="@{/mall/goods/detail(goods_id=${a.goods_id})}">《新华一角》</a></p>
-		                        <div class="price">
-		                        ¥
-		                        	&nbsp
-		                            <span th:text="${a.goodsPrice.sale}=='Y'?${a.goodsPrice.sale_price}:${a.goodsPrice.retail_price}">2000.00</span>
-		                            <del class="yuanjia" th:text="'¥ '+(${a.goodsPrice.sale}=='Y'?${a.goodsPrice.retail_price})" th:style="${a.goodsPrice.sale}=='Y'?'':'display:none'"></del>
-		                        </div>
-		                    </li>
-						</ul>
-						<div class="more_btn"><a href="/mall/goods/list?goodsPrice.sale=Y">查看更多</a></div>
 					</li>
 					
 				</ul>
