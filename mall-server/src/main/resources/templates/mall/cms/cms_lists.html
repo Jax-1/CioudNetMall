@@ -1,17 +1,16 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<html lang="en" >
 
 
 <body class="page-header-fixed page-sidebar-closed-hide-logo page-content-white">
-<!-- 内容部分 -->
+<!-- ���ݲ��� -->
 	<div class="content_box">
 		<div class="cms_show_box">
 			<div class="content_bar">
-				您所在的位置：<span id="subtitle">传统文化</span>	
+				�����ڵ�λ�ã�<span id="subtitle">��ͳ�Ļ�</span>	
 			</div>
 			<div class="content_left">
-				<!-- 文章内容 -->
+				<!-- �������� -->
 				<div class="content_text">
 					<ul class="list_cms_ul">
 						<li th:each="a:${list.dataList}">
@@ -20,13 +19,13 @@
 									<img src="images/noimage_big.png" alt="" style="weith:180px" th:each="entry : ${a}==null?'':${a.filePath}" th:attr="src=${a}==null?'':${fileServicePath}+'/'+${entry.path}+'/'+${entry.fileidname}+'.'+${entry.filetype}">
 								</div>
 								<div class="list_cms_rbox">
-									<h3 th:text="${a.title}">清“痛症”瓷，云纹浅谈！</h3>
+									<h3 th:text="${a.title}">�塰ʹ֢���ɣ�����ǳ̸��</h3>
 									<div class="list_cms_classify" th:text="${a.atticleldCategory.ladelname}">
-										书法交流会
+										�鷨������
 									</div>
 									<div class="list_cms_bar">
-										浏览<span th:text="${a.viewCount}">15</span>
-										<span  th:text="${#dates.format(a.createat,'yyyy-MM-dd HH:mm:ss')}">2018-05-09 14：48</span>
+										���<span th:text="${a.viewCount}">15</span>
+										<span  th:text="${#dates.format(a.createat,'yyyy-MM-dd HH:mm:ss')}">2018-05-09 14��48</span>
 									</div>
 								</div>
 							</a>
@@ -35,19 +34,19 @@
 					</ul>
 
 					
-					<!-- 分页 -->
+					<!-- ��ҳ -->
 					<div class="pagination_Box">
 						<ul>
-							<li><a href="" class="demo" th:href="@{/mall/cms/list.do(Pid=${Pid},pageNo=${1})}">首页</a></li>
-							<li><a href=""  class="demo" th:href="@{/mall/cms/list.do(Pid=${Pid},pageNo=${list.pageNo}-1>0?${list.pageNo}-1:1)}">上一页</a></li>
+							<li><a href="" class="demo" th:href="@{/mall/cms/list.do(Pid=${Pid},pageNo=${1})}">��ҳ</a></li>
+							<li><a href=""  class="demo" th:href="@{/mall/cms/list.do(Pid=${Pid},pageNo=${list.pageNo}-1>0?${list.pageNo}-1:1)}">��һҳ</a></li>
 							<li class="active" id="activepage">
 								<a  th:text="${list.pageNo}">1</a>
 							</li>
 							<li>
-								<a href="" th:href="@{/mall/cms/list.do(Pid=${Pid},pageNo=${list.pageNo}==${list.pages}?${list.pages}:${list.pageNo}+1)}">下一页</a>
+								<a href="" th:href="@{/mall/cms/list.do(Pid=${Pid},pageNo=${list.pageNo}==${list.pages}?${list.pages}:${list.pageNo}+1)}">��һҳ</a>
 							</li>
 							<li>
-								<a  href="" th:href="@{/mall/cms/list.do(Pid=${Pid},pageNo=${list.pages})}"><i class="fa fa-angle-double-right">末页</a>
+								<a  href="" th:href="@{/mall/cms/list.do(Pid=${Pid},pageNo=${list.pages})}"><i class="fa fa-angle-double-right">ĩҳ</a>
 							</li>
 						</ul>
 					</div>
@@ -55,32 +54,32 @@
 				</div>
 				
 			</div>
-			<!-- 左侧内容结束 -->
-			<!-- 右侧内容 -->
+			<!-- ������ݽ��� -->
+			<!-- �Ҳ����� -->
 			<div class="content_right">
 				<div class="cms_tuijian">
 					<div class="cms_tuijian_tit">
-						所有分类
+						���з���
 					</div>
 					<div class="cms_tuijian_list">
 						<ul class="cms_classify_list">
-							<li th:each="ca:${Category}"><a href="#" th:href="@{/mall/cms/list.do(Pid=${Pid},classification=${ca.id})}" th:text="${ca.ladelname}">推广传统文化 </a></li>
+							<li th:each="ca:${Category}"><a href="#" th:href="@{/mall/cms/list.do(Pid=${Pid},classification=${ca.id})}" th:text="${ca.ladelname}">�ƹ㴫ͳ�Ļ� </a></li>
 							
 						</ul>
 					</div>
 				</div>
-				<!-- 排行 -->
+				<!-- ���� -->
 				<div class="cms_paihang">
 					<div class="cms_paihang_tit">
-						热门文章排行
+						������������
 					</div>
 					<div class="cms_paihang_list">
 						<ul>
 							<li  th:each="a:${hotAtt}">
 								<a href=""  th:href="@{/mall/cms/content.do(Pid=${Pid},id=${a.id})}">
 									<img src="images/noimg.png" alt="" style="weith:87px" th:each="entry : ${a}==null?'':${a.filePath}" th:attr="src=${a}==null?'':${fileServicePath}+'/'+${entry.path}+'/'+${entry.fileidname}+'.'+${entry.filetype}">
-									<div class="f_r" th:text="${a.title}">纯粹的个人主义同他的由于一般
-									极具欧洲特色</div>
+									<div class="f_r" th:text="${a.title}">����ĸ�������ͬ��������һ��
+									����ŷ����ɫ</div>
 								</a>
 							</li>
 	
@@ -90,7 +89,7 @@
 			</div>
 		</div>
 	</div>
-	<!-- 内容部分结束 -->
+	<!-- ���ݲ��ֽ��� -->
 	<script type="text/javascript" th:inline="javascript">
 	$(function(){
 		var pageNo=[[${list.pageNo}]];
