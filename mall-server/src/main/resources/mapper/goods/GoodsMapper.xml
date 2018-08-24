@@ -335,7 +335,9 @@ FROM
 	(
 SELECT
 	B.*,
-	t_inventory.Amount 
+	t_inventory.Amount,
+	 t_inventory.stay_amount,
+	 t_inventory.has_amount
 FROM
 	(
 SELECT

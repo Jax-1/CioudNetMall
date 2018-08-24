@@ -116,8 +116,8 @@
 		                        </span>
 		                        <p><a  th:text="${a.auth.position}+'-'+${a.auth.authorname}">中国美术家协会会员 楚英</a></p>
 		                        <p><a href="" th:text="'《'+${a.goods_name}+'》'" th:href="@{/mall/goods/detail(goods_id=${a.goods_id})}">《新华一角》</a></p>
-		                        <p class="ku_c" th:text="'库存：'+${a.goodsInfo.inventory.amount}">库存：99</p>
-		                        <p class="ku_c">已出售：0</p>
+		                        <p class="ku_c" th:text="'库存：'+${a.goodsInfo.inventory.amount-a.goodsInfo.inventory.has_amount}">库存：99</p>
+		                        <p class="ku_c" th:text="'已出售：'+${a.goodsInfo.inventory.has_amount}">已出售：0</p>
 		                        <div class="price">
 		                        ¥
 		                        	&nbsp
