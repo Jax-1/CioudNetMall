@@ -1,16 +1,21 @@
 <!DOCTYPE html>
 <html lang="en" >
-
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
 
 <body class="page-header-fixed page-sidebar-closed-hide-logo page-content-white">
-<!-- дзхщ╡©╥ж -->
+<div th:fragment="page">
+<!-- Е├┘Е╝╧И┐╗Е┬├ -->
 	<div class="content_box">
 		<div class="cms_show_box">
 			<div class="content_bar">
-				дЗкЫтз╣дн╩жцё╨<span id="subtitle">╢╚мЁнд╩╞</span>	
+				Ф┌╗Ф┴─Е°╗Г └Д╫█Г╫╝О╪ <span id="subtitle">Д╪═Г╩÷Ф√┤Е▄√</span>	
+
 			</div>
 			<div class="content_left">
-				<!-- ндубдзхщ -->
+				<!-- Ф√┤Г╚═Е├┘Е╝╧ -->
 				<div class="content_text">
 					<ul class="list_cms_ul">
 						<li th:each="a:${list.dataList}">
@@ -19,13 +24,13 @@
 									<img src="images/noimage_big.png" alt="" style="weith:180px" th:each="entry : ${a}==null?'':${a.filePath}" th:attr="src=${a}==null?'':${fileServicePath}+'/'+${entry.path}+'/'+${entry.fileidname}+'.'+${entry.filetype}">
 								</div>
 								<div class="list_cms_rbox">
-									<h3 th:text="${a.title}">гЕ║╟м╢ж╒║╠╢иё╛тфнфгЁл╦ё║</h3>
+									<h3 th:text="${a.title}"></h3>
 									<div class="list_cms_classify" th:text="${a.atticleldCategory.ladelname}">
-										йИ╥╗╫╩аВ╩А
+										
 									</div>
 									<div class="list_cms_bar">
-										Д╞юю<span th:text="${a.viewCount}">15</span>
-										<span  th:text="${#dates.format(a.createat,'yyyy-MM-dd HH:mm:ss')}">2018-05-09 14ё╨48</span>
+										<span th:text="${a.viewCount}">15</span>
+										<span  th:text="${#dates.format(a.createat,'yyyy-MM-dd HH:mm:ss')}"></span>
 									</div>
 								</div>
 							</a>
@@ -34,19 +39,19 @@
 					</ul>
 
 					
-					<!-- ╥жрЁ -->
+					<!-- Е┬├И║╣-->
 					<div class="pagination_Box">
 						<ul>
-							<li><a href="" class="demo" th:href="@{/mall/cms/list.do(Pid=${Pid},pageNo=${1})}">йврЁ</a></li>
-							<li><a href=""  class="demo" th:href="@{/mall/cms/list.do(Pid=${Pid},pageNo=${list.pageNo}-1>0?${list.pageNo}-1:1)}">иор╩рЁ</a></li>
+							<li><a href="" class="demo" th:href="@{/mall/cms/list.do(Pid=${Pid},pageNo=${1})}">И╕√И║╣</a></li>
+							<li><a href=""  class="demo" th:href="@{/mall/cms/list.do(Pid=${Pid},pageNo=${list.pageNo}-1>0?${list.pageNo}-1:1)}">Д╦┼Д╦─И║╣</a></li>
 							<li class="active" id="activepage">
 								<a  th:text="${list.pageNo}">1</a>
 							</li>
 							<li>
-								<a href="" th:href="@{/mall/cms/list.do(Pid=${Pid},pageNo=${list.pageNo}==${list.pages}?${list.pages}:${list.pageNo}+1)}">обр╩рЁ</a>
+								<a href="" th:href="@{/mall/cms/list.do(Pid=${Pid},pageNo=${list.pageNo}==${list.pages}?${list.pages}:${list.pageNo}+1)}">Д╦▀Д╦─И║╣</a>
 							</li>
 							<li>
-								<a  href="" th:href="@{/mall/cms/list.do(Pid=${Pid},pageNo=${list.pages})}"><i class="fa fa-angle-double-right">д╘рЁ</a>
+								<a  href="" th:href="@{/mall/cms/list.do(Pid=${Pid},pageNo=${list.pages})}"><i class="fa fa-angle-double-right">Ф°╚И║╣</a>
 							</li>
 						</ul>
 					</div>
@@ -54,32 +59,35 @@
 				</div>
 				
 			</div>
-			<!-- вС╡Юдзхщ╫АйЬ -->
-			<!-- ср╡Юдзхщ -->
+			<!-- Е╥╕Д╬╖Е├┘Е╝╧Г╩⌠Ф²÷ -->
+			<!-- Е▐ЁД╬╖Е├┘Е╝╧ -->
+
 			<div class="content_right">
 				<div class="cms_tuijian">
 					<div class="cms_tuijian_tit">
-						кЫсп╥жюЮ
+						Ф┴─Ф°┴Е┬├Г╠╩
+
 					</div>
 					<div class="cms_tuijian_list">
 						<ul class="cms_classify_list">
-							<li th:each="ca:${Category}"><a href="#" th:href="@{/mall/cms/list.do(Pid=${Pid},classification=${ca.id})}" th:text="${ca.ladelname}">мф╧Ц╢╚мЁнд╩╞ </a></li>
+							<li th:each="ca:${Category}"><a href="#" th:href="@{/mall/cms/list.do(Pid=${Pid},classification=${ca.id})}" th:text="${ca.ladelname}"> </a></li>
 							
 						</ul>
 					</div>
 				</div>
-				<!-- еепп -->
+				<!-- Ф▌▓Х║▄ -->
+
 				<div class="cms_paihang">
 					<div class="cms_paihang_tit">
-						ххцендубеепп
+						Г┐╜И≈╗Ф√┤Г╚═Ф▌▓Х║▄
+
 					</div>
 					<div class="cms_paihang_list">
 						<ul>
 							<li  th:each="a:${hotAtt}">
 								<a href=""  th:href="@{/mall/cms/content.do(Pid=${Pid},id=${a.id})}">
 									<img src="images/noimg.png" alt="" style="weith:87px" th:each="entry : ${a}==null?'':${a.filePath}" th:attr="src=${a}==null?'':${fileServicePath}+'/'+${entry.path}+'/'+${entry.fileidname}+'.'+${entry.filetype}">
-									<div class="f_r" th:text="${a.title}">╢©╢Б╣д╦ЖхкжВрЕм╛кШ╣дсисзр╩╟Ц
-									╪╚╬ъе╥жчльи╚</div>
+									<div class="f_r" th:text="${a.title}"></div>
 								</a>
 							</li>
 	
@@ -89,7 +97,8 @@
 			</div>
 		</div>
 	</div>
-	<!-- дзхщ╡©╥ж╫АйЬ -->
+	<!-- Е├┘Е╝╧И┐╗Е┬├Г╩⌠Ф²÷ -->
+
 	<script type="text/javascript" th:inline="javascript">
 	$(function(){
 		var pageNo=[[${list.pageNo}]];
@@ -116,5 +125,6 @@
     })
 		
 	</script>
+	</div>
 </body>
 </html>

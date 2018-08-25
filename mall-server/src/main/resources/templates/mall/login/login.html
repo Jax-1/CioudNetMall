@@ -1,7 +1,12 @@
 <!DOCTYPE html>
 <html lang="en" >
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
 <body>
-	<!-- ÄÚÈİ²¿·Ö -->
+	<div th:fragment="page">
+	<!-- å†…å®¹éƒ¨åˆ† -->
 	<div class="content_box">
 		<div class="login_box">
 			<div class="inputAreaBg">
@@ -9,33 +14,33 @@
 				<div class="inputArea">
 					<div class="textDiv">
 						<div class="loginText">
-							ÓÃ»§µÇÂ¼
+							ç”¨æˆ·ç™»å½•
 						</div>
 						<div class="registerText">
-							<a href="/user/register.do">ÓÃ»§×¢²á</a>
+							<a href="/user/register.do">ç”¨æˆ·æ³¨å†Œ</a>
 						</div>
 					</div>
 					<div class="msg" style="display:none">
 						
 					</div>
 					<div class="nickNameDiv">
-						<input type="text" class="textInput" placeholder="ÊÖ»úºÅÂë" id="user_name">	
+						<input type="text" class="textInput" placeholder="è¯·è¾“å…¥ç”¨æˆ·å" id="user_name">	
 					</div>
 					<div class="passwordDiv">
-						<input type="password" class="textInput" placeholder="ÃÜÂë" id="password">	
+						<input type="password" class="textInput" placeholder="è¯·è¾“å…¥å¯†ç " id="password">	
 					</div>
 					<div class="autoLoginDiv">
 						<input type="checkbox" class="rememberMe" id="autoLogin">
-						 <label for="autoLogin">×Ô¶¯µÇÂ¼</label> 
+						 <label for="autoLogin">è‡ªåŠ¨ç™»å½•</label> 
 					</div>
 					<div class="loginBtn" id="login">
-						µÇ  Â¼
+						ç™»å½•
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-	<!-- ÄÚÈİ²¿·Ö½áÊø -->
+	<!-- å†…å®¹éƒ¨åˆ†ç»“æŸ -->
 	<script type="text/javascript">
 		function chickform(){
 			var username=$("#user_name").val();
@@ -48,7 +53,7 @@
 		$("#login").click(function(){
 			if(!chickform()){
 				$(".msg").show();
-				$(".msg").text("ÕËºÅÃÜÂë²»ÄÜÎª¿Õ£¡");
+				$(".msg").text("è´¦å·å¯†ç ä¸èƒ½ä¸ºç©ºï¼");
 				return;
 			}
 			$.post('/user/login',
@@ -56,13 +61,15 @@
 					password:$("#password").val()},
 					function(data){
 				if(data!=null&&data.res=="1"){
-					//µÇÂ¼³É¹¦
+					//ç™»å½•æˆåŠŸ
+
 					$(".msg").show();
-					$(".msg").text("µÇÂ¼³É¹¦£¡");
-					console.log("js»ñÈ¡ÉÏ(Ç°)Ò»Ò³url"+document.referrer);
+					$(".msg").text("ç™»å½•æˆåŠŸï¼");
+					console.log("jsè·å–ä¸Š(å‰)ä¸€é¡µurl"+document.referrer);
 					setTimeout('goback()',1000);
 				}else{
-					//µÇÂ¼Ê§°Ü
+					//ç™»å½•å¤±è´¥
+
 					$(".msg").show();
 					$(".msg").text(data.msg);
 				}
@@ -70,7 +77,8 @@
 			});
 			
 		});
-		//Ìø×ªµ½ÉÏÒ»Ò³
+		//è·³è½¬åˆ°ä¸Šä¸€é¡µ
+
 		function goback(){
 			if(document.referrer==window.location.href||document.referrer==""||document.referrer.indexOf("register.do")!=-1||document.referrer.indexOf("/mall/user")!=-1){
 				window.location.href="/";
@@ -84,5 +92,6 @@
 
 	
 	</script>
+	</div>
 </body>
 </html>

@@ -1,35 +1,45 @@
 <!DOCTYPE html>
 <html lang="en" >
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
 <body>
-<!-- ÄÚÈİ²¿·Ö -->
+<div th:fragment="page">
+<!-- å†…å®¹éƒ¨åˆ† -->
+
 	<div class="content_box">
 		<div class="cms_show_box">
 			<div class="content_bar">
-				ÄúËùÔÚµÄÎ»ÖÃ£º<span id="subtitle">´«Í³ÎÄ»¯</span>->
-				<span>ÄÚÈİÒ³</span>		
+				æ‚¨æ‰€åœ¨çš„ä½ç½®ï¼š<span id="subtitle">ä¼ ç»Ÿæ–‡åŒ–</span>->
+				<span>å†…å®¹é¡µ</span>		
 			</div>
 			<div class="content_left">
-				<!-- ÎÄÕÂÄÚÈİ -->
+				<!-- æ–‡ç« å†…å®¹ -->
+
 				<div class="content_text">
-					<h4 class="cont_text_tit" th:text="${att.title}">Ö»¿¿»­¼¦³ÉÎª¹úÀñ´óÊ¦µÄÍõÊÀ¾ü£¨ÏÂ£©
+					<h4 class="cont_text_tit" th:text="${att.title}">
 					</h4>
 					<div class="cont_text_bar">
-						×÷Õß£º<span th:text="${att.createby}">ÔÆÍø´«Ã½</span>
-						·¢²¼Ê±¼ä: <span  th:text="${#dates.format(att.createat,'yyyy-MM-dd HH:mm:ss')}">2018-05-09</span>
-						ä¯ÀÀ: <span th:text="${att.viewCount}">500</span>
-						µãÔŞ: <span th:text="${att.likeCount}" id="value_zan">20</span>
+						<span th:text="${att.createby}"></span>
+						<span  th:text="${#dates.format(att.createat,'yyyy-MM-dd HH:mm:ss')}"></span>
+						<span th:text="${att.viewCount}"></span>
+						 <span th:text="${att.likeCount}" id="value_zan"></span>
 					</div>
 					<div class="cont_text_main" th:utext="${att.content}">
 						
 					</div>
 				</div>
-				<!-- ÎÄÕÂÄÚÈİ½áÊø -->
+				<!-- æ–‡ç« å†…å®¹ç»“æŸ -->
+
 				<div class="content_zan">
 					<span id="cont_zan" class="zan zan_active"></span>
-					<span>µãÔŞ</span>
+					<span>ç‚¹èµ</span>
+
 				</div>
-				<!-- ÆÀÂÛ -->
-				<!--PC°æ-->
+				<!-- è¯„è®º -->
+				<!--PCç‰ˆ-->
+
 				<div id="SOHUCS" ></div>
 				<script charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/changyan.js" ></script>
 				<script type="text/javascript">
@@ -39,27 +49,31 @@
 				});
 				</script>
 			</div>
-			<!-- ×ó²àÄÚÈİ½áÊø -->
-			<!-- ÓÒ²àÄÚÈİ -->
+			<!-- å·¦ä¾§å†…å®¹ç»“æŸ -->
+			<!-- å³ä¾§å†…å®¹ -->
+
 			<div class="content_right">
 				<div class="cms_tuijian">
 					<div class="cms_tuijian_tit">
-						¾«²ÊÍÆ¼ö
+						ç²¾å½©æ¨è
+
 					</div>
 					<div class="cms_tuijian_list">
 						<ul>
 							<li th:each="a:${list.dataList}">
 							<span class="recommended-title"></span>
-							<a href="#" th:href="@{/mall/cms/content.do(Pid=${Pid},id=${a.id})}" th:text="${a.title}">[ÒÕÊõ]  ÔÚ¹Å»­ÖĞÑ°ÕÒÏûÊ§µÄÍ¤Ì¨Â¥¸ó</a>
+							<a href="#" th:href="@{/mall/cms/content.do(Pid=${Pid},id=${a.id})}" th:text="${a.title}"></a>
 							</li>
 							
 						</ul>
 					</div>
 				</div>
-				<!-- ÅÅĞĞ -->
+				<!-- æ’è¡Œ -->
+
 				<div class="cms_paihang">
 					<div class="cms_paihang_tit">
-						ÈÈÃÅÎÄÕÂÅÅĞĞ
+						çƒ­é—¨æ–‡ç« æ’è¡Œ
+
 					</div>
 					<div class="cms_paihang_list">
 						<ul>
@@ -67,8 +81,8 @@
 							<li  th:each="a:${hotAtt}">
 								<a href=""  th:href="@{/mall/cms/content.do(Pid=${Pid},id=${a.id})}">
 									<img src="images/noimg.png" alt="" style="weith:87px" th:each="entry : ${a}==null?'':${a.filePath}" th:attr="src=${a}==null?'':${fileServicePath}+'/'+${entry.path}+'/'+${entry.fileidname}+'.'+${entry.filetype}">
-									<div class="f_r" th:text="${a.title}">´¿´âµÄ¸öÈËÖ÷ÒåÍ¬ËûµÄÓÉÓÚÒ»°ã
-									¼«¾ßÅ·ÖŞÌØÉ«</div>
+									<div class="f_r" th:text="${a.title}">
+									</div>
 								</a>
 							</li>
 						</ul>
@@ -77,26 +91,27 @@
 			</div>
 		</div>
 	</div>
-	<!-- ÄÚÈİ²¿·Ö½áÊø -->
+		<!-- å†…å®¹éƒ¨åˆ†ç»“æŸ -->
+
 	<script type="text/javascript" th:inline="javascript">
 		var pid=[[${Pid}]];
 		var att=[[${att}]];
 		switch(pid)
 		{
 		case "MJHC":
-			 $("#subtitle").text("Ãû¼ÒÜöİÍ");
+			 $("#subtitle").text("åå®¶èŸèƒ");
 		  break;
 		case "ZPJJ":
-			$("#subtitle").text("×÷Æ·¼¯½õ");
-			 $(".recommended-title").text("[×÷Æ·¼¯½õ]-")
+			$("#subtitle").text("ä½œå“é›†é”¦");
+			 $(".recommended-title").text("[ä½œå“é›†é”¦]-")
 		  break;
 		case "CTWH":
-			$("#subtitle").text("´«Í³ÎÄ»¯");
-			 $(".recommended-title").text("[´«Í³ÎÄ»¯]-")
+			$("#subtitle").text("ä¼ ç»Ÿæ–‡åŒ–");
+			 $(".recommended-title").text("[ä¼ ç»Ÿæ–‡åŒ–]-")
 			  break;
 		case "ZXZX":
-			$("#subtitle").text("×ÊÑ¶ÖĞĞÄ");
-			 $(".recommended-title").text("[×ÊÑ¶ÖĞĞÄ]-")
+			$("#subtitle").text("èµ„è®¯ä¸­å¿ƒ");
+			 $(".recommended-title").text("[èµ„è®¯ä¸­å¿ƒ]-")
 			  break;
 		default:
 		}
@@ -106,14 +121,17 @@
 				     likeCount:att.likeCount},
 					function(date){
 					if(date.res=='1'){
-						//³É¹¦
+						//æˆåŠŸ
 						$("#value_zan").text(att.likeCount+1);
 					}
 			})
 			
 		})
+
 	
 	</script>
+	</div>
+	
 </body>
 
 </html>

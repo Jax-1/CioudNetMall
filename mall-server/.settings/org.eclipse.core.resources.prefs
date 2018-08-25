@@ -5,4 +5,6 @@ encoding//src/main/resources/message/MsgPool_zh_CN.properties=UTF-8
 encoding//src/main/resources/templates/admin/index_body.html=UTF-8
 encoding//src/main/resources/templates/mall/base/footer.html=UTF-8
 encoding//src/main/resources/templates/mall/cms/cms_lists.html=UTF-8
+encoding//src/main/resources/templates/mall/goods/goods_index.html=UTF-8
+encoding//src/main/resources/templates/mall/login/login.html=UTF-8
 encoding/<project>=UTF-8

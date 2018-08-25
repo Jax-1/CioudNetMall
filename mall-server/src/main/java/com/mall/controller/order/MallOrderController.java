@@ -272,7 +272,7 @@ public class MallOrderController extends AbstractController{
 				orderDetails.setDetails_amount(details_amount);
 				//计算总邮费
 				//不包邮状态
-				if("N".equals(goods.getGoodsInfo().getExt1())) {
+				if("N".equals(goods.getGoodsInfo().getExt1())&&Validate.notNull(goods.getGoodsInfo().getExt3())) {
 					postage_amount=postage_amount.add(new BigDecimal(goods.getGoodsInfo().getExt3()));
 				}
 				
