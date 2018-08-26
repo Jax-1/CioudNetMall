@@ -91,6 +91,7 @@ public class MallGoodsController extends AbstractController{
 		newgoods.setIs_marketable("Y");
 		PageResult<Goods> newGoods = goodsService.queryByPageFront(list, newgoods);
 		model.addAttribute("newGoods", newGoods.getDataList());
+		
 		//人气
 		Goods popgoods=new Goods();
 		popgoods.setPopularitySort("DESC");

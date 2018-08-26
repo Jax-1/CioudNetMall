@@ -71,6 +71,13 @@
                                         </td>
                                         <td th:text="${entity!=null and entity.PaymentFlow!=null}?${#dates.format(entity.PaymentFlow.create_time,'yyyy-MM-dd HH:mm:ss')}:'N/A'">2018-07-17 09:22:42</td>
                                     </tr>
+                                    <!-- 快递信息 -->
+                                    <tr>
+                                        <td>快递名：</td>
+                                        <td><select id="shipping_id"></select></td>
+                                        <td></td>
+                                        <td ></td>
+                                    </tr>
                                     <tr>
                                         <td>发货单号：</td>
                                         <td><input type="text" id="awb"></td>

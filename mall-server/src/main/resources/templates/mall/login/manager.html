@@ -912,7 +912,25 @@
 					</tr>
 				</tfoot>
 			</table>
+			<!-- 订单快递查询 -->
+		<div>
+			 <link rel="stylesheet" href="/mall/kdniao/KDNWidget.css" />
+			 <div id="demoID"></div>
+                      <script src="/mall/kdniao/KDNWidget.js"></script>
+                      <script>
+                          window.onload = function () {
+                              KDNWidget.run({
+                                  serviceType: "B",
+                                  expCode:"ZTO",
+                                  expNo:"219258755329",
+                                  showType:"normal",
+                                  container: "demoID"
+                              })
+                          }
+                    </script>	
 		</div>
+		</div>
+		
 	</div>
 	<!-- 售后编辑 -->
 	<div class="my_right_box" th:fragment="serviceEdit">
