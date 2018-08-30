@@ -21,6 +21,14 @@ public class CourierServiceImpl extends BaseServiceImpl<Courier> implements Cour
 	protected IBaseDao<Courier> getMapper() {
 		return courierMapper;
 	}
+	/**
+	 * 查询全部快递
+	 * @param courier
+	 * @return
+	 */
+	public List<Courier> queryAll(Courier courier){
+		return courierMapper.queryAll(courier);
+	}
 
 	
 }

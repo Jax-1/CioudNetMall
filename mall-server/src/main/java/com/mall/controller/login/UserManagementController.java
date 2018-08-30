@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.mall.controller.AbstractController;
+import com.mall.entity.inventory.InventoryDeivery;
 import com.mall.entity.login.User;
 import com.mall.entity.login.UserInfo;
 import com.mall.entity.order.Order;
@@ -19,6 +20,7 @@ import com.mall.entity.order.OrderAddress;
 import com.mall.entity.order.OrderServe;
 import com.mall.message.ProcessResult;
 import com.mall.message.SystemCode;
+import com.mall.service.inventory.InventoryDeiveryService;
 import com.mall.service.login.UserInfoService;
 import com.mall.service.login.UserLoginService;
 import com.mall.service.order.OrderAddressService;
@@ -51,6 +53,8 @@ public class UserManagementController extends AbstractController{
 	private CacheService cacheService;
 	@Resource
 	private OrderServeService orderServeService;
+	@Resource
+	private InventoryDeiveryService inventoryDeiveryService;
 	/**
 	 * 跳转用户管理界面
 	 * @param model
@@ -136,6 +140,13 @@ public class UserManagementController extends AbstractController{
 		String port=cache.get(SystemCode.FILE_SERVICE_PORT);
 		String filePath=cache.get(SystemCode.FILE_SERVICE_FILES_PATH);
 		String fileUrlPrefix=url+":"+port+"/"+filePath;
+		
+		//获取发货单信息
+		InventoryDeivery inventoryDeivery = new InventoryDeivery();
+		inventoryDeivery.setOrder_number(order.getOrder_number());
+		inventoryDeivery=inventoryDeiveryService.selectByNumber(inventoryDeivery);
+		model.addAttribute("deivery", inventoryDeivery);
+				
 		model.addAttribute("fileServicePath", fileUrlPrefix);
 		model.addAttribute("entity", order);
 		model.addAttribute("page", "mall/login/my_center");

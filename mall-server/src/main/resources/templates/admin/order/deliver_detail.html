@@ -74,13 +74,29 @@
                                     <!-- 快递信息 -->
                                     <tr>
                                         <td>快递名：</td>
-                                        <td><select id="shipping_id"></select></td>
+                                        <td>
+                                        	<div th:style="${deivery.shipping_name}!=null?'display:none'">
+                                        	<select id="shipping_id">
+                                        	<option value="-1">未选择</option>
+                                        	<option th:each="a:${courierList}" th:text="${a.name}" th:attr="value=${a.code}"></option>
+	                                        </select>
+	                                        </div>
+	                                        <div th:style="${deivery.shipping_name}==null?'display:none'">
+	                                        <span th:text="${deivery.shipping_name}" style="display:none"></span>
+	                                        <span  th:each="a:${courierList}" th:text="${a.name}" th:if="${a.code} eq ${deivery.shipping_name}"></span>
+	                                        </div>
+                                        </td>
                                         <td></td>
                                         <td ></td>
                                     </tr>
                                     <tr>
                                         <td>发货单号：</td>
-                                        <td><input type="text" id="awb"></td>
+                                        <td>
+                                        	<div th:style="${deivery.invoice_no}!=null?'display:none'"><input type="text" id="awb"></div>
+                                        	<div th:style="${deivery.invoice_no}==null?'display:none'"><span th:text="${deivery.invoice_no}"></span></div>
+                                        	
+                                        	
+                                        </td>
                                         <td>发货时间：</td>
                                         <td th:text="${deivery.create_time}==null?'N/A':(${#dates.format(deivery.create_time,'yyyy-MM-dd HH:mm:ss')})">2018-07-17 09:22:42</td>
                                     </tr>
@@ -229,12 +245,18 @@
     //发货
     function toDeivery(){
     	var awb=$("#awb").val();
+    	var shipping=$("#shipping_id").val();
+    	if(shipping=='-1'){
+    		alert("请选择快递！");
+    		return;
+    	}
     	if(awb==null||awb==''){
     		alert("请填写发货单号！");
     		return;
     	}
+    	
     	var dataOrder={order_number:deivery.order_number,logistics_state:'2'};
-    	var dataDeivery={delivery_number:deivery.delivery_number,logistics_state:'2',invoice_no:awb};
+    	var dataDeivery={delivery_number:deivery.delivery_number,logistics_state:'2',invoice_no:awb,shipping_name:shipping};
     	if(!chengeOrderStatus(dataOrder)){
     		//更改订单状态失败
     		alert("订单状态修改失败！");

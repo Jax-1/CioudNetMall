@@ -911,20 +911,27 @@
 				</tfoot>
 			</table>
 			<!-- 订单快递查询 -->
-		<div>
+		<div th:style="${deivery?.invoice_no}==null?'display:none'">
 			 <link rel="stylesheet" href="/mall/kdniao/KDNWidget.css" />
 			 <div id="demoID"></div>
                       <script src="/mall/kdniao/KDNWidget.js"></script>
-                      <script>
-                          window.onload = function () {
-                              KDNWidget.run({
-                                  serviceType: "B",
-                                  expCode:"ZTO",
-                                  expNo:"219258755329",
-                                  showType:"normal",
-                                  container: "demoID"
-                              })
-                          }
+                      <script th:inline="javascript">
+                      var deivery=[[${deivery}]];
+                       if(deivery!=null &&deivery.invoice_no!=null){
+                    	   window.onload = function () {
+                               KDNWidget.run({
+                                   serviceType: "B",
+                                  
+                                   expCode:[[${deivery?.shipping_name}]],
+                                  
+                                   expNo:[[${deivery?.invoice_no}]],
+                                   showType:"normal",
+                                   container: "demoID"
+                               })
+                           }
+                    	   
+                       }
+                         
                     </script>	
 		</div>
 		</div>
