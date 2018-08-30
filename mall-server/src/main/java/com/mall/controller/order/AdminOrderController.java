@@ -1,5 +1,6 @@
 package com.mall.controller.order;
 
+import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.mall.controller.AbstractController;
 import com.mall.entity.cms.AuthorWithBLOBs;
 import com.mall.entity.goods.Goods;
+import com.mall.entity.inventory.Courier;
 import com.mall.entity.inventory.InventoryDeivery;
 import com.mall.entity.inventory.InventoryDeiveryAction;
 import com.mall.entity.order.Order;
@@ -20,6 +22,7 @@ import com.mall.entity.order.OrderServe;
 import com.mall.message.SystemCode;
 import com.mall.service.cms.AuthorWithBLOBsService;
 import com.mall.service.goods.GoodsService;
+import com.mall.service.inventory.CourierService;
 import com.mall.service.inventory.InventoryDeiveryActionService;
 import com.mall.service.inventory.InventoryDeiveryService;
 import com.mall.service.order.OrderActionService;
@@ -48,6 +51,8 @@ public class AdminOrderController  extends AbstractController{
 	private InventoryDeiveryActionService inventoryDeiveryActionService;
 	@Resource
 	private OrderServeService orderServeService;
+	@Resource
+	private CourierService courierService;
 	
 	@RequestMapping("/list")
 	public String toOrderList(Model model ,Order order ,PageResult<Order> list) {
@@ -136,7 +141,10 @@ public class AdminOrderController  extends AbstractController{
 		InventoryDeiveryAction inventoryDeiveryAction =new InventoryDeiveryAction();
 		inventoryDeiveryAction.setDelivery_number(inventoryDeivery.getDelivery_number());
 		list=inventoryDeiveryActionService.queryByPageFront(list, inventoryDeiveryAction);
+		//获取全部快递信息
+		List<Courier> courierList = courierService.queryAll(null);
 		
+		model.addAttribute("courierList", courierList);
 		model.addAttribute("list", list.getDataList());
 		model.addAttribute("deivery", inventoryDeivery);
 		model.addAttribute("entity", order);

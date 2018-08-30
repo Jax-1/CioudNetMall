@@ -303,7 +303,13 @@ LEFT JOIN t_order_address T2 ON T1.receive_id = T2.id
   	 		logistics_state=#{logistics_state},
   	 	</if>
   	 	<if test="invoice_no!=null and invoice_no!=''">
-  	 		invoice_no=#{invoice_no}
+  	 		invoice_no=#{invoice_no},
+  	 	</if>
+  	 	<if test="shipping_id!=null and shipping_id!=''">
+  	 		shipping_id=#{shipping_id},
+  	 	</if>
+  	 	<if test="shipping_name!=null and shipping_name!=''">
+  	 		shipping_name=#{shipping_name}
   	 	</if>
   	 </set>
   	where delivery_number=#{delivery_number}
