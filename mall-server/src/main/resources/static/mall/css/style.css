@@ -1044,7 +1044,7 @@ body {
   margin: 10px auto;
   display: -webkit-box;
   display: box;
-  overflow: auto; }
+  overflow: hidden; }
   .shop_index_box .left_menu_box {
     position: relative;
     width: 260px;
@@ -2112,17 +2112,19 @@ body {
 
 .my_header_bar {
   font-size: 14px;
-  display: -webkit-box;
-  display: box; }
+  /* display: -webkit-box;
+	display: box; */ }
   .my_header_bar select, .my_header_bar input {
     height: 35px;
     line-height: 35px;
     border: 1px solid #ccc; }
   .my_header_bar .ground_bar {
-    margin-right: 20px; }
+    margin-right: 20px;
+    display: inline-block; }
   .my_header_bar .ground_time input {
     width: 100px; }
   .my_header_bar .ground_searche {
+    display: inline-block;
     margin-left: 20px; }
     .my_header_bar .ground_searche .butn {
       vertical-align: middle;

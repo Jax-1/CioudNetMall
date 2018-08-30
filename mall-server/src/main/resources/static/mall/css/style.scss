@@ -1329,13 +1329,12 @@ body{
 	margin:10px auto;
 	display:-webkit-box;
 	display:box;
-	overflow: auto;
+	overflow: hidden;
 	.left_menu_box{
 		position: relative;
 		width: 260px;
 		background: #fff;
 		height: 420px;
-		// overflow: hidden;
 		z-index: 99;
 		.menu_dl{
 			padding: 10px;
@@ -2692,8 +2691,8 @@ body{
 //我的中心 订单列表
 .my_header_bar{
 	font-size: 14px;
-	display: -webkit-box;
-	display: box;
+	/* display: -webkit-box;
+	display: box; */
 	select,input{
 		height: 35px;
 		line-height: 35px;
@@ -2701,6 +2700,7 @@ body{
 	}
 	.ground_bar{
 		margin-right: 20px;
+		display: inline-block;
 	}
 	.ground_time{
 		input{
@@ -2708,6 +2708,7 @@ body{
 		}
 	}
 	.ground_searche{
+		display: inline-block;
 		margin-left: 20px;
 		.butn{
 			vertical-align: middle;
