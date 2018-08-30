@@ -63,7 +63,8 @@ body,
 ul li {
   list-style-type: none; }
 
-.body_bg {
+.body_bg,
+body {
   background-color: #f4e4c3;
   background-repeat: repeat-y;
   background-size: 100% auto; }
@@ -960,7 +961,8 @@ ul li {
     vertical-align: middle; }
   .dSmallPicBox a:hover {
     color: #884400;
-    text-decoration: underline; }
+    text-decoration: underline;
+    cursor: pointer; }
   .dSmallPicBox .ulSmallPic {
     padding: 10px;
     margin-top: 10px; }
@@ -1118,7 +1120,8 @@ ul li {
         background: #fff;
         text-align: center;
         line-height: 25px;
-        margin-left: 10px; }
+        margin-left: 10px;
+        cursor: pointer; }
       .shop_index_box .right_slide_box .tab_bar li.active {
         background: #a0866d;
         color: #fff; }
@@ -1151,7 +1154,8 @@ ul li {
       line-height: 70px;
       font-size: 22px;
       font-weight: 400;
-      text-align: center; }
+      text-align: center;
+      cursor: pointer; }
     .shop_classify_min .shop_tab_box ul li.active {
       color: #b21b0f;
       position: relative;
@@ -1168,12 +1172,13 @@ ul li {
       background-size: 100% auto;
       background-image: url(../images/tab_active_bottom.png); }
   .shop_classify_min .show_cont_box {
-    overflow: hidden;
-    width: 100%; }
+    width: 100%;
+    overflow: hidden; }
     .shop_classify_min .show_cont_box .father_tab_box {
       left: 0;
-      height: 500px;
-      width: 600%;
+      position: relative;
+      overflow: hidden;
+      width: 700%;
       transform: translateX(0);
       transition: transform 0.5s;
       -moz-transition: transform 0.5s;
@@ -1196,7 +1201,7 @@ ul li {
       .shop_classify_min .show_cont_box .child_ul li {
         float: left;
         border: 1px solid #eee8e3;
-        padding: 15px;
+        padding: 13px;
         margin: 0 15px; }
         .shop_classify_min .show_cont_box .child_ul li:first-child {
           margin-left: 0px; }

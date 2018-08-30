@@ -75,7 +75,8 @@ ul li{
 
 //头部
 // 1280 px
-.body_bg{
+.body_bg,
+body{
 	background-color:#f4e4c3;
 	// background-image: url(../images/bg_shan.png);
 	background-repeat: repeat-y;
@@ -1209,7 +1210,8 @@ ul li{
 	}
 	a:hover {
     color: #884400;
-    text-decoration: underline
+    text-decoration: underline;
+    cursor:pointer;
 	}
 
 	.ulSmallPic{
@@ -1246,6 +1248,8 @@ ul li{
 				height: 324px;
 				img{
 					width: 200px;
+					border:0;
+					padding:0;
 				}
 			} 
 			p{
@@ -1323,8 +1327,9 @@ ul li{
 .shop_index_box{
 	width: 1280px;
 	margin:10px auto;
-	display: -webkit-box;
-	display: box;
+	display:-webkit-box;
+	display:box;
+	overflow: auto;
 	.left_menu_box{
 		position: relative;
 		width: 260px;
@@ -1369,8 +1374,10 @@ ul li{
 				}
 			}
 		}
+		float: left;
 	}
 	.right_slide_box{
+		float: right;
 		margin-left: 10px;
 		width: 1010px;
 		height: 420px;
@@ -1410,6 +1417,7 @@ ul li{
 				text-align: center;
 				line-height: 25px;
 				margin-left: 10px;
+				cursor:pointer;
 
 			}
 			li.active{
@@ -1442,17 +1450,18 @@ ul li{
 		ul{
 			width: 1280px;
 			padding:0;
-			display: -webkit-box;
-			display: box;
+			overflow: hidden;
 			border-bottom: 2px solid #ab8e72;
 			background: rgba(171,142,114,0.35);
 			li{
+				float: left;
 				width: 256px;
 				height: 70px;
 				line-height: 70px;
 				font-size: 22px;
 				font-weight: 400;
 				text-align: center;
+				cursor: pointer;
 			}
 			li.active{
 				color:#b21b0f;
@@ -1474,12 +1483,14 @@ ul li{
 		}
 	}
 	.show_cont_box{
-		overflow: hidden;
 		width: 100%;
+		overflow: hidden;
 		.father_tab_box{
 			left:0;
-			height: 500px;
-			width: 600%;
+			// height: 460px;
+			position: relative;
+			overflow: hidden;
+			width: 700%;
 			transform: translateX(0);
 			transition: transform 0.5s;
 			-moz-transition: transform 0.5s;	
@@ -1501,9 +1512,8 @@ ul li{
 			}
 		}
 		.child_ul{ 
-			display:box;
-			display: -webkit-box;
 			background:#fff;
+			overflow: auto;
 			li{
 				&:first-child{
 					margin-left:0px;
@@ -1511,10 +1521,10 @@ ul li{
 				&:last-child{
 					margin-right:0px;
 				}
-				width: 230px;
+				float: left;
 				border:1px solid #eee8e3;
-				padding:15px;
-				margin:0 16.5px;
+				padding:13px;
+				margin:0 15px;
 				a{
 					color:#666;
 				}
@@ -1528,6 +1538,8 @@ ul li{
 					height: 324px;
 					img{
 						width: 200px;
+						border:0;
+						padding:0;
 					}
 				} 
 				p{	
@@ -1555,8 +1567,9 @@ ul li{
 	width: 1280px;
 	margin: 0 auto;
 	ul{ 
-		display:box;
-		display: -webkit-box;
+		/* display:box;
+		display: -webkit-box; */
+		overflow: hidden;
 		background:#fff;
 		li{
 			&:first-child{
@@ -1565,10 +1578,10 @@ ul li{
 			&:last-child{
 				margin-right:0px;
 			}
-			width: 230px;
+			float: left;
 			border:1px solid #eee8e3;
 			padding:15px;
-			margin:0 16.5px;
+			margin:0 15px;
 			a{
 				color:#666;
 			}
@@ -1582,6 +1595,8 @@ ul li{
 				height: 324px;
 				img{
 					width: 200px;
+					border:0;
+					padding:0;
 				}
 			} 
 			p{	
@@ -1605,10 +1620,12 @@ ul li{
 }
 .mingjiatuijian{
 	.mingjia_box{
-		display: -webkit-box;
-		display: box;
+		// display: -webkit-box;
+		// display: box;
+		overflow: hidden;
 		.tuijian{
-			width: 365px;
+			float: left;
+			width: 345px;
 			height: 462px;
 			position: relative;
 			img{
@@ -1629,15 +1646,18 @@ ul li{
 			}
 		}
 		.mingjia_list{
+			float: left;
 			width: 900px;
 			margin-left: 15px;
-			display: flex;
-    		flex-wrap: wrap;
+			// display: flex;
+   			// flex-wrap: wrap;
 			.mingjia_list_ground{
 				position: relative;
+				float: left;
 				width: 220px;
 				height: 225px;
 				margin-left:5px;
+				margin:2.5px;
 				img{
 					width: 100%;
 					height: 100%;
@@ -1680,14 +1700,16 @@ ul li{
 	padding:10px;
 	background: rgba(248,248,248,0.8);
 	.shop_show_header{
-		display: box;
-		display: -webkit-box;
+		/* display: box;
+		display: -webkit-box; */
+		overflow: auto;
 		padding-top: 30px;
 		.header_left_img{
 			width: 260px;
 			padding-left:60px;
 			// text-align: right;
 			position: relative;
+			float: left;
 			.small_box{
 				// left: 0;
 				// top:0;
@@ -1731,7 +1753,8 @@ ul li{
 			}
 		}
 		.header_right_detail{
-			width: 970px;
+			width: 920px;
+			float: left;
 			margin-left: 40px;
 			h3{
 				font-size: 18px;
@@ -1764,11 +1787,17 @@ ul li{
 			.shop_show_buy{
 				margin-top: 20px;
 				padding-left: 30px;
-				display: -webkit-box;
-				display: box;
+				/* display: -webkit-box;
+				display: box; */
+				overflow: auto;
+				.pm_mix{
+					float: left;
+				}
 				.number_box{
-					display: -webkit-box;
-					display: box;
+					/* display: -webkit-box;
+					display: box; */
+					overflow: hidden;
+					float: left;
 					border:1px solid #eae9ed;
 					padding:0;
 					input{
@@ -1777,6 +1806,7 @@ ul li{
 						width: 40px;
 						text-align: center;
 						display: block;
+						float: left;
 					}
 					button{
 						display: block;
@@ -1801,8 +1831,10 @@ ul li{
 					font-weight: 400;
 					margin-left: 20px;
 					font-size: 20px;
+					float: left;
 				}
 				.zixun{
+					float: left;
 					border:1px solid #ab8e72;
 					display: inline-block;
 					line-height: 52px;
@@ -1827,11 +1859,13 @@ ul li{
 		margin-top: 40px;
 		width: 1040px;
 		ul{
-			display: -webkit-box;
-			display: box;
+			/* display: -webkit-box;
+			display: box; */
+			overflow: hidden;
 			background: #f7f7f7;
 			border-bottom: 1px solid #ab8e72;
 			li{
+				float: left;
 				width: 110px;
 				height: 40px;
 				line-height: 40px;
@@ -1850,12 +1884,14 @@ ul li{
 		}
 	}
 	.show_detail_box{
-		display: -webkit-box;
-		display: box;
+		/* display: -webkit-box;
+		display: box; */
+		overflow: hidden;
 		.show_detail_left{
-			width: 1040px;
+			width: 1010px;
 			border:1px solid #c9c9cb;
 			padding:20px;
+			float: left;
 			.jieshao{
 				margin: 20px 0;
 				overflow: hidden;
@@ -1958,6 +1994,8 @@ ul li{
 				border:1px solid #c9c9c9;
 				margin-top: 20px;
 				background: #fff;
+				overflow: auto;
+				min-height: 200px;
 				.pingjia_tit{
 					ul{
 						line-height: 40px;
@@ -1983,7 +2021,8 @@ ul li{
 				.show_pingjia{
 					margin-top: 10px;
 					min-height: 200px;
-					overflow: hidden;
+					overflow-x: hidden;
+
 					position: relative;
 					.f_ul{
 						position: absolute;
@@ -1999,10 +2038,12 @@ ul li{
 					}
 					.pingjia_li{
 						padding:10px;
-						display: -webkit-box;
-						display: box;
+						/* display: -webkit-box;
+						display: box; */
+						overflow: hidden;
 						border-bottom: 1px solid #f9f9f9;
 						.yh{
+							float: left;
 							width: 60px;
 							img{
 								width: 60px;
@@ -2013,10 +2054,13 @@ ul li{
 							}
 						}
 						.pingjia_detail{
+							float: left;
 							margin-left: 10px;
 							width: 786px;
 						}
 						.pingjia_time{
+							float: right;
+							margin-right: 10px;
 							width: 100px;
 							color: #a9a9a9;
 						}
@@ -2058,6 +2102,7 @@ ul li{
 			}
 		}
 		.show_detail_right{
+			float: left;
 			h3{
 
 			}
@@ -2548,9 +2593,9 @@ ul li{
 				padding-bottom: 10px;
 				border-bottom:1px solid #eee8e3;
 				li{
-					width: 230px;
+					//width: 230px;
 					border:1px solid #eee8e3;
-					padding:15px;
+					padding:14px;
 					margin:10px 13px;
 					float: left;
 					a{
@@ -2566,6 +2611,8 @@ ul li{
 						height: 324px;
 						img{
 							width: 200px;
+							border:0;
+							padding:0;
 						}
 					} 
 					p{	
@@ -3165,8 +3212,10 @@ ul li{
 	margin-top: 10px;
 	background: #fff;
 	height: 100%;
-	display: flex;	
+	// display: flex;
+	overflow: hidden;	
 	.side-left{
+		float: left;
 		.icon-flag{
 			margin-right: 10px;
 			font-size:22px;
@@ -3220,6 +3269,7 @@ ul li{
 		}
 	}
 	.side-right{
+		float: left;
 		width: 1000px;
 		margin-left: 60px;
 		padding-top: 23px;
@@ -3261,7 +3311,7 @@ ul li{
    				overflow: hidden;
     			background: #f7f7f7;
     			.csbox{
-    				width: 33.33%;
+    				width: 31.2%;
     				float: left;
     				position: relative;
     				padding:10px;
@@ -3831,4 +3881,35 @@ ul li{
 		    position: relative;
 		}
 	}
+}
+
+/*  添加显示*/  
+.yuanjia{ 
+	font-size:10px;
+	color:#B8B8B8;
+}
+.msg{
+	color:red;
+	font-size:18px;
+}
+label.error{
+    height: 30px;
+    line-height: 30px;
+    font-size: 14px;
+    text-align: left;
+    margin-left: 5px;
+    padding-left: 35px;
+    color: red;
+}
+ .register_box .form_ground_box .submitBtnError {
+	margin: 0 auto;
+	background: #FF0040;
+	color: #C0C0C0;
+	font-size: 18px;
+	width: 260px;
+	height: 40px;
+	line-height: 40px;
+	text-align: center;
+	cursor: pointer;
+	pointer-events: none;
 }

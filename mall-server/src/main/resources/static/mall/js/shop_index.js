@@ -3,8 +3,20 @@ $(function(){
  $(".shop_tab_box li").hover(function(){
  	$(this).addClass('active').siblings().removeClass('active');
  	var index=$(this).index();
- 	// '+index*1280+0+'
- 	$(".father_tab_box").css({'webkitTransform':'translateX(-'+index*1280+'px)'});
+    //ie兼容方法
+    var ms_ie = false;
+    var ua = window.navigator.userAgent;
+    if(ua.indexOf('MSIE 7') != -1 
+        || ua.indexOf('MSIE 8') != -1
+        || ua.indexOf('MSIE 9') != -1
+        || ua.indexOf('MSIE 10') != -1
+        || ua.indexOf('MSIE 11') != -1){
+
+        $(".father_tab_box").animate({left:-index*1280+'px'},'fast');
+    }else{
+        $(".father_tab_box").css({'webkitTransform':'translateX(-'+index*1280+'px)'});
+    }
+    
  })
  	//顶部轮播图
 
