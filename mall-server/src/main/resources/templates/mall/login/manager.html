@@ -65,11 +65,11 @@
 					<label for="">地址</label>
 					<div class="input_box">
 						<textarea name="" id="address_street" cols="30" rows="10" th:text="${session.user.userInfo.address_street}"></textarea>
-						
+						<input id="headimgurl" type="hidden"/>
 					</div>
 				</div>
 				<div class="save_btn">
-					<input type="button" value="保存" id="submit" />
+					<input type="submit" value="保存" id="submit" />
 				</div>
 				
 			</div>
@@ -86,14 +86,12 @@
 					<div class="form-top">
 						<div class="img_show">
 							<label for="show_img">
-								<img src="/mall/images/u106.png" alt="" id="headimg">
+								<img src="/mall/images/u106.png" alt="" id="show_user_img">
 							</label>
 						</div>
 						<div class="img_show_rt">	
 							<p>注：（请上传不超过2M 正方形的图片）</p>
-							<input type="file" name="show_img" id="show_img">
-							<input type="hidden" id="headimgurl">
-							<br>
+							<input type="file" name="show_img" id="show_img"><br>
 							<button class="btn_sub">上传</button>
 						</div>
 					</div>
@@ -105,12 +103,12 @@
 		 <script src="/admin/assets/global/plugins/ajaxfileupload.js" type="text/javascript"></script>
 		<script type="text/javascript" th:inline="javascript">
 		  $(function(){
-			  	console.log([[${session.user}]])
+			  
 			  	var userinfo =[[${session.user.userInfo}]];
 				new PCAS("province","city","area",userinfo.address_province,userinfo.address_city,userinfo.address_area);
 			  	$("#submit").click(function(){
-			  		console.log($("#headimgurl").val());
-			  		
+			  		console.log($("#address_street").val());
+			  		console.log($("#headimgurl").val())
 				  		$.post('/mall/user/chengeuserinfo',
 					  			{
 					  			 name:$("#name").val(),
@@ -134,7 +132,7 @@
 					  					$("#msg").text(data.msg);
 					  				}
 					  		
-					  	})
+					  	}) 
 			  	});
 			  	
 			  	 //上传头像
@@ -147,21 +145,50 @@
 			  	 
 			  	 $(".btn_sub").click(function(){
 			  		 var file=$("#show_img")[0].files[0];
-			  		 $.ajaxFileUpload({
-	                     url:"/ueditor/uploade",
-	                     fileElementId: "show_img", //文件上传域的ID，这里是input的ID，而不是img的
-	                     type:"POST",
-	     	             dataType:"json",
-	                     async : true,   //是否是异步
-	                     success: function (data) {
-	                         
-	                         path=data[0].host+'/'+data[0].path;
-	                         $("#headimgurl").val(data[0].id);
-	                   		 $("#headimg").attr("src",path);
-	                         
-	                     }            
+			  		 var reader = new FileReader();
+			         var AllowImgFileSize = 2100000; //上传图片最大值(单位字节)（ 2 M = 2097152 B ）超过2M上传失败
+			         var imgUrlBase64;
+			         if (file) {
+			            //将文件以Data URL形式读入页面  
+			            imgUrlBase64 = reader.readAsDataURL(file);
+			            reader.onload = function (e) {
+			              //var ImgFileSize = reader.result.substring(reader.result.indexOf(",") + 1).length;//截取base64码部分（可选可不选，需要与后台沟通）
+			              if (AllowImgFileSize != 0 && AllowImgFileSize < reader.result.length) {
+			                    alert( '上传失败，请上传不大于2M的图片！');
+			                    return false;
+			                }else{
+			                    //执行上传操作reader.result')
+			                    //console.log(reader.result);
+			                	var image = new Image();
+		                	    image.src = e.target.result;
+		                	    image.onload = function() {
+		                	  		if(this.width==this.height||(0<this.width-this.height<10)||(0<this.height-this.width<10)){
+		                	  			 $.ajaxFileUpload({
+						                     url:"/ueditor/uploade",
+						                     fileElementId: "show_img", //文件上传域的ID，这里是input的ID，而不是img的
+						                     type:"POST",
+						     	             dataType:"json",
+						                     async : true,   //是否是异步
+						                     success: function (data) {
+						                         console.log(data[0].id)
+						                        $("#headimgurl").val(data[0].id);         
+					                	  		$("#show_user_img")[0].src=reader.result;
+						                         
+						                     }            
 
-	                 });
+						                 });
+		                	  		}else{
+		                	  			alert('头像需要是1比1的正方形');
+		                	  		}
+		                	    };
+			  	 				
+			                    
+			                }
+			            }
+		        	 } else{
+		            	alert('请选择上传图片');
+		          	 }
+			  		
 			  		 
 			  	 })
 
