@@ -1,6 +1,7 @@
 package com.mall.service.login.impl;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -19,6 +20,7 @@ import com.mall.message.ProcessResult;
 import com.mall.message.SystemCode;
 import com.mall.service.BaseServiceImpl;
 import com.mall.service.login.UserLoginService;
+import com.mall.service.sys.CacheService;
 import com.mall.util.DateFormatUtil;
 import com.mall.util.MD5Util;
 import com.mall.util.SessionUtil;
@@ -30,6 +32,8 @@ public class UserLoginServiceImpl extends BaseServiceImpl<User> implements UserL
 	private UserMapper userMapper;
 	@Resource
 	private UserInfoMapper userInfoMapper;
+	@Resource
+	private CacheService cacheService;
 
 	@Override
 	public ProcessResult<User> login(User user, HttpServletRequest request) {
@@ -51,7 +55,14 @@ public class UserLoginServiceImpl extends BaseServiceImpl<User> implements UserL
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
+				//文件服务器路径
+				Map<String, String> cache = cacheService.getCache(SystemCode.FILE_SERVICE);
+				String url=cache.get(SystemCode.FILE_SERVICE_URL);
+				String port=cache.get(SystemCode.FILE_SERVICE_PORT);
+				String filePath=cache.get(SystemCode.FILE_SERVICE_FILES_PATH);
+				String fileUrlPrefix=url+":"+port+"/"+filePath;
 				
+				request.getSession().setAttribute("path", fileUrlPrefix);
 				SessionUtil.setUser(request, model);
 				result.setRes(SystemCode.SUCCESS);
 				result.setMsg(MessageUtil.getMsgByLan(MsgPoolCode.LOGIN_SUCESS));
@@ -110,7 +121,7 @@ public class UserLoginServiceImpl extends BaseServiceImpl<User> implements UserL
 	}
 
 	@Override
-	protected IBaseDao<User> getMapper() {
+	public IBaseDao<User> getMapper() {
 		return userMapper;
 	}
 

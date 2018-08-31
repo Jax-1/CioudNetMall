@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.mall.controller.AbstractController;
+import com.mall.dao.login.UserMapper;
 import com.mall.entity.inventory.InventoryDeivery;
 import com.mall.entity.login.User;
 import com.mall.entity.login.UserInfo;
@@ -55,6 +56,8 @@ public class UserManagementController extends AbstractController{
 	private OrderServeService orderServeService;
 	@Resource
 	private InventoryDeiveryService inventoryDeiveryService;
+	@Resource
+	private UserMapper userMapper;
 	/**
 	 * 跳转用户管理界面
 	 * @param model
@@ -63,6 +66,7 @@ public class UserManagementController extends AbstractController{
 	 */
 	@RequestMapping("/manager")
 	public String toUserManager(Model model,HttpServletRequest request) {
+		
 		model.addAttribute("page", "mall/login/my_center");
 		model.addAttribute("manager", "info");
 		return "mall/index";
@@ -75,6 +79,13 @@ public class UserManagementController extends AbstractController{
 	 */
 	@RequestMapping("/modify_pwd_verify")
 	public String toUserModifyPwdVardate(Model model,HttpServletRequest request) {
+		//文件服务器路径
+		Map<String, String> cache = cacheService.getCache(SystemCode.FILE_SERVICE);
+		String url=cache.get(SystemCode.FILE_SERVICE_URL);
+		String port=cache.get(SystemCode.FILE_SERVICE_PORT);
+		String filePath=cache.get(SystemCode.FILE_SERVICE_FILES_PATH);
+		String fileUrlPrefix=url+":"+port+"/"+filePath;
+		model.addAttribute("fileServicePath", fileUrlPrefix);
 		model.addAttribute("page", "mall/login/my_center");
 		model.addAttribute("manager", "modify_pwd_verify");
 		return "mall/index";
@@ -279,6 +290,7 @@ public class UserManagementController extends AbstractController{
 			logger.info("更改用户信息："+userInfo.getUser_name());
 			
 			userInfoService.updateByPrimaryKey(userInfo);
+			user=userMapper.Login(user);
 			SessionUtil.setUser(request, user);
 			res.setRes(SystemCode.SUCCESS);
 			res.setMsg("用户信息修改成功");

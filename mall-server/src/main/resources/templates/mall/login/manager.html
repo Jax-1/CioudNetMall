@@ -65,17 +65,17 @@
 					<label for="">地址</label>
 					<div class="input_box">
 						<textarea name="" id="address_street" cols="30" rows="10" th:text="${session.user.userInfo.address_street}"></textarea>
-						<span id="headimgurl"></span>
+						
 					</div>
 				</div>
 				<div class="save_btn">
-					<input type="submit" value="保存" id="submit" />
+					<input type="button" value="保存" id="submit" />
 				</div>
 				
 			</div>
 			<div class="my_img">
 				<div class="my_header_img">
-					<img th:attr="src=${session.user!=null&&session.user.filePath!=null}?'':'/mall/images/u106.png'" alt="">
+					<img th:attr="src=${session.user?.filePath!=null}?(${session.path}+'/'+${session.user?.filePath.path}+'/'+${session.user?.filePath.fileidname}+'.'+${session.user?.filePath.filetype}):'/mall/images/u106.png'" alt="">
 				</div>
 				<div class="filed_btn">上传头像</div>
 			</div>
@@ -86,12 +86,14 @@
 					<div class="form-top">
 						<div class="img_show">
 							<label for="show_img">
-								<img src="/mall/images/u106.png" alt="">
+								<img src="/mall/images/u106.png" alt="" id="headimg">
 							</label>
 						</div>
 						<div class="img_show_rt">	
 							<p>注：（请上传不超过2M 正方形的图片）</p>
-							<input type="file" name="show_img" id="show_img"><br>
+							<input type="file" name="show_img" id="show_img">
+							<input type="hidden" id="headimgurl">
+							<br>
 							<button class="btn_sub">上传</button>
 						</div>
 					</div>
@@ -103,11 +105,12 @@
 		 <script src="/admin/assets/global/plugins/ajaxfileupload.js" type="text/javascript"></script>
 		<script type="text/javascript" th:inline="javascript">
 		  $(function(){
-			  
+			  	console.log([[${session.user}]])
 			  	var userinfo =[[${session.user.userInfo}]];
 				new PCAS("province","city","area",userinfo.address_province,userinfo.address_city,userinfo.address_area);
 			  	$("#submit").click(function(){
-			  		console.log($("#address_street").val());
+			  		console.log($("#headimgurl").val());
+			  		
 				  		$.post('/mall/user/chengeuserinfo',
 					  			{
 					  			 name:$("#name").val(),
@@ -119,7 +122,7 @@
 					  			address_city:$("#address_city").val(),
 					  			address_area:$("#address_area").val(),
 					  			address_street:$("#address_street").val(),
-					  			headimgurl:$("#headimgurl").text()
+					  			headimgurl:$("#headimgurl").val()
 					  			 },
 					  			function(data){
 					  				if(data!=null&&data.res=="1"){
@@ -151,8 +154,10 @@
 	     	             dataType:"json",
 	                     async : true,   //是否是异步
 	                     success: function (data) {
-	                         console.log(data)
-	                   
+	                         
+	                         path=data[0].host+'/'+data[0].path;
+	                         $("#headimgurl").val(data[0].id);
+	                   		 $("#headimg").attr("src",path);
 	                         
 	                     }            
 

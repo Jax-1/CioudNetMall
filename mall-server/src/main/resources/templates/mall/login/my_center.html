@@ -15,7 +15,7 @@
 						<h3 class="my_tit">我的中心</h3>
 						<div class="my_detail_box">
 							<div class="my_img">
-								<img  th:attr="src=${session.user!=null&&session.user.filePath!=null}?'':'/mall/images/u106.png'" alt="">
+								<img  th:attr="src=${session.user?.filePath!=null}?(${session.path}+'/'+${session.user?.filePath.path}+'/'+${session.user?.filePath.fileidname}+'.'+${session.user?.filePath.filetype}):'/mall/images/u106.png'" alt="">
 							</div>
 							<div class="my_right_bar">
 								<ul>
