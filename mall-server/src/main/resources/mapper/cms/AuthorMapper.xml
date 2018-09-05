@@ -293,7 +293,7 @@
 		</if>
 		AND t1.status='Y'
 	ORDER BY t1.createat desc
-	)a LEFT JOIN t_file_path b ON a.id = b.belongid
+	)a LEFT JOIN t_file_path b ON a.viewimg = b.fileid
 	ORDER BY  a.createat DESC
   </select>
   <!-- 删除，软删除，更改状态 -->
