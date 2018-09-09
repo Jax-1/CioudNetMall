@@ -50,6 +50,12 @@
             <!--<artifactId>spring-boot-starter-ueditor-qiniu</artifactId>-->
             <!--<version>1.0.0.RELEASE</version>-->
         <!--</dependency>-->
+        <!--  -->
+        <dependency>
+             <groupId>com.bigdatan.framework</groupId>
+			  <artifactId>spring-boot-starter-redis</artifactId>
+			  <version>0.0.1-SNAPSHOT</version>
+        </dependency>
         <dependency>
             <groupId>tk.mybatis</groupId>
             <artifactId>mapper-spring-boot-starter</artifactId>

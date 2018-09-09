@@ -22,6 +22,7 @@
         <module>spring-boot-starter-druid</module>
         <module>spring-boot-starter-swagger</module>
         <!--<module>spring-boot-starter-ueditor-qiniu</module>-->
+        <module>spring-boot-starter-redis</module>
 
     </modules>
 

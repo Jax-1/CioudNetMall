@@ -314,7 +314,7 @@
 	WHERE
 		t1.classification = t2.id 
 		AND t1.id = #{id}
-		)a LEFT JOIN t_file_path b ON a.id = b.belongid
+		)a LEFT JOIN t_file_path b ON a.viewimg = b.fileid
   </select>
   <!-- 推荐作家 -->
   <select id="queryRecommendAtt" resultMap="authorResultMap">
@@ -335,7 +335,7 @@
 		AND t1.status='Y'
 		AND t1.recommended	='Y'
 	ORDER BY t1.createat,t1.viewCount desc
-	)a LEFT JOIN t_file_path b ON a.id = b.belongid limit 0,${pageSize}
+	)a LEFT JOIN t_file_path b ON a.viewimg = b.fileid limit 0,${pageSize}
   
   </select>
   <!-- 更新点赞数或查看次数 -->
