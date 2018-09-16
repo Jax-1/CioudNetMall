@@ -1,0 +1,15 @@
+
+redis:
+   hostName: 47.93.16.119
+   port: 6379  
+   timeout: 10000
+   maxIdle: 300  
+   maxTotal: 10000
+   maxWaitMillis: 1000
+   minEvictableIdleTimeMillis: 30000  
+   numTestsPerEvictionRun: 1024
+   timeBetweenEvictionRunsMillis: 30000  
+   testOnBorrow: true
+   testWhileIdle: true  
+   
+   

@@ -1,14 +1,22 @@
 package com.bigdatan.framework.redis;
 
-import org.springframework.beans.factory.annotation.Value;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+ 
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.stereotype.Component;
+ 
 
+// 配置文件中的前缀
 /**
- * redis配置
+ * redis自动配置
  * @author Jang
  *
  */
-@ConfigurationProperties(prefix="spring.redis")
+@Component
+@ConfigurationProperties(prefix="redis")
 public class RedisProperties {
 	//模式
 	private String mode;
@@ -33,23 +41,14 @@ public class RedisProperties {
 	
 	private boolean  testOnBorrow;
 	private boolean  testWhileIdle;
-	//集群配置
-	@Value("${cluster.nodes}")
-	private String nodes;
-	@Value("${cluster.max-redirects}")
-	private Integer max_redirects;
-	
-	//哨兵配置
-	
-	
-	public String getHostName() {
-		return hostName;
-	}
 	public String getMode() {
 		return mode;
 	}
 	public void setMode(String mode) {
 		this.mode = mode;
+	}
+	public String getHostName() {
+		return hostName;
 	}
 	public void setHostName(String hostName) {
 		this.hostName = hostName;
@@ -120,18 +119,5 @@ public class RedisProperties {
 	public void setTestWhileIdle(boolean testWhileIdle) {
 		this.testWhileIdle = testWhileIdle;
 	}
-	public String getNodes() {
-		return nodes;
-	}
-	public void setNodes(String nodes) {
-		this.nodes = nodes;
-	}
-	public Integer getMax_redirects() {
-		return max_redirects;
-	}
-	public void setMax_redirects(Integer max_redirects) {
-		this.max_redirects = max_redirects;
-	}
-	
-		
+
 }
