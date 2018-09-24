@@ -16,7 +16,7 @@ import org.springframework.context.annotation.ComponentScan;
  */
 @SpringBootApplication
 @MapperScan(basePackages = "com.mall.dao")
-@ComponentScan(basePackages ="com.mall")
+@ComponentScan
 @EnableCaching 
 public class Application extends SpringBootServletInitializer {
 

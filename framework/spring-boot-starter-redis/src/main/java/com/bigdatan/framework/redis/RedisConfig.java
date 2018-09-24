@@ -4,7 +4,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.AutoConfigureBefore;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
@@ -82,13 +85,16 @@ public class RedisConfig {
         //连接池  
         JedisConnectionFactory.setPoolConfig(jedisPoolConfig);  
         //IP地址  
-        JedisConnectionFactory.setHostName("192.168.177.128");  
+        JedisConnectionFactory.setHostName(redis.getHostName());  
+        logger.info("setHostName---->"+redis.getHostName());
         //端口号  
-        JedisConnectionFactory.setPort(6379);  
+        JedisConnectionFactory.setPort(redis.getPort());  
+        logger.info("setPort---->"+redis.getPort());
         //如果Redis设置有密码  
         //JedisConnectionFactory.setPassword(password);  
         //客户端超时时间单位是毫秒  
-        JedisConnectionFactory.setTimeout(5000);  
+        JedisConnectionFactory.setTimeout(redis.getTimeout()); 
+        logger.info("setTimeout---->"+redis.getTimeout());
         return JedisConnectionFactory; 
     }
 
