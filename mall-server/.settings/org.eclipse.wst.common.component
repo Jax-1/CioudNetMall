@@ -10,9 +10,6 @@
         <dependent-module archiveName="spring-boot-starter-druid-1.0.0.RELEASE.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/spring-boot-starter-druid/spring-boot-starter-druid">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <dependent-module archiveName="spring-boot-starter-redis-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/spring-boot-starter-redis/spring-boot-starter-redis">
-            <dependency-type>uses</dependency-type>
-        </dependent-module>
         <property name="java-output-path" value="/mall-server/target/classes"/>
         <property name="context-root" value="dbshop"/>
     </wb-module>

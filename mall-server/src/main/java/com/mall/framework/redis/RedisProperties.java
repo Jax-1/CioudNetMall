@@ -1,4 +1,4 @@
-package com.bigdatan.framework.redis;
+package com.mall.framework.redis;
 
 import java.util.ArrayList;
 import java.util.HashMap;

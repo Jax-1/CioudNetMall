@@ -1,5 +1,6 @@
 package com.mall.entity.goods;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
@@ -9,7 +10,7 @@ import com.mall.util.DateFormatUtil;
 import com.mall.util.SessionUtil;
 import com.mall.util.UUIDUtil;
 
-public class GoodsCategory {
+public class GoodsCategory implements Serializable{
     private String category_id;
 
     private String parent_id;
@@ -29,6 +30,11 @@ public class GoodsCategory {
     private Date update_time;
 
     private String admin_id;
+    
+    public String toString() {
+    	return category_id+"-"+parent_id+"-"+category_name;
+    }
+    
     
     private List<GoodsCategory> goodsCategoryList;
     

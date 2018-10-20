@@ -1,4 +1,4 @@
-package com.bigdatan.framework.redis;
+package com.mall.framework.redis;
 
 import org.springframework.boot.autoconfigure.AutoConfigureBefore;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
@@ -12,7 +12,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.cache.RedisCacheManager;
 import org.springframework.data.redis.core.RedisTemplate;
 
-import redis.clients.jedis.JedisPoolConfig;
 
 @Configuration
 @EnableCaching
@@ -26,9 +25,16 @@ public class RedisAutoConfig extends CachingConfigurerSupport {
         return (target, method, params) -> {
             StringBuilder sb = new StringBuilder();
             sb.append(target.getClass().getName());
+            System.out.println("缓存对象类名："+target.getClass().getName());
             sb.append(method.getName());
             for (Object obj : params) {
-                sb.append(obj.toString());
+            	 System.out.println("缓存对象："+obj);
+            	 if(obj==null) {
+            		 sb.append("none"); 
+            		 continue;
+            	 }
+            	 sb.append(obj.toString());
+                
             }
             return sb.toString();
         };

@@ -51,11 +51,8 @@
             <!--<version>1.0.0.RELEASE</version>-->
         <!--</dependency>-->
         <!--  -->
-        <dependency>
-             <groupId>com.bigdatan.framework</groupId>
-			  <artifactId>spring-boot-starter-redis</artifactId>
-			  <version>0.0.1-SNAPSHOT</version>
-        </dependency>
+       
+       
         <dependency>
             <groupId>tk.mybatis</groupId>
             <artifactId>mapper-spring-boot-starter</artifactId>
@@ -199,7 +196,15 @@
 		    <artifactId>httpcore</artifactId>
 		    <version>4.4.6</version>
 		</dependency>
-		
+		<!-- redis -->
+		<dependency>
+		    <groupId>org.springframework.data</groupId>
+		    <artifactId>spring-data-redis</artifactId>
+		</dependency>
+		<dependency>
+		    <groupId>redis.clients</groupId>
+		    <artifactId>jedis</artifactId>
+		</dependency>
 		
     </dependencies>
 

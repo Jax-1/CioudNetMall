@@ -86,9 +86,9 @@ spring:
 #                strategy:
 #            ddl-auto: update
    #cache
-    #cache:
-     #  ehcache:
-      #    config:classpath:/config/ehcache.xml
+    cache:
+       ehcache:
+          config:classpath:/config/ehcache.xml
     #上传文件大小
     http:
         multipart:

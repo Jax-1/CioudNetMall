@@ -1,4 +1,4 @@
-package com.bigdatan.framework.redis;
+package com.mall.framework.redis;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,6 +15,11 @@ import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
+
+import com.mall.framework.redis.RedisConfig;
+import com.mall.framework.redis.RedisProperties;
+import com.mall.framework.redis.RedisUtil;
+
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 
 import redis.clients.jedis.JedisPoolConfig;
