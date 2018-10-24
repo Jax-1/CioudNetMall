@@ -16,6 +16,8 @@ import com.mall.api.BaseAPI;
 import com.mall.entity.cms.Atticleld;
 import com.mall.entity.cms.AtticleldCategory;
 import com.mall.entity.cms.AuthorWithBLOBs;
+import com.mall.entity.goods.Goods;
+import com.mall.entity.goods.GoodsInfo;
 import com.mall.message.SystemCode;
 import com.mall.service.cms.AtticleldCategoryService;
 import com.mall.service.cms.AtticleldService;
@@ -26,7 +28,7 @@ import com.mall.service.sys.CacheService;
 import com.mall.util.PageResult;
 
 @Controller
-@RequestMapping("api")
+@RequestMapping("api/cms")
 public class CmsApi extends BaseAPI {
 	@Resource
 	private CacheService cacheService;
@@ -46,7 +48,7 @@ public class CmsApi extends BaseAPI {
 	 * @param model
 	 * @return
 	 */
-	@GetMapping("cms/list/{Pid}")
+	@GetMapping("list/{Pid}")
 	@ResponseBody
 	public PageResult<Atticleld> toCmsList(@PathVariable("Pid")String Pid,Model model,PageResult<Atticleld> list,Atticleld att) {
 		int pageSize  =  Integer.parseInt(cacheService.getCache(SystemCode.PAGE).get(SystemCode.MALL_ATT_PAGE));
@@ -63,7 +65,7 @@ public class CmsApi extends BaseAPI {
 	 * @param Pid
 	 * @return
 	 */
-	@GetMapping("/cms/{Pid}")
+	@GetMapping("/{Pid}")
 	@ResponseBody
 	public List<AtticleldCategory> getCMScategory(@PathVariable("Pid")String Pid) {
 		List<AtticleldCategory> category = atticleldCategoryService.queryAll(Pid);
@@ -75,7 +77,7 @@ public class CmsApi extends BaseAPI {
 	 * @param model
 	 * @return
 	 */
-	@GetMapping("/cms/{Pid}/content")
+	@GetMapping("/{Pid}/content")
 	@ResponseBody
 	public Atticleld toCmsContent(@PathVariable("Pid")String Pid,Model model,Atticleld att) {
 		//文章信息
@@ -92,7 +94,7 @@ public class CmsApi extends BaseAPI {
 	 * @param list
 	 * @return
 	 */
-	@GetMapping("cms/auth/list")
+	@GetMapping("/auth/list")
 	@ResponseBody
 	public PageResult<AuthorWithBLOBs> toCmsAuthList(Model model ,PageResult<AuthorWithBLOBs> list,AuthorWithBLOBs auth) {
 		int pageSize  =  Integer.parseInt(cacheService.getCache(SystemCode.PAGE).get(SystemCode.MALL_AUT_PAGE));
@@ -103,6 +105,36 @@ public class CmsApi extends BaseAPI {
 		
 		
 		return list;
+	}
+	/**
+	 * 作家详细页面
+	 * @param Pid
+	 * @param model
+	 * @param auth
+	 * @return
+	 */
+	@GetMapping("/auth/content")
+	@ResponseBody
+	public AuthorWithBLOBs toCmsAuthContent(String Pid,Model model,AuthorWithBLOBs auth) {
+		auth = authorWithBLOBsService.selectInfo(auth);
+		logger.info("增加作家查看次数："+auth.getAuthorname());
+		//增加查看次数
+		auth.setViewCount(auth.getViewCount()+1);
+		authorWithBLOBsService.updateLikeAndViewCount(auth);
+		
+		return auth;
+	}
+	/**
+	 * 获取推荐作家
+	 * @return
+	 */
+	@GetMapping("/auth/recommend")
+	@ResponseBody
+	public List<AuthorWithBLOBs> getRecommendAtt() {
+		//推荐作家
+		List<AuthorWithBLOBs> auth = authorWithBLOBsService.queryRecommendAtt(new AuthorWithBLOBs());
+		logger.info("获取推荐作家："+auth.size());
+		return auth;
 	}
 
 }
