@@ -6,6 +6,7 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.mall.api.BaseAPI;
@@ -18,11 +19,12 @@ import com.mall.service.sys.CacheService;
  *
  */
 @Controller
+@RequestMapping("api/base")
 public class BaseApi extends BaseAPI {
 	@Resource
 	private CacheService cacheService;
 	
-	@GetMapping("fileUrlPrefix")
+	@GetMapping("filepath")
 	@ResponseBody
 	public String getFileUrlPrefix() {
 		Map<String, String> cache = cacheService.getCache(SystemCode.FILE_SERVICE);
