@@ -52,9 +52,9 @@ public class GoodsApi extends BaseAPI{
 
 	@GetMapping("category")
 	@ResponseBody
-	public List<GoodsCategory> getGoodsCategory() {
+	public List<GoodsCategory> getGoodsCategory(GoodsCategory goodsCategory) {
 		//查询所有分类
-		List<GoodsCategory> goodsCategoryList = goodsCategoryService.getGoodsCategoryList(null);
+		List<GoodsCategory> goodsCategoryList = goodsCategoryService.getGoodsCategoryList(goodsCategory);
 		logger.info("获取商品分类列表："+goodsCategoryList.size());
 		
 		return goodsCategoryList;
@@ -96,37 +96,7 @@ public class GoodsApi extends BaseAPI{
 		PageResult<Goods> saleGoods = goodsService.queryByPageFront(list, goods);
 		return saleGoods.getDataList();
 	}
-	@RequestMapping("/detail")
-	public String toGoodsDetail(Model model,Goods goods,HttpServletRequest request) {
-		goods = goodsService.selectInfo(goods);
-		if(Validate.notNull(goods.getGoodsInfo().getAuth_id())) {
-			//查询商品作家信息
-			AuthorWithBLOBs a=new AuthorWithBLOBs();
-			a.setId(goods.getGoodsInfo().getAuth_id());
-			a = authorWithBLOBsService.selectInfo(a);
-			goods.setAuth(a);
-		}
-		User user = SessionUtil.getUser(request);
-		GoodsHistory goodsHistory =new GoodsHistory();
-		goodsHistory.setCreate_time(DateFormatUtil.getDate());
-		goodsHistory.setGood_id(goods.getGoods_id());
-		if(Validate.notNull(user)) {
-			//用户登录了
-			goodsHistory.setUser_id(user.getUser_name());
-		}else {
-			//未登录，存储IP信息
-			logger.info("IP:"+request.getRemoteAddr());
-			goodsHistory.setUser_id(SessionUtil.getIpAddr(request));
-		}
-		try {
-			GoodsHistoryService.insertSelective(goodsHistory);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		model.addAttribute("goods", goods);
-		model.addAttribute("page", "mall/goods/goods_show");
-		return "mall/index";
-	}
+	
 	/**
 	 * 商品详情
 	 * @param goods
