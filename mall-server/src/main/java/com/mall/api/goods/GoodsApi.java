@@ -53,8 +53,9 @@ public class GoodsApi extends BaseAPI{
 	@GetMapping("category")
 	@ResponseBody
 	public List<GoodsCategory> getGoodsCategory(GoodsCategory goodsCategory) {
+		
 		//查询所有分类
-		List<GoodsCategory> goodsCategoryList = goodsCategoryService.getGoodsCategoryList(goodsCategory);
+		List<GoodsCategory> goodsCategoryList = goodsCategoryService.getGoodsCategoryOneList(goodsCategory);
 		logger.info("获取商品分类列表："+goodsCategoryList.size());
 		
 		return goodsCategoryList;

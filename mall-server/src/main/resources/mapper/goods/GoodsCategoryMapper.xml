@@ -159,7 +159,7 @@
     where category_id = #{category_id,jdbcType=VARCHAR}
   
   </update>
-  <!-- 分类查询 -->
+  <!-- 分类查询  全量查询-->
   <select id="getGoodsCategoryList" parameterType="com.mall.entity.goods.GoodsCategory" resultMap="BaseResultMap">
   	 select 
     <include refid="Base_Column_List" />
@@ -168,6 +168,23 @@
     	status='Y'
     <if test="parent_id!=null">
     	and parent_id=#{category_id}
+    </if>
+    <if test="parent_id==null">
+    	and parent_id='' or parent_id='0'
+    </if>
+    order by priority
+    	
+  	
+  </select>
+  <!-- 分类查询  查询一层子分类-->
+  <select id="getGoodsCategoryOneList" parameterType="com.mall.entity.goods.GoodsCategory" resultMap="BaseResultMap">
+  	 select 
+    <include refid="Base_Column_List" />
+    from t_goods_category
+    where 
+    	status='Y'
+    <if test="parent_id!=null">
+    	and parent_id=#{parent_id}
     </if>
     <if test="parent_id==null">
     	and parent_id='' or parent_id='0'

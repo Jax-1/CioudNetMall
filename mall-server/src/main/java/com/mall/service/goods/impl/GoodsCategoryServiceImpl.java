@@ -34,5 +34,13 @@ public class GoodsCategoryServiceImpl extends BaseServiceImpl<GoodsCategory> imp
 		return goodsCategoryList;
 	}
 
+	@Override
+	public List<GoodsCategory> getGoodsCategoryOneList(GoodsCategory goodsCategory) {
+
+		List<GoodsCategory> goodsCategoryList = goodsCategoryMapper.getGoodsCategoryOneList(goodsCategory);
+		
+		return goodsCategoryList;
+	}
+
 	
 }
