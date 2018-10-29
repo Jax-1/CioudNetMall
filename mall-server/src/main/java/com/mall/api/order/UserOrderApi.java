@@ -29,7 +29,7 @@ public class UserOrderApi extends BaseAPI {
 	 * @param request
 	 * @return
 	 */
-	@RequestMapping("/order")
+	@RequestMapping("")
 	public PageResult<Order> toUserOrder(Model model,HttpServletRequest request,PageResult<Order> list,Order order) {
 		
 		User user = SessionUtil.getUser(request);

@@ -66,6 +66,7 @@ public class UserLoginServiceImpl extends BaseServiceImpl<User> implements UserL
 				SessionUtil.setUser(request, model);
 				result.setRes(SystemCode.SUCCESS);
 				result.setMsg(MessageUtil.getMsgByLan(MsgPoolCode.LOGIN_SUCESS));
+				result.setObj(model);
 			}else {
 				result.setRes(SystemCode.FAILURE);
 				result.setMsg(MessageUtil.getMsgByLan(MsgPoolCode.NO_OBJ_ERROR_PASS));
