@@ -39,6 +39,7 @@ public class LoginApi extends BaseAPI {
 	@PostMapping("/login")
 	@ResponseBody
 	public ProcessResult<User> toLogin(User user, HttpServletRequest request){
+		System.out.println("username:"+user.getUser_name()+"---pwd:"+user.getPassword());
 		logger.info(request.getServletPath() );
 		if(!Validate.notNull(user)||!Validate.notNull(user.getUser_name())||!Validate.notNull(user.getPassword())) {
 			return  new ProcessResult<User>();
