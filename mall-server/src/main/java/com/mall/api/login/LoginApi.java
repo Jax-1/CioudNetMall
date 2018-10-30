@@ -4,6 +4,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -35,7 +36,7 @@ public class LoginApi extends BaseAPI {
 	 * 登录
 	 * @return
 	 */
-	@PostMapping("/login")
+	@GetMapping("/login")
 	@ResponseBody
 	public ProcessResult<User> toLogin(User user, HttpServletRequest request){
 		System.out.println("username:"+user.getUser_name()+"---pwd:"+user.getPassword());
