@@ -94,6 +94,8 @@ public class UserAddressApi extends BaseAPI {
 		res.setMsg("添加收货地址失败！");
 		return res;	
 	}
+	@PostMapping("/default")
+	@ResponseBody
 	public ProcessResult<OrderAddress> changeAddressDefault(OrderAddress orderAddress,HttpServletRequest request){
 		ProcessResult<OrderAddress> res=new ProcessResult<OrderAddress>();
 		User user = SessionUtil.getUser(request);
