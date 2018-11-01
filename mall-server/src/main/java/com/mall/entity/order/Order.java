@@ -7,9 +7,9 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import com.mall.entity.cms.FilePath;
-import com.mall.entity.login.User;
-import com.mall.entity.login.UserInfo;
 import com.mall.entity.payment.PaymentMethod;
+import com.mall.entity.user.User;
+import com.mall.entity.user.UserInfo;
 import com.mall.util.DateFormatUtil;
 import com.mall.util.SessionUtil;
 import com.mall.entity.payment.PaymentFlow;

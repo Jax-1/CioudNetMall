@@ -6,7 +6,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import com.mall.dao.sequence.Sequence;
-import com.mall.entity.login.User;
+import com.mall.entity.user.User;
 
 /**
  * 订单处理工具类

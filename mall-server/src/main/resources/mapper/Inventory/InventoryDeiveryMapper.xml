@@ -213,7 +213,7 @@
 	    <result column="thedefault" jdbcType="VARCHAR" property="thedefault" />
 	    <result column="create_time_oa" jdbcType="TIMESTAMP" property="create_time" />
   	</association>
-  	<association property="userInfo" javaType="com.mall.entity.login.UserInfo">
+  	<association property="userInfo" javaType="com.mall.entity.user.UserInfo">
   		<id column="id_u" jdbcType="VARCHAR" property="id" />
 	    <result column="user_name_u" jdbcType="VARCHAR" property="user_name" />
 	    <result column="name_u" jdbcType="VARCHAR" property="name" />

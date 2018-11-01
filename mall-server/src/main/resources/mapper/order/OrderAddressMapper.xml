@@ -161,7 +161,7 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
   <!-- 获取当前用户的收获地址 -->
-  <select id="userTakeDeliveryAddress" parameterType="com.mall.entity.login.User" resultMap="BaseResultMap">
+  <select id="userTakeDeliveryAddress" parameterType="com.mall.entity.user.User" resultMap="BaseResultMap">
   	SELECT
   		id,
 		user_id,
@@ -189,10 +189,4 @@
   
   
   </delete>
-  <!-- 修改状态 -->
-  <update id="changeAddressDefault" parameterType="com.mall.entity.order.OrderAddress">
-  	update t_order_address
-      thedefault = #{thedefault,jdbcType=VARCHAR},
-    where id = #{id,jdbcType=INTEGER} 
-  </update>
 </mapper>

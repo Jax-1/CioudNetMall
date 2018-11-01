@@ -4,8 +4,8 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang3.StringUtils;
 
-import com.mall.entity.login.Admin;
-import com.mall.entity.login.User;
+import com.mall.entity.user.Admin;
+import com.mall.entity.user.User;
 
 
 

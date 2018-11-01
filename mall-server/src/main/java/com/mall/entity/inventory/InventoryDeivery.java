@@ -2,10 +2,10 @@ package com.mall.entity.inventory;
 
 import java.util.Date;
 
-import com.mall.entity.login.User;
-import com.mall.entity.login.UserInfo;
 import com.mall.entity.order.Order;
 import com.mall.entity.order.OrderAddress;
+import com.mall.entity.user.User;
+import com.mall.entity.user.UserInfo;
 
 public class InventoryDeivery {
     private Integer delivery_id;

@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.mall.entity.login.Admin;
+import com.mall.entity.user.Admin;
 import com.mall.util.SessionUtil;
 
 

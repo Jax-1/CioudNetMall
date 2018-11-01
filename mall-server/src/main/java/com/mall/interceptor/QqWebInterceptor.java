@@ -6,7 +6,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.mall.entity.login.User;
+import com.mall.entity.user.User;
 import com.mall.util.SessionUtil;
 
 public class QqWebInterceptor implements HandlerInterceptor{

@@ -8,9 +8,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.mall.controller.AbstractController;
-import com.mall.entity.login.Admin;
 import com.mall.entity.order.Order;
 import com.mall.entity.order.OrderAction;
+import com.mall.entity.user.Admin;
 import com.mall.message.ProcessResult;
 import com.mall.service.order.OrderActionService;
 import com.mall.service.order.OrderService;

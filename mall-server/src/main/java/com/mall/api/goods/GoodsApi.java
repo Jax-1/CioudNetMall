@@ -16,7 +16,7 @@ import com.mall.entity.cms.AuthorWithBLOBs;
 import com.mall.entity.goods.Goods;
 import com.mall.entity.goods.GoodsCategory;
 import com.mall.entity.goods.GoodsHistory;
-import com.mall.entity.login.User;
+import com.mall.entity.user.User;
 import com.mall.message.SystemCode;
 import com.mall.service.ad.AdService;
 import com.mall.service.cms.AuthorWithBLOBsService;

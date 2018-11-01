@@ -3,8 +3,8 @@ package com.mall.service.order;
 import java.util.List;
 
 import com.mall.dao.base.IBaseDao;
-import com.mall.entity.login.User;
 import com.mall.entity.order.OrderAddress;
+import com.mall.entity.user.User;
 
 public interface OrderAddressService extends IBaseDao<OrderAddress>{
 	/**

@@ -7,8 +7,8 @@ import org.apache.log4j.Logger;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.mall.entity.login.Admin;
-import com.mall.entity.login.User;
+import com.mall.entity.user.Admin;
+import com.mall.entity.user.User;
 import com.mall.util.SessionUtil;
 import com.mall.util.Validate;
 

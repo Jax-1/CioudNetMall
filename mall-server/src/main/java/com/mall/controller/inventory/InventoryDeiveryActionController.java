@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.mall.controller.AbstractController;
 import com.mall.entity.inventory.InventoryDeivery;
 import com.mall.entity.inventory.InventoryDeiveryAction;
-import com.mall.entity.login.Admin;
+import com.mall.entity.user.Admin;
 import com.mall.message.ProcessResult;
 import com.mall.service.inventory.InventoryDeiveryActionService;
 import com.mall.service.inventory.InventoryDeiveryService;

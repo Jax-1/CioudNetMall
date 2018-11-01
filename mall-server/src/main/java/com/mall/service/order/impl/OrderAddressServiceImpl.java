@@ -9,8 +9,8 @@ import org.springframework.stereotype.Service;
 
 import com.mall.dao.base.IBaseDao;
 import com.mall.dao.order.OrderAddressMapper;
-import com.mall.entity.login.User;
 import com.mall.entity.order.OrderAddress;
+import com.mall.entity.user.User;
 import com.mall.service.BaseServiceImpl;
 import com.mall.service.order.OrderAddressService;
 import com.mall.util.PageResult;
@@ -34,12 +34,18 @@ public class OrderAddressServiceImpl extends BaseServiceImpl<OrderAddress> imple
 		//获取用户所有收货地址
 		List<OrderAddress> userTakeDeliveryAddress = orderAddressMapper.userTakeDeliveryAddress(user);
 		for(OrderAddress orderAddressItem:userTakeDeliveryAddress) {
-			orderAddressItem.setThedefault("");
+			orderAddressItem.setThedefault("N");
 			if(orderAddressItem.getId().equals(orderAddress.getId())) {
 				//设为默认
 				orderAddressItem.setThedefault("Y");
 			}
-			int changeAddressDefault = orderAddressMapper.changeAddressDefault(orderAddressItem);
+			int changeAddressDefault=0;
+			try {
+				changeAddressDefault = orderAddressMapper.updateByPrimaryKeySelective(orderAddressItem);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			if(changeAddressDefault<=0) {
 				//修改失败
 				flg=false;

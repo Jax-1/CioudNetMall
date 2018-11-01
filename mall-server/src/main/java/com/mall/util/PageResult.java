@@ -81,11 +81,20 @@ public class PageResult<T> implements Serializable{
             result.setTotal(page.getTotal());
             result.setPages(page.getPages());
         }
-        else {
-            result.setPageNo(1);
-            result.setPageSize(datas.size());
-            result.setDataList(datas);
-            result.setTotal(datas.size());
+        else { 
+        	if(datas==null) {
+        		 result.setPageNo(1);
+                 result.setPageSize(0);
+                 result.setDataList(null);
+                 result.setTotal(1);
+        	
+        	}else {
+        		 result.setPageNo(1);
+                 result.setPageSize(datas.size());
+                 result.setDataList(datas);
+                 result.setTotal(datas.size());
+        	}
+           
         }
 
         return result;
