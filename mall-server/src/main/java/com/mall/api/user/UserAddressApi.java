@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -107,6 +108,27 @@ public class UserAddressApi extends BaseAPI {
 		}
 		res.setMsg("设置默认收货地址失败！");
 		return res;
+	}
+	/**
+	 * 用户收货地址管理
+	 * @param model
+	 * @param request
+	 * @return
+	 */
+	@GetMapping("/default")
+	@ResponseBody
+	public OrderAddress getDefaultAddress(HttpServletRequest request) {
+		User user = SessionUtil.getUser(request);
+		//获取当前用户的收获地址
+		List<OrderAddress> addressList = orderAddressService.userTakeDeliveryAddress(user);
+		for(OrderAddress address:addressList) {
+			if("Y".equals(address.getThedefault())) {
+				return address;
+			}
+		}
+		return new OrderAddress();
+		
+		
 	}
 	
 

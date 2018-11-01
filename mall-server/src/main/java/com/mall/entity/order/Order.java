@@ -7,6 +7,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import com.mall.entity.cms.FilePath;
+import com.mall.entity.goods.Goods;
 import com.mall.entity.payment.PaymentMethod;
 import com.mall.entity.user.User;
 import com.mall.entity.user.UserInfo;
@@ -75,6 +76,7 @@ public class Order {
 	 * 关联支付流水
 	 */
 	private PaymentFlow PaymentFlow;
+	
 	
 	
 	public PaymentFlow getPaymentFlow() {
