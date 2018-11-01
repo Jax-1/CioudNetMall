@@ -189,4 +189,10 @@
   
   
   </delete>
+  <!-- 修改状态 -->
+  <update id="changeAddressDefault" parameterType="com.mall.entity.order.OrderAddress">
+  	update t_order_address
+      thedefault = #{thedefault,jdbcType=VARCHAR},
+    where id = #{id,jdbcType=INTEGER} 
+  </update>
 </mapper>

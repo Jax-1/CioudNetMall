@@ -12,5 +12,12 @@ public interface OrderAddressMapper extends IBaseDao<OrderAddress>{
 	 */
 	public List<OrderAddress> userTakeDeliveryAddress( User user);
 	
+	/**
+	 * 修改地址默认项
+	 * @param orderAddress
+	 * @return
+	 */
+	public int changeAddressDefault(OrderAddress orderAddress);
+	
 
 }

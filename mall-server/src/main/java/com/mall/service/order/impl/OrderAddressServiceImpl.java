@@ -1,5 +1,6 @@
 package com.mall.service.order.impl;
 
+import java.util.Iterator;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -26,6 +27,25 @@ public class OrderAddressServiceImpl extends BaseServiceImpl<OrderAddress> imple
 	public List<OrderAddress> userTakeDeliveryAddress(User user) {
 		
 		return orderAddressMapper.userTakeDeliveryAddress(user);
+	}
+	@Override
+	public boolean changeAddressDefault(OrderAddress orderAddress,User user) {
+		boolean flg=true;
+		//获取用户所有收货地址
+		List<OrderAddress> userTakeDeliveryAddress = orderAddressMapper.userTakeDeliveryAddress(user);
+		for(OrderAddress orderAddressItem:userTakeDeliveryAddress) {
+			orderAddressItem.setThedefault("");
+			if(orderAddressItem.getId().equals(orderAddress.getId())) {
+				//设为默认
+				orderAddressItem.setThedefault("Y");
+			}
+			int changeAddressDefault = orderAddressMapper.changeAddressDefault(orderAddressItem);
+			if(changeAddressDefault<=0) {
+				//修改失败
+				flg=false;
+			}
+		}
+		return flg;
 	}
 
 	
