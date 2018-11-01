@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.mall.dao.login.AdminMapper">
+<mapper namespace="com.mall.dao.user.AdminMapper">
   <resultMap id="BaseResultMap" type="com.mall.entity.user.Admin">
     <id column="admin_name" jdbcType="VARCHAR" property="admin_name" />
     <result column="password" jdbcType="VARCHAR" property="password" />
