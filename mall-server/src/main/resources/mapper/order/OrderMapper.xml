@@ -15,6 +15,7 @@
     <result column="invoice_tag" jdbcType="TINYINT" property="invoice_tag" />
     <result column="del_state" jdbcType="TINYINT" property="del_state" />
     <result column="payment_id" jdbcType="INTEGER" property="payment_id" />
+    <result column="pay_id" jdbcType="INTEGER" property="pay_id" />
     <result column="payment_seq" jdbcType="VARCHAR" property="payment_seq" />
     <result column="pay_state" jdbcType="TINYINT" property="pay_state" />
     <result column="comment" jdbcType="VARCHAR" property="comment" />
@@ -23,8 +24,8 @@
   </resultMap>
   <sql id="Base_Column_List">
     order_id, order_number, user_id, total_amount, paid_amount, postage_amount, discount_amount, 
-    receive_id, send_time, logistics_state, invoice_tag, del_state, payment_id, payment_seq, 
-    pay_state, comment, create_time, update_time
+    receive_id, send_time, logistics_state, invoice_tag, del_state, payment_id, pay_id, 
+    payment_seq, pay_state, comment, create_time, update_time
   </sql>
   <!-- 重写，通过订单号查询 -->
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
@@ -42,18 +43,18 @@
       total_amount, paid_amount, postage_amount, 
       discount_amount, receive_id, send_time, 
       logistics_state, invoice_tag, del_state, 
-      payment_id, payment_seq, pay_state, 
-      comment, create_time, update_time
-      )
+      payment_id, pay_id, payment_seq, 
+      pay_state, comment, create_time, 
+      update_time)
     values (#{order_id,jdbcType=INTEGER}, #{order_number,jdbcType=VARCHAR}, #{user_id,jdbcType=VARCHAR}, 
       #{total_amount,jdbcType=DECIMAL}, #{paid_amount,jdbcType=DECIMAL}, #{postage_amount,jdbcType=DECIMAL}, 
       #{discount_amount,jdbcType=DECIMAL}, #{receive_id,jdbcType=INTEGER}, #{send_time,jdbcType=TIMESTAMP}, 
       #{logistics_state,jdbcType=TINYINT}, #{invoice_tag,jdbcType=TINYINT}, #{del_state,jdbcType=TINYINT}, 
-      #{payment_id,jdbcType=INTEGER}, #{payment_seq,jdbcType=VARCHAR}, #{pay_state,jdbcType=TINYINT}, 
-      #{comment,jdbcType=VARCHAR}, #{create_time,jdbcType=TIMESTAMP}, #{update_time,jdbcType=TIMESTAMP}
-      )
+      #{payment_id,jdbcType=INTEGER}, #{pay_id,jdbcType=INTEGER}, #{payment_seq,jdbcType=VARCHAR}, 
+      #{pay_state,jdbcType=TINYINT}, #{comment,jdbcType=VARCHAR}, #{create_time,jdbcType=TIMESTAMP}, 
+      #{update_time,jdbcType=TIMESTAMP})
   </insert>
-  <insert id="insertSelective" parameterType="com.mall.entity.order.Order" useGeneratedKeys="true" keyProperty="order_id">
+  <insert id="insertSelective" parameterType="com.mall.entity.order.Order">
     insert into t_order
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="order_id != null">
@@ -94,6 +95,9 @@
       </if>
       <if test="payment_id != null">
         payment_id,
+      </if>
+      <if test="pay_id != null">
+        pay_id,
       </if>
       <if test="payment_seq != null">
         payment_seq,
@@ -151,6 +155,9 @@
       <if test="payment_id != null">
         #{payment_id,jdbcType=INTEGER},
       </if>
+      <if test="pay_id != null">
+        #{pay_id,jdbcType=INTEGER},
+      </if>
       <if test="payment_seq != null">
         #{payment_seq,jdbcType=VARCHAR},
       </if>
@@ -207,6 +214,9 @@
       <if test="payment_id != null">
         payment_id = #{payment_id,jdbcType=INTEGER},
       </if>
+      <if test="pay_id != null">
+        pay_id = #{pay_id,jdbcType=INTEGER},
+      </if>
       <if test="payment_seq != null">
         payment_seq = #{payment_seq,jdbcType=VARCHAR},
       </if>
@@ -239,6 +249,7 @@
       invoice_tag = #{invoice_tag,jdbcType=TINYINT},
       del_state = #{del_state,jdbcType=TINYINT},
       payment_id = #{payment_id,jdbcType=INTEGER},
+      pay_id = #{pay_id,jdbcType=INTEGER},
       payment_seq = #{payment_seq,jdbcType=VARCHAR},
       pay_state = #{pay_state,jdbcType=TINYINT},
       comment = #{comment,jdbcType=VARCHAR},

@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mall.dao.payment.PaymentMapper">
+  <resultMap id="BaseResultMap" type="com.mall.entity.payment.Payment">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="payment_id" jdbcType="INTEGER" property="payment_id" />
+    <result column="key" jdbcType="VARCHAR" property="key" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="decriptron" jdbcType="VARCHAR" property="decriptron" />
+    <result column="state" jdbcType="VARCHAR" property="state" />
+    <result column="defaultPayment" jdbcType="VARCHAR" property="defaultPayment" />
+    <result column="ico" jdbcType="VARCHAR" property="ico" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="create_time" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="update_time" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, payment_id, key, name, decriptron, state, defaultPayment, ico, create_time, update_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_payment
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from t_payment
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.mall.entity.payment.Payment">
+    insert into t_payment (id, payment_id, key, 
+      name, decriptron, state, 
+      defaultPayment, ico, create_time, 
+      update_time)
+    values (#{id,jdbcType=INTEGER}, #{payment_id,jdbcType=INTEGER}, #{key,jdbcType=VARCHAR}, 
+      #{name,jdbcType=VARCHAR}, #{decriptron,jdbcType=VARCHAR}, #{state,jdbcType=VARCHAR}, 
+      #{defaultPayment,jdbcType=VARCHAR}, #{ico,jdbcType=VARCHAR}, #{create_time,jdbcType=TIMESTAMP}, 
+      #{update_time,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.mall.entity.payment.Payment">
+    insert into t_payment
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="payment_id != null">
+        payment_id,
+      </if>
+      <if test="key != null">
+        key,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="decriptron != null">
+        decriptron,
+      </if>
+      <if test="state != null">
+        state,
+      </if>
+      <if test="defaultPayment != null">
+        defaultPayment,
+      </if>
+      <if test="ico != null">
+        ico,
+      </if>
+      <if test="create_time != null">
+        create_time,
+      </if>
+      <if test="update_time != null">
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="payment_id != null">
+        #{payment_id,jdbcType=INTEGER},
+      </if>
+      <if test="key != null">
+        #{key,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="decriptron != null">
+        #{decriptron,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null">
+        #{state,jdbcType=VARCHAR},
+      </if>
+      <if test="defaultPayment != null">
+        #{defaultPayment,jdbcType=VARCHAR},
+      </if>
+      <if test="ico != null">
+        #{ico,jdbcType=VARCHAR},
+      </if>
+      <if test="create_time != null">
+        #{create_time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="update_time != null">
+        #{update_time,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.mall.entity.payment.Payment">
+    update t_payment
+    <set>
+      <if test="payment_id != null">
+        payment_id = #{payment_id,jdbcType=INTEGER},
+      </if>
+      <if test="key != null">
+        key = #{key,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="decriptron != null">
+        decriptron = #{decriptron,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null">
+        state = #{state,jdbcType=VARCHAR},
+      </if>
+      <if test="defaultPayment != null">
+        defaultPayment = #{defaultPayment,jdbcType=VARCHAR},
+      </if>
+      <if test="ico != null">
+        ico = #{ico,jdbcType=VARCHAR},
+      </if>
+      <if test="create_time != null">
+        create_time = #{create_time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="update_time != null">
+        update_time = #{update_time,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.mall.entity.payment.Payment">
+    update t_payment
+    set payment_id = #{payment_id,jdbcType=INTEGER},
+      key = #{key,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      decriptron = #{decriptron,jdbcType=VARCHAR},
+      state = #{state,jdbcType=VARCHAR},
+      defaultPayment = #{defaultPayment,jdbcType=VARCHAR},
+      ico = #{ico,jdbcType=VARCHAR},
+      create_time = #{create_time,jdbcType=TIMESTAMP},
+      update_time = #{update_time,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

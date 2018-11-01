@@ -381,6 +381,9 @@ FROM
 	LEFT JOIN t_goods_info  ON t_goods.goods_info_id = t_goods_info.goods_info_id 
 WHERE
 	t_goods.del_state = 'N' 
+		<!-- MS -->
+		 and t_goods.goods_id NOT IN (select TS.goods_id from t_seckill TS)
+		<!-- Ms end -->
 			<!-- 分类 -->
 			<if test="goodsInfo!=null and goodsInfo.category_id!=null and goodsInfo.category_id!=''">
 				and t_goods_info.category_id=#{goodsInfo.category_id}

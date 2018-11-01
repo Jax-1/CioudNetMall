@@ -16,7 +16,9 @@ import com.mall.util.SessionUtil;
 import com.mall.entity.payment.PaymentFlow;
 
 public class Order {
-    private Integer order_id;
+   
+
+	private Integer order_id;
 
 	private String order_number;
 
@@ -41,6 +43,8 @@ public class Order {
 	private Byte del_state;
 
 	private Integer payment_id;
+	
+	private Integer pay_id;
 
 	private String payment_seq;
 
@@ -53,17 +57,17 @@ public class Order {
 	private Date update_time;
 	
 	/**
-	 * 关联商品信息表
+	 * 关联商品信息�?
 	 */
 	private List<OrderDetails> orderDetailsList;
 	
 	/**
-	 * 关联收获地址表
+	 * 关联收获地址�?
 	 */
 	private OrderAddress orderAddress;
 	
 	/**
-	 * 关联用户信息表
+	 * 关联用户信息�?
 	 */
 	private UserInfo userInfo;
 	
@@ -79,6 +83,12 @@ public class Order {
 	
 	
 	
+	public Integer getPay_id() {
+		return pay_id;
+	}
+	public void setPay_id(Integer pay_id) {
+		this.pay_id = pay_id;
+	}
 	public PaymentFlow getPaymentFlow() {
 		return PaymentFlow;
 	}

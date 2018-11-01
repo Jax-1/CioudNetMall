@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mall.dao.seckill.SeckillSuccessMapper">
+  <resultMap id="BaseResultMap" type="com.mall.entity.seckill.SeckillSuccess">
+    <id column="seckill_id" jdbcType="BIGINT" property="seckill_id" />
+    <id column="user_phone" jdbcType="BIGINT" property="user_phone" />
+    <result column="state" jdbcType="TINYINT" property="state" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="create_time" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    seckill_id, user_phone, state, create_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="com.mall.entity.seckill.SeckillSuccessKey" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_success_killed
+    where seckill_id = #{seckill_id,jdbcType=BIGINT}
+      and user_phone = #{user_phone,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.mall.entity.seckill.SeckillSuccessKey">
+    delete from t_success_killed
+    where seckill_id = #{seckill_id,jdbcType=BIGINT}
+      and user_phone = #{user_phone,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.mall.entity.seckill.SeckillSuccess">
+    insert into t_success_killed (seckill_id, user_phone, state, 
+      create_time)
+    values (#{seckill_id,jdbcType=BIGINT}, #{user_phone,jdbcType=BIGINT}, #{state,jdbcType=TINYINT}, 
+      #{create_time,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.mall.entity.seckill.SeckillSuccess">
+    insert into t_success_killed
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="seckill_id != null">
+        seckill_id,
+      </if>
+      <if test="user_phone != null">
+        user_phone,
+      </if>
+      <if test="state != null">
+        state,
+      </if>
+      <if test="create_time != null">
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="seckill_id != null">
+        #{seckill_id,jdbcType=BIGINT},
+      </if>
+      <if test="user_phone != null">
+        #{user_phone,jdbcType=BIGINT},
+      </if>
+      <if test="state != null">
+        #{state,jdbcType=TINYINT},
+      </if>
+      <if test="create_time != null">
+        #{create_time,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.mall.entity.seckill.SeckillSuccess">
+    update t_success_killed
+    <set>
+      <if test="state != null">
+        state = #{state,jdbcType=TINYINT},
+      </if>
+      <if test="create_time != null">
+        create_time = #{create_time,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where seckill_id = #{seckill_id,jdbcType=BIGINT}
+      and user_phone = #{user_phone,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.mall.entity.seckill.SeckillSuccess">
+    update t_success_killed
+    set state = #{state,jdbcType=TINYINT},
+      create_time = #{create_time,jdbcType=TIMESTAMP}
+    where seckill_id = #{seckill_id,jdbcType=BIGINT}
+      and user_phone = #{user_phone,jdbcType=BIGINT}
+  </update>
+</mapper>
