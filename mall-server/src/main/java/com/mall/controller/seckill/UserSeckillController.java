@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -54,13 +55,10 @@ public class UserSeckillController extends AbstractController {
 	private SeckillService seckillService;
 	
 	@RequestMapping("/{seckillId}/detail")
-	public String toGoodsDetail(Model model,@PathVariable("seckillId") String seckillId,HttpServletRequest request) {
+	public String toGoodsDetail(Model model,@PathVariable("seckillId") long seckillId,HttpServletRequest request) {
 		
-		if(seckillId == null){
-            return "redirect:mall/seckill/list";
-        }
-		System.out.println(Long.parseLong(seckillId));
-        Seckill seckill = seckillService.getById(Long.parseLong(seckillId));
+		
+        Seckill seckill = seckillService.getById(seckillId);
         if(seckill == null){
             return "forward:mall/seckill/list";
         }
@@ -143,5 +141,8 @@ public class UserSeckillController extends AbstractController {
 		model.addAttribute("page", "mall/seckill/seckill_list");
 		return "mall/index";
 	}
+	
+	
+   
 
 }

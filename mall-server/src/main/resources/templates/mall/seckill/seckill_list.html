@@ -120,8 +120,8 @@
 		                        	</a>
 		                        </span>
 		                        <p><a  th:text="${a.goods.auth.position}+'-'+${a.goods.auth.authorname}">中国美术家协会会员 楚英</a></p>
-		                        <p><a href="" th:text="'《'+${a.goods.goods_name}+'》'" th:href="@{/mall/seckill/${a.goods_id}/detail}">《新华一角》</a></p>
-		                        <p class="ku_c" th:text="'库存：'+${a.number}">库存：99</p>
+		                        <p><a href="" th:text="'《'+${a.goods.goods_name}+'》'" th:href="@{'/mall/seckill/'+${a.seckill_id}+'/detail'}">《新华一角》</a></p>
+		                        <p class="ku_c" th:text="'库存：'+${a.goods.goodsInfo.inventory.amount-a.goods.goodsInfo.inventory.has_amount}">库存：99</p>
 		                        
 		                        <div class="price">
 		                        ¥

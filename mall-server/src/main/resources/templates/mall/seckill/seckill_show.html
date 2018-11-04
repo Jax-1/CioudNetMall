@@ -31,10 +31,13 @@
                     <h3 th:text="${goods.auth.position}+'-'+${goods.auth.authorname}+'  '+'《'+${goods.goods_name}+'》'">河北省美术家协会会员 康计永《山乡自有春意在》</h3>
                     <div class="shop_d_box">
                           
-                        		<p>价格：<span class="price" th:text="'¥ '+(${goods.goodsPrice.sale}=='Y'?${goods.goodsPrice.sale_price}:${goods.goodsPrice.retail_price})">2000元</span>
-                        			<span th:style="${goods.goodsPrice.sale}=='Y'?'':'display:none'" class='yuanjia'>¥<del th:text="${goods.goodsPrice.retail_price}"> </del> </span>
+                        		<p>价格：<span class="price" th:text="'¥ '+(${goods.goodsPrice.sale_price})">2000元</span>
+                        			<span  class='yuanjia'>¥<del th:text="${goods.goodsPrice.retail_price}"> </del> </span>
                         		</p>
-                        		
+                        <p> 秒杀开始时间：<span th:text="${#dates.format(seckill.start_time,'yyyy-MM-dd HH:mm:ss')}">  </span> 秒杀结束时间：<span th:text="${#dates.format(seckill.end_time,'yyyy-MM-dd HH:mm:ss')}"></span></p>
+                         
+                          <p> 秒杀剩余时间：<span th:text="12">张孝勇</span></p>
+                        <p><span th:text="'库存：'+${goods.goodsInfo.inventory.amount-goods.goodsInfo.inventory.has_amount}">库存： 99</span>（当前库存紧张，请及时下单）</p>	
                         <p> 作者：<span th:text="${goods.auth.authorname}">张孝勇</span></p>
                         <p>尺寸：<span th:text="${goods.goodsInfo.size}">34x136cmx4</span></p>
                     </div>
@@ -57,7 +60,7 @@
                         </div>
                     </div>
                     <div class="msg_text">
-                        <span th:text="'库存：'+${goods.goodsInfo.inventory.amount}">库存： 99</span>（当前库存紧张，请及时下单）
+                        
                         <p><span id="msg"></span>
                     </div>
                 </div>

@@ -122,7 +122,7 @@
                                         
                                         
                                         
-                                        <td th:text="${a.number}">100</td>
+                                        <td th:text="${a.goods.goodsInfo.inventory.amount-a.goods.goodsInfo.inventory.has_amount}">100</td>
                                         <td>
                                             <button class="btn btn-xs red" type="button" th:onclick="'del(\''+${a.seckill_id}+'\',\''+${a.seckill_id}+'\')'" > 删除
                                             </button>
