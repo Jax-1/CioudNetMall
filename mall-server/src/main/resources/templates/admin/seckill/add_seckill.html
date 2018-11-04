@@ -23,7 +23,7 @@
             <!-- 内容展示 -->
             <div class="row">
                 <div class="col-md-22">
-                    <form id="addform" class="form-horizontal" role="form" action="admin/seckill/save"  method="post">
+                    <form id="addform" class="form-horizontal" role="form" action="/admin/seckill/save"  method="post">
                     	<input style="display:none" name= "type" th:attr="value=${info!=null}?'UPDATE':'SAVE'">
                     	<input style="display:none" name= "goods_id" th:attr="value=${info!=null}?${info.goods_id}:''">
                     	<input style="display:none" name= "goodsPrice.price_id" th:attr="value=${info!=null}?${info.goods_price_id}:''">
@@ -63,8 +63,9 @@
                                 </div>
                             </div>
                             -->
+                            
                             <div class="form-group" >
-                                <label class="col-md-2 control-label">秒杀价格</label>
+                                <label class="col-md-2 control-label"><em>*</em>秒杀价格</label>
                                 <div class="col-md-3">
                                     <input type="number" class="form-control" placeholder="0.00" name="goodsPrice.sale_price" th:value="${info!=null and info.goodsPrice!=null}?${info.goodsPrice.sale_price}:''">
                                     <span class="help-block"></span>
@@ -73,14 +74,14 @@
                             <div class="form-group" >
                                 <label class="col-md-2 control-label">秒杀开始时间</label>
                                 <div class="col-md-3">
-                                    <input type="text" class="form-control" placeholder="2018-11-11 12:00" >
+                                    <input type="text" class="form-control" placeholder="2018-11-11 12:00" name="start_time" th:value="${seckill_info!=null }?${#dates.format(seckill_info.start_time,'yyyy-MM-dd HH:mm:ss')}:''">
                                     <span class="help-block"></span>
                                 </div>
                             </div>
                             <div class="form-group" >
                                 <label class="col-md-2 control-label">秒杀结束</label>
                                 <div class="col-md-3">
-                                    <input type="text" class="form-control" placeholder="2018-12-11 12:00" >
+                                    <input type="text" class="form-control" placeholder="2018-12-11 12:00" name="end_time" th:value="${seckill_info!=null }?${#dates.format(seckill_info.end_time,'yyyy-MM-dd HH:mm:ss')}:''">
                                     <span class="help-block"></span>
                                 </div>
                             </div>
@@ -110,7 +111,7 @@
                             <div class="form-group">
                                 <label class="col-md-2 control-label"><em>*</em>库存</label>
                                 <div class="col-md-3">
-                                    <input type="number" name="goodsInfo.inventory.amount" class="form-control"  th:value="${info!=null and info.goodsInfo!=null and info.goodsInfo.inventory!=null}?${info.goodsInfo.inventory.amount}:'1'">
+                                    <input type="number" name="number" class="form-control"  th:value="${seckill_info!=null }?${seckill_info.number}:'1'">
                                     <span class="help-block">请填写整数</span>
                                 </div>
                             </div>
@@ -291,6 +292,8 @@
     </div>
     <script  th:inline="javascript">
         $(function(){
+        	var seckill=[[${seckill}]];
+        	console.log(seckill);
             if($("#tehui").is(':checked')){
                 $("#tehui_box").show();
             }

@@ -82,7 +82,7 @@
   <resultMap extends="BaseResultMap" type="com.mall.entity.seckill.SeckillSuccess" id="orderResultMap">
   	<association property="seckill" javaType="com.mall.entity.seckill.Seckill">
   		 <id column="seckill.seckill_id" jdbcType="BIGINT" property="seckill_id" />
-	    <result column="seckill.goods_id" jdbcType="INTEGER" property="goods_id" />
+	    <result column="seckill.goods_id" jdbcType="VARCHAR" property="goods_id" />
 	    <result column="seckill.name" jdbcType="VARCHAR" property="name" />
 	    <result column="seckill.number" jdbcType="INTEGER" property="number" />
 	    <result column="seckill.start_time" jdbcType="TIMESTAMP" property="start_time" />

@@ -3,7 +3,7 @@
 <mapper namespace="com.mall.dao.seckill.SeckillMapper">
   <resultMap id="BaseResultMap" type="com.mall.entity.seckill.Seckill">
     <id column="seckill_id" jdbcType="BIGINT" property="seckill_id" />
-    <result column="goods_id" jdbcType="INTEGER" property="goods_id" />
+    <result column="goods_id" jdbcType="VARCHAR" property="goods_id" />
     <result column="name" jdbcType="VARCHAR" property="name" />
     <result column="number" jdbcType="INTEGER" property="number" />
     <result column="start_time" jdbcType="TIMESTAMP" property="start_time" />
@@ -27,7 +27,7 @@
     insert into t_seckill (seckill_id, goods_id, name, 
       number, start_time, end_time, 
       create_time)
-    values (#{seckill_id,jdbcType=BIGINT}, #{goods_id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, 
+    values (#{seckill_id,jdbcType=BIGINT}, #{goods_id,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
       #{number,jdbcType=INTEGER}, #{start_time,jdbcType=TIMESTAMP}, #{end_time,jdbcType=TIMESTAMP}, 
       #{create_time,jdbcType=TIMESTAMP})
   </insert>
@@ -61,7 +61,7 @@
         #{seckill_id,jdbcType=BIGINT},
       </if>
       <if test="goods_id != null">
-        #{goods_id,jdbcType=INTEGER},
+        #{goods_id,jdbcType=VARCHAR},
       </if>
       <if test="name != null">
         #{name,jdbcType=VARCHAR},
@@ -84,7 +84,7 @@
     update t_seckill
     <set>
       <if test="goods_id != null">
-        goods_id = #{goods_id,jdbcType=INTEGER},
+        goods_id = #{goods_id,jdbcType=VARCHAR},
       </if>
       <if test="name != null">
         name = #{name,jdbcType=VARCHAR},
@@ -106,7 +106,7 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.mall.entity.seckill.Seckill">
     update t_seckill
-    set goods_id = #{goods_id,jdbcType=INTEGER},
+    set goods_id = #{goods_id,jdbcType=VARCHAR},
       name = #{name,jdbcType=VARCHAR},
       number = #{number,jdbcType=INTEGER},
       start_time = #{start_time,jdbcType=TIMESTAMP},
@@ -130,8 +130,14 @@
   	SELECT * FROM t_seckill TK 
   	where 
   		TK.number>0 
-  		and TK.start_time <![CDATA[ <= ]]> #{start_time}
-  		and TK.end_time>=#{end_time}
+  		<if test="start_time!=null">
+  			and TK.start_time >= #{start_time}
+  		</if>
+  		<if test="end_time!=null">
+  			and TK.end_time <![CDATA[ <= ]]>#{end_time}
+  		</if>
+  		
+  		
   
   </select>
   <!-- 秒杀 -->

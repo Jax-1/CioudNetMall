@@ -108,7 +108,7 @@
   select 
     <include refid="Base_Column_List" />
     from t_sys_user_favorites
-    where  user_id = #{user_id,jdbcType=VARCHAR} and del!='N'
+    where  user_id = #{user_id,jdbcType=VARCHAR} and del!='Y' and conversion!='Y'
   
   </select>
 </mapper>

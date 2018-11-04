@@ -91,7 +91,7 @@ public class AdminSeckillController extends AbstractController{
 		/**
 		 * 编辑
 		 */
-		if(Validate.notNull(seckill)) {
+		if(Validate.notNull(seckill)&&Validate.notNull(seckill.getSeckill_id())) {
 			
 			seckill = seckillService.getById(seckill.getSeckill_id());
 			
@@ -112,11 +112,11 @@ public class AdminSeckillController extends AbstractController{
 			//文件服务器路径
 			model.addAttribute("fileServicePath", fileUrlPrefix);
 			model.addAttribute("info", info);
-			model.addAttribute("seckill", seckill);
+			model.addAttribute("seckill_info", seckill);
 		}
 		model.addAttribute("goodsCategoryList", goodsCategoryList);
 		model.addAttribute("authlist", list);
-		model.addAttribute("page", "admin/seckill/add_goods");
+		model.addAttribute("page", "admin/seckill/add_seckill");
 		model.addAttribute("seckill", "nav-item start active open");
 		return "admin/index";
 		

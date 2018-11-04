@@ -10,10 +10,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.mall.api.BaseAPI;
+import com.mall.entity.goods.Goods;
 import com.mall.entity.user.User;
 import com.mall.entity.user.UserFavorites;
 import com.mall.message.ProcessResult;
 import com.mall.message.SystemCode;
+import com.mall.service.goods.GoodsService;
 import com.mall.service.sys.CacheService;
 import com.mall.service.user.UserFavoritesService;
 import com.mall.util.PageResult;
@@ -26,6 +28,8 @@ public class UserFavoritesApi extends BaseAPI {
 	private UserFavoritesService userFavoritesService;
 	@Resource
 	private CacheService cacheService;
+	@Resource
+	private GoodsService goodsService;
 	
 	/**
 	 * 保存收藏夹
@@ -74,11 +78,19 @@ public class UserFavoritesApi extends BaseAPI {
 	@ResponseBody
 	public PageResult<UserFavorites> getFavoritesDetail(HttpServletRequest request,UserFavorites userFavorites,PageResult<UserFavorites> list){
 		User user = SessionUtil.getUser(request);
-		userFavorites.setUser_id(user.getUser_name());
-//		userFavorites.setUser_id("13260631321");
+//		userFavorites.setUser_id(user.getUser_name());
+		userFavorites.setUser_id("13823595211");
 		int pageSizeShuf  =  Integer.parseInt(cacheService.getCache(SystemCode.PAGE).get(SystemCode.MALL_GOODS_SHUF_PAGE));
 		list.setPageSize(pageSizeShuf);
-		return userFavoritesService.queryByPageFront(list,userFavorites);
+		list=userFavoritesService.queryByPageFront(list,userFavorites);
+		for(UserFavorites UserFavorites:list.getDataList()) {
+			Goods goods =new Goods();
+			goods.setGoods_id(UserFavorites.getGoods_id());
+			goods=goodsService.selectInfo(goods);
+			UserFavorites.setGoods(goods);
+			
+		}
+		return list;
 		
 	}
 	

@@ -104,32 +104,32 @@
                                     <tr class="odd gradeX" th:each="a:${list.dataList}">
                                         <td>
                                             <label class="mt-checkbox mt-checkbox-single mt-checkbox-outline m-r-15">
-                                                <input type="checkbox" class="checkboxes" name="check_list" th:attr="value=${a.goods_id}" />
+                                                <input type="checkbox" class="checkboxes" name="check_list" th:attr="value=${a.goods.goods_id}" />
                                                 <span></span>
                                             </label>
                                         </td>
-                                        <td th:text="${a.nickname}"> 19950</td>
-                                        <td th:text="${a.goods_name}">
+                                        <td th:text="${a.goods.nickname}"> 19950</td>
+                                        <td th:text="${a.goods.goods_name}">
                                    		         民间艺术品《双鱼》
                                         </td >
-                                        <td th:text="${a.goodsPrice.sale=='Y'}?${a.goodsPrice.sale_price}:${a.goodsPrice.retail_price}">19900</td>
-                                        <td th:text="${a.is_marketable=='Y'}?'是':'否'">是</td>
-                                        <td th:text="${a.classic=='Y'}?'是':'否'">是</td>
+                                        <td th:text="${a.goods.goodsPrice.sale=='Y'}?${a.goods.goodsPrice.sale_price}:${a.goods.goodsPrice.retail_price}">19900</td>
+                                        <td th:text="${a.goods.is_marketable=='Y'}?'是':'否'">是</td>
+                                        <td th:text="${a.goods.classic=='Y'}?'是':'否'">是</td>
                                         
-                                        <td th:text="${a.new_product=='Y'}?'是':'否'">是</td>
-                                        <td th:text="${a.goodsPrice.sale=='Y'}?'是':'否'">否</td>
-                                        <td th:text="${a.recommend=='Y'}?'是':'否'">是</td>
-                                        <td th:text="${a.goodsInfo.inventory.amount}">100</td>
+                                        <td th:text="${a.goods.new_product=='Y'}?'是':'否'">是</td>
+                                        <td th:text="${a.goods.goodsPrice.sale=='Y'}?'是':'否'">否</td>
+                                        <td th:text="${a.goods.recommend=='Y'}?'是':'否'">是</td>
+                                        <td th:text="${a.goods.goodsInfo.inventory.amount}">100</td>
                                         <td>
-                                            <button class="btn btn-xs red" type="button" th:onclick="'del(\''+${a.goods_id}+'\')'" > 删除
+                                            <button class="btn btn-xs red" type="button" th:onclick="'del(\''+${a.goods.goods_id}+'\')'" > 删除
                                             </button>
-                                            <button class="btn btn-xs green" type="button" th:onclick="'update(\''+${a.goods_id}+'\')'" > 修改
+                                            <button class="btn btn-xs green" type="button" th:onclick="'update(\''+${a.goods.goods_id}+'\')'" > 修改
                                             </button>
-                                            <button class="btn btn-xs green" type="button" th:onclick="'tableUp(\''+${a.goods_id}+'\')'" > 上架
+                                            <button class="btn btn-xs green" type="button" th:onclick="'tableUp(\''+${a.goods.goods_id}+'\')'" > 上架
                                             </button>
-                                            <button class="btn btn-xs green" type="button" th:onclick="'tableDown(\''+${a.goods_id}+'\')'" > 下架
+                                            <button class="btn btn-xs green" type="button" th:onclick="'tableDown(\''+${a.goods.goods_id}+'\')'" > 下架
                                             </button>
-                                            <button class="btn btn-xs green" type="button" th:onclick="'view(\''+${a.goods_id}+'\')'" > 预览商品
+                                            <button class="btn btn-xs green" type="button" th:onclick="'view(\''+${a.goods.goods_id}+'\')'" > 预览商品
                                             </button>
                                         </td>
                                     </tr>
