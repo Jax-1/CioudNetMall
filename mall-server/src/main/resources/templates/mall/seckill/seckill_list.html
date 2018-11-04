@@ -9,6 +9,7 @@
 	<div class="content_box">
 		<div class="shop_list_fbox">
 			<!-- 商品列表 -->
+			<!-- 
 			<div class="shop_list_box">
 				<div class="shop_boxs">
 				<form action="/mall/seckill/list" method="post" id="topage">
@@ -87,7 +88,7 @@
 						<input type="hidden" id="salesSort" name="salesSort"  th:value="${goods}!=null?${goods.salesSort}"/>
 						<input type="hidden" id="popularitySort" name="popularitySort"  th:value="${goods}!=null?${goods.popularitySort}"/>
 						<input type="hidden" id="priceSort" name="priceSort" th:value="${goods}!=null?${goods.priceSort}"/>	
-						<!-- 推荐 -->
+						
 						<input type="hidden" id="recommend" name="recommend" th:value="${goods}!=null?${goods.recommend}"/>	
 						<input type="hidden" id="classic" name="classic" th:value="${goods}!=null?${goods.classic}"/>	
 						<input type="hidden" id="new_product" name="new_product" th:value="${goods}!=null?${goods.new_product}"/>	
@@ -96,6 +97,7 @@
 						</form>
 					</div>
 				</div>
+				 -->
 				<div class="shop_boxs">
 					<h3 class="tit_bar">
 						<b>默认排序</b>
@@ -111,13 +113,13 @@
 		                   <li th:each="a:${list.dataList}">
 								<span class="sPic">
 									<a th:href="@{/mall/goods/detail(goods_id=${a.goods_id})}">
-		                            	<img alt=""  th:src="@{${fileServicePath}+'/'+${a.filePath.path}+'/'+${a.filePath.fileidname}+'.'+${a.filePath.filetype}}">
+		                            	<img alt=""  th:src="@{${fileServicePath}+'/'+${a.goods.filePath.path}+'/'+${a.goods.filePath.fileidname}+'.'+${a.goods.filePath.filetype}}">
 		                        	</a>
 		                        </span>
-		                        <p><a  th:text="${a.auth.position}+'-'+${a.auth.authorname}">中国美术家协会会员 楚英</a></p>
-		                        <p><a href="" th:text="'《'+${a.goods_name}+'》'" th:href="@{/mall/goods/detail(goods_id=${a.goods_id})}">《新华一角》</a></p>
-		                        <p class="ku_c" th:text="'库存：'+${a.goodsInfo.inventory.amount-a.goodsInfo.inventory.has_amount}">库存：99</p>
-		                        <p class="ku_c" th:text="'已出售：'+${a.goodsInfo.inventory.has_amount}">已出售：0</p>
+		                        <p><a  th:text="${a.goods.auth.position}+'-'+${a.goods.auth.authorname}">中国美术家协会会员 楚英</a></p>
+		                        <p><a href="" th:text="'《'+${a.goods.goods_name}+'》'" th:href="@{/mall/goods/detail(goods_id=${a.goods_id})}">《新华一角》</a></p>
+		                        <p class="ku_c" th:text="'库存：'+${a.number}">库存：99</p>
+		                        
 		                        <div class="price">
 		                        ¥
 		                        	&nbsp

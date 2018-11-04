@@ -2,10 +2,12 @@ package com.mall.entity.seckill;
 
 import java.util.Date;
 
+import com.mall.entity.goods.Goods;
+
 public class Seckill {
     private Long seckill_id;
 
-    private Integer goods_id;
+    private String goods_id;
 
     private String name;
 
@@ -16,8 +18,20 @@ public class Seckill {
     private Date end_time;
 
     private Date create_time;
+    
+    private Goods goods;
+    
+    
 
-    public Long getSeckill_id() {
+    public Goods getGoods() {
+		return goods;
+	}
+
+	public void setGoods(Goods goods) {
+		this.goods = goods;
+	}
+
+	public Long getSeckill_id() {
         return seckill_id;
     }
 
@@ -25,11 +39,11 @@ public class Seckill {
         this.seckill_id = seckill_id;
     }
 
-    public Integer getGoods_id() {
+    public String getGoods_id() {
         return goods_id;
     }
 
-    public void setGoods_id(Integer goods_id) {
+    public void setGoods_id(String goods_id) {
         this.goods_id = goods_id;
     }
 

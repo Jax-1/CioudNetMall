@@ -114,4 +114,34 @@
       create_time = #{create_time,jdbcType=TIMESTAMP}
     where seckill_id = #{seckill_id,jdbcType=BIGINT}
   </update>
+  <!-- 减库存 -->
+  <update id="reduceNumber">
+  UPDATE seckill
+        SET number = number - 1
+        WHERE seckill_id = #{seckill_id}
+        AND start_time <![CDATA[ <= ]]> #{killTime}
+        AND end_time >= #{killTime}
+        AND number > 0
+  
+  </update>
+  
+  <!-- 列表 -->
+  <select id="getPageFront" parameterType="com.mall.entity.seckill.Seckill" resultMap="BaseResultMap">
+  	SELECT * FROM t_seckill TK 
+  	where 
+  		TK.number>0 
+  		and TK.start_time <![CDATA[ <= ]]> #{start_time}
+  		and TK.end_time>=#{end_time}
+  
+  </select>
+  <!-- 秒杀 -->
+   <select id="killByProcedure" statementType="CALLABLE">
+        CALL excuteSeckill(
+        #{seckillId, jdbcType=BIGINT, mode=IN},
+        #{phone, jdbcType=BIGINT, mode=IN},
+        #{killTime, jdbcType=TIMESTAMP, mode=IN},
+        #{result, jdbcType=INTEGER, mode=OUT}
+        )
+    </select>
+  
 </mapper>

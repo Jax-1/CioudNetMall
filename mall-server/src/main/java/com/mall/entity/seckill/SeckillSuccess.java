@@ -6,8 +6,20 @@ public class SeckillSuccess extends SeckillSuccessKey {
     private Byte state;
 
     private Date create_time;
+    
+    private Seckill seckill;
+    
+    
+    //秒杀商品信息
+    public Seckill getSeckill() {
+		return seckill;
+	}
 
-    public Byte getState() {
+	public void setSeckill(Seckill seckill) {
+		this.seckill = seckill;
+	}
+
+	public Byte getState() {
         return state;
     }
 
