@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.mall.api.BaseAPI;
 import com.mall.entity.order.Order;
@@ -30,6 +31,7 @@ public class UserOrderApi extends BaseAPI {
 	 * @return
 	 */
 	@RequestMapping("")
+	@ResponseBody
 	public PageResult<Order> toUserOrder(Model model,HttpServletRequest request,PageResult<Order> list,Order order) {
 		
 		User user = SessionUtil.getUser(request);
@@ -38,6 +40,7 @@ public class UserOrderApi extends BaseAPI {
 		}
 		logger.info("获取用户订单列表！Username="+user.getUser_name());
 		order.setUser_id(user.getUser_name());
+		
 		list =orderService.queryByPageFront(list,order);
 		return list;
 	}

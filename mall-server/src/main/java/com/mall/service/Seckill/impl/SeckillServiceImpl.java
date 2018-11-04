@@ -43,7 +43,7 @@ public class SeckillServiceImpl extends BaseServiceImpl<Seckill> implements Seck
 
 	@Override
 	public Seckill getById(long seckillId) {
-		return seckillDao.selectByPrimaryKey(Long.toString(seckillId));
+		return seckillDao.getById(seckillId);
 	}
 
 	@Override

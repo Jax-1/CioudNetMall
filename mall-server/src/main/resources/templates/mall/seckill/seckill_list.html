@@ -9,12 +9,14 @@
 	<div class="content_box">
 		<div class="shop_list_fbox">
 			<!-- 商品列表 -->
-			<!-- 
+			
 			<div class="shop_list_box">
 				<div class="shop_boxs">
 				<form action="/mall/seckill/list" method="post" id="topage">
+				 
 					<h3 class="tit_bar"><b>选画中心</b></h3>
 					<div class="header_bar">
+						<!--  
 						<div class="header_div">
 							<div class="left_lab">分类：</div>
 							<div class="memu_ul" id="classify">
@@ -93,11 +95,12 @@
 						<input type="hidden" id="classic" name="classic" th:value="${goods}!=null?${goods.classic}"/>	
 						<input type="hidden" id="new_product" name="new_product" th:value="${goods}!=null?${goods.new_product}"/>	
 						<input type="hidden" id="sale" name="goodsPrice.sale" th:value="(${goods}!=null and ${goods.goodsPrice}!=null)?${goods.goodsPrice.sale}"/>	
-							
+							-->
 						</form>
 					</div>
 				</div>
-				 -->
+				
+				 
 				<div class="shop_boxs">
 					<h3 class="tit_bar">
 						<b>默认排序</b>
@@ -112,19 +115,19 @@
 							
 		                   <li th:each="a:${list.dataList}">
 								<span class="sPic">
-									<a th:href="@{/mall/goods/detail(goods_id=${a.goods_id})}">
-		                            	<img alt=""  th:src="@{${fileServicePath}+'/'+${a.goods.filePath.path}+'/'+${a.goods.filePath.fileidname}+'.'+${a.goods.filePath.filetype}}">
+									<a th:href="@{'/mall/seckill/'+${a.seckill_id}+'/detail'}">
+		                            	<img alt=""  th:src="@{${fileServicePath}+'/'+${a.goods.filePath.path}+'/'+${a.goods.filePath.fileidname}+'.'+${a.goods.filePath.filetype}}" >
 		                        	</a>
 		                        </span>
 		                        <p><a  th:text="${a.goods.auth.position}+'-'+${a.goods.auth.authorname}">中国美术家协会会员 楚英</a></p>
-		                        <p><a href="" th:text="'《'+${a.goods.goods_name}+'》'" th:href="@{/mall/goods/detail(goods_id=${a.goods_id})}">《新华一角》</a></p>
+		                        <p><a href="" th:text="'《'+${a.goods.goods_name}+'》'" th:href="@{/mall/seckill/${a.goods_id}/detail}">《新华一角》</a></p>
 		                        <p class="ku_c" th:text="'库存：'+${a.number}">库存：99</p>
 		                        
 		                        <div class="price">
 		                        ¥
 		                        	&nbsp
-		                            <span th:text="${a.goodsPrice.sale}=='Y'?${a.goodsPrice.sale_price}:${a.goodsPrice.retail_price}">2000.00</span>
-		                            <del class="yuanjia" th:text="'¥ '+(${a.goodsPrice.sale}=='Y'?${a.goodsPrice.retail_price})" th:style="${a.goodsPrice.sale}=='Y'?'':'display:none'"></del>
+		                            <span th:text="${a.goods.goodsPrice.sale_price}">2000.00</span>
+		                            <del class="yuanjia" th:text="'¥ '+(${a.goods.goodsPrice.retail_price})" ></del>
 		                        </div>
 		                    </li>
 					</ul>

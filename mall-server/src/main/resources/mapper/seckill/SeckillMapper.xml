@@ -149,5 +149,21 @@
         #{result, jdbcType=INTEGER, mode=OUT}
         )
     </select>
+    <!-- 批量删除 -->
+    <update id="batchDelete">
+    	update t_seckill set
+  		del_state='Y'
+	  	where seckill_id in
+	  	<foreach collection="list" index="index" item="item" separator="," open="(" close=")">
+	            #{item.seckill_id}
+	     </foreach>
+    
+    </update>
+    <select id="getById" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_seckill
+    where seckill_id = #{seckill_id,jdbcType=BIGINT}
+  </select>
   
 </mapper>

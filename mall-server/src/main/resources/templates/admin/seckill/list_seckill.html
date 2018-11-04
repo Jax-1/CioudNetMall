@@ -25,7 +25,9 @@
             <!-- 内容展示 -->
             <div class="row">
                 <div class="col-md-12">
-                    <form class="form-horizontal" id="selectForm" action="/admin/goods/list" method="post">
+                 
+                    <form class="form-horizontal" id="selectForm" action="/admin/seckill/list" method="post">
+                    <!-- 
                         <div class="form-group">
                             <div class="col-sm-1">
                                 <select class="form-control"  id="goods_category">
@@ -62,7 +64,9 @@
                                 <button class="btn btn-success" type="submit">搜索</button>
                             </div>
                         </div>
+                        -->
                     </form>
+                    
                 </div>
                 <div class="col-md-12">
                     <div class="portlet light bordered">
@@ -72,7 +76,7 @@
                                     <div class="col-md-6">
                                         <div class="btn-group">
                                             <button id="sample_editable_1_new" class="btn sbold green">
-                                                <a href="/admin/goods/editor">添加新的</a>
+                                                <a href="/admin/seckill/editor">添加新的</a>
                                                 <i class="fa fa-plus"></i>
                                             </button>
                                         </div>
@@ -91,11 +95,10 @@
                                         <th> 商品编号</th>
                                         <th> 商品名称 </th>
                                         <th> 价格</th>
+                                        <th> 秒杀价格</th>
                                         <th> 上架</th>
-                                        <th> 精品 </th>
-                                        <th> 新品 </th>
-                                        <th> 特惠</th>
-                                        <th> 推荐</th>
+                                        
+                                        
                                         <th> 库存 </th>
                                         <th> 操作</th>
                                     </tr>
@@ -104,7 +107,8 @@
                                     <tr class="odd gradeX" th:each="a:${list.dataList}">
                                         <td>
                                             <label class="mt-checkbox mt-checkbox-single mt-checkbox-outline m-r-15">
-                                                <input type="checkbox" class="checkboxes" name="check_list" th:attr="value=${a.goods.goods_id}" />
+                                                <input type="checkbox" class="checkboxes" name="check_list" th:attr="value=${a.seckill_id}" />
+                                                <input type="checkbox" class="checkboxes" name="check_list1" th:attr="value=${a.goods.goods_id}" />
                                                 <span></span>
                                             </label>
                                         </td>
@@ -112,24 +116,23 @@
                                         <td th:text="${a.goods.goods_name}">
                                    		         民间艺术品《双鱼》
                                         </td >
-                                        <td th:text="${a.goods.goodsPrice.sale=='Y'}?${a.goods.goodsPrice.sale_price}:${a.goods.goodsPrice.retail_price}">19900</td>
+                                        <td th:text="${a.goods.goodsPrice.retail_price}">19900</td>
+                                        <td th:text="${a.goods.goodsPrice.sale_price}">19900</td>
                                         <td th:text="${a.goods.is_marketable=='Y'}?'是':'否'">是</td>
-                                        <td th:text="${a.goods.classic=='Y'}?'是':'否'">是</td>
                                         
-                                        <td th:text="${a.goods.new_product=='Y'}?'是':'否'">是</td>
-                                        <td th:text="${a.goods.goodsPrice.sale=='Y'}?'是':'否'">否</td>
-                                        <td th:text="${a.goods.recommend=='Y'}?'是':'否'">是</td>
-                                        <td th:text="${a.goods.goodsInfo.inventory.amount}">100</td>
+                                        
+                                        
+                                        <td th:text="${a.number}">100</td>
                                         <td>
-                                            <button class="btn btn-xs red" type="button" th:onclick="'del(\''+${a.goods.goods_id}+'\')'" > 删除
+                                            <button class="btn btn-xs red" type="button" th:onclick="'del(\''+${a.seckill_id}+'\',\''+${a.seckill_id}+'\')'" > 删除
                                             </button>
-                                            <button class="btn btn-xs green" type="button" th:onclick="'update(\''+${a.goods.goods_id}+'\')'" > 修改
+                                            <button class="btn btn-xs green" type="button" th:onclick="'update(\''+${a.seckill_id}+'\')'" > 修改
                                             </button>
                                             <button class="btn btn-xs green" type="button" th:onclick="'tableUp(\''+${a.goods.goods_id}+'\')'" > 上架
                                             </button>
                                             <button class="btn btn-xs green" type="button" th:onclick="'tableDown(\''+${a.goods.goods_id}+'\')'" > 下架
                                             </button>
-                                            <button class="btn btn-xs green" type="button" th:onclick="'view(\''+${a.goods.goods_id}+'\')'" > 预览商品
+                                            <button class="btn btn-xs green" type="button" th:onclick="'view(\''+${a.seckill_id}+'\')'" > 预览商品
                                             </button>
                                         </td>
                                     </tr>
@@ -297,15 +300,18 @@
         		console.log(type);
 	        	//获取全部选中box值，写入arr
 				var val=$("input[name=check_list]:checked")
+				var val1=$("input[name=check_list1]:checked")
 	        	var arr=[];
+				var arr1=[];
 	        	for(var i=0;i<val.length;i++){
 		        	console.log(val[i].value)
 		        	arr.push(val[i].value);
+		        	arr1.push(val1[i].value);
 		        }
-
+	
 				if(type=='del'){
 					
-		        	del(arr);
+		        	del(arr,arr1);
 		        	//arr.push(goods_id);
 					
 				}else if(type=='tableUp'){
@@ -321,7 +327,7 @@
 		
         
 		//删除方法
-		function del(e){
+		function del(e,f){
 			console.log(e);
 			var answers = {};
             if(e instanceof Array){
@@ -331,6 +337,15 @@
             	}
             }else{
             	answers['list[0].goods_id'] = e;
+            }
+            var answersF = {};
+            if(e instanceof Array){
+            	for ( var i = 0; i <f.length; i++){
+            		    console.log(f[i]);
+            		    answersF['list['+i+'].seckill_id'] = f[i];
+            	}
+            }else{
+            	answersF['list[0].goods_id'] = f;
             }
      	   $.post("/admin/goods/batchDelete",
      			  answers,
@@ -346,6 +361,21 @@
      		   			}
      		   		},'json'
      			   )  
+     		//删除秒杀
+     			  $.post("/admin/seckill/batchDelete",
+     					 answersF,
+     	     		   		function(date){
+     	     		   			if(date.res=='1'){
+     	     		   				//成功
+     	     		   				console.log('删除成功')
+     	     		   				setTimeout(function(){
+     	         		   				window.location.reload();
+     	         		   				},1000)
+     	     		   			}else{
+     	     		   				//$("#msg").text(adte.msg);
+     	     		   			}
+     	     		   		},'json'
+     	     			   )  
             
             
         }
@@ -412,7 +442,7 @@
 
 		//修改方法
 		function update(e){
-			window.location.href="/admin/goods/editor?goods_id="+e;
+			window.location.href="/admin/seckill/editor?seckill_id="+e;
         }
 
 		//预览方法
@@ -422,21 +452,7 @@
             		list:goods_id
             };
 
-     	   $.post("/admin/goods/batchDelete",
-     			   parmet,
-     		   		function(date){
-     		   			if(date.res=='1'){
-     		   				//成功
-     		   				console.log('删除成功')
-     		   				setTimeout(function(){
-         		   				window.location.reload();
-         		   				},1000)
-     		   			}else{
-     		   				//$("#msg").text(adte.msg);
-     		   			}
-     		   		},'json'
-     			   )  
-            
+     	  
             
         }
         	

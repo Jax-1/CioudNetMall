@@ -10,14 +10,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.mall.controller.AbstractController;
+import com.mall.dao.seckill.SeckillMapper;
 import com.mall.entity.cms.AuthorWithBLOBs;
 import com.mall.entity.goods.Goods;
 import com.mall.entity.goods.GoodsCategory;
+import com.mall.entity.goods.GoodsList;
 import com.mall.entity.goods.GoodsPrice;
 import com.mall.entity.seckill.Seckill;
+import com.mall.entity.seckill.SeckillList;
+import com.mall.message.ProcessResult;
 import com.mall.message.SystemCode;
 import com.mall.service.Seckill.SeckillService;
 import com.mall.service.cms.AuthorWithBLOBsService;
@@ -51,6 +57,8 @@ public class AdminSeckillController extends AbstractController{
 	private CacheService cacheService;
 	@Resource
 	private SeckillService seckillService;
+	 @Autowired
+	 private SeckillMapper seckillDao;
 	
 	@RequestMapping("/list")
 	public String toGoodsList(Model model,PageResult<Seckill> list,Seckill seckill) {
@@ -172,6 +180,30 @@ public class AdminSeckillController extends AbstractController{
 			
 		}
 		return "redirect:/admin/seckill/list";
+		
+	}
+	
+	/**
+	 * 批量删除
+	 * @param list
+	 * @return
+	 */
+	@PostMapping("/batchDelete")
+	@ResponseBody
+	public ProcessResult<Seckill> batchDelete(SeckillList list) {
+		System.out.println(list.getList().size());
+		ProcessResult<Seckill> res=new ProcessResult<Seckill>();
+		try {
+			int delete = seckillDao.batchDelete(list.getList());
+			if(delete>0) {
+				res.setRes(SystemCode.SUCCESS);
+				res.setMsg("批量更新完成！");
+			}
+		} catch (Exception e) {
+			logger.error("批量删除商品信息：失败！"+e.getMessage());
+		}
+		
+		return res;
 		
 	}
 	

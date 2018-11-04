@@ -54,12 +54,13 @@ public class UserSeckillController extends AbstractController {
 	private SeckillService seckillService;
 	
 	@RequestMapping("/{seckillId}/detail")
-	public String toGoodsDetail(Model model,@PathVariable("seckillId") Long seckillId,HttpServletRequest request) {
+	public String toGoodsDetail(Model model,@PathVariable("seckillId") String seckillId,HttpServletRequest request) {
 		
 		if(seckillId == null){
             return "redirect:mall/seckill/list";
         }
-        Seckill seckill = seckillService.getById(seckillId);
+		System.out.println(Long.parseLong(seckillId));
+        Seckill seckill = seckillService.getById(Long.parseLong(seckillId));
         if(seckill == null){
             return "forward:mall/seckill/list";
         }
@@ -120,6 +121,13 @@ public class UserSeckillController extends AbstractController {
 			Goods goods=new Goods();
 			goods.setGoods_id(s.getGoods_id());
 			goods=goodsService.selectInfo(goods);
+			if(Validate.notNull(goods.getGoodsInfo().getAuth_id())) {
+				//查询商品作家信息
+				AuthorWithBLOBs a=new AuthorWithBLOBs();
+				a.setId(goods.getGoodsInfo().getAuth_id());
+				a = authorWithBLOBsService.selectInfo(a);
+				goods.setAuth(a);
+			}
 			s.setGoods(goods);
 			
 		}
