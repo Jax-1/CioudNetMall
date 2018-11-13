@@ -36,7 +36,7 @@
                         		</p>
                         <p> 秒杀开始时间：<span th:text="${#dates.format(seckill.start_time,'yyyy-MM-dd HH:mm:ss')}">  </span> 秒杀结束时间：<span th:text="${#dates.format(seckill.end_time,'yyyy-MM-dd HH:mm:ss')}"></span></p>
                          
-                          <p> 秒杀剩余时间：<span th:text="12">张孝勇</span></p>
+                          <p> <spen id="time_out">秒杀剩余时间：</spen><em  id="time_out_value"></em></p>
                         <p><span th:text="'库存：'+${goods.goodsInfo.inventory.amount-goods.goodsInfo.inventory.has_amount}">库存： 99</span>（当前库存紧张，请及时下单）</p>	
                         <p> 作者：<span th:text="${goods.auth.authorname}">张孝勇</span></p>
                         <p>尺寸：<span th:text="${goods.goodsInfo.size}">34x136cmx4</span></p>
@@ -338,6 +338,77 @@
         <img src="/mall/images/baozhen.png" alt="">
     </div>
 	<script type="text/javascript" th:inline="javascript">
+		var seckill=[[${seckill}]];
+		
+		
+		
+		var day,hour,minute,second
+		var a=seckill.end_time;
+		var b=seckill.start_time;
+		 var millisecond_end =  Date.parse(a)-new Date(); //毫秒
+		 var millisecond_satat= Date.parse(b)- new Date() ; //毫秒
+		
+		 
+		 
+		 if(millisecond_end>0&&millisecond_satat<=0){
+			 //进行中 millisecond_end
+			 	date=millisecond_end;
+			  day    =  parseInt(date / 1000 / 60 / 60 / 24);
+			    var daysRound   = Math.floor(day);
+			   hour    =  parseInt(date/ 1000 / 60 / 60 - (24 * daysRound));
+			    var hoursRound   = Math.floor(hour);
+			   minute   =  parseInt(date / 1000 /60 - (24 * 60 * daysRound) - (60 * hoursRound));
+			    var minutesRound  = Math.floor(minute);
+			   second   =  parseInt(date/ 1000 - (24 * 60 * 60 * daysRound) - (60 * 60 * hoursRound) - (60 * minutesRound));
+			 //return 'running';
+			  
+			 
+		 }else if(millisecond_end<=0&&millisecond_satat<=0){
+			 //已完成
+			// return 'over';
+			 $("#time_out_value").text("以结束");
+			 
+		 }else if(millisecond_end>0&&millisecond_satat>0){
+			//待开始 millisecond_satat
+			  day = parseInt(millisecond_satat / (1000 * 60 * 60 * 24)); 
+			  hour = parseInt(millisecond_satat / (1000 * 60 * 60 )); 
+			  minute = parseInt(millisecond_satat / (1000 * 60 )); 
+			  second = parseInt(millisecond_satat / (1000)); 
+			// return 'stay';
+			  $("#time_out").text("距开始时间：");
+			 
+			
+			 
+		 }
+	 $(document).ready(function(){
+		 if(second!='undefined'){
+			 setInterval(timer,1000);
+		 }
+		
+	 });
+	 function timer()//计时
+	    {
+	      
+	      
+	      if( second<=0)
+	      {
+	    	   second=59;
+	    	   minute= minute-1;
+	      }
+	  
+	      if( minute<=0)
+	      {
+	    	   minute=59;
+	    	   hour= hour-1;
+	      }
+	      if( hour<=0){
+	    	   hour=23;
+	    	   day= day-1;
+	      }
+	      $("#time_out_value").text( day+'天'+ hour+'时'+ minute+'分'+ second+'秒');
+	     
+	  
+	    }
 	function buy(){
 		var goods=[[${goods}]];
 		//验证商品库存信息

@@ -77,9 +77,10 @@ public class UserFavoritesApi extends BaseAPI {
 	@GetMapping("/list")
 	@ResponseBody
 	public PageResult<UserFavorites> getFavoritesDetail(HttpServletRequest request,UserFavorites userFavorites,PageResult<UserFavorites> list){
-		User user = SessionUtil.getUser(request);
-//		userFavorites.setUser_id(user.getUser_name());
-		userFavorites.setUser_id("13823595211");
+		if(userFavorites==null) {
+			User user = SessionUtil.getUser(request);
+			userFavorites.setUser_id(user.getUser_name());
+		}
 		int pageSizeShuf  =  Integer.parseInt(cacheService.getCache(SystemCode.PAGE).get(SystemCode.MALL_GOODS_SHUF_PAGE));
 		list.setPageSize(pageSizeShuf);
 		list=userFavoritesService.queryByPageFront(list,userFavorites);

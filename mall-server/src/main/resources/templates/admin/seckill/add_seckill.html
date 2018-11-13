@@ -71,20 +71,23 @@
                                     <span class="help-block"></span>
                                 </div>
                             </div>
+                            
                             <div class="form-group" >
                                 <label class="col-md-2 control-label">秒杀开始时间</label>
                                 <div class="col-md-3">
-                                    <input type="text" class="form-control" placeholder="2018-11-11 12:00" name="start_time" th:value="${seckill_info!=null }?${#dates.format(seckill_info.start_time,'yyyy-MM-dd HH:mm:ss')}:''">
+                                    <input type="text" class="form-control" placeholder="2018-11-11 12:00" name="start_time" id="seckill_start" th:value="${seckill_info!=null }?${#dates.format(seckill_info.start_time,'yyyy-MM-dd HH:mm:ss')}:''">
                                     <span class="help-block"></span>
                                 </div>
                             </div>
+                           	
                             <div class="form-group" >
                                 <label class="col-md-2 control-label">秒杀结束</label>
                                 <div class="col-md-3">
-                                    <input type="text" class="form-control" placeholder="2018-12-11 12:00" name="end_time" th:value="${seckill_info!=null }?${#dates.format(seckill_info.end_time,'yyyy-MM-dd HH:mm:ss')}:''">
+                                    <input type="text" class="form-control" placeholder="2018-12-11 12:00" name="end_time" id="seckill_end" th:value="${seckill_info!=null }?${#dates.format(seckill_info.end_time,'yyyy-MM-dd HH:mm:ss')}:''">
                                     <span class="help-block"></span>
                                 </div>
                             </div>
+                            
                             <div class="form-group">
                                 <label class="col-md-2 control-label"><em>*</em>秒杀商品分类</label>
                                 <div class="col-md-3">

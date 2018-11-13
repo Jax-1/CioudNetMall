@@ -86,7 +86,7 @@ public class UserManagerApi extends BaseAPI {
 	 */
 	@RequestMapping("/modify")
 	@ResponseBody
-	public Boolean toChengePwd(HttpServletRequest request,String password) {
+	public Boolean toChengePwd(HttpServletRequest request,String password,String username) {
 		logger.info("用户更改密码校验："+request.getSession().getAttribute("checkCode"));
 		if(request.getSession().getAttribute("checkCode")==null||
 				!Boolean.valueOf(request.getSession().getAttribute("checkCode").toString()).booleanValue()) {
@@ -94,8 +94,14 @@ public class UserManagerApi extends BaseAPI {
 			return false;
 			
 		}
+		User user =new User();
 		//更改密码
-		User user = SessionUtil.getUser(request);
+		if(username==null) {
+			user = SessionUtil.getUser(request);
+		}else {
+			user.setUser_name(username);
+		}
+		
 		String rand = MD5Util.getRand();
 		user.setRand(rand);
 		user.setPassword(MD5Util.encoder(password,rand));
