@@ -108,6 +108,19 @@ public class OrderApi extends BaseAPI {
 			//历史订单支付
 			logger.info("历史订单支付！"+order.getOrder_number());
 			order=orderService.calculationOrderAmount(order);
+			for(OrderDetails orderDetails:order.getOrderDetailsList()) {
+				
+				try {
+					orderDetailsService.updateByPrimaryKeySelective(orderDetails);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+			try {
+				orderService.updateByPrimaryKeySelective(order);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 			
 			logger.info("更新订单信息："+order.getOrder_number());
 		}else {
@@ -125,6 +138,19 @@ public class OrderApi extends BaseAPI {
 				}
 			}
 			order=orderService.calculationOrderAmount(order);
+			for(OrderDetails orderDetails:order.getOrderDetailsList()) {
+				
+				try {
+					orderDetailsService.insertSelective(orderDetails);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+			try {
+				orderService.insertSelective(order);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 			
 			logger.info("创建订单："+order.getOrder_number());
 		}

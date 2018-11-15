@@ -100,11 +100,7 @@ public class OrderServiceImpl extends BaseServiceImpl<Order> implements OrderSer
 				}
 				//计算商品总价,加单品总价
 				total_amount=total_amount.add(details_amount);
-				try {
-					orderDetailsService.updateByPrimaryKeySelective(orderDetails);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
+				
 			}
 			//计算商品总价,加邮费总额
 			total_amount=total_amount.add(postage_amount);
@@ -115,11 +111,7 @@ public class OrderServiceImpl extends BaseServiceImpl<Order> implements OrderSer
 			order.setReceive_id(orderUpdate.getReceive_id());
 			order.setPayment_id(orderUpdate.getPayment_id());
 			order.setComment(orderUpdate.getComment());
-			try {
-				orderService.updateByPrimaryKeySelective(order);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
+			
 			
 			
 		}
